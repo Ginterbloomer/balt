@@ -1,0 +1,710 @@
+
+<h2 class="sr-only">LexLV — полный ASL</h2>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Переменные для быстрой кастомизации */
+  :root {
+    --border-radius-md: 6px;
+    --border-radius-lg: 12px;
+    --color-border-secondary: #e2e8f0;
+    --color-border-tertiary: #edf2f7;
+    --color-text-primary: #1a202c;
+    --color-text-secondary: #718096;
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f7fafc;
+    
+    --color-brand: #3182ce; 
+    --color-brand-light: #ebf8ff;
+    --color-danger: #e53e3e;
+    --color-danger-light: #fff5f5;
+    --color-success: #38a169;
+    --color-success-light: #f0fff4;
+    --color-warning: #dd6b20;
+    --color-warning-light: #fffaf0;
+  
+    /* Ограничиваем максимальную ширину приложения для баланса на больших экранах */
+    --max-app-width: 600px;
+  }
+  
+  /* Центрируем всё приложение на экране */
+  body {
+    background: var(--color-background-secondary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  
+  /* Оболочка для центрирования контента */
+  .app-header, .search-bar, .categories, .section-title, .laws-list {
+    max-width: var(--max-app-width);
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+  
+  /* HEADER - ТЕПЕРЬ ВСЁ ПО ЦЕНТРУ */
+  .app-header {
+    padding: 2rem 1rem 1.5rem;
+    border-bottom: 1px solid var(--color-border-tertiary);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрирует элементы по горизонтали */
+    text-align: center;  /* Центрирует текст внутри элементов */
+    background: var(--color-background-primary);
+  }
+  .app-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    letter-spacing: -0.5px;
+  }
+  .app-subtitle {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-top: 6px;
+  }
+  
+  /* СТИЛЬ 1: ЯЗЫКОВЫЕ КНОПКИ (Тоже по центру) */
+  .lang-switcher {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    justify-content: center; /* Центрирует кнопки в контейнере */
+  }
+  .lang-btn {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 5px 12px;
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--color-border-secondary);
+    cursor: pointer;
+    background: var(--color-background-primary);
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease; 
+  }
+  .lang-btn:hover {
+    color: var(--color-text-primary);
+    border-color: var(--color-text-secondary);
+    background: var(--color-background-secondary);
+  }
+  .lang-btn.active {
+    background: var(--color-text-primary);
+    color: #ffffff;
+    border-color: var(--color-text-primary);
+  }
+  
+  
+  /* ПОИСК ПО ЦЕНТРУ */
+  .search-bar {
+    padding: 16px 1rem;
+    display: flex;
+    justify-content: center;
+  }
+  .search-bar input {
+    width: 100%;
+    max-width: 400px; /* Чтобы поиск не был слишком длинным */
+    font-size: 14px;
+    padding: 10px 14px;
+    border: 1px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    text-align: center; /* Текст внутри поиска тоже по центру */
+  }
+  .search-bar input:focus {
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px var(--color-brand-light);
+  }
+  
+  
+  /* КАТЕГОРИИ */
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    padding: 1.25rem 1rem;
+  }
+  .cat-card {
+    background: var(--color-background-primary);
+    border: 1px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 16px 14px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    text-align: center; /* Центрируем иконки и текст в категориях */
+  }
+  .cat-card:hover {
+    border-color: var(--color-border-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  }
+  .cat-card.active {
+    border: 1px solid var(--color-brand);
+    background: var(--color-brand-light);
+  }
+  .cat-icon {
+    font-size: 22px;
+    margin-bottom: 8px;
+    display: block;
+    color: var(--color-brand);
+  }
+  .cat-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    line-height: 1.3;
+  }
+  .cat-count {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    margin-top: 4px;
+  }
+  
+  
+  /* СПИСОК ЗАКОНОВ */
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    padding: 1rem 1rem 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .laws-list {
+    padding: 0 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .law-card {
+    background: var(--color-background-primary);
+    border: 1px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .law-card:hover {
+    border-color: var(--color-border-secondary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  }
+  .law-card.expanded {
+    border-color: var(--color-border-secondary);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  }
+  .law-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .law-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    line-height: 1.4;
+  }
+  .arrow-icon {
+    font-size: 16px;
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+    margin-top: 3px;
+    transition: transform 0.2s ease;
+  }
+  .law-card.expanded .arrow-icon {
+    transform: rotate(180deg);
+  }
+  
+  /* БЭДЖИ */
+  .law-meta {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: var(--border-radius-md);
+  }
+  .badge-fine {
+    background: var(--color-warning-light);
+    color: var(--color-warning);
+  }
+  .badge-article {
+    background: var(--color-background-secondary);
+    color: var(--color-text-secondary);
+  }
+  .badge-warn {
+    background: var(--color-success-light);
+    color: var(--color-success);
+  }
+  
+  /* ДЕТАЛИ КАРТОЧКИ */
+  .law-detail {
+    display: none;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border-tertiary);
+  }
+  .law-detail.show {
+    display: block;
+  }
+  .dl {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: var(--color-text-secondary);
+    margin-bottom: 4px;
+    margin-top: 14px;
+  }
+  .dl:first-child {
+    margin-top: 0;
+  }
+  .dt {
+    font-size: 13.5px;
+    color: var(--color-text-primary);
+    line-height: 1.5;
+  }
+  .fine-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .fine-box {
+    flex: 1;
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 10px 12px;
+  }
+  .fine-lbl {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+  }
+  .fine-val {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-top: 2px;
+  }
+  .fine-val.danger {
+    color: var(--color-danger);
+  }
+  
+  /* Вложенные блоки частей */
+  .part-block {
+    margin-top: 12px;
+    padding: 14px;
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-lg);
+    border-left: 3px solid var(--color-brand);
+  }
+  .part-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-brand);
+    margin-bottom: 4px;
+  }
+  .part-desc {
+    font-size: 13px;
+    color: var(--color-text-primary);
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  .part-fines {
+    display: flex;
+    gap: 8px;
+  }
+  .part-fine-box {
+    flex: 1;
+    background: var(--color-background-primary);
+    border-radius: var(--border-radius-md);
+    padding: 8px 10px;
+    border: 1px solid var(--color-border-tertiary);
+  }
+  
+  
+  /* === ИЗМЕНЕНИЕ СТИЛЯ 3: КНОПКА ССЫЛКИ СЖИМАЕТСЯ ПОД ТЕКСТ === */
+  .source-btn {
+    display: inline-flex; /* Изменено с flex на inline-flex, чтобы кнопка не занимала всю ширину */
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 16px;
+    width: auto; /* Изменено со 100% на auto — теперь она строго по размеру текста */
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--color-text-primary);
+    color: var(--color-text-primary);
+    background: transparent;
+    cursor: pointer;
+    margin-top: 16px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .source-btn:hover {
+    background: var(--color-text-primary);
+    color: #ffffff;
+  }
+  .source-btn i {
+    font-size: 14px;
+  }
+  
+  .empty {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    padding: 24px 0;
+    text-align: center;
+  }
+  </style>
+
+<div class="app-header">
+  <div class="app-title">LexLV</div>
+  <div class="app-subtitle" id="appSubtitle">Административное право Латвии · ASL</div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('ru',this)">RU</button>
+    <button class="lang-btn" onclick="setLang('lv',this)">LV</button>
+    <button class="lang-btn" onclick="setLang('en',this)">EN</button>
+  </div>
+</div>
+<div class="search-bar"><input type="text" id="searchInput" placeholder="Найти нарушение..." oninput="filterLaws()"/></div>
+<div class="categories" id="catGrid"></div>
+<div class="section-title" id="sectionTitle"></div>
+<div class="laws-list" id="lawsList"></div>
+
+<script>
+let lang='ru', currentCat='admin';
+const BASE='https://likumi.lv/ta/id/314808-administrativo-sodu-likums-par-parkapumiem-parvaldes-sabiedriskas-kartibas-un-valsts-valodas-lietosanas-joma';
+
+const ui={
+  ru:{subtitle:'Административное право Латвии · ASL',placeholder:'Найти нарушение или штраф...',min:'Минимум',max:'Максимум',desc:'Описание',howContest:'Как оспорить',sourceBtn:'Открыть статью на likumi.lv',warn:'Возможно предупреждение',warnWord:'Предупреждение',empty:'Ничего не найдено.'},
+  lv:{subtitle:'Latvijas administratīvās tiesības · ASL',placeholder:'Meklēt pārkāpumu vai sodu...',min:'Minimums',max:'Maksimums',desc:'Apraksts',howContest:'Kā apstrīdēt',sourceBtn:'Atvērt pantu likumi.lv',warn:'Iespējams brīdinājums',warnWord:'Brīdinājums',empty:'Nekas netika atrasts.'},
+  en:{subtitle:'Latvian Administrative Law · ASL',placeholder:'Search violation or fine...',min:'Minimum',max:'Maximum',desc:'Description',howContest:'How to contest',sourceBtn:'Open article on likumi.lv',warn:'Warning possible',warnWord:'Warning',empty:'Nothing found.'}
+};
+
+const cats={
+  admin:{ru:{name:'Управление',sec:'Нарушения в сфере управления'},lv:{name:'Pārvalde',sec:'Pārkāpumi pārvaldes jomā'},en:{name:'Administration',sec:'Administrative violations'}},
+  order:{ru:{name:'Общественный порядок',sec:'Нарушения общественного порядка'},lv:{name:'Sabiedriskā kārtība',sec:'Sabiedriskās kārtības pārkāpumi'},en:{name:'Public order',sec:'Public order violations'}},
+  lang:{ru:{name:'Гос. язык',sec:'Нарушения в сфере государственного языка'},lv:{name:'Valsts valoda',sec:'Valsts valodas pārkāpumi'},en:{name:'State language',sec:'State language violations'}}
+};
+
+function L(ru,lv,en){return{ru,lv,en};}
+function FM(ru,lv,en){return{ru,lv,en};}
+
+const laws={
+admin:[
+  {article:'ASL 3. pants',anchor:'#p3',warnMin:true,warn:true,
+   fineMax:FM('700 € (физ. лицо) / 14 000 € (юр. лицо)','700 € (fiziska) / 14 000 € (juridiska)','700 € (natural person) / 14 000 € (legal entity)'),
+   ru:{name:'Непредоставление информации органу власти',desc:'Непредоставление, ненадлежащее предоставление или предоставление ложной информации государственному органу.',contest:'Можно оспорить, если информация была предоставлена в срок, но в другой форме, либо если запрос органа был неправомерным.'},
+   lv:{name:'Informācijas nesniegšana iestādei',desc:'Informācijas nesniegšana, nepienācīga sniegšana vai nepatiesas informācijas sniegšana valsts iestādei.',contest:'Var apstrīdēt, ja informācija tika sniegta laikā citā formā vai ja iestādes pieprasījums bija nelikumīgs.'},
+   en:{name:'Failure to provide information to an authority',desc:'Failure to provide, improper provision, or provision of false information to a state authority.',contest:'Can be contested if information was provided on time in a different form, or if the authority\'s request was unlawful.'}},
+
+  {article:'ASL 4. pants',anchor:'#p4',warnMin:true,warn:true,
+   fineMax:FM('700 € (физ. лицо) / 14 000 € (юр. лицо)','700 € (fiziska) / 14 000 € (juridiska)','700 € (natural person) / 14 000 € (legal entity)'),
+   ru:{name:'Невыполнение законных требований должностного лица',desc:'Невыполнение законных требований должностного лица или воспрепятствование его профессиональной деятельности.',contest:'Требование должно быть законным. Если выходило за пределы полномочий — штраф можно оспорить.'},
+   lv:{name:'Amatpersonas likumīgo prasību nepildīšana',desc:'Amatpersonas likumīgo prasību nepildīšana vai amatpersonas darbības traucēšana.',contest:'Prasībai jābūt likumīgai. Ja pārsniedza pilnvaras — sodu var apstrīdēt.'},
+   en:{name:'Failure to comply with an official\'s lawful demands',desc:'Failure to comply with the lawful demands of an official or obstruction of the official\'s work.',contest:'The demand must be lawful. If the official acted outside their authority, the fine can be contested.'}},
+
+  {article:'ASL 5. pants',anchor:'#p5',warnMin:false,fineMin:'0 €',warn:false,
+   fineMax:FM('350 €','350 €','350 €'),
+   ru:{name:'Разглашение сведений с закрытого заседания Сейма',desc:'Неправомерное разглашение сведений, полученных на закрытом заседании парламентской комиссии Сейма.',contest:'Оспорить, если сведения не имели статуса ограниченного доступа или заседание фактически не было закрытым.'},
+   lv:{name:'Saeimas komisijas slēgtā sēdē iegūtu ziņu izpaušana',desc:'Neatļauta tādu ziņu izpaušana, kuras iegūtas Saeimas komisijas slēgtā sēdē.',contest:'Var apstrīdēt, ja informācija nebija ierobežotas pieejamības vai sēde faktiski nebija slēgta.'},
+   en:{name:'Disclosure of information from a closed Saeima session',desc:'Unauthorised disclosure of information obtained at a closed session of a Saeima committee.',contest:'Can be contested if the information was not classified or if the session was not actually closed.'}},
+
+  {article:'ASL 6. pants',anchor:'#p6',warnMin:false,warn:false,parts:true,
+   fineMax:FM('700 € (использование чужой личности)','700 € (citas personas identitāte)','700 € (using another\'s identity)'),
+   ru:{name:'Скрытие личности при обращении в орган власти',contest:'Оспорить крайне сложно — факт установления ложной личности фиксируется документально.',
+     parts:[
+       {label:'(1) Скрытие или нераскрытие личности',desc:'Предоставление ложных персональных данных органу власти.',fineMin:'0 €',fineMax:'350 €'},
+       {label:'(2) Использование личности другого человека',desc:'Использование чужих персональных данных при взаимодействии с государственными структурами.',fineMin:'280 €',fineMax:'700 €'}
+     ]},
+   lv:{name:'Personas identitātes slēpšana vai neatklāšana',contest:'Ļoti grūti apstrīdēt — viltus identitātes fakts tiek fiksēts dokumentāri.',
+     parts:[
+       {label:'(1) Identitātes slēpšana vai neatklāšana',desc:'Nepatiesu personas datu sniegšana iestādei.',fineMin:'0 €',fineMax:'350 €'},
+       {label:'(2) Citas personas identitātes izmantošana',desc:'Citas personas datu izmantošana saziņā ar valsts struktūrām.',fineMin:'280 €',fineMax:'700 €'}
+     ]},
+   en:{name:'Concealment or non-disclosure of personal identity',contest:'Extremely difficult to contest — the fact of false identity is documented.',
+     parts:[
+       {label:'(1) Concealment or non-disclosure of identity',desc:'Providing false personal data to a state authority.',fineMin:'0 €',fineMax:'350 €'},
+       {label:'(2) Using another person\'s identity',desc:'Using another person\'s data when dealing with state structures.',fineMin:'280 €',fineMax:'700 €'}
+     ]}},
+
+  {article:'ASL 7. pants',anchor:'#p7',warnMin:false,warn:false,parts:true,
+   fineMax:FM('7 100 € (юр. лицо, ложная информация)','7 100 € (juridiska, nepatiesa informācija)','7 100 € (legal entity, false information)'),
+   ru:{name:'Необоснованный вызов экстренных служб',contest:'Можно оспорить при добросовестном заблуждении — если были реальные основания полагать, что угроза существует.',
+     parts:[
+       {label:'(1) Необоснованный вызов',desc:'Необоснованный вызов пожарных, полиции или пограничной охраны.',fineMin:'35 € (физ. лицо)',fineMax:'140 € (физ.) / 1 400 € (юр.)'},
+       {label:'(2) Распространение ложной информации, повлёкшее выезд служб',desc:'Распространение сведений о несуществующем событии или его инсценировка, вынудившая службы реагировать.',fineMin:'35 € (физ. лицо)',fineMax:'210 € (физ.) / 7 100 € (юр.)'}
+     ]},
+   lv:{name:'Nepamatota speciālo dienestu izsaukšana',contest:'Var apstrīdēt labticīgas kļūdas gadījumā — ja bija reāls pamats uzskatīt, ka apdraudējums pastāv.',
+     parts:[
+       {label:'(1) Nepamatota izsaukšana',desc:'Nepamatota ugunsdzēsēju, policijas vai robežsardzes izsaukšana.',fineMin:'35 € (fiziska)',fineMax:'140 € (fiziska) / 1 400 € (juridiska)'},
+       {label:'(2) Nepatiesas informācijas izplatīšana, kas izraisīja reaģēšanu',desc:'Nepatiesa notikuma izplatīšana vai inscenēšana, kas izraisīja dienestu iesaistīšanos.',fineMin:'35 € (fiziska)',fineMax:'210 € (fiziska) / 7 100 € (juridiska)'}
+     ]},
+   en:{name:'Unjustified call-out of emergency services',contest:'Can be contested in cases of good-faith mistake — if there were real grounds to believe a threat existed.',
+     parts:[
+       {label:'(1) Unjustified call-out',desc:'Unjustified call-out of fire service, police, or border guard.',fineMin:'35 € (natural person)',fineMax:'140 € (natural) / 1 400 € (legal)'},
+       {label:'(2) Spreading false information causing response',desc:'Spreading or staging a false event that caused emergency services to respond.',fineMin:'35 € (natural person)',fineMax:'210 € (natural) / 7 100 € (legal)'}
+     ]}},
+
+  {article:'ASL 8. pants',anchor:'#p8',warnMin:true,warn:true,
+   fineMax:FM('2 000 €','2 000 €','2 000 €'),
+   ru:{name:'Нападение на служебную собаку или лошадь',desc:'Нападение на служебное животное или воспрепятствование выполнению ими служебных задач.',contest:'Оспорить при самообороне или если животное действовало без законных оснований.'},
+   lv:{name:'Uzbrukums dienesta sunim vai zirgam',desc:'Uzbrukums dienesta sunim vai zirgam vai traucēšana veikt tam uzdotās darbības.',contest:'Var apstrīdēt pašaizsardzības gadījumā vai ja dzīvnieks darbojās bez likumīga pamata.'},
+   en:{name:'Attack on a service dog or horse',desc:'Attacking a service animal or obstructing it from performing its duties.',contest:'Can be contested in cases of self-defence or if the animal was deployed without lawful grounds.'}}
+],
+
+order:[
+  {article:'ASL 9. pants',anchor:'#p9',warnMin:true,warn:true,
+   fineMax:FM('100 €','100 €','100 €'),
+   ru:{name:'Нахождение на льду водоёма в запрещённый период',desc:'Нахождение на льду внутреннего публичного водоёма или морского побережья, когда это запрещено нормативными актами.',contest:'Оспорить при отсутствии запрещающих знаков или официального запрета в данном конкретном месте.'},
+   lv:{name:'Aizlieguma atrasties uz ūdenstilpes ledus pārkāpšana',desc:'Atrašanās uz iekšzemes publiskās ūdenstilpes vai jūras piekrastes ledus, ja tas ir aizliegts normatīvajos aktos.',contest:'Var apstrīdēt, ja konkrētajā vietā nebija aizliedzošu zīmju vai oficiāla aizlieguma.'},
+   en:{name:'Violation of the ban on being on ice',desc:'Being on the ice of a public inland body of water or the sea coast during a period prohibited by law.',contest:'Can be contested if there were no prohibition signs or official ban at that specific location.'}},
+
+  {article:'ASL 10. pants',anchor:'#p10',warnMin:true,warn:true,
+   fineMax:FM('350 €','350 €','350 €'),
+   ru:{name:'Употребление алкоголя в публичном месте / нахождение в состоянии опьянения',desc:'Употребление алкоголя или других опьяняющих веществ в публичном месте. Исключение — места с разрешением самоуправления или VID. Также — нахождение в состоянии опьянения, нарушающем общественный порядок.',contest:'Оспорить, если место имело разрешение на продажу алкоголя для употребления на месте, либо если поведение не нарушало порядок.'},
+   lv:{name:'Alkohola lietošana publiskā vietā / atrašanās reibuma stāvoklī',desc:'Alkoholisko dzērienu vai citu apreibinošo vielu lietošana publiskā vietā. Izņēmums — vietas ar pašvaldības vai VID atļauju.',contest:'Var apstrīdēt, ja vietai bija atļauja alkohola patērēšanai uz vietas.'},
+   en:{name:'Alcohol consumption in a public place / being intoxicated',desc:'Consuming alcohol or other intoxicating substances in a public place. Exception — places with a municipal or VID permit.',contest:'Can be contested if the location had a permit for on-site consumption.'}},
+
+  {article:'ASL 11. pants',anchor:'#p11',warnMin:true,warn:true,parts:true,
+   fineMax:FM('1 400 € (у мемориала)','1 400 € (pie piemiņas vietas)','1 400 € (near memorial)'),
+   ru:{name:'Нарушение общественного порядка',contest:'Оспорить при отсутствии доказательств — свидетелей или записей.',
+     parts:[
+       {label:'(1) Общее нарушение порядка',desc:'Брань, оскорбления, нарушение покоя граждан или работы учреждений, угроза безопасности.',fineMin:'Предупреждение',fineMax:'500 € (физ.) / 5 000 € (юр.)'},
+       {label:'(2) Нарушение порядка на борту воздушного судна',desc:'Нарушение норм поведения или невыполнение указаний экипажа, создающее угрозу безопасности.',fineMin:'150 €',fineMax:'700 €'},
+       {label:'(3) Нарушение порядка у мемориала или памятника',desc:'Те же действия, совершённые у места памяти военных или жертв геноцида.',fineMin:'280 €',fineMax:'1 400 €'}
+     ]},
+   lv:{name:'Sabiedriskās kārtības traucēšana',contest:'Var apstrīdēt, ja nav pierādījumu — liecinieku vai ierakstu.',
+     parts:[
+       {label:'(1) Vispārēja kārtības traucēšana',desc:'Lamāšanās, apvainojumi, personu miera traucēšana vai iestāžu darba traucēšana.',fineMin:'Brīdinājums',fineMax:'500 € (fiziska) / 5 000 € (juridiska)'},
+       {label:'(2) Kārtības traucēšana gaisa kuģī',desc:'Uzvedības normu pārkāpšana vai apkalpes norādījumu nepildīšana gaisa kuģī.',fineMin:'150 €',fineMax:'700 €'},
+       {label:'(3) Kārtības traucēšana pie piemiņas vietas',desc:'Tās pašas darbības pie karavīru vai genocīda upuru piemiņas vietas vai pieminekļa.',fineMin:'280 €',fineMax:'1 400 €'}
+     ]},
+   en:{name:'Disturbance of public order',contest:'Can be contested if there is no evidence — witnesses or recordings.',
+     parts:[
+       {label:'(1) General public order disturbance',desc:'Swearing, insults, disturbing people\'s peace or the work of institutions, endangering safety.',fineMin:'Warning',fineMax:'500 € (natural) / 5 000 € (legal)'},
+       {label:'(2) Disturbance on board an aircraft',desc:'Violation of conduct norms or failure to comply with crew instructions, endangering safety.',fineMin:'150 €',fineMax:'700 €'},
+       {label:'(3) Disturbance near a memorial or monument',desc:'The same actions committed near a place of remembrance for soldiers or genocide victims.',fineMin:'280 €',fineMax:'1 400 €'}
+     ]}},
+
+  {article:'ASL 11.1 pants',anchor:'#p11_1',warnMin:false,fineMin:'70 €',warn:false,
+   fineMax:FM('500 €','500 €','500 €'),
+   ru:{name:'Агрессивное поведение в отношении лица',desc:'Угрозы здоровью или имуществу (при наличии оснований их бояться), навязчивое преследование, слежка, нежелательный контакт.',contest:'Оспорить при отсутствии доказательств угроз или систематичности контактов.'},
+   lv:{name:'Pret personu vērsta agresīva uzvedība',desc:'Draudi veselībai vai mantiskajām interesēm, uzmācīga vajāšana, novērošana, nevēlama saziņa.',contest:'Var apstrīdēt, ja nav pierādījumu draudiem vai kontaktu sistemātiskumam.'},
+   en:{name:'Aggressive behaviour towards a person',desc:'Threats to health or property, persistent stalking, surveillance, unwanted contact.',contest:'Can be contested if there is no evidence of threats or systematic contact.'}},
+
+  {article:'ASL 11.2 pants',anchor:'#p11_2',warnMin:false,fineMin:'0 €',warn:false,
+   fineMax:FM('700 €','700 €','700 €'),
+   ru:{name:'Сексуальное домогательство',desc:'Нежелательные действия сексуального характера (физические, словесные или письменные), создающие враждебную или унижающую обстановку.',contest:'Должны быть доказаны: нежелательность действий, их сексуальный характер, факт унижения достоинства.'},
+   lv:{name:'Seksuāla uzmākšanās',desc:'Personai nevēlamas seksuāla rakstura darbības, kas rada iebiedējošus vai degradējošus apstākļus.',contest:'Jāpierāda: nevēlamība, seksuālais raksturs un cieņas aizskārums.'},
+   en:{name:'Sexual harassment',desc:'Unwanted physical, verbal or written conduct of a sexual nature creating an intimidating or degrading environment.',contest:'Must be proven: the unwanted nature, sexual character, and dignity violation.'}},
+
+  {article:'ASL 12. pants',anchor:'#p12',warnMin:false,fineMin:'210 €',warn:false,
+   fineMax:FM('500 € (обычно) / 700 € (в отношении близких)','500 € (parasti) / 700 € (ģimenē)','500 € (standard) / 700 € (family/partner)'),
+   ru:{name:'Причинение незначительных телесных повреждений',desc:'Вред здоровью с краткосрочными последствиями, не вызвавший расстройства или потери трудоспособности. Более строгая норма — при нанесении вреда родственникам, супругу или сожителю.',contest:'Граница между незначительным и средним ущербом определяется медзаключением. Средний ущерб — уже уголовная статья.'},
+   lv:{name:'Maznozīmīga miesas bojājuma nodarīšana',desc:'Miesas bojājums ar īslaicīgām sekām, kas nav izraisījis veselības traucējumu vai darbspēju zaudējumu. Stingrāka norma — pret radiniekam vai partnerim.',contest:'Robežu nosaka medicīniskais atzinums. Vidējs bojājums — jau kriminālpants.'},
+   en:{name:'Infliction of minor bodily injury',desc:'Bodily harm with short-term consequences that did not cause a health disorder. Stricter provision if caused to a relative, spouse or cohabitant.',contest:'Boundary determined by medical report. Moderate injury is already a criminal offence.'}},
+
+  {article:'ASL 13. pants',anchor:'#p13',warnMin:true,warn:true,
+   fineMax:FM('350 € (физ.) / 2 900 € (юр.)','350 € (fiziska) / 2 900 € (juridiska)','350 € (natural) / 2 900 € (legal)'),
+   ru:{name:'Использование символов тоталитарных режимов в публичном месте',desc:'Флаги, гимны, свастика, знаки СС, серп и молот СССР и нацистской Германии — если цель связана с прославлением режима. Исключение: образовательные, научные, художественные цели.',contest:'Оспорить, доказав образовательный или художественный контекст.'},
+   lv:{name:'Totalitāro režīmu simbolu izmantošana publiskā vietā',desc:'Bijušās PSRS un nacistiskās Vācijas karogu, himnu, svastikas, SS zīmju, sirpja un āmura izmantošana режīma slavināšanas nolūkā.',contest:'Var apstrīdēt, pierādot izglītojoša vai mākslinieciska konteksta esamību.'},
+   en:{name:'Use of totalitarian regime symbols in a public place',desc:'USSR and Nazi Germany flags, anthems, swastika, SS insignia, hammer and sickle — if the purpose is glorification.',contest:'Can be contested by proving an educational or artistic context.'}},
+
+  {article:'ASL 13.1 pants',anchor:'#p13_1',warnMin:true,warn:true,
+   fineMax:FM('350 € (физ.) / 2 900 € (юр.)','350 € (fiziska) / 2 900 € (juridiska)','350 € (natural) / 2 900 € (legal)'),
+   ru:{name:'Использование символов, прославляющих военную агрессию',desc:'Публичное использование символики, прославляющей военную агрессию и военные преступления. Статья введена в 2022 году.',contest:'Контекст и умысел — ключевые факторы при оспаривании.'},
+   lv:{name:'Militārās agresijas slavinošu simbolu izmantošana publiskā vietā',desc:'Militārās agresijas un kara noziegumu slavinošu simbolu izmantošana publiskā vietā. Pants ieviests 2022. gadā.',contest:'Konteksts un nodoms ir galvenie faktori apstrīdēšanā.'},
+   en:{name:'Use of symbols glorifying military aggression in a public place',desc:'Public use of symbols glorifying military aggression and war crimes. Article introduced in 2022.',contest:'Context and intent are the key factors when contesting.'}}
+],
+
+lang:[
+  {article:'ASL 14. pants',anchor:'#p14',warnMin:false,fineMin:'35 €',warn:false,
+   fineMax:FM('140 € (физ.) / 700 € (юр.)','140 € (fiziska) / 700 € (juridiska)','140 € (natural) / 700 € (legal)'),
+   ru:{name:'Тексты печатей и форм не на государственном языке',desc:'Создание текстов печатей, штампов или форм не на латышском либо дублирование на иностранном, где требуется исключительно латышский.',contest:'Оспорить, если нормативный акт допускает двуязычие в данном случае.'},
+   lv:{name:'Zīmogu, spiedogu un veidlapu tekstu neveidošana valsts valodā',desc:'Zīmogu, spiedogu vai veidlapu tekstu neveidošana latviešu valodā vai atveidošana svešvalodā tur, kur paredzēta tikai valsts valoda.',contest:'Var apstrīdēt, ja normatīvais akts konkrētajā gadījumā pieļauj divvalodību.'},
+   en:{name:'Failure to use state language in stamps and forms',desc:'Failure to create texts of seals, stamps or forms in Latvian, or duplicating them in a foreign language where Latvian is required.',contest:'Can be contested if the applicable regulation permits bilingualism in that specific case.'}},
+
+  {article:'ASL 15. pants',anchor:'#p15',warnMin:false,fineMin:'35 €',warn:false,
+   fineMax:FM('140 € (физ.) / 700 € (юр.)','140 € (fiziska) / 700 € (juridiska)','140 € (natural) / 700 € (legal)'),
+   ru:{name:'Нарушение норм государственного языка в публичной информации',desc:'Использование государственного языка в публично доступной информации с нарушением действующих языковых норм.',contest:'Оспорить при незначительных стилистических ошибках, не искажающих смысл.'},
+   lv:{name:'Valsts valodas normu neievērošana atklātā informācijā',desc:'Valsts valodas lietošana sabiedrībai pieejamā informācijā, neievērojot spēkā esošās valodas normas.',contest:'Var apstrīdēt, ja kļūdas ir nenozīmīgas un neiskropļo nozīmi.'},
+   en:{name:'Non-compliance with state language norms in public information',desc:'Use of the state language in publicly available information in violation of applicable language norms.',contest:'Can be contested for minor stylistic errors that do not distort meaning.'}},
+
+  {article:'ASL 16. pants',anchor:'#p16',warnMin:false,fineMin:'35 €',warn:false,
+   fineMax:FM('140 € (физ.) / 700 € (юр.)','140 € (fiziska) / 700 € (juridiska)','140 € (natural) / 700 € (legal)'),
+   ru:{name:'Предоставление информации на государственном языке в меньшем объёме, чем на иностранном',desc:'Предоставление информации на латышском языке в меньшем или более узком объёме по сравнению с параллельным текстом на иностранном языке.',contest:'Оспорить, если объём и содержание текстов идентичны или различие несущественно.'},
+   lv:{name:'Atkāpes no valsts valodā sniegtās informācijas formas un satura prasībām',desc:'Mazākas vai šaurākas informācijas sniegšana valsts valodā, ja līdztekus sniegta informācija svešvalodā.',contest:'Var apstrīdēt, ja tekstu apjoms un saturs ir identiski vai atšķirība ir nebūtiska.'},
+   en:{name:'Providing less information in state language than in foreign language',desc:'Providing information in Latvian in a lesser or narrower form compared to the parallel text in a foreign language.',contest:'Can be contested if the volume and content of texts are identical or the difference is insignificant.'}},
+
+  {article:'ASL 17. pants',anchor:'#p17',warnMin:false,fineMin:'35 €',warn:false,
+   fineMax:FM('140 € (физ.) / 700 € (юр.)','140 € (fiziska) / 700 € (juridiska)','140 € (natural) / 700 € (legal)'),
+   ru:{name:'Наименования учреждений и мероприятий не на государственном языке',desc:'Наименования государственных учреждений, объединений, коммерсантов и мероприятий не создаются или не используются на латышском языке, если это предусмотрено нормативными актами.',contest:'Оспорить, если нормативный акт допускает иное наименование или двуязычие.'},
+   lv:{name:'Nosaukumu neveidošana un nelietošana valsts valodā',desc:'Iestāžu, biedrību, komersantu un pasākumu nosaukumu neveidošana vai nelietošana valsts valodā, ja normatīvie akti paredz to lietošanu latviešu valodā.',contest:'Var apstrīdēt, ja normatīvais akts pieļauj citu nosaukumu vai divvalodību.'},
+   en:{name:'Failure to create or use names in state language',desc:'Failure to create or use names of institutions, associations, merchants and events in Latvian, where required by law.',contest:'Can be contested if the applicable regulation permits another name or bilingualism.'}},
+
+  {article:'ASL 18. pants',anchor:'#p18',warnMin:false,fineMin:'35 €',warn:false,
+   fineMax:FM('140 € (физ.) / 700 € (юр.)','140 € (fiziska) / 700 € (juridiska)','140 € (natural) / 700 € (legal)'),
+   ru:{name:'Непринятие документов, оформленных на государственном языке',desc:'Отказ принимать документы, оформленные на латышском языке, если они соответствуют компетенции коммерсанта, объединения или учреждения.',contest:'Оспорить, если отказ был мотивирован содержательными, а не языковыми недостатками документа.'},
+   lv:{name:'Valsts valodā noformētu dokumentu nepieņemšana',desc:'Valsts valodā noformētu dokumentu nepieņemšana, ja tie atbilst komersanta, biedrības vai iestādes kompetencei.',contest:'Var apstrīdēt, ja atteikums bija pamatots ar dokumenta satura, nevis valodas trūkumiem.'},
+   en:{name:'Refusal to accept documents in state language',desc:'Refusing to accept documents drawn up in Latvian, if they fall within the competence of the merchant, association or institution.',contest:'Can be contested if the refusal was based on substantive rather than language deficiencies.'}},
+
+  {article:'ASL 19. pants',anchor:'#p19',warnMin:false,fineMin:'35 €',warn:false,
+   fineMax:FM('700 €','700 €','700 €'),
+   ru:{name:'Невладение государственным языком в объёме, необходимом для исполнения должностных обязанностей',desc:'Невладение латышским языком в объёме, необходимом для исполнения профессиональных или должностных обязанностей, если это предусмотрено нормативными актами.',contest:'Оспорить, если уровень языка достаточен для реального выполнения обязанностей или требование не предусмотрено для данной должности.'},
+   lv:{name:'Valsts valodas nelietošana profesionālo pienākumu veikšanai nepieciešamajā apjomā',desc:'Valsts valodas nelietošana tādā apjomā, kāds nepieciešams profesionālo un amata pienākumu veikšanai, ja normatīvie akti paredz valsts valodas lietošanu.',contest:'Var apstrīdēt, ja valodas prasmes ir pietiekamas faktisko pienākumu veikšanai vai prasība nav paredzēta konkrētajam amatam.'},
+   en:{name:'Failure to use state language to the extent required for professional duties',desc:'Failure to use Latvian to the extent required for professional or official duties, where required by law.',contest:'Can be contested if the language level is sufficient for actual duties or the requirement does not apply to the specific position.'}},
+
+  {article:'ASL 20. pants',anchor:'#p20',warnMin:false,fineMin:'35 €',warn:false,
+   fineMax:FM('700 €','700 €','700 €'),
+   ru:{name:'Выражение явного неуважения к государственному языку',desc:'Публичное выражение явного неуважения к латышскому языку как государственному.',contest:'Оспорить, если высказывание носило академический, критический или художественный характер, а не было направлено на унижение языка.'},
+   lv:{name:'Necieņa pret valsts valodu',desc:'Klaja necieņas izrādīšana pret latviešu valodu kā valsts valodu.',contest:'Var apstrīdēt, ja izteikums bija akadēmisks, kritisks vai māksliniecisks, nevis vērsts uz valodas pazemošanu.'},
+   en:{name:'Expressing open disrespect for the state language',desc:'Public expression of open disrespect for the Latvian language as the state language.',contest:'Can be contested if the statement was of an academic, critical or artistic nature rather than aimed at denigrating the language.'}},
+
+  {article:'ASL 21. pants',anchor:'#p21',warnMin:false,warn:false,parts:true,
+   fineMax:FM('1 400 € (юр. лицо)','1 400 € (juridiska)','1 400 € (legal entity)'),
+   ru:{name:'Нарушение правил предоставления информации',contest:'Оспорить, если иностранный язык был добавлен по запросу получателя или публикация не относилась к деятельности публичного лица.',
+     parts:[
+       {label:'(1) Рассылка материалов на иностранном языке без запроса',desc:'Рассылка проспектов, каталогов или других материалов на иностранном языке параллельно с латышским без запроса получателя — публичными лицами или при делегированных полномочиях.',fineMin:'35 € (физ.) / 70 € (должн.)',fineMax:'140 € (физ.) / 300 € (должн.) / 1 000 € (юр.)'},
+       {label:'(2) Отсутствие надписей, объявлений, вакансий на государственном языке',desc:'Непредоставление объявлений, вывесок, афиш, плакатов, объявлений о вакансиях на латышском языке, если это предусмотрено нормативными актами.',fineMin:'35 €',fineMax:'140 € (физ.) / 1 400 € (юр.)'},
+       {label:'(3) Использование иностранного языка там, где разрешён только латышский',desc:'Предоставление надписей, буклетов или объявлений на иностранном языке параллельно с латышским там, где нормативные акты разрешают только латышский — публичными лицами или при делегированных полномочиях.',fineMin:'35 € (физ.) / 70 € (должн.)',fineMax:'140 € (физ.) / 300 € (должн.) / 1 400 € (юр.)'}
+     ]},
+   lv:{name:'Informācijas sniegšanas noteikumu neievērošana',contest:'Var apstrīdēt, ja svešvaloda tika pievienota pēc saņēmēja pieprasījuma vai publikācija neattiecās uz publiskas personas darbību.',
+     parts:[
+       {label:'(1) Materiālu nosūtīšana svešvalodā bez pieprasījuma',desc:'Prospektu, katalogu vai citu materiālu nosūtīšana svešvalodā līdztekus valsts valodai bez personas pieprasījuma — publiskas personas institūcijām vai deleģētu uzdevumu izpildītājiem.',fineMin:'35 € (fiziska) / 70 € (amatpersona)',fineMax:'140 € (fiziska) / 300 € (amatpersona) / 1 000 € (juridiska)'},
+       {label:'(2) Uzrakstu, paziņojumu, sludinājumu nesniegšana valsts valodā',desc:'Uzrakstu, izkārtņu, afišu, plakātu, darba sludinājumu nesniegšana latviešu valodā, ja normatīvie akti to paredz.',fineMin:'35 €',fineMax:'140 € (fiziska) / 1 400 € (juridiska)'},
+       {label:'(3) Svešvalodas lietošana tur, kur atļauta tikai valsts valoda',desc:'Uzrakstu, bukletu vai paziņojumu sniegšana svešvalodā līdztekus valsts valodai tur, kur normatīvie akti pieļauj tikai latviešu valodu.',fineMin:'35 € (fiziska) / 70 € (amatpersona)',fineMax:'140 € (fiziska) / 300 € (amatpersona) / 1 400 € (juridiska)'}
+     ]},
+   en:{name:'Non-compliance with information provision rules',contest:'Can be contested if the foreign language was added at the recipient\'s request or the publication did not relate to the activities of a public body.',
+     parts:[
+       {label:'(1) Sending materials in a foreign language without request',desc:'Sending brochures, catalogues or other materials in a foreign language alongside Latvian without the recipient\'s request — by public bodies or delegated task performers.',fineMin:'35 € (natural) / 70 € (official)',fineMax:'140 € (natural) / 300 € (official) / 1 000 € (legal)'},
+       {label:'(2) Failure to provide signs, notices, vacancies in state language',desc:'Failure to provide signs, notices, posters, job advertisements in Latvian, where required by law.',fineMin:'35 €',fineMax:'140 € (natural) / 1 400 € (legal)'},
+       {label:'(3) Using a foreign language where only state language is permitted',desc:'Providing signs, leaflets or notices in a foreign language alongside Latvian where regulations permit only Latvian — by public bodies or delegated task performers.',fineMin:'35 € (natural) / 70 € (official)',fineMax:'140 € (natural) / 300 € (official) / 1 400 € (legal)'}
+     ]}},
+
+  {article:'ASL 22. pants',anchor:'#p22',warnMin:false,fineMin:'35 €',warn:false,
+   fineMax:FM('140 € (физ.) / 1 400 € (юр.)','140 € (fiziska) / 1 400 € (juridiska)','140 € (natural) / 1 400 € (legal)'),
+   ru:{name:'Невладение государственным языком в делопроизводстве',desc:'Ведение делопроизводства и документооборота не на латышском языке, если это предусмотрено нормативными актами.',contest:'Оспорить, если документы велись параллельно на латышском или нормативный акт не обязывает вести делопроизводство на латышском для данного субъекта.'},
+   lv:{name:'Valsts valodas nelietošana lietvedībā',desc:'Valsts valodas nelietošana lietvedībā un dokumentos, ja normatīvie akti paredz valsts valodas lietošanu.',contest:'Var apstrīdēt, ja dokumenti tika vesti paralēli latviešu valodā vai normatīvais akts neuzliek šo pienākumu konkrētajam subjektam.'},
+   en:{name:'Failure to use state language in office records',desc:'Failure to conduct office work and documents in Latvian, where required by law.',contest:'Can be contested if records were maintained in parallel in Latvian or the regulation does not require this for the specific entity.'}},
+
+  {article:'ASL 23. pants',anchor:'#p23',warnMin:false,fineMin:'70 €',warn:false,
+   fineMax:FM('210 € (физ.) / 1 400 € (юр.)','210 € (fiziska) / 1 400 € (juridiska)','210 € (natural) / 1 400 € (legal)'),
+   ru:{name:'Договоры на медицинские, охранные и публичные услуги не на государственном языке',desc:'Заключение договоров на медицинские, охранные и иные публичные услуги не на латышском языке или без приложения перевода на латышский к договору на иностранном языке.',contest:'Оспорить, если перевод договора на латышский был приложен или договор был заключён с иностранным контрагентом в международном контексте.'},
+   lv:{name:'Ārstniecības un sabiedrisku pakalpojumu līgumu neslēgšana valsts valodā',desc:'Ārstniecības, veselības aprūpes, sabiedriskās drošības un citu sabiedrisku pakalpojumu sniegšanas līgumu neslēgšana valsts valodā vai tulkojuma nepievienošana svešvalodā noslēgtam līgumam.',contest:'Var apstrīdēt, ja līgumam tika pievienots tulkojums latviešu valodā vai līgums tika noslēgts ar ārvalstu partneri starptautiskā kontekstā.'},
+   en:{name:'Failure to conclude medical and public service contracts in state language',desc:'Failure to conclude medical, healthcare, public security and other public service contracts in Latvian, or failure to attach a Latvian translation to a contract in a foreign language.',contest:'Can be contested if a Latvian translation was attached or the contract was concluded with a foreign partner in an international context.'}},
+
+  {article:'ASL 24. pants',anchor:'#p24',warnMin:false,fineMin:'140 €',warn:false,
+   fineMax:FM('700 € (физ.) / 1 400 € (юр.)','700 € (fiziska) / 1 400 € (juridiska)','700 € (natural) / 1 400 € (legal)'),
+   ru:{name:'Трудовой договор с работником без необходимого уровня государственного языка',desc:'Заключение трудового договора с работником, чей уровень владения латышским языком недостаточен для выполнения профессиональных обязанностей, если нормативные акты требуют владения латышским для данной должности.',contest:'Оспорить, если должность фактически не требует использования латышского или работник прошёл необходимую аттестацию.'},
+   lv:{name:'Darba līguma noslēgšana, neievērojot valsts valodas zināšanu apjomu',desc:'Darba līguma noslēgšana ar darbinieku, kura valsts valodas zināšanas nav pietiekamas attiecīgo pienākumu veikšanai, ja normatīvie akti paredz valsts valodas prasmi.',contest:'Var apstrīdēt, ja amats faktiski neprasa latviešu valodas lietošanu vai darbinieks ir nokārtojis nepieciešamo atestāciju.'},
+   en:{name:'Concluding an employment contract without verifying state language proficiency',desc:'Concluding an employment contract with an employee whose Latvian proficiency is insufficient for the job duties, where the law requires Latvian proficiency for that position.',contest:'Can be contested if the position does not actually require Latvian or the employee has passed the necessary certification.'}},
+
+  {article:'ASL 25. pants',anchor:'#p25',warnMin:false,fineMin:'140 €',warn:false,
+   fineMax:FM('700 € (физ.) / 1 400 € (юр.)','700 € (fiziska) / 1 400 € (juridiska)','700 € (natural) / 1 400 € (legal)'),
+   ru:{name:'Непредоставление перевода на заседаниях и рабочих совещаниях',desc:'Непредоставление перевода на государственный язык на заседаниях или рабочих совещаниях, если это предусмотрено нормативными актами.',contest:'Оспорить, если все участники заседания владели языком или перевод не был предусмотрен для данного типа мероприятия.'},
+   lv:{name:'Tulkojuma nenodrošināšana sēdēs un citās darba sanāksmēs',desc:'Tulkojuma nenodrošināšana sēdēs vai citās darba sanāksmēs valsts valodā, ja normatīvie akti to paredz.',contest:'Var apstrīdēt, ja visi dalībnieki pārvaldīja valodu vai tulkojums nebija paredzēts konkrētajam pasākuma veidam.'},
+   en:{name:'Failure to provide interpretation at meetings and working sessions',desc:'Failure to provide interpretation into the state language at meetings or working sessions, where required by law.',contest:'Can be contested if all participants understood the language or interpretation was not required for this type of event.'}},
+
+  {article:'ASL 26. pants',anchor:'#p26',warnMin:false,fineMin:'35 €',warn:false,
+   fineMax:FM('140 € (физ.) / 3 000 € (юр.)','140 € (fiziska) / 3 000 € (juridiska)','140 € (natural) / 3 000 € (legal)'),
+   ru:{name:'Непредоставление перевода на публичных мероприятиях',desc:'Непредоставление перевода на государственный язык на публичных мероприятиях, если это предусмотрено нормативными актами.',contest:'Оспорить, если аудитория мероприятия владела языком проведения или мероприятие не подпадает под требование о переводе.'},
+   lv:{name:'Tulkojuma nenodrošināšana pasākumos',desc:'Tulkojuma nenodrošināšana pasākumos valsts valodā, ja normatīvie akti to paredz.',contest:'Var apstrīdēt, ja pasākuma auditorija pārvaldīja pasākuma valodu vai pasākums neietilpst tulkojuma prasības darbības jomā.'},
+   en:{name:'Failure to provide interpretation at public events',desc:'Failure to provide interpretation into the state language at public events, where required by law.',contest:'Can be contested if the event audience understood the language or the event does not fall within the interpretation requirement.'}},
+
+  {article:'ASL 27. pants',anchor:'#p27',warnMin:false,fineMin:'35 €',warn:false,
+   fineMax:FM('140 € (физ.) / 5 000 € (юр.)','140 € (fiziska) / 5 000 € (juridiska)','140 € (natural) / 5 000 € (legal)'),
+   ru:{name:'Фильмы для публичного показа без перевода на государственный язык',desc:'Показ фильмов без озвучки, дублирования или субтитров на латышском языке, если это предусмотрено нормативными актами.',contest:'Оспорить, если фильм освобождён от требования перевода (например, показ на языке оригинала в специализированном кинотеатре) или субтитры были предоставлены в иной форме.'},
+   lv:{name:'Publiski demonstrējamu filmu nenodrošināšana ar tulkojumu valsts valodā',desc:'Publiski demonstrējamu filmu neieskaņošana vai nedublēšana valsts valodā vai oriģinālā skaņas pavadījuma nenodrošināšana ar subtitriem latviešu valodā, ja normatīvie akti to paredz.',contest:'Var apstrīdēt, ja filma ir atbrīvota no tulkojuma prasības vai subtitri tika nodrošināti citā formā.'},
+   en:{name:'Failure to provide state language translation for publicly screened films',desc:'Failure to dub, voice-over or subtitle publicly screened films in Latvian, where required by law.',contest:'Can be contested if the film is exempt from the translation requirement or subtitles were provided in another form.'}},
+
+  {article:'ASL 28. pants',anchor:'#p28',warnMin:false,warn:false,parts:true,
+   fineMax:FM('5 000 € (юр. лицо)','5 000 € (juridiska)','5 000 € (legal entity)'),
+   ru:{name:'Информация о товарах не на государственном языке',contest:'Оспорить, если товар предназначен для экспорта или перевод был приложен в иной форме.',
+     parts:[
+       {label:'(1) Этикетки и инструкции не на государственном языке',desc:'Непредоставление информации на латышском языке на этикетках, маркировке, инструкциях и гарантийных документах товаров, не предназначенных для экспорта.',fineMin:'35 €',fineMax:'140 € (физ.) / 3 000 € (юр.)'},
+       {label:'(2) Реализация товаров без полного перевода на государственный язык',desc:'Продажа товаров без полного и точного перевода на латышский язык маркировки, инструкций и гарантийных документов.',fineMin:'35 €',fineMax:'350 € (физ.) / 5 000 € (юр.)'}
+     ]},
+   lv:{name:'Ar preču apriti saistītās informācijas nenodrošināšana valsts valodā',contest:'Var apstrīdēt, ja prece paredzēta eksportam vai tulkojums tika pievienots citā formā.',
+     parts:[
+       {label:'(1) Etiķetes un instrukcijas nav valsts valodā',desc:'Informācijas nesniegšana latviešu valodā uz etiķetēm, marķējumā, instrukcijās un garantijas dokumentos precēm, kas nav paredzētas eksportam.',fineMin:'35 €',fineMax:'140 € (fiziska) / 3 000 € (juridiska)'},
+       {label:'(2) Preču realizēšana bez pilna tulkojuma valsts valodā',desc:'Preču realizēšana bez pilna un precīza marķējuma, instrukciju un garantijas dokumentu tulkojuma latviešu valodā.',fineMin:'35 €',fineMax:'350 € (fiziska) / 5 000 € (juridiska)'}
+     ]},
+   en:{name:'Failure to provide product information in state language',contest:'Can be contested if the product is intended for export or the translation was provided in another form.',
+     parts:[
+       {label:'(1) Labels and instructions not in state language',desc:'Failure to provide information in Latvian on labels, markings, instructions and warranty documents for products not intended for export.',fineMin:'35 €',fineMax:'140 € (natural) / 3 000 € (legal)'},
+       {label:'(2) Selling goods without full translation into state language',desc:'Selling goods without a full and accurate Latvian translation of labelling, instructions and warranty documents.',fineMin:'35 €',fineMax:'350 € (natural) / 5 000 € (legal)'}
+     ]}}
+]
+};
+
+function setLang(l,btn){lang=l;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('appSubtitle').textContent=ui[l].subtitle;document.getElementById('searchInput').placeholder=ui[l].placeholder;renderCats();document.getElementById('sectionTitle').textContent=cats[currentCat][l].sec;document.getElementById('searchInput').value='';renderLaws(laws[currentCat]);}
+
+function renderCats(){
+  const icons={admin:'ti-building-bank',order:'ti-shield',lang:'ti-language'};
+  const counts={admin:'ASL 3–8',order:'ASL 9–13.1',lang:'ASL 14–28'};
+  document.getElementById('catGrid').innerHTML=Object.keys(cats).map(k=>`<div class="cat-card${k===currentCat?' active':''}" onclick="selectCat(this,'${k}')"><i class="ti ${icons[k]} cat-icon" aria-hidden="true"></i><div class="cat-name">${cats[k][lang].name}</div><div class="cat-count">${counts[k]}</div></div>`).join('');
+}
+
+function selectCat(el,cat){currentCat=cat;renderCats();document.getElementById('sectionTitle').textContent=cats[cat][lang].sec;document.getElementById('searchInput').value='';renderLaws(laws[cat]);}
+function getFineMin(law){return law.warnMin?ui[lang].warnWord:(law.fineMin||'—');}
+
+function renderPartsHTML(law){
+  return law[lang].parts.map(p=>`
+    <div class="part-block">
+      <div class="part-label">${p.label}</div>
+      <div class="part-desc">${p.desc}</div>
+      <div class="part-fines">
+        <div class="part-fine-box"><div class="fine-lbl">${ui[lang].min}</div><div class="fine-val">${p.fineMin}</div></div>
+        <div class="part-fine-box"><div class="fine-lbl">${ui[lang].max}</div><div class="fine-val danger">${p.fineMax}</div></div>
+      </div>
+    </div>`).join('');
+}
+
+function renderLaws(items){
+  const t=ui[lang];
+  const list=document.getElementById('lawsList');
+  if(!items||!items.length){list.innerHTML=`<p class="empty">${t.empty}</p>`;return;}
+  list.innerHTML=items.map((law,i)=>`
+    <div class="law-card" onclick="toggleLaw(this,${i})">
+      <div class="law-top"><div class="law-name">${law[lang].name}</div><i class="ti ti-chevron-down arrow-icon" aria-hidden="true"></i></div>
+      <div class="law-meta">
+        ${law.warn?`<span class="badge badge-warn">${t.warn}</span>`:''}
+        <span class="badge badge-fine">max ${law.fineMax[lang].split('/')[0].trim()}</span>
+        <span class="badge badge-article">${law.article}</span>
+      </div>
+      <div class="law-detail" id="detail-${i}">
+        ${law.parts?renderPartsHTML(law):`
+          <div class="dl">${t.desc}</div>
+          <div class="dt">${law[lang].desc}</div>
+          <div class="fine-row">
+            <div class="fine-box"><div class="fine-lbl">${t.min}</div><div class="fine-val">${getFineMin(law)}</div></div>
+            <div class="fine-box"><div class="fine-lbl">${t.max}</div><div class="fine-val danger">${law.fineMax[lang]}</div></div>
+          </div>`}
+        <div class="dl">${t.howContest}</div>
+        <div class="dt">${law[lang].contest}</div>
+        <a class="source-btn" href="${BASE}${law.anchor}" onclick="event.stopPropagation()">
+          <i class="ti ti-external-link" aria-hidden="true"></i>${t.sourceBtn}
+        </a>
+      </div>
+    </div>`).join('');
+}
+
+function toggleLaw(card,i){const d=document.getElementById('detail-'+i);const open=d.classList.contains('show');document.querySelectorAll('.law-detail').forEach(x=>x.classList.remove('show'));document.querySelectorAll('.law-card').forEach(x=>x.classList.remove('expanded'));if(!open){d.classList.add('show');card.classList.add('expanded');}}
+
+function filterLaws(){const q=document.getElementById('searchInput').value.toLowerCase();if(!q){renderLaws(laws[currentCat]);return;}const all=Object.values(laws).flat();renderLaws(all.filter(l=>l[lang].name.toLowerCase().includes(q)||l.article.toLowerCase().includes(q)));}
+
+renderCats();
+document.getElementById('sectionTitle').textContent=cats[currentCat][lang].sec;
+renderLaws(laws[currentCat]);
+</script>
