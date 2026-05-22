@@ -1,5 +1,6 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"/>
 
-<h2 class="sr-only">BALT 1</h2>
+<h2 class="sr-only">LexLV — полный ASL</h2>
 <style>
   * {
     box-sizing: border-box;
@@ -366,6 +367,16 @@
     text-align: center;
   }
   </style>
+<style>
+  .law-switcher{display:flex;gap:8px;margin-top:12px;justify-content:center;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:4px;}
+  .law-btn{font-size:12px;font-weight:500;padding:6px 18px;border-radius:var(--border-radius-md);border:none;cursor:pointer;background:transparent;color:var(--color-text-secondary);transition:all 0.2s ease;}
+  .law-btn.active{background:var(--color-background-primary);color:var(--color-brand);box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+  .badge-pts{background:#faf5ff;color:#6b46c1;}
+  .signs-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;align-items:flex-end;}
+  .sign-chip{display:flex;flex-direction:column;align-items:center;gap:3px;}
+  .sign-num{font-size:10px;color:var(--color-text-secondary);font-weight:500;}
+</style>
+
 
 <div class="app-header">
   <div class="app-title">BALT 1</div>
@@ -375,6 +386,10 @@
     <button class="lang-btn" onclick="setLang('lv',this)">LV</button>
     <button class="lang-btn" onclick="setLang('en',this)">EN</button>
   </div>
+  <div class="law-switcher">
+    <button class="law-btn active" onclick="setLaw('asl',this)">ASL</button>
+    <button class="law-btn" onclick="setLaw('csl',this)">Ceļu satiksme</button>
+  </div>
 </div>
 <div class="search-bar"><input type="text" id="searchInput" placeholder="Найти нарушение..." oninput="filterLaws()"/></div>
 <div class="categories" id="catGrid"></div>
@@ -382,16 +397,55 @@
 <div class="laws-list" id="lawsList"></div>
 
 <script>
-let lang='ru', currentCat='admin';
-const BASE='https://likumi.lv/ta/id/314808-administrativo-sodu-likums-par-parkapumiem-parvaldes-sabiedriskas-kartibas-un-valsts-valodas-lietosanas-joma';
+let lang='lv', currentCat='admin', currentLaw='asl';
+const BASE_ASL='https://likumi.lv/ta/id/314808-administrativo-sodu-likums-par-parkapumiem-parvaldes-sabiedriskas-kartibas-un-valsts-valodas-lietosanas-joma';
+const BASE_CSL='https://likumi.lv/ta/id/45467-celu-satiksmes-likums';
+const BASE_CSN='https://likumi.lv/ta/id/187237-celu-satiksmes-noteikumi';
 
-const ui={
+// ===== SVG ROAD SIGNS =====
+const S={
+  lim:n=>`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="white" stroke="#e53e3e" stroke-width="6"/><text x="30" y="40" text-anchor="middle" font-size="${n>99?17:21}" font-weight="700" fill="#1a202c" font-family="Arial,sans-serif">${n}</text></svg>`,
+  limEnd:n=>`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="white" stroke="#aaa" stroke-width="5"/><text x="30" y="40" text-anchor="middle" font-size="${n>99?15:19}" font-weight="700" fill="#aaa" font-family="Arial,sans-serif">${n}</text><line x1="9" y1="51" x2="51" y2="9" stroke="#e53e3e" stroke-width="4"/></svg>`,
+  noStop:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="white" stroke="#e53e3e" stroke-width="6"/><line x1="14" y1="14" x2="46" y2="46" stroke="#e53e3e" stroke-width="7" stroke-linecap="round"/><line x1="46" y1="14" x2="14" y2="46" stroke="#e53e3e" stroke-width="7" stroke-linecap="round"/></svg>`,
+  noPark:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="#3182ce"/><text x="30" y="44" text-anchor="middle" font-size="34" font-weight="700" fill="white" font-family="Arial,sans-serif">P</text><line x1="9" y1="51" x2="51" y2="9" stroke="#e53e3e" stroke-width="6"/></svg>`,
+  park:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="58" height="58" rx="5" fill="#3182ce"/><text x="30" y="44" text-anchor="middle" font-size="38" font-weight="700" fill="white" font-family="Arial,sans-serif">P</text></svg>`,
+  stop:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><polygon points="19,3 41,3 57,19 57,41 41,57 19,57 3,41 3,19" fill="#e53e3e"/><text x="30" y="37" text-anchor="middle" font-size="13" font-weight="700" fill="white" font-family="Arial,sans-serif">STOP</text></svg>`,
+  giveWay:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><polygon points="30,57 3,10 57,10" fill="white" stroke="#e53e3e" stroke-width="5"/><polygon points="30,45 13,16 47,16" fill="#e53e3e"/></svg>`,
+  noEntry:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="#e53e3e"/><rect x="10" y="24" width="40" height="12" rx="3" fill="white"/></svg>`,
+  oneWay:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="58" height="58" rx="5" fill="#3182ce"/><polygon points="12,23 36,23 36,13 52,30 36,47 36,37 12,37" fill="white"/></svg>`,
+  residential:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="58" height="58" rx="4" fill="#3182ce"/><polygon points="30,13 15,26 15,45 23,45 23,35 37,35 37,45 45,45 45,26" fill="white"/><circle cx="13" cy="44" r="3.5" fill="white"/><circle cx="47" cy="44" r="3.5" fill="white"/></svg>`,
+  populated:`<svg viewBox="0 0 70 46" width="60" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="68" height="44" fill="#3182ce" stroke="white" stroke-width="3"/><text x="35" y="29" text-anchor="middle" font-size="12" font-weight="700" fill="white" font-family="Arial,sans-serif">RĪGA</text></svg>`,
+  redLight:`<svg viewBox="0 0 40 68" width="34" height="58" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="2" width="32" height="64" rx="5" fill="#2d3748"/><circle cx="20" cy="16" r="10" fill="#e53e3e"/><circle cx="20" cy="34" r="10" fill="#4a5568"/><circle cx="20" cy="52" r="10" fill="#4a5568"/></svg>`,
+  noPhone:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="white" stroke="#e53e3e" stroke-width="6"/><rect x="22" y="11" width="16" height="38" rx="3" fill="#2d3748"/><rect x="26" y="42" width="8" height="3" rx="1.5" fill="#718096"/><line x1="8" y1="52" x2="52" y2="8" stroke="#e53e3e" stroke-width="6"/></svg>`,
+  priority:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><rect x="13" y="13" width="34" height="34" rx="3" transform="rotate(45 30 30)" fill="#ECC94B" stroke="white" stroke-width="4"/></svg>`
+};
+function sgn(svg,label){return `<div class="sign-chip">${svg}<span class="sign-num">${label}</span></div>`;}
+
+// ===== UI STRINGS =====
+const uiStrings={
+  asl:{
+    ru:{subtitle:'Административное право Латвии · ASL',placeholder:'Найти нарушение или штраф...',min:'Минимум',max:'Максимум',desc:'Описание',howContest:'Как оспорить',sourceBtn:'Открыть статью на likumi.lv',warn:'Возможно предупреждение',warnWord:'Предупреждение',empty:'Ничего не найдено.',pts:'очков',signs:'Знаки'},
+    lv:{subtitle:'Latvijas administratīvās tiesības · ASL',placeholder:'Meklēt pārkāpumu vai sodu...',min:'Minimums',max:'Maksimums',desc:'Apraksts',howContest:'Kā apstrīdēt',sourceBtn:'Atvērt pantu likumi.lv',warn:'Iespējams brīdinājums',warnWord:'Brīdinājums',empty:'Nekas netika atrasts.',pts:'punkti',signs:'Zīmes'},
+    en:{subtitle:'Latvian Administrative Law · ASL',placeholder:'Search violation or fine...',min:'Minimum',max:'Maximum',desc:'Description',howContest:'How to contest',sourceBtn:'Open article on likumi.lv',warn:'Warning possible',warnWord:'Warning',empty:'Nothing found.',pts:'points',signs:'Signs'}
+  },
+  csl:{
+    ru:{subtitle:'Дорожное право Латвии · CSL / CSN',placeholder:'Найти нарушение или штраф...',min:'Минимум',max:'Максимум',desc:'Описание',howContest:'Как оспорить',sourceBtn:'Открыть закон на likumi.lv',warn:'Возможно предупреждение',warnWord:'Предупреждение',empty:'Ничего не найдено.',pts:'очков',signs:'Знаки'},
+    lv:{subtitle:'Latvijas ceļu satiksmes tiesības · CSL / CSN',placeholder:'Meklēt pārkāpumu vai sodu...',min:'Minimums',max:'Maksimums',desc:'Apraksts',howContest:'Kā apstrīdēt',sourceBtn:'Atvērt likumu likumi.lv',warn:'Iespējams brīdinājums',warnWord:'Brīdinājums',empty:'Nekas netika atrasts.',pts:'punkti',signs:'Zīmes'},
+    en:{subtitle:'Latvian Road Traffic Law · CSL / CSN',placeholder:'Search violation or fine...',min:'Minimum',max:'Maximum',desc:'Description',howContest:'How to contest',sourceBtn:'Open law on likumi.lv',warn:'Warning possible',warnWord:'Warning',empty:'Nothing found.',pts:'points',signs:'Signs'}
+  }
+};
+
+// ===== ASL CATEGORIES & LAWS (from original file) =====
+// (lang/currentCat declared above)
+
+
+const aslUI={
   ru:{subtitle:'Административное право Латвии · ASL',placeholder:'Найти нарушение или штраф...',min:'Минимум',max:'Максимум',desc:'Описание',howContest:'Как оспорить',sourceBtn:'Открыть статью на likumi.lv',warn:'Возможно предупреждение',warnWord:'Предупреждение',empty:'Ничего не найдено.'},
   lv:{subtitle:'Latvijas administratīvās tiesības · ASL',placeholder:'Meklēt pārkāpumu vai sodu...',min:'Minimums',max:'Maksimums',desc:'Apraksts',howContest:'Kā apstrīdēt',sourceBtn:'Atvērt pantu likumi.lv',warn:'Iespējams brīdinājums',warnWord:'Brīdinājums',empty:'Nekas netika atrasts.'},
   en:{subtitle:'Latvian Administrative Law · ASL',placeholder:'Search violation or fine...',min:'Minimum',max:'Maximum',desc:'Description',howContest:'How to contest',sourceBtn:'Open article on likumi.lv',warn:'Warning possible',warnWord:'Warning',empty:'Nothing found.'}
 };
 
-const cats={
+const aslCats={
   admin:{ru:{name:'Управление',sec:'Нарушения в сфере управления'},lv:{name:'Pārvalde',sec:'Pārkāpumi pārvaldes jomā'},en:{name:'Administration',sec:'Administrative violations'}},
   order:{ru:{name:'Общественный порядок',sec:'Нарушения общественного порядка'},lv:{name:'Sabiedriskā kārtība',sec:'Sabiedriskās kārtības pārkāpumi'},en:{name:'Public order',sec:'Public order violations'}},
   lang:{ru:{name:'Гос. язык',sec:'Нарушения в сфере государственного языка'},lv:{name:'Valsts valoda',sec:'Valsts valodas pārkāpumi'},en:{name:'State language',sec:'State language violations'}}
@@ -400,7 +454,7 @@ const cats={
 function L(ru,lv,en){return{ru,lv,en};}
 function FM(ru,lv,en){return{ru,lv,en};}
 
-const laws={
+const aslLaws={
 admin:[
   {article:'ASL 3. pants',anchor:'#p3',warnMin:true,warn:true,
    fineMax:FM('700 € (физ. лицо) / 14 000 € (юр. лицо)','700 € (fiziska) / 14 000 € (juridiska)','700 € (natural person) / 14 000 € (legal entity)'),
@@ -648,63 +702,682 @@ lang:[
 ]
 };
 
-function setLang(l,btn){lang=l;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('appSubtitle').textContent=ui[l].subtitle;document.getElementById('searchInput').placeholder=ui[l].placeholder;renderCats();document.getElementById('sectionTitle').textContent=cats[currentCat][l].sec;document.getElementById('searchInput').value='';renderLaws(laws[currentCat]);}
+// ===== CSL CATEGORIES =====
+const cslCats={
+  speed:{ru:{name:'Скорость',sec:'Превышение скорости · CSL 55. pants'},lv:{name:'Ātrums',sec:'Braukšanas ātruma pārsniegšana · CSL 55. pants'},en:{name:'Speed',sec:'Speeding violations · CSL 55. pants'}},
+  parking:{ru:{name:'Парковка / остановка',sec:'Нарушения остановки и парковки · CSL 57. pants'},lv:{name:'Stāvēšana',sec:'Apstāšanās un stāvēšanas pārkāpumi · CSL 57. pants'},en:{name:'Parking / stopping',sec:'Parking and stopping violations · CSL 57. pants'}},
+  alcohol:{ru:{name:'Алкоголь / наркотики',sec:'Управление в нетрезвом виде · CSL 62. pants'},lv:{name:'Alkohols / narkotikas',sec:'TL vadīšana reibumā · CSL 62. pants'},en:{name:'Alcohol / drugs',sec:'Driving under influence · CSL 62. pants'}},
+  signals:{ru:{name:'Знаки и сигналы',sec:'Нарушения знаков и сигналов · CSL/CSN'},lv:{name:'Zīmes un signāli',sec:'Ceļa zīmju un signālu pārkāpumi · CSL/CSN'},en:{name:'Signs & signals',sec:'Traffic sign and signal violations · CSL/CSN'}},
+  other:{ru:{name:'Другие нарушения',sec:'Прочие нарушения ПДД · CSL'},lv:{name:'Citi pārkāpumi',sec:'Citi ceļu satiksmes pārkāpumi · CSL'},en:{name:'Other violations',sec:'Other road traffic violations · CSL'}}
+};
 
-function renderCats(){
-  const icons={admin:'ti-building-bank',order:'ti-shield',lang:'ti-language'};
-  const counts={admin:'ASL 3–8',order:'ASL 9–13.1',lang:'ASL 14–28'};
-  document.getElementById('catGrid').innerHTML=Object.keys(cats).map(k=>`<div class="cat-card${k===currentCat?' active':''}" onclick="selectCat(this,'${k}')"><i class="ti ${icons[k]} cat-icon" aria-hidden="true"></i><div class="cat-name">${cats[k][lang].name}</div><div class="cat-count">${counts[k]}</div></div>`).join('');
+// ===== CSL LAWS =====
+const cslLaws={
+speed:[
+ {article:'CSL 55.1.\u201355.2. pants',anchor:'#p55',warnMin:true,warn:true,pts:0,parts:true,
+  signsSVG:[sgn(S.lim(50),'309-50'),sgn(S.populated,'519/555')],
+  fineMax:{ru:'10 \u20ac (>7,5 \u0442)',lv:'10 \u20ac (>7,5 t)',en:'10 \u20ac (>7.5t)'},
+  ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u0434\u043e 10 \u043a\u043c/\u0447',contest:'\u041e\u0441\u043f\u043e\u0440\u0438\u0442\u044c, \u0435\u0441\u043b\u0438 \u0437\u043d\u0430\u043a \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u043d\u0435\u043f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d \u0438\u043b\u0438 \u043f\u043e\u0432\u0440\u0435\u0436\u0434\u0451\u043d.',
+   parts:[
+    {label:'< 7,5 \u0442 (\u043b\u0435\u0433\u043a\u043e\u0432\u043e\u0439, \u043c\u043e\u0442\u043e\u0446\u0438\u043a\u043b, \u043c\u043e\u043f\u0435\u0434)',desc:'\u041f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435, \u043b\u044e\u0431\u043e\u0435 \u043c\u0435\u0441\u0442\u043e.',fineMin:'\u041f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435',fineMax:'\u041f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435'},
+    {label:'> 7,5 \u0442 (\u0433\u0440\u0443\u0437\u043e\u0432\u043e\u0439, \u0441 \u043f\u0440\u0438\u0446\u0435\u043f\u043e\u043c)',desc:'\u041f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435 \u0438\u043b\u0438 \u0448\u0442\u0440\u0430\u0444.',fineMin:'\u041f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435',fineMax:'10 \u20ac'}
+   ]},
+  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana l\u012bdz 10 km/st',contest:'Var apstr\u012bd\u0113t, ja \u0101truma ierobežojuma z\u012bme nav pareizi izvietota.',
+   parts:[
+    {label:'< 7,5 t (vieglais, motocikls, mop\u0113ds)',desc:'Tikai br\u012bdin\u0101jums, jebkur\u0101 viet\u0101.',fineMin:'Br\u012bdin\u0101jums',fineMax:'Br\u012bdin\u0101jums'},
+    {label:'> 7,5 t (kravas, ar piekabi)',desc:'Br\u012bdin\u0101jums vai naudas sods.',fineMin:'Br\u012bdin\u0101jums',fineMax:'10 \u20ac'}
+   ]},
+  en:{name:'Speeding up to 10 km/h over limit',contest:'Can be contested if the speed limit sign is incorrectly placed or damaged.',
+   parts:[
+    {label:'< 7.5t (car, motorcycle, moped)',desc:'Warning only, any location.',fineMin:'Warning',fineMax:'Warning'},
+    {label:'> 7.5t (truck, with trailer)',desc:'Warning or fine.',fineMin:'Warning',fineMax:'10 \u20ac'}
+   ]}},
+
+ {article:'CSL 55.3.\u201355.6. pants',anchor:'#p55',warnMin:true,warn:true,pts:0,parts:true,
+  signsSVG:[sgn(S.lim(50),'309-50'),sgn(S.residential,'533'),sgn(S.populated,'519/555')],
+  fineMax:{ru:'80 \u20ac (>7,5 \u0442, \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442)',lv:'80 \u20ac (>7,5 t, apdzīvota v.)',en:'80 \u20ac (>7.5t, populated area)'},
+  ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u043d\u0430 11\u201320 \u043a\u043c/\u0447',contest:'\u041e\u0441\u043f\u043e\u0440\u0438\u0442\u044c, \u0435\u0441\u043b\u0438 \u0437\u043d\u0430\u043a \u0431\u044b\u043b \u043f\u043e\u0432\u0440\u0435\u0436\u0434\u0451\u043d \u0438\u043b\u0438 \u043d\u0435 \u0432\u0438\u0434\u0435\u043d.',
+   parts:[
+    {label:'< 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'',fineMin:'\u041f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435',fineMax:'20 \u20ac'},
+    {label:'< 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430 (519/555/533)',desc:'\u0423\u0434\u0432\u043e\u0435\u043d\u043d\u044b\u0439 \u0448\u0442\u0440\u0430\u0444.',fineMin:'\u041f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435',fineMax:'40 \u20ac'},
+    {label:'> 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'',fineMin:'\u041f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435',fineMax:'40 \u20ac'},
+    {label:'> 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'\u0411\u0435\u0437 \u043f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u044f.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'}
+   ]},
+  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana par 11\u201320 km/st',contest:'Var apstr\u012bd\u0113t, ja \u0101truma ierobežojuma z\u012bme bija boj\u0101ta vai neredzama.',
+   parts:[
+    {label:'< 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'',fineMin:'Br\u012bdin\u0101jums',fineMax:'20 \u20ac'},
+    {label:'< 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona (519/555/533)',desc:'Divk\u0101r\u0161ots sods.',fineMin:'Br\u012bdin\u0101jums',fineMax:'40 \u20ac'},
+    {label:'> 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'',fineMin:'Br\u012bdin\u0101jums',fineMax:'40 \u20ac'},
+    {label:'> 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'Nav br\u012bdin\u0101juma.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'}
+   ]},
+  en:{name:'Speeding 11\u201320 km/h over limit',contest:'Can be contested if the speed limit sign was damaged or not visible.',
+   parts:[
+    {label:'< 7.5t \u2014 outside populated area',desc:'',fineMin:'Warning',fineMax:'20 \u20ac'},
+    {label:'< 7.5t \u2014 populated area / residential zone (519/555/533)',desc:'Doubled fine.',fineMin:'Warning',fineMax:'40 \u20ac'},
+    {label:'> 7.5t \u2014 outside populated area',desc:'',fineMin:'Warning',fineMax:'40 \u20ac'},
+    {label:'> 7.5t \u2014 populated area / residential zone',desc:'No warning.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'}
+   ]}},
+
+ {article:'CSL 55.7.\u201355.10. pants',anchor:'#p55',warnMin:false,warn:false,pts:1,parts:true,
+  signsSVG:[sgn(S.lim(50),'309-50'),sgn(S.residential,'533')],
+  fineMax:{ru:'160 \u20ac (>7,5 \u0442, \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442)',lv:'160 \u20ac (>7,5 t, apdzīvota v.)',en:'160 \u20ac (>7.5t, populated area)'},
+  ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u043d\u0430 21\u201330 \u043a\u043c/\u0447',contest:'\u041e\u0441\u043f\u043e\u0440\u0438\u0442\u044c \u043f\u0440\u0438 \u043f\u043e\u0433\u0440\u0435\u0448\u043d\u043e\u0441\u0442\u0438 \u0440\u0430\u0434\u0430\u0440\u0430 (\u0434\u043e\u043f. \u00b13 \u043a\u043c/\u0447 \u0438\u043b\u0438 3%).',
+   parts:[
+    {label:'< 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'1 \u0443\u0447. \u0431\u0430\u043b\u043b.',fineMin:'40 \u20ac',fineMax:'40 \u20ac'},
+    {label:'< 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'1 \u0443\u0447. \u0431\u0430\u043b\u043b.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'},
+    {label:'> 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'1 \u0443\u0447. \u0431\u0430\u043b\u043b.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'},
+    {label:'> 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'1 \u0443\u0447. \u0431\u0430\u043b\u043b.',fineMin:'160 \u20ac',fineMax:'160 \u20ac'}
+   ]},
+  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana par 21\u201330 km/st',contest:'Var apstr\u012bd\u0113t pie rad\u0101ra k\u013c\u016bdas (pie\u013ca\u0173jama \u00b13 km/st vai 3%).',
+   parts:[
+    {label:'< 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'1 uzskaites punkts.',fineMin:'40 \u20ac',fineMax:'40 \u20ac'},
+    {label:'< 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'1 uzskaites punkts.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'},
+    {label:'> 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'1 uzskaites punkts.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'},
+    {label:'> 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'1 uzskaites punkts.',fineMin:'160 \u20ac',fineMax:'160 \u20ac'}
+   ]},
+  en:{name:'Speeding 21\u201330 km/h over limit',contest:'Can be contested if the radar had a measurement error (allowable \u00b13 km/h or 3%).',
+   parts:[
+    {label:'< 7.5t \u2014 outside populated area',desc:'1 demerit point.',fineMin:'40 \u20ac',fineMax:'40 \u20ac'},
+    {label:'< 7.5t \u2014 populated area / residential zone',desc:'1 demerit point.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'},
+    {label:'> 7.5t \u2014 outside populated area',desc:'1 demerit point.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'},
+    {label:'> 7.5t \u2014 populated area / residential zone',desc:'1 demerit point.',fineMin:'160 \u20ac',fineMax:'160 \u20ac'}
+   ]}},
+
+ {article:'CSL 55.11.\u201355.14. pants',anchor:'#p55',warnMin:false,warn:false,pts:2,parts:true,
+  signsSVG:[sgn(S.lim(50),'309-50'),sgn(S.residential,'533')],
+  fineMax:{ru:'320 \u20ac (>7,5 \u0442, \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442)',lv:'320 \u20ac (>7,5 t, apdzīvota v.)',en:'320 \u20ac (>7.5t, populated area)'},
+  ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u043d\u0430 31\u201340 \u043a\u043c/\u0447',contest:'\u041e\u0441\u043f\u043e\u0440\u0438\u0442\u044c \u043f\u0440\u0438 \u043f\u043e\u0433\u0440\u0435\u0448\u043d\u043e\u0441\u0442\u0438 \u0440\u0430\u0434\u0430\u0440\u0430 \u0438\u043b\u0438 \u043d\u0435\u043f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e\u043c \u0437\u043d\u0430\u043a\u0435.',
+   parts:[
+    {label:'< 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'2 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'},
+    {label:'< 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'2 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'160 \u20ac',fineMax:'160 \u20ac'},
+    {label:'> 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'2 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'160 \u20ac',fineMax:'160 \u20ac'},
+    {label:'> 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'2 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'320 \u20ac',fineMax:'320 \u20ac'}
+   ]},
+  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana par 31\u201340 km/st',contest:'Var apstr\u012bd\u0113t pie rad\u0101ra k\u013c\u016bdas vai nepareizas z\u012bmes.',
+   parts:[
+    {label:'< 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'2 uzskaites punkti.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'},
+    {label:'< 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'2 uzskaites punkti.',fineMin:'160 \u20ac',fineMax:'160 \u20ac'},
+    {label:'> 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'2 uzskaites punkti.',fineMin:'160 \u20ac',fineMax:'160 \u20ac'},
+    {label:'> 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'2 uzskaites punkti.',fineMin:'320 \u20ac',fineMax:'320 \u20ac'}
+   ]},
+  en:{name:'Speeding 31\u201340 km/h over limit',contest:'Can be contested if the radar had a measurement error or the speed limit sign was incorrect.',
+   parts:[
+    {label:'< 7.5t \u2014 outside populated area',desc:'2 demerit points.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'},
+    {label:'< 7.5t \u2014 populated area / residential zone',desc:'2 demerit points.',fineMin:'160 \u20ac',fineMax:'160 \u20ac'},
+    {label:'> 7.5t \u2014 outside populated area',desc:'2 demerit points.',fineMin:'160 \u20ac',fineMax:'160 \u20ac'},
+    {label:'> 7.5t \u2014 populated area / residential zone',desc:'2 demerit points.',fineMin:'320 \u20ac',fineMax:'320 \u20ac'}
+   ]}},
+
+ {article:'CSL 55.15.\u201355.18. pants',anchor:'#p55',warnMin:false,warn:false,pts:3,parts:true,
+  signsSVG:[sgn(S.lim(50),'309-50'),sgn(S.residential,'533')],
+  fineMax:{ru:'620 \u20ac (>7,5 \u0442, \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442)',lv:'620 \u20ac (>7,5 t, apdzīvota v.)',en:'620 \u20ac (>7.5t, populated area)'},
+  ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u043d\u0430 41\u201350 \u043a\u043c/\u0447',contest:'\u041e\u0441\u043f\u043e\u0440\u0438\u0442\u044c \u043f\u0440\u0438 \u043f\u043e\u0433\u0440\u0435\u0448\u043d\u043e\u0441\u0442\u0438 \u0440\u0430\u0434\u0430\u0440\u0430 (\u0434\u043e\u043f. \u00b13 \u043a\u043c/\u0447 \u0438\u043b\u0438 3%).',
+   parts:[
+    {label:'< 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'3 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'160 \u20ac',fineMax:'220 \u20ac'},
+    {label:'< 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'3 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'240 \u20ac',fineMax:'320 \u20ac'},
+    {label:'> 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'3 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'320 \u20ac',fineMax:'440 \u20ac'},
+    {label:'> 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'3 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'480 \u20ac',fineMax:'620 \u20ac'}
+   ]},
+  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana par 41\u201350 km/st',contest:'Var apstr\u012bd\u0113t pie rad\u0101ra k\u013c\u016bdas (\u00b13 km/st vai 3%).',
+   parts:[
+    {label:'< 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'3 uzskaites punkti.',fineMin:'160 \u20ac',fineMax:'220 \u20ac'},
+    {label:'< 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'3 uzskaites punkti.',fineMin:'240 \u20ac',fineMax:'320 \u20ac'},
+    {label:'> 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'3 uzskaites punkti.',fineMin:'320 \u20ac',fineMax:'440 \u20ac'},
+    {label:'> 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'3 uzskaites punkti.',fineMin:'480 \u20ac',fineMax:'620 \u20ac'}
+   ]},
+  en:{name:'Speeding 41\u201350 km/h over limit',contest:'Can be contested if the radar had a measurement error (\u00b13 km/h or 3%).',
+   parts:[
+    {label:'< 7.5t \u2014 outside populated area',desc:'3 demerit points.',fineMin:'160 \u20ac',fineMax:'220 \u20ac'},
+    {label:'< 7.5t \u2014 populated area / residential zone',desc:'3 demerit points.',fineMin:'240 \u20ac',fineMax:'320 \u20ac'},
+    {label:'> 7.5t \u2014 outside populated area',desc:'3 demerit points.',fineMin:'320 \u20ac',fineMax:'440 \u20ac'},
+    {label:'> 7.5t \u2014 populated area / residential zone',desc:'3 demerit points.',fineMin:'480 \u20ac',fineMax:'620 \u20ac'}
+   ]}},
+
+ {article:'CSL 55.19.\u201355.22. pants',anchor:'#p55',warnMin:false,warn:false,pts:4,parts:true,
+  signsSVG:[sgn(S.lim(50),'309-50'),sgn(S.residential,'533')],
+  fineMax:{ru:'880 \u20ac + 12 \u043c\u0435\u0441. (>7,5 \u0442, \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442)',lv:'880 \u20ac + 12 m\u0113n. (>7,5 t)',en:'880 \u20ac + 12 mo. (>7.5t, populated)'},
+  ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u043d\u0430 51\u201360 \u043a\u043c/\u0447',contest:'\u041f\u0440\u0438 \u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0438\u0438 \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u044b \u0437\u0430\u043c\u0435\u0440\u0430 \u0438\u043b\u0438 \u043f\u043e\u0433\u0440\u0435\u0448\u043d\u043e\u0441\u0442\u0438 \u043f\u0440\u0438\u0431\u043e\u0440\u0430.',
+   parts:[
+    {label:'< 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'4 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'240 \u20ac',fineMax:'320 \u20ac + 3 \u043c\u0435\u0441. \u043b\u0438\u0448\u0435\u043d\u0438\u044f'},
+    {label:'< 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'4 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'360 \u20ac',fineMax:'460 \u20ac + 6 \u043c\u0435\u0441. \u043b\u0438\u0448\u0435\u043d\u0438\u044f'},
+    {label:'> 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'4 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'480 \u20ac',fineMax:'640 \u20ac + 6 \u043c\u0435\u0441. \u043b\u0438\u0448\u0435\u043d\u0438\u044f'},
+    {label:'> 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'4 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'700 \u20ac',fineMax:'880 \u20ac + 12 \u043c\u0435\u0441. \u043b\u0438\u0448\u0435\u043d\u0438\u044f'}
+   ]},
+  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana par 51\u201360 km/st',contest:'Var apstr\u012bd\u0113t pie m\u0113r\u012b\u0161anas proced\u016bras p\u0101rkāpuma vai ierīces k\u013c\u016bdas.',
+   parts:[
+    {label:'< 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'4 uzskaites punkti.',fineMin:'240 \u20ac',fineMax:'320 \u20ac + 3 m\u0113n.'},
+    {label:'< 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'4 uzskaites punkti.',fineMin:'360 \u20ac',fineMax:'460 \u20ac + 6 m\u0113n.'},
+    {label:'> 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'4 uzskaites punkti.',fineMin:'480 \u20ac',fineMax:'640 \u20ac + 6 m\u0113n.'},
+    {label:'> 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'4 uzskaites punkti.',fineMin:'700 \u20ac',fineMax:'880 \u20ac + 12 m\u0113n.'}
+   ]},
+  en:{name:'Speeding 51\u201360 km/h over limit',contest:'Can be contested if the measurement procedure was violated or the device had an error.',
+   parts:[
+    {label:'< 7.5t \u2014 outside populated area',desc:'4 demerit points.',fineMin:'240 \u20ac',fineMax:'320 \u20ac + 3 mo. suspension'},
+    {label:'< 7.5t \u2014 populated area / residential zone',desc:'4 demerit points.',fineMin:'360 \u20ac',fineMax:'460 \u20ac + 6 mo. suspension'},
+    {label:'> 7.5t \u2014 outside populated area',desc:'4 demerit points.',fineMin:'480 \u20ac',fineMax:'640 \u20ac + 6 mo. suspension'},
+    {label:'> 7.5t \u2014 populated area / residential zone',desc:'4 demerit points.',fineMin:'700 \u20ac',fineMax:'880 \u20ac + 12 mo. suspension'}
+   ]}},
+
+ {article:'CSL 55.23.\u201355.26. pants',anchor:'#p55',warnMin:false,warn:false,pts:6,parts:true,
+  signsSVG:[sgn(S.lim(90),'309-90'),sgn(S.residential,'533')],
+  fineMax:{ru:'1\u202f400 \u20ac + 12\u201324 \u043c\u0435\u0441. (\u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442)',lv:'1\u202f400 \u20ac + 12\u201324 m\u0113n.',en:'1\u202f400 \u20ac + 12\u201324 mo.'},
+  ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u043d\u0430 61\u201370 \u043a\u043c/\u0447 \u26a0\ufe0f (\u043f\u043e\u043f\u0440\u0430\u0432\u043a\u0438 28.05.2024)',contest:'\u0427\u0430\u0449\u0435 \u0444\u0438\u043a\u0441\u0438\u0440\u0443\u0435\u0442\u0441\u044f \u0444\u043e\u0442\u043e\u0440\u0430\u0434\u0430\u0440\u043e\u043c. \u041e\u0441\u043f\u043e\u0440\u0438\u0442\u044c \u043f\u0440\u0438 \u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0438\u0438 \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u044b \u0438\u043b\u0438 \u043f\u043e\u0433\u0440\u0435\u0448\u043d\u043e\u0441\u0442\u0438 \u043f\u0440\u0438\u0431\u043e\u0440\u0430.',
+   parts:[
+    {label:'< 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'5\u20136 \u0443\u0447. \u0431\u0430\u043b\u043b\u043e\u0432.',fineMin:'720 \u20ac',fineMax:'960 \u20ac + 9 \u043c\u0435\u0441. \u043b\u0438\u0448\u0435\u043d\u0438\u044f'},
+    {label:'< 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'5\u20136 \u0443\u0447. \u0431\u0430\u043b\u043b\u043e\u0432.',fineMin:'1\u202f040 \u20ac',fineMax:'1\u202f400 \u20ac + 9\u201312 \u043c\u0435\u0441. \u043b\u0438\u0448\u0435\u043d\u0438\u044f'},
+    {label:'> 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'6 \u0443\u0447. \u0431\u0430\u043b\u043b\u043e\u0432.',fineMin:'720 \u20ac',fineMax:'960 \u20ac + 12\u201318 \u043c\u0435\u0441. \u043b\u0438\u0448\u0435\u043d\u0438\u044f'},
+    {label:'> 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'6 \u0443\u0447. \u0431\u0430\u043b\u043b\u043e\u0432.',fineMin:'1\u202f040 \u20ac',fineMax:'1\u202f400 \u20ac + 12\u201324 \u043c\u0435\u0441. \u043b\u0438\u0448\u0435\u043d\u0438\u044f'}
+   ]},
+  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana par 61\u201370 km/st \u26a0\ufe0f (grozījumi 28.05.2024)',contest:'Bieži fiksē ar fotoradaru. Var apstr\u012bd\u0113t pie proced\u016bras p\u0101rkāpuma vai ierīces k\u013c\u016bdas.',
+   parts:[
+    {label:'< 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'5\u20136 uzskaites punkti.',fineMin:'720 \u20ac',fineMax:'960 \u20ac + 9 m\u0113n.'},
+    {label:'< 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'5\u20136 uzskaites punkti.',fineMin:'1\u202f040 \u20ac',fineMax:'1\u202f400 \u20ac + 9\u201312 m\u0113n.'},
+    {label:'> 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'6 uzskaites punkti.',fineMin:'720 \u20ac',fineMax:'960 \u20ac + 12\u201318 m\u0113n.'},
+    {label:'> 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'6 uzskaites punkti.',fineMin:'1\u202f040 \u20ac',fineMax:'1\u202f400 \u20ac + 12\u201324 m\u0113n.'}
+   ]},
+  en:{name:'Speeding 61\u201370 km/h over limit \u26a0\ufe0f (amendment 28.05.2024)',contest:'Usually detected by photo radar. Can be contested if procedure was violated or device had an error.',
+   parts:[
+    {label:'< 7.5t \u2014 outside populated area',desc:'5\u20136 demerit points.',fineMin:'720 \u20ac',fineMax:'960 \u20ac + 9 mo. suspension'},
+    {label:'< 7.5t \u2014 populated area / residential zone',desc:'5\u20136 demerit points.',fineMin:'1\u202f040 \u20ac',fineMax:'1\u202f400 \u20ac + 9\u201312 mo. suspension'},
+    {label:'> 7.5t \u2014 outside populated area',desc:'6 demerit points.',fineMin:'720 \u20ac',fineMax:'960 \u20ac + 12\u201318 mo. suspension'},
+    {label:'> 7.5t \u2014 populated area / residential zone',desc:'6 demerit points.',fineMin:'1\u202f040 \u20ac',fineMax:'1\u202f400 \u20ac + 12\u201324 mo. suspension'}
+   ]}},
+
+ {article:'CSL 55.27.+ pants',anchor:'#p55',warnMin:false,warn:false,pts:8,parts:false,
+  signsSVG:[sgn(S.lim(130),'309-130')],
+  fineMax:{ru:'2\u202f000 \u20ac + \u0434\u043e 36 \u043c\u0435\u0441. \u043b\u0438\u0448\u0435\u043d\u0438\u044f',lv:'2\u202f000 \u20ac + l\u012bdz 36 m\u0113n.',en:'2\u202f000 \u20ac + up to 36 mo. suspension'},
+  ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u0431\u043e\u043b\u0435\u0435 \u0447\u0435\u043c \u043d\u0430 70 \u043a\u043c/\u0447 \u26a0\ufe0f (\u043f\u043e\u043f\u0440\u0430\u0432\u043a\u0438 28.05.2024)',desc:'\u041c\u0430\u043a\u0441\u0438\u043c\u0430\u043b\u044c\u043d\u043e\u0435 \u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0438\u0435. \u0428\u0442\u0440\u0430\u0444 1\u202f400\u20132\u202f000 \u20ac + \u043b\u0438\u0448\u0435\u043d\u0438\u0435 \u043f\u0440\u0430\u0432 \u043d\u0430 12\u201336 \u043c\u0435\u0441\u044f\u0446\u0435\u0432. 8 \u0443\u0447\u0451\u0442\u043d\u044b\u0445 \u0431\u0430\u043b\u043b\u043e\u0432.',contest:'\u041e\u0441\u043f\u043e\u0440\u0438\u0442\u044c \u043a\u0440\u0430\u0439\u043d\u0435 \u0441\u043b\u043e\u0436\u043d\u043e. \u041e\u0441\u043d\u043e\u0432\u0430\u043d\u0438\u044f: \u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0438\u0435 \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u044b \u0438\u043b\u0438 \u043f\u043e\u0433\u0440\u0435\u0448\u043d\u043e\u0441\u0442\u044c \u043f\u0440\u0438\u0431\u043e\u0440\u0430.'},
+  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana par vair\u0101k nek\u0101 70 km/st \u26a0\ufe0f (grozījumi 28.05.2024)',desc:'Maksim\u0101lais p\u0101rkāpuma l\u012dmenis. Sods 1\u202f400\u20132\u202f000 \u20ac + ties\u012bbu at\u0146em\u0161ana uz 12\u201336 m\u0113ne\u0161iem. 8 uzskaites punkti.',contest:'Ļoti grūti apstr\u012bd\u0113t. M\u0113r\u012b\u0161anas proced\u016bra un ierīces k\u013c\u016bda \u2014 vienīgie pamati.'},
+  en:{name:'Speeding more than 70 km/h over limit \u26a0\ufe0f (amendment 28.05.2024)',desc:'Maximum speeding offence. Fine 1\u202f400\u20132\u202f000 \u20ac + licence suspension 12\u201336 months. 8 demerit points.',contest:'Extremely difficult to contest. Measurement procedure and device error are the only grounds.'}}
+],
+
+parking:[
+ {article:'CSL 57.1. pants',anchor:'#p57',warnMin:true,warn:true,parts:true,singleFine:true,
+  signsSVG:[sgn(S.noStop,'326'),sgn(S.noPark,'324')],
+  fineMax:{ru:'15 €',lv:'15 €',en:'15 €'},
+  ru:{name:'Незначительные нарушения при остановке',contest:'Оспорить, если разметка или знак неправильно нанесён/установлен, либо остановка была вынужденной.',
+   parts:[
+    {label:'57.1.1. Остановка на левой стороне дороги (если не разрешено)',
+     desc:'Запрещено всем ТС на двухполосных дорогах вне нас. пункта.',fineMin:'Предупреждение',fineMax:'15 €'},
+    {label:'57.1.2. Остановка на проезжей части при наличии обочины',
+     desc:'Должен останавливаться на обочине, если она есть.',fineMin:'Предупреждение',fineMax:'15 €'},
+    {label:'57.1.3. Расстояние до края проезжей части более 0,5 м',
+     desc:'ТС должен стоять не дальше 0,5 м от края проезжей части.',fineMin:'Предупреждение',fineMax:'15 €'},
+    {label:'57.1.4. Остановка, перекрывающая сигналы светофора или знаки',
+     desc:'Знаки или светофор должны быть видны всем участникам.',fineMin:'Предупреждение',fineMax:'15 €'},
+    {label:'57.1.6. Остановка в зоне знаков 920/943/947 (разметка края)',
+     desc:'Знаки 920, 943, 947 обозначают запрещённую для остановки краевую/бордюрную зону.',fineMin:'Предупреждение',fineMax:'15 €'}
+   ]},
+  lv:{name:'Nenozīmīgi apstāšanās pārkāpumi',contest:'Var apstrīdēt, ja apzīmējums vai zīme nav pareiza vai apstāšanās bija piespiedu kārtā.',
+   parts:[
+    {label:'57.1.1. Apstāšanās ceļa kreisajā pusē (ja nav atļauts)',
+     desc:'Aizliegts visiem TL uz divi ceju shosejā ārpus apdzīvotas vietas.',fineMin:'Brīdinājums',fineMax:'15 €'},
+    {label:'57.1.2. Apstāšanās uz brauktuves, ja ceļam ir nomale',
+     desc:'Jāapstājas uz nomalas, ja tā ir pieejama.',fineMin:'Brīdinājums',fineMax:'15 €'},
+    {label:'57.1.3. Tālāk par 0,5 m no brauktuves malas',
+     desc:'TL jāstāv ne tālāk par 0,5 m no brauktuves malas.',fineMin:'Brīdinājums',fineMax:'15 €'},
+    {label:'57.1.4. Apstāšanās, aizsedzot luksofora signālus vai ceļa zīmes',
+     desc:'Zīmes un luksoforis jābūt redzamam visiem dalībniekiem.',fineMin:'Brīdinājums',fineMax:'15 €'},
+    {label:'57.1.6. Apstāšanās zīmju 920/943/947 zonā (malas apzīmējums)',
+     desc:'Zīmes 920, 943, 947 norāda uz apstāšanai aizliegtu malas/apmaļa zonu.',fineMin:'Brīdinājums',fineMax:'15 €'}
+   ]},
+  en:{name:'Minor stopping violations',contest:'Can be contested if marking or sign is incorrect or stopping was forced.',
+   parts:[
+    {label:'57.1.1. Stopping on the left side of the road (where not permitted)',
+     desc:'Prohibited for all vehicles on two-lane roads outside populated areas.',fineMin:'Warning',fineMax:'15 €'},
+    {label:'57.1.2. Stopping on the carriageway when there is a shoulder',
+     desc:'Must stop on the shoulder if available.',fineMin:'Warning',fineMax:'15 €'},
+    {label:'57.1.3. More than 0.5m from the edge of the carriageway',
+     desc:'Vehicle must stand no further than 0.5m from the edge.',fineMin:'Warning',fineMax:'15 €'},
+    {label:'57.1.4. Stopping where it blocks traffic lights or signs',
+     desc:'Signs and traffic lights must remain visible to all participants.',fineMin:'Warning',fineMax:'15 €'},
+    {label:'57.1.6. Stopping in zone of signs 920/943/947 (edge marking)',
+     desc:'Signs 920, 943, 947 indicate a prohibited edge/kerb zone.',fineMin:'Warning',fineMax:'15 €'}
+   ]}},
+
+ {article:'CSL 57.2. pants',anchor:'#p57',warnMin:true,warn:true,parts:true,singleFine:true,
+  signsSVG:[sgn(S.noStop,'326')],
+  fineMax:{ru:'30 €',lv:'30 €',en:'30 €'},
+  ru:{name:'Серьёзные нарушения при остановке',contest:'Оспорить, если знаки установлены неправильно или остановка была вынужденной (aвария).',
+   parts:[
+    {label:'57.2.1. Остановка во 2-м ряду (если не разрешено)',desc:'',fineMin:'Предупреждение',fineMax:'30 €'},
+    {label:'57.2.2. Остановка на мосту, эстакаде, дорожном путепроводе или под ними',desc:'',fineMin:'Предупреждение',fineMax:'30 €'},
+    {label:'57.2.3. До разделительной полосы / противоположного края менее 3 м',desc:'Иные ТС не могут проехать.',fineMin:'Предупреждение',fineMax:'30 €'},
+    {label:'57.2.4. На пешеходном переходе или ближе 5 м от него',desc:'5 м — до и после перехода.',fineMin:'Предупреждение',fineMax:'30 €'},
+    {label:'57.2.5. На перекрёстке или ближе 5 м от него',desc:'',fineMin:'Предупреждение',fineMax:'30 €'},
+    {label:'57.2.6. Ближе 25 м до / 10 м после знаков 541/542/543 (автобусные остановки)',desc:'25 м — до знака, 10 м — после.',fineMin:'Предупреждение',fineMax:'30 €'},
+    {label:'57.2.7. На полосах разгона/торможения',desc:'',fineMin:'Предупреждение',fineMax:'30 €'},
+    {label:'57.2.8. В зоне знака 326 (запрещена остановка)',desc:'Знак 326 полностью запрещает остановку.',fineMin:'Предупреждение',fineMax:'30 €'},
+    {label:'57.2.10. В туннелях',desc:'',fineMin:'Предупреждение',fineMax:'30 €'},
+    {label:'57.2.11. На тротуаре, пешеходном / велосипедном пути (где запрещено)',desc:'',fineMin:'Предупреждение',fineMax:'30 €'}
+   ]},
+  lv:{name:'Nopietnāki apstāšanās pārkāpumi',contest:'Var apstrīdēt, ja zīmes uzstādītas nepareizi vai apstāšanās bija piespiedu kārtā (avārija).',
+   parts:[
+    {label:'57.2.1. Apstāšanās otrajā rindā (ja nav atļauts)',desc:'',fineMin:'Brīdinājums',fineMax:'30 €'},
+    {label:'57.2.2. Apstāšanās uz tiltiem, estakādēm vai zem tiem',desc:'',fineMin:'Brīdinājums',fineMax:'30 €'},
+    {label:'57.2.3. Brauktuves platums līdz sadalošajai joslai < 3 m',desc:'Citi TL nevar brāukt.',fineMin:'Brīdinājums',fineMax:'30 €'},
+    {label:'57.2.4. Uz gājēju pārejas vai tuvāk par 5 m',desc:'5 m — gan pirms, gan pēc pārejas.',fineMin:'Brīdinājums',fineMax:'30 €'},
+    {label:'57.2.5. Krustojumā vai tuvāk par 5 m',desc:'',fineMin:'Brīdinājums',fineMax:'30 €'},
+    {label:'57.2.6. Tuvāk par 25 m pirms / 10 m aiz zīmēm 541/542/543 (pieturvieta)',desc:'25 m — pirms zīmes, 10 m — pēc.',fineMin:'Brīdinājums',fineMax:'30 €'},
+    {label:'57.2.7. Uz ieskrejiena/bremzēšanas joslām',desc:'',fineMin:'Brīdinājums',fineMax:'30 €'},
+    {label:'57.2.8. Zīmes 326 darbības zonā (apstāšanās aizliegta)',desc:'Zīme 326 pilnīgi aizliedz apstāšanos.',fineMin:'Brīdinājums',fineMax:'30 €'},
+    {label:'57.2.10. Tuneļos',desc:'',fineMin:'Brīdinājums',fineMax:'30 €'},
+    {label:'57.2.11. Uz ietvēm, gājēju/veloceļu vai velojoslas (kur aizliegts)',desc:'',fineMin:'Brīdinājums',fineMax:'30 €'}
+   ]},
+  en:{name:'Serious stopping violations',contest:'Can be contested if signs are incorrectly placed or stopping was forced (breakdown).',
+   parts:[
+    {label:'57.2.1. Stopping in second row (where not permitted)',desc:'',fineMin:'Warning',fineMax:'30 €'},
+    {label:'57.2.2. Stopping on a bridge, overpass or flyover / under them',desc:'',fineMin:'Warning',fineMax:'30 €'},
+    {label:'57.2.3. Carriageway width to dividing line / opposite edge < 3m',desc:'Other vehicles cannot pass.',fineMin:'Warning',fineMax:'30 €'},
+    {label:'57.2.4. On a pedestrian crossing or within 5m of one',desc:'5m — before and after the crossing.',fineMin:'Warning',fineMax:'30 €'},
+    {label:'57.2.5. At an intersection or within 5m of one',desc:'',fineMin:'Warning',fineMax:'30 €'},
+    {label:'57.2.6. Within 25m before / 10m after signs 541/542/543 (bus stop)',desc:'25m before sign, 10m after.',fineMin:'Warning',fineMax:'30 €'},
+    {label:'57.2.7. On acceleration or deceleration lanes',desc:'',fineMin:'Warning',fineMax:'30 €'},
+    {label:'57.2.8. In the zone of sign 326 (stopping prohibited)',desc:'Sign 326 fully prohibits stopping.',fineMin:'Warning',fineMax:'30 €'},
+    {label:'57.2.10. In tunnels',desc:'',fineMin:'Warning',fineMax:'30 €'},
+    {label:'57.2.11. On pavements, pedestrian/cycle paths or cycle lanes (where prohibited)',desc:'',fineMin:'Warning',fineMax:'30 €'}
+   ]}},
+
+ {article:'CSL 57.3. pants',anchor:'#p57',warnMin:false,fineMin:'40 €',warn:false,parts:false,singleFine:true,
+  signsSVG:[sgn(S.noStop,'326')],
+  fineMax:{ru:'40 €',lv:'40 €',en:'40 €'},
+  ru:{name:'Остановка, мешающая общественному транспорту или на ж/д переезде',desc:'Остановка, создающая помехи для автобусов, троллейбусов или трамваев, а также остановка на железнодорожном переезде. Без предупреждения.',contest:'Оспорить, если остановка была кратковременной и не создала фактических помех движению.'},
+  lv:{name:'Apstāšanās, traucējot sabiedriskā transporta kūbšanu vai uz dzelzceļa pārbrauktuves',desc:'Apstāšanās, traucējot autobusu, trolejbusu vai tramvaju kūbšanu, kā arī dzelzceļa pārbrauktuve. Bez brīdinājuma.',contest:'Var apstrīdēt, ja apstāšanās bija īslaicīga un faktiski netraucēja kūbšanu.'},
+  en:{name:'Stopping obstructing public transport or stopping on a railway crossing',desc:'Stopping that obstructs buses, trolleybuses or trams, or stopping on a railway crossing. No warning.',contest:'Can be contested if the stop was very brief and did not actually obstruct movement.'}},
+
+ {article:'CSL 57.4.–57.9. pants (stāvēšana)',anchor:'#p57',warnMin:false,fineMin:'30 €',warn:false,parts:true,singleFine:true,
+  signsSVG:[sgn(S.noPark,'324'),sgn(S.park,'501')],
+  fineMax:{ru:'Varĕется от тяжести нарушения',lv:'Atkarīgs no pārkāpuma',en:'Depends on severity'},
+  ru:{name:'Нарушения правил стоянки (длительная)',contest:'Оспорить, если знак 324 установлен неправильно или не виден. Оплата в 15 дней — скидка 25%.',
+   parts:[
+    {label:'Нарушения, аналогичные 57.1. (но выше штраф)',
+     desc:'Те же нарушения, что и 57.1., но водитель оставил ТС без надзора.',fineMin:'30 €',fineMax:'30 €'},
+    {label:'Нарушения, аналогичные 57.2. (но выше штраф)',
+     desc:'Те же нарушения, что и 57.2., но водитель оставил ТС без надзора (sans avertissement).',fineMin:'30 €',fineMax:'30 €'},
+    {label:'Стоянка на месте для инвалидов без разрешения',
+     desc:'Использование места для инвалидов без карты. Значительно выше штраф.',fineMin:'30 €',fineMax:'Значительно выше'}
+   ]},
+  lv:{name:'Stāvēšanas pārkāpumi (ilgstoša)',contest:'Var apstrīdēt, ja zīme 324 uzstādīta nepareizi vai nav redzama. Samāksa 15 dienu laikā — 25% atlaide.',
+   parts:[
+    {label:'Pārkāpumi, analogi 57.1. (augstāks sods)',
+     desc:'Tie paši pārkāpumi kā 57.1., bet vadītājs atstājis TL bez uzraudzības.',fineMin:'30 €',fineMax:'30 €'},
+    {label:'Pārkāpumi, analogi 57.2. (augstāks sods)',
+     desc:'Tie paši pārkāpumi kā 57.2., bet vadītājs atstājis TL bez uzraudzības.',fineMin:'30 €',fineMax:'30 €'},
+    {label:'Stāvēšana invalīdu stāvvietā bez atļaujas',
+     desc:'Invalīdu stāvvietas izmančošana bez Eiropas invalīdu kartes. Ievērojami augstāks sods.',fineMin:'30 €',fineMax:'Ievērojami augstāks'}
+   ]},
+  en:{name:'Parking violations (extended stop)',contest:'Can be contested if sign 324 is incorrectly placed or not visible. Payment within 15 days — 25% discount.',
+   parts:[
+    {label:'Violations analogous to 57.1. (higher fine, no warning)',
+     desc:'Same violations as 57.1. but driver left vehicle unattended.',fineMin:'30 €',fineMax:'30 €'},
+    {label:'Violations analogous to 57.2. (higher fine, no warning)',
+     desc:'Same violations as 57.2. but driver left vehicle unattended.',fineMin:'30 €',fineMax:'30 €'},
+    {label:'Parking in a disabled space without authorisation',
+     desc:'Using a disabled parking space without a European Disability Card. Significantly higher fine.',fineMin:'30 €',fineMax:'Significantly higher'}
+   ]}}
+],
+
+alcohol:[
+ {article:'CSL 62.1. pants',anchor:'#p62',warnMin:false,warn:false,pts:6,parts:false,signsSVG:[],
+  fineMax:{ru:'430 € + 6 мес. лишения',lv:'430 € + 6 mēn.',en:'430 € + 6 mo. suspension'},
+  ru:{name:'0,21–0,50 промилле: проф. водители и стаж < 2 лет',
+   desc:'D, D1, DE, D1E, TRAM, TROL категории или стаж < 2 лет. 6 учётных баллов.',
+   contest:'Оспорить при нарушении процедуры двухэтапного освидетельствования или неисправности прибора.'},
+  lv:{name:'0,21–0,50 promiles: prof. vadītāji un stāžs < 2 g.',
+   desc:'D, D1, DE, D1E, TRAM, TROL kategoriju vadītāji vai ar stāžu < 2 g. 6 uzskaites punkti.',
+   contest:'Var apstrīdēt pie divu posmu pārbaudes procedūras pārkāpuma vai ierīces neprecizitātes.'},
+  en:{name:'0.21–0.50 promille: professional drivers and licence < 2 years',
+   desc:'D, D1, DE, D1E, TRAM, TROL category drivers or drivers with < 2 years experience. 6 demerit points.',
+   contest:'Can be contested if the two-stage testing procedure was violated or the device was faulty.'}},
+
+ {article:'CSL 62.2.2. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:false,signsSVG:[],
+  fineMax:{ru:'640 € + 12 мес. лишения',lv:'640 € + 12 mēn.',en:'640 € + 12 mo. suspension'},
+  ru:{name:'0,51–1,00 промилле: автомобиль, мотоцикл, мопед',
+   desc:'Управление ТС (кроме вело/электросамоката) с 0,51–1,00 промилле. 8 учётных баллов. Лишение на 12 мес.',
+   contest:'Оспорить при нарушении процедуры или если прошло много времени с момента управления.'},
+  lv:{name:'0,51–1,00 promiles: automašīna, motocikls, mopēds',
+   desc:'TL vadīšana (iznēmot velo/elektroskrejriteni) ar 0,51–1,00 promilēm. 8 uzskaites punkti. Tiesību atņemšana uz 12 mēn.',
+   contest:'Var apstrīdēt pie divu posmu pārbaudes procedūras pārkāpuma vai ja laiks kopš TL vadīšanas ir bijis ilgs.'},
+  en:{name:'0.51–1.00 promille: car, motorcycle, moped',
+   desc:'Driving a vehicle (except bicycle/e-scooter) with 0.51–1.00 promille. 8 demerit points. Licence suspension 12 months.',
+   contest:'Can be contested if the two-stage testing procedure was violated or significant time elapsed since driving.'}},
+
+ {article:'CSL 62.3.2. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:false,signsSVG:[],
+  fineMax:{ru:'1 400 € + 3 года лишения',lv:'1 400 € + 3 gadi',en:'1 400 € + 3 years suspension'},
+  ru:{name:'1,01–1,50 промилле: автомобиль, мотоцикл, мопед',
+   desc:'Управление ТС с 1,01–1,50 промилле. 8 учётных баллов. Лишение на 3 года.',
+   contest:'Оспорить практически невозможно. Основания: нарушение протокола или неисправность прибора.'},
+  lv:{name:'1,01–1,50 promiles: automašīna, motocikls, mopēds',
+   desc:'TL vadīšana ar 1,01–1,50 promilēm. 8 uzskaites punkti. Tiesību atņemšana uz 3 gadiem.',
+   contest:'Praktiski neiespējami apstrīdēt. Pamati: protokola pārkāpums, ierīces neprecizitāte.'},
+  en:{name:'1.01–1.50 promille: car, motorcycle, moped',
+   desc:'Driving with 1.01–1.50 promille. 8 demerit points. Licence suspension 3 years.',
+   contest:'Extremely difficult to contest. Grounds: protocol violation, device inaccuracy.'}},
+
+ {article:'CSL 62.4.–62.5. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:true,signsSVG:[],
+  fineMax:{ru:'2 000 € + 5 лет лишения',lv:'2 000 € + 5 gadi',en:'2 000 € + 5 years suspension'},
+  ru:{name:'Более 1,50 промилле или наркотики / психотропные вещества',
+   contest:'Оспорить при нарушении процедуры. При наркотиках: если препарат назначен врачом и уровень не свидетельствует об интоксикации.',
+   parts:[
+    {label:'> 1,50 промилле (авто, мотоцикл, мопед)',desc:'8 учётных баллов.',fineMin:'1 200 €',fineMax:'2 000 € + 5 лет'},
+    {label:'Наркотики, психотропные или токсические вещества',desc:'8 учётных баллов.',fineMin:'1 200 €',fineMax:'2 000 € + 5 лет'}
+   ]},
+  lv:{name:'Vairāk par 1,50 promilēm vai narkotikas / psihotropas vielas',
+   contest:'Var apstrīdēt pie procedūras pārkāpuma. Narkotikām: ja ārsts izrakstījis un līmenis neatbilst intoksikācijai.',
+   parts:[
+    {label:'> 1,50 promiles (auto, motocikls, mopēds)',desc:'8 uzskaites punkti.',fineMin:'1 200 €',fineMax:'2 000 € + 5 gadi'},
+    {label:'Narkotikas, psihotropas vai toksiskas vielas',desc:'8 uzskaites punkti.',fineMin:'1 200 €',fineMax:'2 000 € + 5 gadi'}
+   ]},
+  en:{name:'More than 1.50 promille or narcotics / psychotropic substances',
+   contest:'Can be contested if procedure violated. For narcotics: if prescribed by a doctor and level does not indicate intoxication.',
+   parts:[
+    {label:'> 1.50 promille (car, motorcycle, moped)',desc:'8 demerit points.',fineMin:'1 200 €',fineMax:'2 000 € + 5 years'},
+    {label:'Narcotic, psychotropic or toxic substances',desc:'8 demerit points.',fineMin:'1 200 €',fineMax:'2 000 € + 5 years'}
+   ]}},
+
+ {article:'CSL 62.7.–62.8. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:true,signsSVG:[],
+  fineMax:{ru:'2 000 € + 5 лет лишения',lv:'2 000 € + 5 gadi',en:'2 000 € + 5 years suspension'},
+  ru:{name:'Употребление алкоголя после остановки / отказ от освидетельствования',
+   contest:'Отказ уже является нарушением независимо от состояния. Оспорить практически невозможно.',
+   parts:[
+    {label:'Употребление алкоголя / наркотиков после ДТП или остановки — до проверки',desc:'Потребление после того, как ТС был остановлен, но до теста.',fineMin:'1 200 €',fineMax:'2 000 € + 5 лет'},
+    {label:'Отказ от медицинского освидетельствования',desc:'Отказ от алкотеста или теста на наркотики по требованию полиции.',fineMin:'1 200 €',fineMax:'2 000 € + 5 лет'}
+   ]},
+  lv:{name:'Alkohola/narkotiku lietošana pēc apturēšanas / atteikšanās no pārbaudes',
+   contest:'Atteikuma fakts jau ir pārkāpums. Praktiski neiespējami apstrīdēt.',
+   parts:[
+    {label:'Alkohola vai narkotiku lietošana pēc CSNg vai apturēšanas — pirms pārbaudes',desc:'Alkohola/narkotiku lietošana, kad TL apturēts, bet pirms testa.',fineMin:'1 200 €',fineMax:'2 000 € + 5 gadi'},
+    {label:'Atteikšanās no medicīniskās pārbaudes',desc:'Atteikšanās veikt alkohola vai narkotiku testu pēc policijai pieprasījuma.',fineMin:'1 200 €',fineMax:'2 000 € + 5 gadi'}
+   ]},
+  en:{name:'Consuming alcohol/drugs after being stopped / refusing medical test',
+   contest:'Refusal itself is already a violation. Practically impossible to contest.',
+   parts:[
+    {label:'Consuming alcohol or drugs after accident or stop — before test',desc:'Consuming after vehicle stopped but before taking the test.',fineMin:'1 200 €',fineMax:'2 000 € + 5 years'},
+    {label:'Refusing the medical examination',desc:'Refusing alcohol or drug test at the request of police.',fineMin:'1 200 €',fineMax:'2 000 € + 5 years'}
+   ]}},
+
+ {article:'CSL 62.6. pants',anchor:'#p62',warnMin:false,warn:false,pts:3,parts:false,signsSVG:[],
+  fineMax:{ru:'280 € (sans лишения)',lv:'280 € (bez tiesību atņemšanas)',en:'280 € (no licence suspension)'},
+  ru:{name:'Управление под воздействием медикаментов или в состоянии усталости',
+   desc:'Управление, когда медикаменты снижают скорость реакции, при болезни или при усталости, влияющей на дееспособность. 3 уч. балла. Лишения прав нет.',
+   contest:'Оспорить, если медикаменты фактически не влияли на дееспособность или состояние было неправильно оценено.'},
+  lv:{name:'TL vadīšana medikamentu ietekmē vai noguruma stāvoklī',
+   desc:'TL vadīšana, kad medikamenti samazina reakcijas ātrumu, slimojot vai noguruma pakāpē, kas ietekmē darbspējas. 3 uzskaites punkti. Nav tiesību atņemšanas.',
+   contest:'Var apstrīdēt, ja medikamenti reālajā situācijā nemazināja darbspējas.'},
+  en:{name:'Driving under medication or in state of fatigue',
+   desc:'Driving when medication reduces reaction time, when ill, or when fatigue affects driving capacity. 3 demerit points. No licence suspension.',
+   contest:'Can be contested if medication did not actually impair capacity or the condition was incorrectly assessed.'}}
+],
+
+signals:[
+ {article:'CSL 56. pants + CSN 130. p.',anchor:'#p56',warnMin:false,warn:false,pts:6,parts:false,
+  signsSVG:[sgn(S.redLight,'Luksoforis')],
+  fineMax:{ru:'320 € + лишение до 6 мес.',lv:'320 € + tiesības līdz 6 mēn.',en:'320 € + suspension up to 6 mo.'},
+  ru:{name:'Проезд на запрещающий сигнал светофора',
+   desc:'Проезд на красный или красно-жёлтый сигнал. 6 уч. баллов. Повторное нарушение в течение года — лишение прав.',
+   contest:'Оспорить, если светофор был неисправен или смена сигнала произошла в момент уже начатого манёвра. Требуется запись камеры.'},
+  lv:{name:'Braūkšana caur aizliedzošu luksofora signālu',
+   desc:'Braūkšana caur sarkanu vai sarkani dzeltenu luksofora signālu. 6 uzskaites punkti. Atkārtota pārkāpšana gadā — tiesību atņemšana.',
+   contest:'Var apstrīdēt, ja luksofors bija bojāts vai signāla maiņa notika jau uzsākta manēvera laikā.'},
+  en:{name:'Driving through a prohibitory traffic light signal',
+   desc:'Driving through a red or red-yellow traffic light. 6 demerit points. Repeated violation within a year — licence suspension.',
+   contest:'Can be contested if the traffic light was faulty or the signal changed during an already-commenced manoeuvre.'}},
+
+ {article:'CSN 77. p. — zīme 202',anchor:'#p58',warnMin:false,warn:false,pts:6,parts:false,
+  signsSVG:[sgn(S.stop,'202')],
+  fineMax:{ru:'320 €',lv:'320 €',en:'320 €'},
+  ru:{name:'Несоблюдение знака STOP (202)',
+   desc:'Невыполнение полной остановки перед знаком 202 (стоп-линией) перед проездом. 6 уч. баллов.',
+   contest:'Оспорить, если остановка была выполнена, но не зафиксирована. Требуется запись или свидетели.'},
+  lv:{name:'Ceļa zīmes STOP (202) neievērošana',
+   desc:'Zīmes 202 (STOP) prasības nepildīšana — pilnīga apstāšanās pirms zīmes vai stop līnijas. 6 uzskaites punkti.',
+   contest:'Var apstrīdēt, ja apstāšanās tika veikta, bet netika fiksēta. Nepiecieš.ams videoieraksts vai liecīnieki.'},
+  en:{name:'Failure to comply with STOP sign (202)',
+   desc:'Failure to make a full stop before sign 202 (STOP) or stop line before proceeding. 6 demerit points.',
+   contest:'Can be contested if the stop was made but not recorded. Video recording or witness statements required.'}},
+
+ {article:'CSN 75.–76. p. — zīme 206',anchor:'#p58',warnMin:false,warn:false,pts:4,parts:false,
+  signsSVG:[sgn(S.giveWay,'206'),sgn(S.priority,'401')],
+  fineMax:{ru:'160 €',lv:'160 €',en:'160 €'},
+  ru:{name:'Несоблюдение знака «Уступите дорогу» (206) / нарушение преимущества',
+   desc:'Непредоставление преимущества при наличии знака 206 или правил проезда перекрёстков. 4 уч. балла.',
+   contest:'Оспорить, если преимущество было фактически предоставлено или другой участник сам нарушил ПДД.'},
+  lv:{name:'Zīmes "Dod ceļu" (206) neievērošana / prioritātes pārkāpums',
+   desc:'Ceļa neatlaišana zīmes 206 (dod ceļu) vai krustojumu noteikumu ietekmē. 4 uzskaites punkti.',
+   contest:'Var apstrīdēt, ja prioritāte faktiski tika atlaista vai cits dalībnieks pats pārkāpa noteikumus.'},
+  en:{name:'Failure to comply with Give Way sign (206) / right-of-way violation',
+   desc:'Failure to yield the right of way under sign 206 (give way) or intersection rules. 4 demerit points.',
+   contest:'Can be contested if the right of way was actually yielded or the other party violated the rules.'}},
+
+ {article:'CSN 52.–54. p. — zīmes 301/303',anchor:'#p58',warnMin:false,warn:false,pts:6,parts:false,
+  signsSVG:[sgn(S.noEntry,'301'),sgn(S.oneWay,'303')],
+  fineMax:{ru:'320 €',lv:'320 €',en:'320 €'},
+  ru:{name:'Нарушение знаков запрета въезда (301) или одностороннего движения',
+   desc:'Въезд на улицу с односторонним движением против потока или нарушение знака 301 (въезд запрещён). 6 уч. баллов.',
+   contest:'Оспорить, если знак не был виден, повреждён или установлен без надлежащего уведомления.'},
+  lv:{name:'Zīmju aizlieguma iebraukt (301) vai vienvirziena satiksmes pārkāpums',
+   desc:'Iebraukšana vienvirziena ielas pret satiksmes plūsmu vai zīmes 301 (braukt aizliegts) pārkāpšana. 6 uzskaites punkti.',
+   contest:'Var apstrīdēt, ja zīme nebija redzama, bija bojāta vai uzstādīta bez pienācīga paziņojuma.'},
+  en:{name:'Violation of no-entry sign (301) or one-way traffic',
+   desc:'Entering a one-way street against traffic or violating sign 301 (no entry). 6 demerit points.',
+   contest:'Can be contested if the sign was not visible, damaged or placed without proper notification.'}}
+],
+
+other:[
+ {article:'CSL 58.5. pants',anchor:'#p58',warnMin:false,warn:false,pts:3,parts:false,
+  signsSVG:[sgn(S.noPhone,'Telefons')],
+  fineMax:{ru:'160 €',lv:'160 €',en:'160 €'},
+  ru:{name:'Использование мобильного телефона во время вождения',
+   desc:'Использование телефона или другого устройства без hands-free во время движения. 3 уч. балла.',
+   contest:'Оспорить, если использовалось hands-free или ТС стояло в момент фиксации.'},
+  lv:{name:'Mobilā tālruņa lietošana braūkšanas laikā',
+   desc:'Mobilā telefona vai citas komunikācijas ierīces lietošana bez briva roku ierīces TL vadīšanas laikā. 3 uzskaites punkti.',
+   contest:'Var apstrīdēt, ja tika izmantota brīvroku ierīce vai TL stāvēja fiksācijas brīdī.'},
+  en:{name:'Using a mobile phone while driving',
+   desc:'Using a mobile phone or other communication device without a hands-free device while driving. 3 demerit points.',
+   contest:'Can be contested if a hands-free device was used or the vehicle was stationary at the time of recording.'}},
+
+ {article:'CSL 58.4. pants',anchor:'#p58',warnMin:false,warn:false,pts:3,parts:false,
+  signsSVG:[],
+  fineMax:{ru:'80 €',lv:'80 €',en:'80 €'},
+  ru:{name:'Непристёгнутый ремень безопасности',
+   desc:'Управление ТС без застёгнутого ремня или перевозка пассажира без ремня. 3 уч. балла. Ответственность на водителе.',
+   contest:'Оспорить, если ремень был застёгнут, но не зафиксирован на видео, или если ТС стояло.'},
+  lv:{name:'Nepiesegts drošības josta',
+   desc:'TL vadīšana bez piesegtās drošības jostas vai pasažīra pārvadāšana bez jostas. 3 uzskaites punkti.',
+   contest:'Var apstrīdēt, ja josta bija piesegta, bet netika fiksēta video.'},
+  en:{name:'Unfastened seat belt',
+   desc:'Driving without fastened seat belt or transporting a passenger without a belt. 3 demerit points. Driver is responsible.',
+   contest:'Can be contested if the belt was fastened but not captured on video, or if the vehicle was stationary.'}},
+
+ {article:'CSL 43.1. pants',anchor:'#p43',warnMin:false,warn:false,parts:true,signsSVG:[],
+  fineMax:{ru:'700 € + лишение до 12 мес.',lv:'700 € + tiesības līdz 12 mēn.',en:'700 € + suspension up to 12 mo.'},
+  ru:{name:'Управление ТС без прав / с лишёнными правами',
+   contest:'Оспорить только при технической ошибке в документах.',
+   parts:[
+    {label:'Никогда не имел прав для данной категории',desc:'Первичное нарушение.',fineMin:'140 €',fineMax:'350 €'},
+    {label:'Права аннулированы, приостановлены или срок истёк',desc:'Управление в период запрета.',fineMin:'280 €',fineMax:'700 € + лишение до 12 мес.'}
+   ]},
+  lv:{name:'TL vadīšana bez tiesībam / ar atņemtām tiesībām',
+   contest:'Var apstrīdēt tikai pie tehniskām kļūdām dokumentos.',
+   parts:[
+    {label:'Nekad nav bijušas tiesības attiecīgajai kategorijai',desc:'Primārs pārkāpums.',fineMin:'140 €',fineMax:'350 €'},
+    {label:'Tiesības anulētas, apturētas vai beidzies derīguma termiņš',desc:'TL vadīšana aizlieguma periodā.',fineMin:'280 €',fineMax:'700 € + līdz 12 mēn.'}
+   ]},
+  en:{name:'Driving without licence / with suspended or revoked licence',
+   contest:'Can only be contested in cases of technical errors in documents.',
+   parts:[
+    {label:'Never had a licence for the category',desc:'Primary offence.',fineMin:'140 €',fineMax:'350 €'},
+    {label:'Licence revoked, suspended or expired',desc:'Driving during a prohibition period.',fineMin:'280 €',fineMax:'700 € + up to 12 mo.'}
+   ]}},
+
+ {article:'CSL 43.3. pants (OCTA)',anchor:'#p43',warnMin:false,warn:false,parts:false,signsSVG:[],
+  fineMax:{ru:'700 €',lv:'700 €',en:'700 €'},
+  ru:{name:'Управление ТС без обязательной автогражданской ответственности (OCTA)',
+   desc:'Управление ТС без действующего полиса OCTA. Фиксируется фоторадарами. Повторное в течение года — выше.',
+   contest:'Оспорить, если OCTA был действителен, но не внесён в систему вовремя.'},
+  lv:{name:'TL vadīšana bez OCTA',
+   desc:'TL vadīšana bez spēkā esoša OCTA. Fiksē ar fotoradariem. Atkārtota pārkāpšana gadā — augstāks sods.',
+   contest:'Var apstrīdēt, ja OCTA bija spēkā, bet savlaicīgi netika ievadīts sistēmā.'},
+  en:{name:'Driving without mandatory civil liability insurance (OCTA)',
+   desc:'Driving without a valid OCTA policy. Detected by photo radars. Repeated within a year — higher fine.',
+   contest:'Can be contested if the OCTA policy was valid but not entered into the system on time.'}},
+
+ {article:'CSL 43.5. pants (TO)',anchor:'#p43',warnMin:false,warn:false,parts:false,signsSVG:[],
+  fineMax:{ru:'350 €',lv:'350 €',en:'350 €'},
+  ru:{name:'Управление ТС без техосмотра / с техническими неисправностями',
+   desc:'Управление ТС без действующего талона техосмотра или с неисправностями, угрожающими безопасности.',
+   contest:'Оспорить, если ТО был пройден, но талон не обновлён в системе, или неисправность возникла в пути.'},
+  lv:{name:'TL vadīšana bez tehniskās apskates / ar tehniskiem defektiem',
+   desc:'TL vadīšana bez spēkā esoša tehniskās apskates talona vai ar drošību apdraudošī tehniskām kļūdām.',
+   contest:'Var apstrīdēt, ja TA bija nekārtota, bet talons netika atjaunināts sistēmā.'},
+  en:{name:'Driving without technical inspection / with technical defects',
+   desc:'Driving without a valid technical inspection certificate or with safety-endangering technical defects.',
+   contest:'Can be contested if the inspection was completed but the certificate was not updated in the system.'}}
+]
+};
+
+// ===== RENDERING FUNCTIONS =====
+function getCats(){return currentLaw==='asl'?aslCats:cslCats;}
+function getLaws(){return currentLaw==='asl'?aslLaws:cslLaws;}
+function getUI(){return currentLaw==='asl'?aslUI[lang]:uiStrings.csl[lang];}
+function getBase(){return currentLaw==='asl'?BASE_ASL:BASE_CSL;}
+
+function setLaw(law,btn){
+  currentLaw=law;
+  document.querySelectorAll('.law-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentCat=Object.keys(getCats())[0];
+  document.getElementById('appSubtitle').textContent=getUI().subtitle;
+  document.getElementById('searchInput').placeholder=getUI().placeholder;
+  document.getElementById('searchInput').value='';
+  renderCats();
+  document.getElementById('sectionTitle').textContent=getCats()[currentCat][lang].sec;
+  renderLaws(getLaws()[currentCat]);
 }
 
-function selectCat(el,cat){currentCat=cat;renderCats();document.getElementById('sectionTitle').textContent=cats[cat][lang].sec;document.getElementById('searchInput').value='';renderLaws(laws[cat]);}
-function getFineMin(law){return law.warnMin?ui[lang].warnWord:(law.fineMin||'—');}
+function setLang(l,btn){
+  lang=l;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('appSubtitle').textContent=getUI().subtitle;
+  document.getElementById('searchInput').placeholder=getUI().placeholder;
+  renderCats();
+  document.getElementById('sectionTitle').textContent=getCats()[currentCat][lang].sec;
+  document.getElementById('searchInput').value='';
+  renderLaws(getLaws()[currentCat]);
+}
+
+function renderCats(){
+  const cats=getCats();
+  const aslIcons={admin:'ti-building-bank',order:'ti-shield',lang:'ti-language'};
+  const aslCounts={admin:'ASL 3–8',order:'ASL 9–13.1',lang:'ASL 14–28'};
+  const cslIcons={speed:'ti-gauge',parking:'ti-parking',alcohol:'ti-bottle',signals:'ti-traffic-lights',other:'ti-list-check'};
+  const cslCounts={speed:'CSL 55. p.',parking:'CSL 57. p.',alcohol:'CSL 62. p.',signals:'CSN/CSL',other:'CSL 43–58. p.'};
+  const icons=currentLaw==='asl'?aslIcons:cslIcons;
+  const counts=currentLaw==='asl'?aslCounts:cslCounts;
+  document.getElementById('catGrid').innerHTML=Object.keys(cats).map(k=>`
+    <div class="cat-card${k===currentCat?' active':''}" onclick="selectCat(this,'${k}')">
+      <i class="ti ${icons[k]} cat-icon" aria-hidden="true"></i>
+      <div class="cat-name">${cats[k][lang].name}</div>
+      <div class="cat-count">${counts[k]}</div>
+    </div>`).join('');
+}
+
+function selectCat(el,cat){
+  currentCat=cat;
+  renderCats();
+  document.getElementById('sectionTitle').textContent=getCats()[cat][lang].sec;
+  document.getElementById('searchInput').value='';
+  renderLaws(getLaws()[cat]);
+}
+
+function getFineMin(law){
+  const t=getUI();
+  return law.warnMin?t.warnWord:(law.fineMin||'—');
+}
 
 function renderPartsHTML(law){
+  const t=getUI();
+  const fl={ru:'Штраф',lv:'Sods',en:'Fine'};
   return law[lang].parts.map(p=>`
     <div class="part-block">
       <div class="part-label">${p.label}</div>
-      <div class="part-desc">${p.desc}</div>
+      ${p.desc?`<div class="part-desc">${p.desc}</div>`:''}
       <div class="part-fines">
-        <div class="part-fine-box"><div class="fine-lbl">${ui[lang].min}</div><div class="fine-val">${p.fineMin}</div></div>
-        <div class="part-fine-box"><div class="fine-lbl">${ui[lang].max}</div><div class="fine-val danger">${p.fineMax}</div></div>
+        ${law.singleFine
+          ?`<div class="part-fine-box" style="flex:none;min-width:80px"><div class="fine-lbl">${fl[lang]}</div><div class="fine-val danger">${p.fineMax}</div></div>`
+          :`<div class="part-fine-box"><div class="fine-lbl">${t.min}</div><div class="fine-val">${p.fineMin}</div></div>
+            <div class="part-fine-box"><div class="fine-lbl">${t.max}</div><div class="fine-val danger">${p.fineMax}</div></div>`}
       </div>
     </div>`).join('');
 }
 
 function renderLaws(items){
-  const t=ui[lang];
+  const t=getUI();
   const list=document.getElementById('lawsList');
   if(!items||!items.length){list.innerHTML=`<p class="empty">${t.empty}</p>`;return;}
-  list.innerHTML=items.map((law,i)=>`
-    <div class="law-card" onclick="toggleLaw(this,${i})">
-      <div class="law-top"><div class="law-name">${law[lang].name}</div><i class="ti ti-chevron-down arrow-icon" aria-hidden="true"></i></div>
+  list.innerHTML=items.map((law,i)=>{
+    const maxStr=law.fineMax?law.fineMax[lang]:'—';
+    const maxBadge=maxStr.split('/')[0].trim();
+    const ptsBadge=law.pts?`<span class="badge badge-pts">${law.pts} ${t.pts}</span>`:'';
+    const signHTML=(law.signsSVG&&law.signsSVG.length)
+      ? `<div class="signs-row">${law.signsSVG.join('')}</div>`
+      : '';
+    return `<div class="law-card" onclick="toggleLaw(this,${i})">
+      <div class="law-top">
+        <div class="law-name">${law[lang].name}</div>
+        <i class="ti ti-chevron-down arrow-icon" aria-hidden="true"></i>
+      </div>
       <div class="law-meta">
         ${law.warn?`<span class="badge badge-warn">${t.warn}</span>`:''}
-        <span class="badge badge-fine">max ${law.fineMax[lang].split('/')[0].trim()}</span>
+        <span class="badge badge-fine">max ${maxBadge}</span>
+        ${ptsBadge}
         <span class="badge badge-article">${law.article}</span>
       </div>
       <div class="law-detail" id="detail-${i}">
+        ${signHTML}
         ${law.parts?renderPartsHTML(law):`
           <div class="dl">${t.desc}</div>
           <div class="dt">${law[lang].desc}</div>
-          <div class="fine-row">
-            <div class="fine-box"><div class="fine-lbl">${t.min}</div><div class="fine-val">${getFineMin(law)}</div></div>
-            <div class="fine-box"><div class="fine-lbl">${t.max}</div><div class="fine-val danger">${law.fineMax[lang]}</div></div>
-          </div>`}
+          ${law.singleFine
+            ?`<div class="fine-row"><div class="fine-box"><div class="fine-lbl">${{ru:'Штраф',lv:'Sods',en:'Fine'}[lang]}</div><div class="fine-val danger">${maxStr}</div></div></div>`
+            :`<div class="fine-row">
+                <div class="fine-box"><div class="fine-lbl">${t.min}</div><div class="fine-val">${getFineMin(law)}</div></div>
+                <div class="fine-box"><div class="fine-lbl">${t.max}</div><div class="fine-val danger">${maxStr}</div></div>
+              </div>`}`}
         <div class="dl">${t.howContest}</div>
         <div class="dt">${law[lang].contest}</div>
-        <a class="source-btn" href="${BASE}${law.anchor}" onclick="event.stopPropagation()">
+        <a class="source-btn" href="${getBase()}${law.anchor}" target="_blank" onclick="event.stopPropagation()">
           <i class="ti ti-external-link" aria-hidden="true"></i>${t.sourceBtn}
         </a>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
-function toggleLaw(card,i){const d=document.getElementById('detail-'+i);const open=d.classList.contains('show');document.querySelectorAll('.law-detail').forEach(x=>x.classList.remove('show'));document.querySelectorAll('.law-card').forEach(x=>x.classList.remove('expanded'));if(!open){d.classList.add('show');card.classList.add('expanded');}}
+function toggleLaw(card,i){
+  const d=document.getElementById('detail-'+i);
+  const open=d.classList.contains('show');
+  document.querySelectorAll('.law-detail').forEach(x=>x.classList.remove('show'));
+  document.querySelectorAll('.law-card').forEach(x=>x.classList.remove('expanded'));
+  if(!open){d.classList.add('show');card.classList.add('expanded');}
+}
 
-function filterLaws(){const q=document.getElementById('searchInput').value.toLowerCase();if(!q){renderLaws(laws[currentCat]);return;}const all=Object.values(laws).flat();renderLaws(all.filter(l=>l[lang].name.toLowerCase().includes(q)||l.article.toLowerCase().includes(q)));}
+function filterLaws(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  if(!q){renderLaws(getLaws()[currentCat]);return;}
+  const all=Object.values(getLaws()).flat();
+  renderLaws(all.filter(l=>
+    l[lang].name.toLowerCase().includes(q)||
+    l.article.toLowerCase().includes(q)
+  ));
+}
 
+// ===== INIT =====
 renderCats();
-document.getElementById('sectionTitle').textContent=cats[currentCat][lang].sec;
-renderLaws(laws[currentCat]);
+document.getElementById('appSubtitle').textContent=getUI().subtitle;
+document.getElementById('searchInput').placeholder=getUI().placeholder;
+document.getElementById('sectionTitle').textContent=getCats()[currentCat][lang].sec;
+renderLaws(getLaws()[currentCat]);
 </script>
