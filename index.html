@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"/>
 
+<h2 class="sr-only">LexLV — полный ASL</h2>
 <style>
   * {
     box-sizing: border-box;
@@ -365,6 +366,8 @@
     padding: 24px 0;
     text-align: center;
   }
+  .csn-badge{display:inline-block;font-size:10px;font-weight:600;background:var(--color-brand-light);color:var(--color-brand);padding:2px 8px;border-radius:var(--border-radius-md);margin-left:6px;letter-spacing:0.2px;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:all 0.15s;}.csn-badge:hover{background:var(--color-brand);color:white;}
+  .csn-card-ref{font-size:12px;color:var(--color-brand);background:var(--color-brand-light);border-radius:var(--border-radius-md);padding:5px 12px;margin-top:10px;display:inline-flex;gap:8px;font-weight:500;flex-wrap:wrap;align-items:center;}
   </style>
 <style>
   .law-switcher{display:flex;gap:8px;margin-top:12px;justify-content:center;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:4px;}
@@ -381,8 +384,8 @@
   <div class="app-title">BALT 1</div>
   <div class="app-subtitle" id="appSubtitle">Административное право Латвии · ASL</div>
   <div class="lang-switcher">
-    <button class="lang-btn active" onclick="setLang('ru',this)">RU</button>
-    <button class="lang-btn" onclick="setLang('lv',this)">LV</button>
+    <button class="lang-btn" onclick="setLang('ru',this)">RU</button>
+    <button class="lang-btn active" onclick="setLang('lv',this)">LV</button>
     <button class="lang-btn" onclick="setLang('en',this)">EN</button>
   </div>
   <div class="law-switcher">
@@ -399,7 +402,20 @@
 let lang='lv', currentCat='admin', currentLaw='asl';
 const BASE_ASL='https://likumi.lv/ta/id/314808-administrativo-sodu-likums-par-parkapumiem-parvaldes-sabiedriskas-kartibas-un-valsts-valodas-lietosanas-joma';
 const BASE_CSL='https://likumi.lv/ta/id/45467-celu-satiksmes-likums';
-const BASE_CSN='https://likumi.lv/ta/id/187237-celu-satiksmes-noteikumi';
+const BASE_CSN='https://likumi.lv/ta/id/274865-celu-satiksmes-noteikumi';
+
+// CSN link helper: 'CSN 121.11' -> clickable badge linking to #p121
+function csnLink(ref){
+  if(!ref) return '';
+  var m=ref.match(/CSN (\d+)/);
+  if(!m) return '<span class="csn-badge">'+ref+'</span>';
+  return '<a href="'+BASE_CSN+'#p'+m[1]+'" target="_blank" class="csn-badge" onclick="event.stopPropagation()">'+ref+'</a>';
+}
+// For compound refs like 'CSN 121.1 · CSN 121.2'
+function csnLinks(refs){
+  if(!refs) return '';
+  return refs.split(' · ').map(csnLink).join('');
+}
 
 // ===== SVG ROAD SIGNS =====
 const S={
@@ -417,8 +433,42 @@ const S={
   redLight:`<svg viewBox="0 0 40 68" width="34" height="58" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="2" width="32" height="64" rx="5" fill="#2d3748"/><circle cx="20" cy="16" r="10" fill="#e53e3e"/><circle cx="20" cy="34" r="10" fill="#4a5568"/><circle cx="20" cy="52" r="10" fill="#4a5568"/></svg>`,
   noPhone:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="white" stroke="#e53e3e" stroke-width="6"/><rect x="22" y="11" width="16" height="38" rx="3" fill="#2d3748"/><rect x="26" y="42" width="8" height="3" rx="1.5" fill="#718096"/><line x1="8" y1="52" x2="52" y2="8" stroke="#e53e3e" stroke-width="6"/></svg>`,
   priority:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><rect x="13" y="13" width="34" height="34" rx="3" transform="rotate(45 30 30)" fill="#ECC94B" stroke="white" stroke-width="4"/></svg>`
+,
+  // Sign 327 - Stāvēt aizliegts (red ring, blue fill, single diagonal stripe - NO P letter)
+  noParkZone:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="29" fill="#e53e3e"/><circle cx="30" cy="30" r="21" fill="#3182ce"/><line x1="10" y1="10" x2="50" y2="50" stroke="#e53e3e" stroke-width="13"/></svg>`,
+  s327:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="29" fill="#e53e3e"/><circle cx="30" cy="30" r="21" fill="#3182ce"/><line x1="10" y1="10" x2="50" y2="50" stroke="#e53e3e" stroke-width="13"/></svg>`,
+  // Sign 328 - No parking on odd dates
+  s328:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="29" fill="#e53e3e"/><circle cx="30" cy="30" r="21" fill="#3182ce"/><line x1="10" y1="10" x2="50" y2="50" stroke="#e53e3e" stroke-width="13"/><text x="30" y="22" text-anchor="middle" font-size="9" font-weight="700" fill="white" font-family="Arial,sans-serif">1.3.5</text></svg>`,
+  // Sign 329 - No parking on even dates
+  s329:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="29" fill="#e53e3e"/><circle cx="30" cy="30" r="21" fill="#3182ce"/><line x1="10" y1="10" x2="50" y2="50" stroke="#e53e3e" stroke-width="13"/><text x="30" y="22" text-anchor="middle" font-size="9" font-weight="700" fill="white" font-family="Arial,sans-serif">2.4.6</text></svg>`,
+  // Sign 523 - Zone sign
+  s523:`<svg viewBox="0 0 64 44" width="54" height="37" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="63" height="43" rx="3" fill="white" stroke="#38a169" stroke-width="4"/><text x="32" y="20" text-anchor="middle" font-size="10" font-weight="700" fill="#38a169" font-family="Arial,sans-serif">ZONA</text><text x="32" y="34" text-anchor="middle" font-size="11" font-weight="700" fill="#38a169" font-family="Arial,sans-serif">523</text></svg>`,
+  // Sign 537 - Stāvvieta (parking zone)
+  s537:`<svg viewBox="0 0 52 52" width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="51" height="51" rx="3" fill="#3182ce"/><text x="26" y="38" text-anchor="middle" font-size="36" font-weight="700" fill="white" font-family="Arial,sans-serif">P</text></svg>`,
+  // Sign 539 - Maksas stāvvieta (paid parking)
+  s539:`<svg viewBox="0 0 52 52" width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="51" height="51" rx="3" fill="#3182ce"/><text x="26" y="32" text-anchor="middle" font-size="26" font-weight="700" fill="white" font-family="Arial,sans-serif">P</text><text x="26" y="46" text-anchor="middle" font-size="11" font-weight="600" fill="white" font-family="Arial,sans-serif">€</text></svg>`,
+  // Signs 830-839 - Parking orientation supplementary signs
+  s830:`<svg viewBox="0 0 80 46" width="58" height="34" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="45" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><rect x="13" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="35" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="57" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/></svg>`,
+  s831:`<svg viewBox="0 0 80 46" width="58" height="34" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="45" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><polygon points="8,36 16,10 27,10 19,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="30,36 38,10 49,10 41,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="52,36 60,10 71,10 63,36" fill="none" stroke="#333" stroke-width="1.5"/></svg>`,
+  s832:`<svg viewBox="0 0 80 46" width="58" height="34" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="45" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><polygon points="19,36 8,10 19,10 30,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="41,36 30,10 41,10 52,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="63,36 52,10 63,10 74,36" fill="none" stroke="#333" stroke-width="1.5"/></svg>`,
+  s833:`<svg viewBox="0 0 80 46" width="58" height="34" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="45" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><rect x="8" y="18" width="22" height="13" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="50" y="18" width="22" height="13" rx="1" fill="none" stroke="#333" stroke-width="1.5"/></svg>`,
+  s834:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><rect x="13" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="35" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="57" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">8-18</text></svg>`,
+  s835:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><polygon points="8,36 16,10 27,10 19,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="30,36 38,10 49,10 41,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="52,36 60,10 71,10 63,36" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">8-18</text></svg>`,
+  s836:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><polygon points="19,36 8,10 19,10 30,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="41,36 30,10 41,10 52,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="63,36 52,10 63,10 74,36" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">8-18</text></svg>`,
+  s837:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><rect x="8" y="18" width="22" height="13" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="50" y="18" width="22" height="13" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">8-18</text></svg>`,
+  s838:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><rect x="13" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="35" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="57" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">3.5t</text></svg>`,
+  s839:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><polygon points="8,36 16,10 27,10 19,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="30,36 38,10 49,10 41,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="52,36 60,10 71,10 63,36" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">3.5t</text></svg>`,
+  // Signs 920/943/947 - edge/kerb marking (yellow zigzag)
+  edgeMark:`<svg viewBox="0 0 70 34" width="60" height="29" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="68" height="32" rx="3" fill="#ECC94B" stroke="#888" stroke-width="1.5"/><polyline points="6,26 18,8 30,26 42,8 54,26 64,14" fill="none" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  // Sign 523 - Zone/area sign (green bordered rectangle)
+  zone523:`<svg viewBox="0 0 64 44" width="56" height="38" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="62" height="42" rx="3" fill="white" stroke="#38a169" stroke-width="4"/><text x="32" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="#38a169" font-family="Arial,sans-serif">ZONA</text><text x="32" y="36" text-anchor="middle" font-size="10" fill="#38a169" font-family="Arial,sans-serif">523</text></svg>`,
+  // Signs 830-849 - Parking orientation supplementary signs (white rect, black arrows)
+  parkPerp:`<svg viewBox="0 0 90 52" width="70" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="88" height="50" rx="3" fill="white" stroke="#333" stroke-width="2"/><line x1="20" y1="43" x2="20" y2="17" stroke="#333" stroke-width="3" stroke-linecap="round"/><polygon points="20,10 15,22 25,22" fill="#333"/><line x1="45" y1="43" x2="45" y2="17" stroke="#333" stroke-width="3" stroke-linecap="round"/><polygon points="45,10 40,22 50,22" fill="#333"/><line x1="70" y1="43" x2="70" y2="17" stroke="#333" stroke-width="3" stroke-linecap="round"/><polygon points="70,10 65,22 75,22" fill="#333"/><text x="45" y="50" text-anchor="middle" font-size="7" fill="#555" font-family="Arial,sans-serif">830</text></svg>`,
+  parkAngle:`<svg viewBox="0 0 90 52" width="70" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="88" height="50" rx="3" fill="white" stroke="#333" stroke-width="2"/><line x1="22" y1="42" x2="34" y2="14" stroke="#333" stroke-width="3" stroke-linecap="round"/><polygon points="36,9 28,18 38,21" fill="#333"/><line x1="45" y1="42" x2="57" y2="14" stroke="#333" stroke-width="3" stroke-linecap="round"/><polygon points="59,9 51,18 61,21" fill="#333"/><line x1="64" y1="42" x2="76" y2="14" stroke="#333" stroke-width="3" stroke-linecap="round"/><polygon points="78,9 70,18 80,21" fill="#333"/><text x="45" y="50" text-anchor="middle" font-size="7" fill="#555" font-family="Arial,sans-serif">831/832</text></svg>`,
+  parkParallel:`<svg viewBox="0 0 90 52" width="70" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="88" height="50" rx="3" fill="white" stroke="#333" stroke-width="2"/><rect x="14" y="18" width="20" height="20" rx="2" fill="none" stroke="#333" stroke-width="2"/><rect x="38" y="18" width="20" height="20" rx="2" fill="none" stroke="#333" stroke-width="2"/><rect x="62" y="18" width="20" height="20" rx="2" fill="none" stroke="#333" stroke-width="2"/><line x1="8" y1="44" x2="84" y2="44" stroke="#333" stroke-width="2.5"/><text x="45" y="51" text-anchor="middle" font-size="7" fill="#555" font-family="Arial,sans-serif">833</text></svg>`
 };
-function sgn(svg,label){return `<div class="sign-chip">${svg}<span class="sign-num">${label}</span></div>`;}
+function sgn(svg,label){return '<div class="sign-chip">'+svg+'<span class="sign-num">'+label+'</span></div>';}
+
 
 // ===== UI STRINGS =====
 const uiStrings={
@@ -703,8 +753,8 @@ lang:[
 
 // ===== CSL CATEGORIES =====
 const cslCats={
+  parking:{ru:{name:'Остановка / стоянка',sec:'Нарушения остановки и стоянки · CSL 57. pants'},lv:{name:'Apstāšanās / Stāvēšana',sec:'Apstāšanās un stāvēšanas pārkāpumi · CSL 57. pants'},en:{name:'Stopping / Parking',sec:'Stopping and parking violations · CSL 57. pants'}},
   speed:{ru:{name:'Скорость',sec:'Превышение скорости · CSL 55. pants'},lv:{name:'Ātrums',sec:'Braukšanas ātruma pārsniegšana · CSL 55. pants'},en:{name:'Speed',sec:'Speeding violations · CSL 55. pants'}},
-  parking:{ru:{name:'Парковка / остановка',sec:'Нарушения остановки и парковки · CSL 57. pants'},lv:{name:'Stāvēšana',sec:'Apstāšanās un stāvēšanas pārkāpumi · CSL 57. pants'},en:{name:'Parking / stopping',sec:'Parking and stopping violations · CSL 57. pants'}},
   alcohol:{ru:{name:'Алкоголь / наркотики',sec:'Управление в нетрезвом виде · CSL 62. pants'},lv:{name:'Alkohols / narkotikas',sec:'TL vadīšana reibumā · CSL 62. pants'},en:{name:'Alcohol / drugs',sec:'Driving under influence · CSL 62. pants'}},
   signals:{ru:{name:'Знаки и сигналы',sec:'Нарушения знаков и сигналов · CSL/CSN'},lv:{name:'Zīmes un signāli',sec:'Ceļa zīmju un signālu pārkāpumi · CSL/CSN'},en:{name:'Signs & signals',sec:'Traffic sign and signal violations · CSL/CSN'}},
   other:{ru:{name:'Другие нарушения',sec:'Прочие нарушения ПДД · CSL'},lv:{name:'Citi pārkāpumi',sec:'Citi ceļu satiksmes pārkāpumi · CSL'},en:{name:'Other violations',sec:'Other road traffic violations · CSL'}}
@@ -891,129 +941,181 @@ speed:[
 ],
 
 parking:[
- {article:'CSL 57.1. pants',anchor:'#p57',warnMin:true,warn:true,parts:true,singleFine:true,
-  signsSVG:[sgn(S.noStop,'326'),sgn(S.noPark,'324')],
+ {article:'CSL 57.1. pants',anchor:'#p57',warn:true,parts:true,singleFine:true,
+  signsSVG:[sgn(S.edgeMark,'920/943/947')],
   fineMax:{ru:'15 €',lv:'15 €',en:'15 €'},
-  ru:{name:'Незначительные нарушения при остановке',contest:'Оспорить, если разметка или знак неправильно нанесён/установлен, либо остановка была вынужденной.',
+  ru:{name:'Остановка: незначительные нарушения',contest:'Оспорить, если разметка или знак установлены неправильно, либо остановка была вынужденной.',
    parts:[
-    {label:'57.1.1. Остановка на левой стороне дороги (если не разрешено)',
-     desc:'Запрещено всем ТС на двухполосных дорогах вне нас. пункта.',fineMin:'Предупреждение',fineMax:'15 €'},
-    {label:'57.1.2. Остановка на проезжей части при наличии обочины',
-     desc:'Должен останавливаться на обочине, если она есть.',fineMin:'Предупреждение',fineMax:'15 €'},
-    {label:'57.1.3. Расстояние до края проезжей части более 0,5 м',
-     desc:'ТС должен стоять не дальше 0,5 м от края проезжей части.',fineMin:'Предупреждение',fineMax:'15 €'},
-    {label:'57.1.4. Остановка, перекрывающая сигналы светофора или знаки',
-     desc:'Знаки или светофор должны быть видны всем участникам.',fineMin:'Предупреждение',fineMax:'15 €'},
-    {label:'57.1.6. Остановка в зоне знаков 920/943/947 (разметка края)',
-     desc:'Знаки 920, 943, 947 обозначают запрещённую для остановки краевую/бордюрную зону.',fineMin:'Предупреждение',fineMax:'15 €'}
-   ]},
-  lv:{name:'Nenozīmīgi apstāšanās pārkāpumi',contest:'Var apstrīdēt, ja apzīmējums vai zīme nav pareiza vai apstāšanās bija piespiedu kārtā.',
+    {label:'57.1.1. Остановка на левой стороне дороги (если не разрешено)',desc:'Запрещено на двухполосных дорогах вне нас. пункта.',fineMin:'15 €',fineMax:'15 €'},
+    {label:'57.1.2. Остановка на проезжей части при наличии обочины',desc:'Необходимо остановиться на обочине, если она есть.',fineMin:'15 €',fineMax:'15 €'},
+    {label:'57.1.3. Остановка дальше 0,5 м от края проезжей части',desc:'ТС должно стоять не дальше 0,5 м от края.',fineMin:'15 €',fineMax:'15 €'},
+    {label:'57.1.4. Остановка, перекрывающая сигналы светофора или знаки',desc:'Знаки и светофор должны быть видны всем участникам.',fineMin:'15 €',fineMax:'15 €'},
+    {label:'57.1.6. Остановка в зоне знаков 920 / 943 / 947 (разметка края)',desc:'Знаки 920, 943, 947 указывают запрещённую зону остановки у края.',fineMin:'15 €',fineMax:'15 €'}]},
+  lv:{name:'Apstāšanās: nenozīmīgi pārkāpumi',contest:'Var apstrīdēt, ja apzīmējums vai zīme uzstādīta nepareizi, vai apstāšanās bija piespiedu kārtā.',
    parts:[
-    {label:'57.1.1. Apstāšanās ceļa kreisajā pusē (ja nav atļauts)',
-     desc:'Aizliegts visiem TL uz divi ceju shosejā ārpus apdzīvotas vietas.',fineMin:'Brīdinājums',fineMax:'15 €'},
-    {label:'57.1.2. Apstāšanās uz brauktuves, ja ceļam ir nomale',
-     desc:'Jāapstājas uz nomalas, ja tā ir pieejama.',fineMin:'Brīdinājums',fineMax:'15 €'},
-    {label:'57.1.3. Tālāk par 0,5 m no brauktuves malas',
-     desc:'TL jāstāv ne tālāk par 0,5 m no brauktuves malas.',fineMin:'Brīdinājums',fineMax:'15 €'},
-    {label:'57.1.4. Apstāšanās, aizsedzot luksofora signālus vai ceļa zīmes',
-     desc:'Zīmes un luksoforis jābūt redzamam visiem dalībniekiem.',fineMin:'Brīdinājums',fineMax:'15 €'},
-    {label:'57.1.6. Apstāšanās zīmju 920/943/947 zonā (malas apzīmējums)',
-     desc:'Zīmes 920, 943, 947 norāda uz apstāšanai aizliegtu malas/apmaļa zonu.',fineMin:'Brīdinājums',fineMax:'15 €'}
-   ]},
-  en:{name:'Minor stopping violations',contest:'Can be contested if marking or sign is incorrect or stopping was forced.',
+    {label:'57.1.1. Apstāšanās ceļa kreisajā pusē, kad tas nav atļauts',desc:'Aizliegts uz divjoslu ceļa ārpus apdzīvotas vietas.',fineMin:'15 €',fineMax:'15 €',csn:'CSN 114'},
+    {label:'57.1.2. Apstāšanās uz brauktuves, ja ceļam ir nomale',desc:'Jāapstājas uz nomalas, ja tā ir pieejama.',fineMin:'15 €',fineMax:'15 €',csn:'CSN 114'},
+    {label:'57.1.3. Apstāšanās tālāk par 0,5 m no brauktuves malas',desc:'TL jāstāv ne tālāk par 0,5 m no brauktuves malas.',fineMin:'15 €',fineMax:'15 €',csn:'CSN 114'},
+    {label:'57.1.4. Apstāšanās, aizsedzot luksofora signālus vai ceļa zīmes',desc:'Ceļa zīmēm un luksoforim jābūt redzamam visiem dalībniekiem.',fineMin:'15 €',fineMax:'15 €',csn:'CSN 121.8'},
+    {label:'57.1.6. Apstāšanās zīmju 920 / 943 / 947 darbības zonā (malas apzīmējums)',desc:'Zīmes 920, 943, 947 norāda apstāšanai aizliegtu malas zonu.',fineMin:'15 €',fineMax:'15 €',csn:'CSN 121.12'}]},
+  en:{name:'Stopping: minor violations',contest:'Can be contested if marking or sign is incorrectly placed, or stopping was forced.',
    parts:[
-    {label:'57.1.1. Stopping on the left side of the road (where not permitted)',
-     desc:'Prohibited for all vehicles on two-lane roads outside populated areas.',fineMin:'Warning',fineMax:'15 €'},
-    {label:'57.1.2. Stopping on the carriageway when there is a shoulder',
-     desc:'Must stop on the shoulder if available.',fineMin:'Warning',fineMax:'15 €'},
-    {label:'57.1.3. More than 0.5m from the edge of the carriageway',
-     desc:'Vehicle must stand no further than 0.5m from the edge.',fineMin:'Warning',fineMax:'15 €'},
-    {label:'57.1.4. Stopping where it blocks traffic lights or signs',
-     desc:'Signs and traffic lights must remain visible to all participants.',fineMin:'Warning',fineMax:'15 €'},
-    {label:'57.1.6. Stopping in zone of signs 920/943/947 (edge marking)',
-     desc:'Signs 920, 943, 947 indicate a prohibited edge/kerb zone.',fineMin:'Warning',fineMax:'15 €'}
-   ]}},
+    {label:'57.1.1. Stopping on the left side of the road (where not permitted)',desc:'Prohibited on two-lane roads outside populated areas.',fineMin:'15 €',fineMax:'15 €'},
+    {label:'57.1.2. Stopping on the carriageway when a shoulder is available',desc:'Must stop on the shoulder if available.',fineMin:'15 €',fineMax:'15 €'},
+    {label:'57.1.3. Stopping more than 0.5m from the edge of the carriageway',desc:'Vehicle must stand no further than 0.5m from the edge.',fineMin:'15 €',fineMax:'15 €'},
+    {label:'57.1.4. Stopping where it blocks traffic lights or signs',desc:'Signs and traffic lights must remain visible to all participants.',fineMin:'15 €',fineMax:'15 €'},
+    {label:'57.1.6. Stopping in zone of signs 920 / 943 / 947 (edge marking)',desc:'Signs 920, 943, 947 indicate a prohibited stopping zone at the edge.',fineMin:'15 €',fineMax:'15 €'}]}},
 
- {article:'CSL 57.2. pants',anchor:'#p57',warnMin:true,warn:true,parts:true,singleFine:true,
+ {article:'CSL 57.2. pants',anchor:'#p57',warn:true,parts:true,singleFine:true,
   signsSVG:[sgn(S.noStop,'326')],
   fineMax:{ru:'30 €',lv:'30 €',en:'30 €'},
-  ru:{name:'Серьёзные нарушения при остановке',contest:'Оспорить, если знаки установлены неправильно или остановка была вынужденной (aвария).',
+  ru:{name:'Остановка: серьёзные нарушения',contest:'Оспорить, если знаки установлены неправильно или остановка была вынужденной (авария, поломка).',
    parts:[
-    {label:'57.2.1. Остановка во 2-м ряду (если не разрешено)',desc:'',fineMin:'Предупреждение',fineMax:'30 €'},
-    {label:'57.2.2. Остановка на мосту, эстакаде, дорожном путепроводе или под ними',desc:'',fineMin:'Предупреждение',fineMax:'30 €'},
-    {label:'57.2.3. До разделительной полосы / противоположного края менее 3 м',desc:'Иные ТС не могут проехать.',fineMin:'Предупреждение',fineMax:'30 €'},
-    {label:'57.2.4. На пешеходном переходе или ближе 5 м от него',desc:'5 м — до и после перехода.',fineMin:'Предупреждение',fineMax:'30 €'},
-    {label:'57.2.5. На перекрёстке или ближе 5 м от него',desc:'',fineMin:'Предупреждение',fineMax:'30 €'},
-    {label:'57.2.6. Ближе 25 м до / 10 м после знаков 541/542/543 (автобусные остановки)',desc:'25 м — до знака, 10 м — после.',fineMin:'Предупреждение',fineMax:'30 €'},
-    {label:'57.2.7. На полосах разгона/торможения',desc:'',fineMin:'Предупреждение',fineMax:'30 €'},
-    {label:'57.2.8. В зоне знака 326 (запрещена остановка)',desc:'Знак 326 полностью запрещает остановку.',fineMin:'Предупреждение',fineMax:'30 €'},
-    {label:'57.2.10. В туннелях',desc:'',fineMin:'Предупреждение',fineMax:'30 €'},
-    {label:'57.2.11. На тротуаре, пешеходном / велосипедном пути (где запрещено)',desc:'',fineMin:'Предупреждение',fineMax:'30 €'}
-   ]},
-  lv:{name:'Nopietnāki apstāšanās pārkāpumi',contest:'Var apstrīdēt, ja zīmes uzstādītas nepareizi vai apstāšanās bija piespiedu kārtā (avārija).',
+    {label:'57.2.1. Остановка во 2-м ряду (если не разрешено)',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.2. На мосту, эстакаде, путепроводе или под ними',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.3. Ширина до разделительной полосы или противопол. края < 3 м',desc:'Другие ТС не могут проехать мимо.',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.4. На пешеходном переходе или ближе 5 м от него',desc:'5 м — как до, так и после перехода.',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.5. На перекрёстке или ближе 5 м от него',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.6. Ближе 25 м до / 10 м после знаков 541–543 (автобусная остановка)',desc:'25 м — до знака, 10 м — после.',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.7. На полосах разгона или торможения',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.8. В зоне знака 326 (остановка запрещена)',desc:'Знак 326 полностью запрещает остановку.',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.10. В туннелях',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.11. На тротуаре, пешеходном или велосипедном пути (где запрещено)',desc:'',fineMin:'30 €',fineMax:'30 €'}]},
+  lv:{name:'Apstāšanās: nopietni pārkāpumi',contest:'Var apstrīdēt, ja zīmes uzstādītas nepareizi vai apstāšanās bija piespiedu kārtā (avārija, bojājums).',
    parts:[
-    {label:'57.2.1. Apstāšanās otrajā rindā (ja nav atļauts)',desc:'',fineMin:'Brīdinājums',fineMax:'30 €'},
-    {label:'57.2.2. Apstāšanās uz tiltiem, estakādēm vai zem tiem',desc:'',fineMin:'Brīdinājums',fineMax:'30 €'},
-    {label:'57.2.3. Brauktuves platums līdz sadalošajai joslai < 3 m',desc:'Citi TL nevar brāukt.',fineMin:'Brīdinājums',fineMax:'30 €'},
-    {label:'57.2.4. Uz gājēju pārejas vai tuvāk par 5 m',desc:'5 m — gan pirms, gan pēc pārejas.',fineMin:'Brīdinājums',fineMax:'30 €'},
-    {label:'57.2.5. Krustojumā vai tuvāk par 5 m',desc:'',fineMin:'Brīdinājums',fineMax:'30 €'},
-    {label:'57.2.6. Tuvāk par 25 m pirms / 10 m aiz zīmēm 541/542/543 (pieturvieta)',desc:'25 m — pirms zīmes, 10 m — pēc.',fineMin:'Brīdinājums',fineMax:'30 €'},
-    {label:'57.2.7. Uz ieskrejiena/bremzēšanas joslām',desc:'',fineMin:'Brīdinājums',fineMax:'30 €'},
-    {label:'57.2.8. Zīmes 326 darbības zonā (apstāšanās aizliegta)',desc:'Zīme 326 pilnīgi aizliedz apstāšanos.',fineMin:'Brīdinājums',fineMax:'30 €'},
-    {label:'57.2.10. Tuneļos',desc:'',fineMin:'Brīdinājums',fineMax:'30 €'},
-    {label:'57.2.11. Uz ietvēm, gājēju/veloceļu vai velojoslas (kur aizliegts)',desc:'',fineMin:'Brīdinājums',fineMax:'30 €'}
-   ]},
-  en:{name:'Serious stopping violations',contest:'Can be contested if signs are incorrectly placed or stopping was forced (breakdown).',
+    {label:'57.2.1. Apstāšanās otrajā rindā, kad tas nav atļauts',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 116'},
+    {label:'57.2.2. Uz tilta, estakādes, ceļa pārvada vai zem tiem',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 121.3'},
+    {label:'57.2.3. Attālums līdz sadalošajai joslai vai pretējai malai < 3 m',desc:'Citi TL nevar braukt garām.',fineMin:'30 €',fineMax:'30 €',csn:'CSN 121.4'},
+    {label:'57.2.4. Uz gājēju pārejas vai tuvāk par 5 m no tās',desc:'5 m — gan pirms, gan pēc pārejas.',fineMin:'30 €',fineMax:'30 €',csn:'CSN 121.5'},
+    {label:'57.2.5. Krustojumā vai tuvāk par 5 m no tā',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 121.6'},
+    {label:'57.2.6. Tuvāk par 25 m pirms / 10 m aiz zīmēm 541–543 (pieturvieta)',desc:'25 m — pirms zīmes, 10 m — aiz tās.',fineMin:'30 €',fineMax:'30 €',csn:'CSN 121.7'},
+    {label:'57.2.7. Uz ieskrējiena vai bremzēšanas joslas',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 121.10'},
+    {label:'57.2.8. Zīmes 326 (apstāšanās aizliegta) darbības zonā',desc:'Zīme 326 pilnīgi aizliedz apstāšanos.',fineMin:'30 €',fineMax:'30 €',csn:'CSN 121.11'},
+    {label:'57.2.10. Tuneļos',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 121.2'},
+    {label:'57.2.11. Uz ietves, gājēju vai veloceļa (kur aizliegts)',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 121.9'}]},
+  en:{name:'Stopping: serious violations',contest:'Can be contested if signs are incorrectly placed or stopping was forced (accident, breakdown).',
    parts:[
-    {label:'57.2.1. Stopping in second row (where not permitted)',desc:'',fineMin:'Warning',fineMax:'30 €'},
-    {label:'57.2.2. Stopping on a bridge, overpass or flyover / under them',desc:'',fineMin:'Warning',fineMax:'30 €'},
-    {label:'57.2.3. Carriageway width to dividing line / opposite edge < 3m',desc:'Other vehicles cannot pass.',fineMin:'Warning',fineMax:'30 €'},
-    {label:'57.2.4. On a pedestrian crossing or within 5m of one',desc:'5m — before and after the crossing.',fineMin:'Warning',fineMax:'30 €'},
-    {label:'57.2.5. At an intersection or within 5m of one',desc:'',fineMin:'Warning',fineMax:'30 €'},
-    {label:'57.2.6. Within 25m before / 10m after signs 541/542/543 (bus stop)',desc:'25m before sign, 10m after.',fineMin:'Warning',fineMax:'30 €'},
-    {label:'57.2.7. On acceleration or deceleration lanes',desc:'',fineMin:'Warning',fineMax:'30 €'},
-    {label:'57.2.8. In the zone of sign 326 (stopping prohibited)',desc:'Sign 326 fully prohibits stopping.',fineMin:'Warning',fineMax:'30 €'},
-    {label:'57.2.10. In tunnels',desc:'',fineMin:'Warning',fineMax:'30 €'},
-    {label:'57.2.11. On pavements, pedestrian/cycle paths or cycle lanes (where prohibited)',desc:'',fineMin:'Warning',fineMax:'30 €'}
-   ]}},
+    {label:'57.2.1. Stopping in second row (where not permitted)',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.2. On a bridge, overpass or flyover / under them',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.3. Width to dividing line or opposite edge < 3m',desc:'Other vehicles cannot pass.',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.4. On a pedestrian crossing or within 5m',desc:'5m — before and after the crossing.',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.5. At an intersection or within 5m',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.6. Within 25m before / 10m after signs 541–543 (bus stop)',desc:'25m before sign, 10m after.',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.7. On acceleration or deceleration lanes',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.8. In zone of sign 326 (stopping prohibited)',desc:'Sign 326 fully prohibits stopping.',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.10. In tunnels',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.2.11. On pavement, pedestrian or cycle path (where prohibited)',desc:'',fineMin:'30 €',fineMax:'30 €'}]}},
 
- {article:'CSL 57.3. pants',anchor:'#p57',warnMin:false,fineMin:'40 €',warn:false,parts:false,singleFine:true,
-  signsSVG:[sgn(S.noStop,'326')],
+ {csnRef:'CSN 121.1 · CSN 121.2',article:'CSL 57.3. pants',anchor:'#p57',warn:false,parts:false,singleFine:true,
+  signsSVG:[],
   fineMax:{ru:'40 €',lv:'40 €',en:'40 €'},
-  ru:{name:'Остановка, мешающая общественному транспорту или на ж/д переезде',desc:'Остановка, создающая помехи для автобусов, троллейбусов или трамваев, а также остановка на железнодорожном переезде. Без предупреждения.',contest:'Оспорить, если остановка была кратковременной и не создала фактических помех движению.'},
-  lv:{name:'Apstāšanās, traucējot sabiedriskā transporta kūbšanu vai uz dzelzceļa pārbrauktuves',desc:'Apstāšanās, traucējot autobusu, trolejbusu vai tramvaju kūbšanu, kā arī dzelzceļa pārbrauktuve. Bez brīdinājuma.',contest:'Var apstrīdēt, ja apstāšanās bija īslaicīga un faktiski netraucēja kūbšanu.'},
-  en:{name:'Stopping obstructing public transport or stopping on a railway crossing',desc:'Stopping that obstructs buses, trolleybuses or trams, or stopping on a railway crossing. No warning.',contest:'Can be contested if the stop was very brief and did not actually obstruct movement.'}},
+  ru:{name:'Остановка, мешающая общественному транспорту или на ж/д переезде',desc:'Остановка, создающая помехи автобусам, троллейбусам или трамваям, а также остановка на железнодорожном переезде.',contest:'Оспорить, если остановка была кратковременной и не создала фактических помех движению.'},
+  lv:{name:'Apstāšanās, kas traucē sabiedriskā transporta kustību, vai uz dzelzceļa pārbrauktuves',desc:'Apstāšanās, kas traucē autobusu, trolejbusu vai tramvaju kustību, kā arī apstāšanās uz dzelzceļa pārbrauktuves.',contest:'Var apstrīdēt, ja apstāšanās bija īslaicīga un faktiski netraucēja satiksmes kustību.'},
+  en:{name:'Stopping obstructing public transport or on a railway crossing',desc:'Stopping that obstructs buses, trolleybuses or trams, or stopping on a railway crossing.',contest:'Can be contested if the stop was very brief and did not actually obstruct movement.'}},
 
- {article:'CSL 57.4.–57.9. pants (stāvēšana)',anchor:'#p57',warnMin:false,fineMin:'30 €',warn:false,parts:true,singleFine:true,
-  signsSVG:[sgn(S.noPark,'324'),sgn(S.park,'501')],
-  fineMax:{ru:'Varĕется от тяжести нарушения',lv:'Atkarīgs no pārkāpuma',en:'Depends on severity'},
-  ru:{name:'Нарушения правил стоянки (длительная)',contest:'Оспорить, если знак 324 установлен неправильно или не виден. Оплата в 15 дней — скидка 25%.',
+ {article:'CSL 57.4. pants',anchor:'#p57',warn:false,parts:true,singleFine:true,
+  signsSVG:[sgn(S.edgeMark,'920/943/947')],
+  fineMax:{ru:'30 €',lv:'30 €',en:'30 €'},
+  ru:{name:'Стоянка: нарушения аналогичные 57.1 (водитель отсутствует)',contest:'Оспорить, если знак установлен неправильно или не виден. Оплата в течение 15 дней — скидка 25%.',
    parts:[
-    {label:'Нарушения, аналогичные 57.1. (но выше штраф)',
-     desc:'Те же нарушения, что и 57.1., но водитель оставил ТС без надзора.',fineMin:'30 €',fineMax:'30 €'},
-    {label:'Нарушения, аналогичные 57.2. (но выше штраф)',
-     desc:'Те же нарушения, что и 57.2., но водитель оставил ТС без надзора (sans avertissement).',fineMin:'30 €',fineMax:'30 €'},
-    {label:'Стоянка на месте для инвалидов без разрешения',
-     desc:'Использование места для инвалидов без карты. Значительно выше штраф.',fineMin:'30 €',fineMax:'Значительно выше'}
-   ]},
-  lv:{name:'Stāvēšanas pārkāpumi (ilgstoša)',contest:'Var apstrīdēt, ja zīme 324 uzstādīta nepareizi vai nav redzama. Samāksa 15 dienu laikā — 25% atlaide.',
+    {label:'57.4.1. Стоянка на левой стороне дороги (если не разрешено)',desc:'Водитель отсутствует — вместо предупреждения сразу штраф.',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.4.2. Стоянка на проезжей части при наличии обочины',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.4.3. Стоянка дальше 0,5 м от края проезжей части',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.4.4. Стоянка, перекрывающая сигналы светофора или знаки',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.4.5. Стоянка на тротуаре, пешеходном или велосипедном пути (где запрещено)',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.4.6. Стоянка в зоне знаков 920 / 943 / 947 (разметка края)',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.4.7. Стоянка ближе 100 м от ж/д переезда вне нас. пункта или ближе 50 м в нас. пункте',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.4.8. Стоянка в месте, к которому нельзя подъехать без нарушения ПДД',desc:'Блокировка других участников.',fineMin:'30 €',fineMax:'30 €'}]},
+  lv:{name:'Stāvēšana: pārkāpumi, analogi 57.1 (vadītājs nav klāt)',contest:'Var apstrīdēt, ja zīme uzstādīta nepareizi vai nav redzama. Samaksa 15 dienu laikā — 25% atlaide.',
    parts:[
-    {label:'Pārkāpumi, analogi 57.1. (augstāks sods)',
-     desc:'Tie paši pārkāpumi kā 57.1., bet vadītājs atstājis TL bez uzraudzības.',fineMin:'30 €',fineMax:'30 €'},
-    {label:'Pārkāpumi, analogi 57.2. (augstāks sods)',
-     desc:'Tie paši pārkāpumi kā 57.2., bet vadītājs atstājis TL bez uzraudzības.',fineMin:'30 €',fineMax:'30 €'},
-    {label:'Stāvēšana invalīdu stāvvietā bez atļaujas',
-     desc:'Invalīdu stāvvietas izmančošana bez Eiropas invalīdu kartes. Ievērojami augstāks sods.',fineMin:'30 €',fineMax:'Ievērojami augstāks'}
-   ]},
-  en:{name:'Parking violations (extended stop)',contest:'Can be contested if sign 324 is incorrectly placed or not visible. Payment within 15 days — 25% discount.',
+    {label:'57.4.1. Stāvēšana ceļa kreisajā pusē, kad tas nav atļauts',desc:'Vadītāja prombūtne — brīdinājuma vietā uzreiz naudas sods.',fineMin:'30 €',fineMax:'30 €',csn:'CSN 114'},
+    {label:'57.4.2. Stāvēšana uz brauktuves, ja ceļam ir nomale',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 114'},
+    {label:'57.4.3. Stāvēšana tālāk par 0,5 m no brauktuves malas',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 114'},
+    {label:'57.4.4. Stāvēšana, aizsedzot luksofora signālus vai ceļa zīmes',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 121.8'},
+    {label:'57.4.5. Stāvēšana uz ietves, gājēju vai veloceļa (kur aizliegts)',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 121.9'},
+    {label:'57.4.6. Stāvēšana zīmju 920 / 943 / 947 darbības zonā (malas apzīmējums)',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 121.12'},
+    {label:'57.4.7. Stāvēšana tuvāk par 100 m no dzelzceļa pārbrauktuves ārpus apdzīvotas vietas vai tuvāk par 50 m apdzīvotā vietā',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 122.1'},
+    {label:'57.4.8. Stāvēšana vietā, kur nevar piebraukt, nepārkāpjot CSN',desc:'Citu dalībnieku bloķēšana.',fineMin:'30 €',fineMax:'30 €',csn:'CSN 114'}]},
+  en:{name:'Parking: violations analogous to 57.1 (driver absent)',contest:'Can be contested if the sign is incorrectly placed or not visible. Payment within 15 days — 25% discount.',
    parts:[
-    {label:'Violations analogous to 57.1. (higher fine, no warning)',
-     desc:'Same violations as 57.1. but driver left vehicle unattended.',fineMin:'30 €',fineMax:'30 €'},
-    {label:'Violations analogous to 57.2. (higher fine, no warning)',
-     desc:'Same violations as 57.2. but driver left vehicle unattended.',fineMin:'30 €',fineMax:'30 €'},
-    {label:'Parking in a disabled space without authorisation',
-     desc:'Using a disabled parking space without a European Disability Card. Significantly higher fine.',fineMin:'30 €',fineMax:'Significantly higher'}
-   ]}}
+    {label:'57.4.1. Parking on the left side of the road (where not permitted)',desc:'Driver absent — fine instead of warning.',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.4.2. Parking on the carriageway when a shoulder is available',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.4.3. Parking more than 0.5m from the edge of the carriageway',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.4.4. Parking where it blocks traffic lights or signs',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.4.5. Parking on pavement, pedestrian or cycle path (where prohibited)',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.4.6. Parking in zone of signs 920 / 943 / 947 (edge marking)',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.4.7. Parking within 100m of a railway crossing outside populated area or within 50m inside',desc:'',fineMin:'30 €',fineMax:'30 €'},
+    {label:'57.4.8. Parking where access is only possible by violating traffic rules',desc:'Blocking other road users.',fineMin:'30 €',fineMax:'30 €'}]}},
+
+ {article:'CSL 57.5. pants',anchor:'#p57',warn:false,parts:true,singleFine:true,
+  signsSVG:[sgn(S.noStop,'326'),sgn(S.s327,'327'),sgn(S.s328,'328'),sgn(S.s329,'329'),sgn(S.s523,'523'),sgn(S.edgeMark,'944/945')],
+  fineMax:{ru:'40 €',lv:'40 €',en:'40 €'},
+  ru:{name:'Стоянка: серьёзные нарушения',contest:'Оспорить, если знаки установлены неправильно или место нарушения обозначено не по нормам. Оплата в 15 дней — скидка 25%.',
+   parts:[
+    {label:'57.5.1. Стоянка во 2-м ряду',desc:'Блокировка движения других ТС.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.3. Стоянка на проезжей части у опасного поворота / перегиба — видимость < 100 м (вне нас. пункта)',desc:'Частично или полностью на проезжей части в месте, где видимость хотя бы в одном направлении менее 100 м.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.4. Стоянка в месте, где ТС мешает проезду других ТС или пешеходам',desc:'Создание помех как для транспорта, так и для пешеходов.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.5. На мосту, эстакаде, путепроводе или под ними',desc:'',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.6. Расстояние до сплошной линии, разделительной полосы или противопол. края < 3 м',desc:'Другие ТС не могут проехать мимо.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.7. На пешеходном переходе или месте пересечения велодорожки с проезжей частью, либо ближе 5 м',desc:'5 м — как до, так и после.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.8. На перекрёстке или ближе 5 м от него',desc:'',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.9. Ближе 25 м до / 10 м после знаков 541–543 (автобусная остановка)',desc:'25 м — до знака, 10 м — после.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.10. На полосах разгона или торможения',desc:'',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.11. В зоне знака 326 (остановка запрещена)',desc:'Знак 326 запрещает как остановку, так и стоянку.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.12. В зоне знаков 327 / 328 / 329 или на территории со знаком 523',desc:'Знаки 327 (стоянка запрещена), 328/329 (по чётным/нечётным дням), 523 (зона ограниченной стоянки).',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.13. В зонах знаков 944 / 945 (специальная разметка края)',desc:'Знаки 944, 945 указывают особый запрет стоянки у края дороги.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.14. В туннелях',desc:'',fineMin:'40 €',fineMax:'40 €'}]},
+  lv:{name:'Stāvēšana: nopietni pārkāpumi',contest:'Var apstrīdēt, ja zīmes uzstādītas nepareizi vai pārkāpuma vieta nav apzīmēta atbilstoši normām. Samaksa 15 dienu laikā — 25% atlaide.',
+   parts:[
+    {label:'57.5.1. Stāvēšana otrajā rindā',desc:'Citu TL kustības bloķēšana.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 116'},
+    {label:'57.5.3. Stāvēšana uz brauktuves bīstamu pagriezienu tuvumā — redzamība < 100 m (ārpus apdzīvotas vietas)',desc:'Daļēji vai pilnīgi uz brauktuves vietā, kur redzamība vismaz vienā virzienā ir mazāka par 100 m.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 121.13'},
+    {label:'57.5.4. Stāvēšana vietā, kur TL neļauj braukt citiem TL vai traucē gājēju pārvietošanos',desc:'Traucēšana gan transportam, gan gājējiem.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 122.2'},
+    {label:'57.5.5. Uz tilta, estakādes, ceļa pārvada vai zem tiem',desc:'',fineMin:'40 €',fineMax:'40 €',csn:'CSN 121.3'},
+    {label:'57.5.6. Attālums līdz nepārtrauktajai līnijai, sadalošajai joslai vai pretējai malai < 3 m',desc:'Citi TL nevar braukt garām.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 121.4'},
+    {label:'57.5.7. Uz gājēju pārejas vai vietas, kur veloceļš šķērso brauktuvi, vai tuvāk par 5 m',desc:'5 m — gan pirms, gan pēc.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 121.5'},
+    {label:'57.5.8. Krustojumā vai tuvāk par 5 m no tā',desc:'',fineMin:'40 €',fineMax:'40 €',csn:'CSN 121.6'},
+    {label:'57.5.9. Tuvāk par 25 m pirms / 10 m aiz zīmēm 541–543 (pieturvieta)',desc:'25 m — pirms zīmes, 10 m — aiz tās.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 121.7'},
+    {label:'57.5.10. Uz ieskrējiena vai bremzēšanas joslas',desc:'',fineMin:'40 €',fineMax:'40 €',csn:'CSN 121.10'},
+    {label:'57.5.11. Zīmes 326 (apstāšanās aizliegta) darbības zonā',desc:'Zīme 326 aizliedz gan apstāšanos, gan stāvēšanu.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 121.11'},
+    {label:'57.5.12. Zīmju 327 / 328 / 329 darbības zonā vai teritorijā ar zīmi 523',desc:'327 (stāvēšana aizliegta), 328/329 (nepāra/pāra datumos), 523 (ierobežotas stāvēšanas zona).',fineMin:'40 €',fineMax:'40 €',csn:'CSN 122.3'},
+    {label:'57.5.13. Vietās ar zīmēm 944 / 945 (īpašs malas apzīmējums)',desc:'Zīmes 944, 945 norāda īpašu stāvēšanas aizliegumu pie ceļa malas.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 122.4'},
+    {label:'57.5.14. Tuneļos',desc:'',fineMin:'40 €',fineMax:'40 €',csn:'CSN 121.2'}]},
+  en:{name:'Parking: serious violations',contest:'Can be contested if signs are incorrectly placed or the prohibited zone is not properly marked. Payment within 15 days — 25% discount.',
+   parts:[
+    {label:'57.5.1. Parking in second row',desc:'Blocking the movement of other vehicles.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.3. Parking on carriageway near dangerous bends — visibility < 100m (outside populated area)',desc:'Partially or fully on the carriageway where visibility in at least one direction is less than 100m.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.4. Parking where vehicle prevents other vehicles from passing or obstructs pedestrians',desc:'Obstructing both traffic and pedestrians.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.5. On a bridge, overpass or flyover / under them',desc:'',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.6. Distance to continuous line, dividing lane or opposite edge < 3m',desc:'Other vehicles cannot pass.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.7. On a pedestrian crossing or where a cycle path crosses the carriageway, or within 5m',desc:'5m — before and after.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.8. At an intersection or within 5m of one',desc:'',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.9. Within 25m before / 10m after signs 541–543 (bus stop)',desc:'25m before the sign, 10m after.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.10. On acceleration or deceleration lanes',desc:'',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.11. In zone of sign 326 (stopping prohibited)',desc:'Sign 326 prohibits both stopping and parking.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.12. In zone of signs 327 / 328 / 329 or in territory with sign 523',desc:'327 (no parking), 328/329 (odd/even dates), 523 (limited parking zone).',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.13. In zones of signs 944 / 945 (special edge marking)',desc:'Signs 944, 945 indicate a special parking prohibition at the road edge.',fineMin:'40 €',fineMax:'40 €'},
+    {label:'57.5.14. In tunnels',desc:'',fineMin:'40 €',fineMax:'40 €'}]}},
+
+ {article:'CSL 57.6. pants',anchor:'#p57',warn:false,parts:false,singleFine:false,
+  signsSVG:[],
+  fineMax:{ru:'280 €',lv:'280 €',en:'280 €'},
+  ru:{name:'Стоянка, мешающая общественному транспорту или на ж/д переезде',desc:'Стоянка, создающая помехи автобусам, троллейбусам или трамваям, а также стоянка на железнодорожном переезде. Без предупреждения.',contest:'Оспорить, если стоянка была кратковременной и не создала фактических помех движению.'},
+  lv:{name:'Stāvēšana, kas traucē sabiedriskā transporta kustību, vai uz dzelzceļa pārbrauktuves',desc:'Stāvēšana, kas traucē autobusu, trolejbusu vai tramvaju kustību, kā arī stāvēšana uz dzelzceļa pārbrauktuves. Bez brīdinājuma.',contest:'Var apstrīdēt, ja stāvēšana bija īslaicīga un faktiski netraucēja satiksmes kustību.'},
+  en:{name:'Parking obstructing public transport or on a railway crossing',desc:'Parking that obstructs buses, trolleybuses or trams, or parking on a railway crossing. No warning.',contest:'Can be contested if the parking was brief and did not actually obstruct movement.'}},
+
+ {csnRef:'CSN 117',article:'CSL 57.7. pants',anchor:'#p57',warn:false,parts:false,singleFine:true,
+  signsSVG:[sgn(S.s537,'537'),sgn(S.s539,'539'),sgn(S.s830,'830'),sgn(S.s831,'831'),sgn(S.s832,'832'),sgn(S.s833,'833'),sgn(S.s834,'834'),sgn(S.s835,'835'),sgn(S.s836,'836'),sgn(S.s837,'837'),sgn(S.s838,'838'),sgn(S.s839,'839')],
+  fineMax:{ru:'30 €',lv:'30 €',en:'30 €'},
+  ru:{name:'Неправильная постановка ТС на стоянке (знаки 830–849)',desc:'ТС расставлен с нарушением способа постановки, обозначенного знаками 830–839 или разметкой, а также нарушение требований знаков 840 и 849 в зоне знаков 537 или 539.',contest:'Оспорить, если разметка или дополнительные знаки нечёткие или не соответствуют нормам.'},
+  lv:{name:'Nepareizi novietots TL stāvvietā (zīmes 830–849)',desc:'TL novietots, pārkāpjot novietošanas veidu, kas noteikts ar zīmēm 830–839 vai ceļa apzīmējumiem, kā arī zīmju 840 un 849 prasību pārkāpšana zīmju 537 vai 539 darbības zonā.',contest:'Var apstrīdēt, ja apzīmējumi vai papildzīmes ir neskaidras vai neatbilst normām.'},
+  en:{name:'Incorrectly positioned vehicle in a parking area (signs 830–849)',desc:'Vehicle positioned in violation of the parking method indicated by signs 830–839 or road markings, or violating requirements of signs 840 and 849 in the zone of signs 537 or 539.',contest:'Can be contested if the markings or supplementary signs are unclear or do not meet standards.'}},
+
+ {csnRef:'CSN 119',article:'CSL 57.8. pants',anchor:'#p57',warn:true,parts:false,singleFine:true,
+  signsSVG:[],
+  fineMax:{ru:'15 €',lv:'15 €',en:'15 €'},
+  ru:{name:'Оставление места водителя без предотвращения самопроизвольного движения ТС',desc:'Водитель покидает место, не выполнив всех необходимых мер для предотвращения самопроизвольного движения ТС (стояночный тормоз, передача, противооткатный упор).',contest:'Оспорить, если меры против самопроизвольного движения были фактически приняты.'},
+  lv:{name:'Vadītāja vietas atstāšana, nenovēršot TL izkustēšanās iespēju',desc:'Vadītājs atstāj vadītāja vietu, neveicot visus nepieciešamos pasākumus, lai novērstu TL pašaizvirzīšanos (stāvbremze, pārvads, pretskriešanas ķīļi).',contest:'Var apstrīdēt, ja pašaizvirzīšanās novēršanas pasākumi faktiski tika veikti.'},
+  en:{name:'Leaving the driver\u0027s seat without preventing the vehicle from moving',desc:'Driver leaves the seat without all necessary measures to prevent the vehicle from moving (parking brake, gear, wheel chocks).',contest:'Can be contested if measures against unintended movement were actually taken.'}}
 ],
 
 alcohol:[
@@ -1271,8 +1373,8 @@ function renderCats(){
   const cats=getCats();
   const aslIcons={admin:'ti-building-bank',order:'ti-shield',lang:'ti-language'};
   const aslCounts={admin:'ASL 3–8',order:'ASL 9–13.1',lang:'ASL 14–28'};
-  const cslIcons={speed:'ti-gauge',parking:'ti-parking',alcohol:'ti-bottle',signals:'ti-traffic-lights',other:'ti-list-check'};
-  const cslCounts={speed:'CSL 55. p.',parking:'CSL 57. p.',alcohol:'CSL 62. p.',signals:'CSN/CSL',other:'CSL 43–58. p.'};
+  const cslIcons={parking:'ti-parking',speed:'ti-gauge',alcohol:'ti-bottle',signals:'ti-traffic-lights',other:'ti-list-check'};
+  const cslCounts={parking:'CSL 57. p.',speed:'CSL 55. p.',alcohol:'CSL 62. p.',signals:'CSN/CSL',other:'CSL 43–58. p.'};
   const icons=currentLaw==='asl'?aslIcons:cslIcons;
   const counts=currentLaw==='asl'?aslCounts:cslCounts;
   document.getElementById('catGrid').innerHTML=Object.keys(cats).map(k=>`
@@ -1299,17 +1401,18 @@ function getFineMin(law){
 function renderPartsHTML(law){
   const t=getUI();
   const fl={ru:'Штраф',lv:'Sods',en:'Fine'};
-  return law[lang].parts.map(p=>`
-    <div class="part-block">
-      <div class="part-label">${p.label}</div>
-      ${p.desc?`<div class="part-desc">${p.desc}</div>`:''}
-      <div class="part-fines">
-        ${law.singleFine
-          ?`<div class="part-fine-box" style="flex:none;min-width:80px"><div class="fine-lbl">${fl[lang]}</div><div class="fine-val danger">${p.fineMax}</div></div>`
-          :`<div class="part-fine-box"><div class="fine-lbl">${t.min}</div><div class="fine-val">${p.fineMin}</div></div>
-            <div class="part-fine-box"><div class="fine-lbl">${t.max}</div><div class="fine-val danger">${p.fineMax}</div></div>`}
-      </div>
-    </div>`).join('');
+  return law[lang].parts.map(function(p){
+    var csnBadge = p.csn ? csnLink(p.csn) : '';
+    var descHTML = p.desc ? '<div class="part-desc">'+p.desc+'</div>' : '';
+    var finesHTML;
+    if(law.singleFine){
+      finesHTML = '<div class="part-fine-box" style="flex:none;min-width:80px"><div class="fine-lbl">'+fl[lang]+'</div><div class="fine-val danger">'+p.fineMax+'</div></div>';
+    } else {
+      finesHTML = '<div class="part-fine-box"><div class="fine-lbl">'+t.min+'</div><div class="fine-val">'+p.fineMin+'</div></div>'
+               + '<div class="part-fine-box"><div class="fine-lbl">'+t.max+'</div><div class="fine-val danger">'+p.fineMax+'</div></div>';
+    }
+    return '<div class="part-block"><div class="part-label">'+p.label+csnBadge+'</div>'+descHTML+'<div class="part-fines">'+finesHTML+'</div></div>';
+  }).join('');
 }
 
 function renderLaws(items){
@@ -1339,12 +1442,14 @@ function renderLaws(items){
         ${law.parts?renderPartsHTML(law):`
           <div class="dl">${t.desc}</div>
           <div class="dt">${law[lang].desc}</div>
-          ${law.singleFine
-            ?`<div class="fine-row"><div class="fine-box"><div class="fine-lbl">${{ru:'Штраф',lv:'Sods',en:'Fine'}[lang]}</div><div class="fine-val danger">${maxStr}</div></div></div>`
-            :`<div class="fine-row">
-                <div class="fine-box"><div class="fine-lbl">${t.min}</div><div class="fine-val">${getFineMin(law)}</div></div>
-                <div class="fine-box"><div class="fine-lbl">${t.max}</div><div class="fine-val danger">${maxStr}</div></div>
-              </div>`}`}
+          ${(function(){
+            var fl={ru:'Штраф',lv:'Sods',en:'Fine'};
+            if(law.singleFine){
+              return '<div class="fine-row"><div class="fine-box"><div class="fine-lbl">'+fl[lang]+'</div><div class="fine-val danger">'+maxStr+'</div></div></div>';
+            }
+            return '<div class="fine-row"><div class="fine-box"><div class="fine-lbl">'+t.min+'</div><div class="fine-val">'+getFineMin(law)+'</div></div><div class="fine-box"><div class="fine-lbl">'+t.max+'</div><div class="fine-val danger">'+maxStr+'</div></div></div>';
+          })()}`}
+        ${law.csnRef?'<div class="csn-card-ref">'+csnLinks(law.csnRef)+'</div>':''}
         <div class="dl">${t.howContest}</div>
         <div class="dt">${law[lang].contest}</div>
         <a class="source-btn" href="${getBase()}${law.anchor}" target="_blank" onclick="event.stopPropagation()">
