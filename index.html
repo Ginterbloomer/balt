@@ -456,6 +456,10 @@ const S={
   s836:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><polygon points="19,36 8,10 19,10 30,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="41,36 30,10 41,10 52,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="63,36 52,10 63,10 74,36" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">8-18</text></svg>`,
   s837:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><rect x="8" y="18" width="22" height="13" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="50" y="18" width="22" height="13" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">8-18</text></svg>`,
   s838:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><rect x="13" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="35" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="57" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">3.5t</text></svg>`,
+  // Sign 927 - Autobusa josla (bus lane) - blue rect with arrow + BUS text
+  busLane:`<svg viewBox="0 0 70 46" width="58" height="38" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="69" height="45" rx="3" fill="#3182ce"/><polygon points="35,36 18,20 26,20 26,10 44,10 44,20 52,20" fill="white"/><text x="35" y="44" text-anchor="middle" font-size="8" font-weight="700" fill="white" font-family="Arial,sans-serif">BUS</text></svg>`,
+  // Sign 527 - Trolleybus lane
+  trollLane:`<svg viewBox="0 0 70 46" width="58" height="38" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="69" height="45" rx="3" fill="#3182ce"/><polygon points="35,36 18,20 26,20 26,10 44,10 44,20 52,20" fill="white"/><text x="35" y="44" text-anchor="middle" font-size="7" font-weight="700" fill="white" font-family="Arial,sans-serif">TROL</text></svg>`,
   s839:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><polygon points="8,36 16,10 27,10 19,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="30,36 38,10 49,10 41,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="52,36 60,10 71,10 63,36" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">3.5t</text></svg>`,
   // Signs 920/943/947 - edge/kerb marking (yellow zigzag)
   edgeMark:`<svg viewBox="0 0 70 34" width="60" height="29" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="68" height="32" rx="3" fill="#ECC94B" stroke="#888" stroke-width="1.5"/><polyline points="6,26 18,8 30,26 42,8 54,26 64,14" fill="none" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
@@ -762,7 +766,7 @@ const cslCats={
 // ===== CSL LAWS =====
 const cslLaws={
 speed:[
- {article:'CSL 55.1.\u201355.2. pants',anchor:'#p55',warnMin:true,warn:true,pts:0,parts:true,
+ {csnRef:'CSN 99 · CSN 100',article:'CSL 55.1.\u201355.2. pants',anchor:'#p55',warnMin:true,warn:true,pts:0,parts:true,
   signsSVG:[sgn(S.lim(50),'309-50'),sgn(S.populated,'519/555')],
   fineMax:{ru:'10 \u20ac (>7,5 \u0442)',lv:'10 \u20ac (>7,5 t)',en:'10 \u20ac (>7.5t)'},
   ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u0434\u043e 10 \u043a\u043c/\u0447',contest:'\u041e\u0441\u043f\u043e\u0440\u0438\u0442\u044c, \u0435\u0441\u043b\u0438 \u0437\u043d\u0430\u043a \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u043d\u0435\u043f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d \u0438\u043b\u0438 \u043f\u043e\u0432\u0440\u0435\u0436\u0434\u0451\u043d.',
@@ -781,7 +785,7 @@ speed:[
     {label:'> 7.5t (truck, with trailer)',desc:'Warning or fine.',fineMin:'Warning',fineMax:'10 \u20ac'}
    ]}},
 
- {article:'CSL 55.3.\u201355.6. pants',anchor:'#p55',warnMin:true,warn:true,pts:0,parts:true,
+ {csnRef:'CSN 99 · CSN 100',article:'CSL 55.3.\u201355.6. pants',anchor:'#p55',warnMin:true,warn:true,pts:0,parts:true,
   signsSVG:[sgn(S.lim(50),'309-50'),sgn(S.residential,'533'),sgn(S.populated,'519/555')],
   fineMax:{ru:'80 \u20ac (>7,5 \u0442, \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442)',lv:'80 \u20ac (>7,5 t, apdzīvota v.)',en:'80 \u20ac (>7.5t, populated area)'},
   ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u043d\u0430 11\u201320 \u043a\u043c/\u0447',contest:'\u041e\u0441\u043f\u043e\u0440\u0438\u0442\u044c, \u0435\u0441\u043b\u0438 \u0437\u043d\u0430\u043a \u0431\u044b\u043b \u043f\u043e\u0432\u0440\u0435\u0436\u0434\u0451\u043d \u0438\u043b\u0438 \u043d\u0435 \u0432\u0438\u0434\u0435\u043d.',
@@ -806,7 +810,7 @@ speed:[
     {label:'> 7.5t \u2014 populated area / residential zone',desc:'No warning.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'}
    ]}},
 
- {article:'CSL 55.7.\u201355.10. pants',anchor:'#p55',warnMin:false,warn:false,pts:1,parts:true,
+ {csnRef:'CSN 99 · CSN 100',article:'CSL 55.7.\u201355.10. pants',anchor:'#p55',warnMin:false,warn:false,pts:1,parts:true,
   signsSVG:[sgn(S.lim(50),'309-50'),sgn(S.residential,'533')],
   fineMax:{ru:'160 \u20ac (>7,5 \u0442, \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442)',lv:'160 \u20ac (>7,5 t, apdzīvota v.)',en:'160 \u20ac (>7.5t, populated area)'},
   ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u043d\u0430 21\u201330 \u043a\u043c/\u0447',contest:'\u041e\u0441\u043f\u043e\u0440\u0438\u0442\u044c \u043f\u0440\u0438 \u043f\u043e\u0433\u0440\u0435\u0448\u043d\u043e\u0441\u0442\u0438 \u0440\u0430\u0434\u0430\u0440\u0430 (\u0434\u043e\u043f. \u00b13 \u043a\u043c/\u0447 \u0438\u043b\u0438 3%).',
@@ -831,7 +835,7 @@ speed:[
     {label:'> 7.5t \u2014 populated area / residential zone',desc:'1 demerit point.',fineMin:'160 \u20ac',fineMax:'160 \u20ac'}
    ]}},
 
- {article:'CSL 55.11.\u201355.14. pants',anchor:'#p55',warnMin:false,warn:false,pts:2,parts:true,
+ {csnRef:'CSN 99 · CSN 100',article:'CSL 55.11.\u201355.14. pants',anchor:'#p55',warnMin:false,warn:false,pts:2,parts:true,
   signsSVG:[sgn(S.lim(50),'309-50'),sgn(S.residential,'533')],
   fineMax:{ru:'320 \u20ac (>7,5 \u0442, \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442)',lv:'320 \u20ac (>7,5 t, apdzīvota v.)',en:'320 \u20ac (>7.5t, populated area)'},
   ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u043d\u0430 31\u201340 \u043a\u043c/\u0447',contest:'\u041e\u0441\u043f\u043e\u0440\u0438\u0442\u044c \u043f\u0440\u0438 \u043f\u043e\u0433\u0440\u0435\u0448\u043d\u043e\u0441\u0442\u0438 \u0440\u0430\u0434\u0430\u0440\u0430 \u0438\u043b\u0438 \u043d\u0435\u043f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e\u043c \u0437\u043d\u0430\u043a\u0435.',
@@ -856,7 +860,7 @@ speed:[
     {label:'> 7.5t \u2014 populated area / residential zone',desc:'2 demerit points.',fineMin:'320 \u20ac',fineMax:'320 \u20ac'}
    ]}},
 
- {article:'CSL 55.15.\u201355.18. pants',anchor:'#p55',warnMin:false,warn:false,pts:3,parts:true,
+ {csnRef:'CSN 99 · CSN 100',article:'CSL 55.15.\u201355.18. pants',anchor:'#p55',warnMin:false,warn:false,pts:3,parts:true,
   signsSVG:[sgn(S.lim(50),'309-50'),sgn(S.residential,'533')],
   fineMax:{ru:'620 \u20ac (>7,5 \u0442, \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442)',lv:'620 \u20ac (>7,5 t, apdzīvota v.)',en:'620 \u20ac (>7.5t, populated area)'},
   ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u043d\u0430 41\u201350 \u043a\u043c/\u0447',contest:'\u041e\u0441\u043f\u043e\u0440\u0438\u0442\u044c \u043f\u0440\u0438 \u043f\u043e\u0433\u0440\u0435\u0448\u043d\u043e\u0441\u0442\u0438 \u0440\u0430\u0434\u0430\u0440\u0430 (\u0434\u043e\u043f. \u00b13 \u043a\u043c/\u0447 \u0438\u043b\u0438 3%).',
@@ -881,7 +885,7 @@ speed:[
     {label:'> 7.5t \u2014 populated area / residential zone',desc:'3 demerit points.',fineMin:'480 \u20ac',fineMax:'620 \u20ac'}
    ]}},
 
- {article:'CSL 55.19.\u201355.22. pants',anchor:'#p55',warnMin:false,warn:false,pts:4,parts:true,
+ {csnRef:'CSN 99 · CSN 100',article:'CSL 55.19.\u201355.22. pants',anchor:'#p55',warnMin:false,warn:false,pts:4,parts:true,
   signsSVG:[sgn(S.lim(50),'309-50'),sgn(S.residential,'533')],
   fineMax:{ru:'880 \u20ac + 12 \u043c\u0435\u0441. (>7,5 \u0442, \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442)',lv:'880 \u20ac + 12 m\u0113n. (>7,5 t)',en:'880 \u20ac + 12 mo. (>7.5t, populated)'},
   ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u043d\u0430 51\u201360 \u043a\u043c/\u0447',contest:'\u041f\u0440\u0438 \u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0438\u0438 \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u044b \u0437\u0430\u043c\u0435\u0440\u0430 \u0438\u043b\u0438 \u043f\u043e\u0433\u0440\u0435\u0448\u043d\u043e\u0441\u0442\u0438 \u043f\u0440\u0438\u0431\u043e\u0440\u0430.',
@@ -906,7 +910,7 @@ speed:[
     {label:'> 7.5t \u2014 populated area / residential zone',desc:'4 demerit points.',fineMin:'700 \u20ac',fineMax:'880 \u20ac + 12 mo. suspension'}
    ]}},
 
- {article:'CSL 55.23.\u201355.26. pants',anchor:'#p55',warnMin:false,warn:false,pts:6,parts:true,
+ {csnRef:'CSN 99 · CSN 100',article:'CSL 55.23.\u201355.26. pants',anchor:'#p55',warnMin:false,warn:false,pts:6,parts:true,
   signsSVG:[sgn(S.lim(90),'309-90'),sgn(S.residential,'533')],
   fineMax:{ru:'1\u202f400 \u20ac + 12\u201324 \u043c\u0435\u0441. (\u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442)',lv:'1\u202f400 \u20ac + 12\u201324 m\u0113n.',en:'1\u202f400 \u20ac + 12\u201324 mo.'},
   ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u043d\u0430 61\u201370 \u043a\u043c/\u0447 \u26a0\ufe0f (\u043f\u043e\u043f\u0440\u0430\u0432\u043a\u0438 28.05.2024)',contest:'\u0427\u0430\u0449\u0435 \u0444\u0438\u043a\u0441\u0438\u0440\u0443\u0435\u0442\u0441\u044f \u0444\u043e\u0442\u043e\u0440\u0430\u0434\u0430\u0440\u043e\u043c. \u041e\u0441\u043f\u043e\u0440\u0438\u0442\u044c \u043f\u0440\u0438 \u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0438\u0438 \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u044b \u0438\u043b\u0438 \u043f\u043e\u0433\u0440\u0435\u0448\u043d\u043e\u0441\u0442\u0438 \u043f\u0440\u0438\u0431\u043e\u0440\u0430.',
@@ -931,7 +935,7 @@ speed:[
     {label:'> 7.5t \u2014 populated area / residential zone',desc:'6 demerit points.',fineMin:'1\u202f040 \u20ac',fineMax:'1\u202f400 \u20ac + 12\u201324 mo. suspension'}
    ]}},
 
- {article:'CSL 55.27.+ pants',anchor:'#p55',warnMin:false,warn:false,pts:8,parts:false,
+ {csnRef:'CSN 99 · CSN 100',article:'CSL 55.27.+ pants',anchor:'#p55',warnMin:false,warn:false,pts:8,parts:false,
   signsSVG:[sgn(S.lim(130),'309-130')],
   fineMax:{ru:'2\u202f000 \u20ac + \u0434\u043e 36 \u043c\u0435\u0441. \u043b\u0438\u0448\u0435\u043d\u0438\u044f',lv:'2\u202f000 \u20ac + l\u012bdz 36 m\u0113n.',en:'2\u202f000 \u20ac + up to 36 mo. suspension'},
   ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u0431\u043e\u043b\u0435\u0435 \u0447\u0435\u043c \u043d\u0430 70 \u043a\u043c/\u0447 \u26a0\ufe0f (\u043f\u043e\u043f\u0440\u0430\u0432\u043a\u0438 28.05.2024)',desc:'\u041c\u0430\u043a\u0441\u0438\u043c\u0430\u043b\u044c\u043d\u043e\u0435 \u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0438\u0435. \u0428\u0442\u0440\u0430\u0444 1\u202f400\u20132\u202f000 \u20ac + \u043b\u0438\u0448\u0435\u043d\u0438\u0435 \u043f\u0440\u0430\u0432 \u043d\u0430 12\u201336 \u043c\u0435\u0441\u044f\u0446\u0435\u0432. 8 \u0443\u0447\u0451\u0442\u043d\u044b\u0445 \u0431\u0430\u043b\u043b\u043e\u0432.',contest:'\u041e\u0441\u043f\u043e\u0440\u0438\u0442\u044c \u043a\u0440\u0430\u0439\u043d\u0435 \u0441\u043b\u043e\u0436\u043d\u043e. \u041e\u0441\u043d\u043e\u0432\u0430\u043d\u0438\u044f: \u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0438\u0435 \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u044b \u0438\u043b\u0438 \u043f\u043e\u0433\u0440\u0435\u0448\u043d\u043e\u0441\u0442\u044c \u043f\u0440\u0438\u0431\u043e\u0440\u0430.'},
@@ -1114,11 +1118,11 @@ parking:[
   fineMax:{ru:'15 €',lv:'15 €',en:'15 €'},
   ru:{name:'Оставление места водителя без предотвращения самопроизвольного движения ТС',desc:'Водитель покидает место, не выполнив всех необходимых мер для предотвращения самопроизвольного движения ТС (стояночный тормоз, передача, противооткатный упор).',contest:'Оспорить, если меры против самопроизвольного движения были фактически приняты.'},
   lv:{name:'Vadītāja vietas atstāšana, nenovēršot TL izkustēšanās iespēju',desc:'Vadītājs atstāj vadītāja vietu, neveicot visus nepieciešamos pasākumus, lai novērstu TL pašaizvirzīšanos (stāvbremze, pārvads, pretskriešanas ķīļi).',contest:'Var apstrīdēt, ja pašaizvirzīšanās novēršanas pasākumi faktiski tika veikti.'},
-  en:{name:'Leaving the driver\u0027s seat without preventing the vehicle from moving',desc:'Driver leaves the seat without all necessary measures to prevent the vehicle from moving (parking brake, gear, wheel chocks).',contest:'Can be contested if measures against unintended movement were actually taken.'}}
+  en:{name:'Leaving the driver\u0027s seat without preventing the vehicle from moving',desc:'Driver leaves the seat without all necessary measures to prevent the vehicle from moving (parking brake, gear, wheel chocks).',contest:'Can be contested if all required measures against unintended movement were actually taken.'}}
 ],
 
 alcohol:[
- {article:'CSL 62.1. pants',anchor:'#p62',warnMin:false,warn:false,pts:6,parts:false,signsSVG:[],
+ {csnRef:'CSN 25',article:'CSL 62.1. pants',anchor:'#p62',warnMin:false,warn:false,pts:6,parts:false,signsSVG:[],
   fineMax:{ru:'430 € + 6 мес. лишения',lv:'430 € + 6 mēn.',en:'430 € + 6 mo. suspension'},
   ru:{name:'0,21–0,50 промилле: проф. водители и стаж < 2 лет',
    desc:'D, D1, DE, D1E, TRAM, TROL категории или стаж < 2 лет. 6 учётных баллов.',
@@ -1130,7 +1134,7 @@ alcohol:[
    desc:'D, D1, DE, D1E, TRAM, TROL category drivers or drivers with < 2 years experience. 6 demerit points.',
    contest:'Can be contested if the two-stage testing procedure was violated or the device was faulty.'}},
 
- {article:'CSL 62.2.2. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:false,signsSVG:[],
+ {csnRef:'CSN 25',article:'CSL 62.2.2. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:false,signsSVG:[],
   fineMax:{ru:'640 € + 12 мес. лишения',lv:'640 € + 12 mēn.',en:'640 € + 12 mo. suspension'},
   ru:{name:'0,51–1,00 промилле: автомобиль, мотоцикл, мопед',
    desc:'Управление ТС (кроме вело/электросамоката) с 0,51–1,00 промилле. 8 учётных баллов. Лишение на 12 мес.',
@@ -1142,7 +1146,7 @@ alcohol:[
    desc:'Driving a vehicle (except bicycle/e-scooter) with 0.51–1.00 promille. 8 demerit points. Licence suspension 12 months.',
    contest:'Can be contested if the two-stage testing procedure was violated or significant time elapsed since driving.'}},
 
- {article:'CSL 62.3.2. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:false,signsSVG:[],
+ {csnRef:'CSN 25',article:'CSL 62.3.2. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:false,signsSVG:[],
   fineMax:{ru:'1 400 € + 3 года лишения',lv:'1 400 € + 3 gadi',en:'1 400 € + 3 years suspension'},
   ru:{name:'1,01–1,50 промилле: автомобиль, мотоцикл, мопед',
    desc:'Управление ТС с 1,01–1,50 промилле. 8 учётных баллов. Лишение на 3 года.',
@@ -1154,7 +1158,7 @@ alcohol:[
    desc:'Driving with 1.01–1.50 promille. 8 demerit points. Licence suspension 3 years.',
    contest:'Extremely difficult to contest. Grounds: protocol violation, device inaccuracy.'}},
 
- {article:'CSL 62.4.–62.5. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:true,signsSVG:[],
+ {csnRef:'CSN 25',article:'CSL 62.4.–62.5. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:true,signsSVG:[],
   fineMax:{ru:'2 000 € + 5 лет лишения',lv:'2 000 € + 5 gadi',en:'2 000 € + 5 years suspension'},
   ru:{name:'Более 1,50 промилле или наркотики / психотропные вещества',
    contest:'Оспорить при нарушении процедуры. При наркотиках: если препарат назначен врачом и уровень не свидетельствует об интоксикации.',
@@ -1175,7 +1179,7 @@ alcohol:[
     {label:'Narcotic, psychotropic or toxic substances',desc:'8 demerit points.',fineMin:'1 200 €',fineMax:'2 000 € + 5 years'}
    ]}},
 
- {article:'CSL 62.7.–62.8. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:true,signsSVG:[],
+ {csnRef:'CSN 25',article:'CSL 62.7.–62.8. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:true,signsSVG:[],
   fineMax:{ru:'2 000 € + 5 лет лишения',lv:'2 000 € + 5 gadi',en:'2 000 € + 5 years suspension'},
   ru:{name:'Употребление алкоголя после остановки / отказ от освидетельствования',
    contest:'Отказ уже является нарушением независимо от состояния. Оспорить практически невозможно.',
@@ -1196,7 +1200,7 @@ alcohol:[
     {label:'Refusing the medical examination',desc:'Refusing alcohol or drug test at the request of police.',fineMin:'1 200 €',fineMax:'2 000 € + 5 years'}
    ]}},
 
- {article:'CSL 62.6. pants',anchor:'#p62',warnMin:false,warn:false,pts:3,parts:false,signsSVG:[],
+ {csnRef:'CSN 25',article:'CSL 62.6. pants',anchor:'#p62',warnMin:false,warn:false,pts:3,parts:false,signsSVG:[],
   fineMax:{ru:'280 € (sans лишения)',lv:'280 € (bez tiesību atņemšanas)',en:'280 € (no licence suspension)'},
   ru:{name:'Управление под воздействием медикаментов или в состоянии усталости',
    desc:'Управление, когда медикаменты снижают скорость реакции, при болезни или при усталости, влияющей на дееспособность. 3 уч. балла. Лишения прав нет.',
@@ -1210,7 +1214,7 @@ alcohol:[
 ],
 
 signals:[
- {article:'CSL 56. pants + CSN 130. p.',anchor:'#p56',warnMin:false,warn:false,pts:6,parts:false,
+ {csnRef:'CSN 130',article:'CSL 56. pants + CSN 130. p.',anchor:'#p56',warnMin:false,warn:false,pts:6,parts:false,
   signsSVG:[sgn(S.redLight,'Luksoforis')],
   fineMax:{ru:'320 € + лишение до 6 мес.',lv:'320 € + tiesības līdz 6 mēn.',en:'320 € + suspension up to 6 mo.'},
   ru:{name:'Проезд на запрещающий сигнал светофора',
@@ -1223,7 +1227,7 @@ signals:[
    desc:'Driving through a red or red-yellow traffic light. 6 demerit points. Repeated violation within a year — licence suspension.',
    contest:'Can be contested if the traffic light was faulty or the signal changed during an already-commenced manoeuvre.'}},
 
- {article:'CSN 77. p. — zīme 202',anchor:'#p58',warnMin:false,warn:false,pts:6,parts:false,
+ {csnRef:'CSN 77',article:'CSN 77. p. — zīme 202',anchor:'#p58',warnMin:false,warn:false,pts:6,parts:false,
   signsSVG:[sgn(S.stop,'202')],
   fineMax:{ru:'320 €',lv:'320 €',en:'320 €'},
   ru:{name:'Несоблюдение знака STOP (202)',
@@ -1236,7 +1240,7 @@ signals:[
    desc:'Failure to make a full stop before sign 202 (STOP) or stop line before proceeding. 6 demerit points.',
    contest:'Can be contested if the stop was made but not recorded. Video recording or witness statements required.'}},
 
- {article:'CSN 75.–76. p. — zīme 206',anchor:'#p58',warnMin:false,warn:false,pts:4,parts:false,
+ {csnRef:'CSN 75 · CSN 76',article:'CSN 75.–76. p. — zīme 206',anchor:'#p58',warnMin:false,warn:false,pts:4,parts:false,
   signsSVG:[sgn(S.giveWay,'206'),sgn(S.priority,'401')],
   fineMax:{ru:'160 €',lv:'160 €',en:'160 €'},
   ru:{name:'Несоблюдение знака «Уступите дорогу» (206) / нарушение преимущества',
@@ -1249,7 +1253,7 @@ signals:[
    desc:'Failure to yield the right of way under sign 206 (give way) or intersection rules. 4 demerit points.',
    contest:'Can be contested if the right of way was actually yielded or the other party violated the rules.'}},
 
- {article:'CSN 52.–54. p. — zīmes 301/303',anchor:'#p58',warnMin:false,warn:false,pts:6,parts:false,
+ {csnRef:'CSN 52 · CSN 53 · CSN 54',article:'CSN 52.–54. p. — zīmes 301/303',anchor:'#p58',warnMin:false,warn:false,pts:6,parts:false,
   signsSVG:[sgn(S.noEntry,'301'),sgn(S.oneWay,'303')],
   fineMax:{ru:'320 €',lv:'320 €',en:'320 €'},
   ru:{name:'Нарушение знаков запрета въезда (301) или одностороннего движения',
@@ -1264,7 +1268,7 @@ signals:[
 ],
 
 other:[
- {article:'CSL 58.5. pants',anchor:'#p58',warnMin:false,warn:false,pts:3,parts:false,
+ {csnRef:'CSN 26',article:'CSL 58.5. pants',anchor:'#p58',warnMin:false,warn:false,pts:3,parts:false,
   signsSVG:[sgn(S.noPhone,'Telefons')],
   fineMax:{ru:'160 €',lv:'160 €',en:'160 €'},
   ru:{name:'Использование мобильного телефона во время вождения',
@@ -1277,14 +1281,14 @@ other:[
    desc:'Using a mobile phone or other communication device without a hands-free device while driving. 3 demerit points.',
    contest:'Can be contested if a hands-free device was used or the vehicle was stationary at the time of recording.'}},
 
- {article:'CSL 58.4. pants',anchor:'#p58',warnMin:false,warn:false,pts:3,parts:false,
+ {csnRef:'CSN 26.4',article:'CSL 58.4. pants',anchor:'#p58',warnMin:false,warn:false,pts:3,parts:false,
   signsSVG:[],
   fineMax:{ru:'80 €',lv:'80 €',en:'80 €'},
   ru:{name:'Непристёгнутый ремень безопасности',
    desc:'Управление ТС без застёгнутого ремня или перевозка пассажира без ремня. 3 уч. балла. Ответственность на водителе.',
    contest:'Оспорить, если ремень был застёгнут, но не зафиксирован на видео, или если ТС стояло.'},
-  lv:{name:'Nepiesegts drošības josta',
-   desc:'TL vadīšana bez piesegtās drošības jostas vai pasažīra pārvadāšana bez jostas. 3 uzskaites punkti.',
+  lv:{name:'Drošības jostas nelietošana',
+   desc:'TL vadīšana bez piesprādzētas drošības jostas vai pasažīra pārvadāšana bez jostas. 3 uzskaites punkti.',
    contest:'Var apstrīdēt, ja josta bija piesegta, bet netika fiksēta video.'},
   en:{name:'Unfastened seat belt',
    desc:'Driving without fastened seat belt or transporting a passenger without a belt. 3 demerit points. Driver is responsible.',
@@ -1334,6 +1338,35 @@ other:[
   en:{name:'Driving without technical inspection / with technical defects',
    desc:'Driving without a valid technical inspection certificate or with safety-endangering technical defects.',
    contest:'Can be contested if the inspection was completed but the certificate was not updated in the system.'}}
+,
+
+ {article:'CSL 54.6. pants',anchor:'#p54',warnMin:false,warn:false,pts:1,parts:true,singleFine:true,
+  signsSVG:[sgn(S.busLane,'Autobusa josla')],
+  fineMax:{ru:'55 € (тротуар/велодорожка)',lv:'55 € (ietves, veloceļi)',en:'55 € (pavements/cycle paths)'},
+  ru:{name:'Нарушения правил движения по полосам · CSL 54. pants',contest:'Оспорить, если разметка полосы нечёткая или знак не соответствует нормам. Езда по автобусной полосе фиксируется камерами.',
+   parts:[
+    {label:'54.6. Езда по полосе общественного транспорта',desc:'Движение по полосе, предназначенной для пассажирских автобусов, троллейбусов или трамваев. Фиксируется камерами.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 88'},
+    {label:'54.1. Выезд на полосу встречного движения (4+ полос)',desc:'Выезд на полосу встречного направления на дороге с 4 и более полосами движения.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 83'},
+    {label:'54.3. Движение по запрещённой полосе (знак 927)',desc:'Движение по полосе, использование которой запрещено знаком 927 (запрет движения по полосе).',fineMin:'40 €',fineMax:'40 €',csn:'CSN 83'},
+    {label:'54.5. Движение по трамвайным путям встречного направления',desc:'Выезд на трамвайные пути для движения во встречном направлении.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 83'},
+    {label:'54.8. Движение по тротуару, пешеходному или велосипедному пути',desc:'Движение по тротуару, пешеходной дорожке, велодорожке или велополосе. 3 учётных балла.',fineMin:'55 €',fineMax:'55 €',csn:'CSN 83'}
+   ]},
+  lv:{name:'Braukšanas joslu noteikumu pārkāpumi · CSL 54. pants',contest:'Var apstrīdēt, ja joslas apzīmējums nav skaidrs vai zīme neatbilst normām. Braukšana pa autobusa joslu tiek fiksēta ar kamerām.',
+   parts:[
+    {label:'54.6. Braukšana pa sabiedriskā transporta joslu',desc:'Braukšana pa joslu, kas paredzēta pasažieru sabiedriskiem TL (autobusiem, trolejbusiem, tramvajiem). Josla apzīmēta ar marķējumu un zīmi.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 88'},
+    {label:'54.1. Iebraukšana pretējā virziena joslā (4 vai vairākas joslas)',desc:'Iebraukšana pretējā virziena joslā uz ceļa ar 4 vai vairākām joslām.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 83'},
+    {label:'54.3. Braukšana pa joslu, kad tas ir aizliegts (zīme 927)',desc:'Braukšana pa joslu, kuras izmantošana aizliegta ar zīmi 927.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 83'},
+    {label:'54.5. Braukšana pa pretējā virziena tramvaja sliežu ceļa klātni',desc:'Iebraukšana tramvaja sliežu ceļā pretējā braukšanas virziena pusē.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 83'},
+    {label:'54.8. Braukšana pa ietvēm, gājēju vai velosipēdu ceļiem',desc:'TL braukšana pa ietvi, gājēju ceļu, veloceļu vai velojoslu. 3 uzskaites punkti.',fineMin:'55 €',fineMax:'55 €',csn:'CSN 83'}
+   ]},
+  en:{name:'Lane use violations · CSL 54. pants',contest:'Can be contested if lane markings are unclear or the sign does not comply with standards. Bus lane use is detected by cameras.',
+   parts:[
+    {label:'54.6. Driving in a public transport lane',desc:'Driving in a lane designated for passenger buses, trolleybuses or trams. Detected by cameras.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 88'},
+    {label:'54.1. Entering an oncoming lane (4+ lanes)',desc:'Driving in an oncoming lane on a road with 4 or more lanes.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 83'},
+    {label:'54.3. Driving in a prohibited lane (sign 927)',desc:'Driving in a lane whose use is prohibited by sign 927 (lane use prohibition).',fineMin:'40 €',fineMax:'40 €',csn:'CSN 83'},
+    {label:'54.5. Driving on oncoming tramway tracks',desc:'Entering tramway tracks in the opposite direction of travel.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 83'},
+    {label:'54.8. Driving on pavements, pedestrian or cycle paths',desc:'Driving a vehicle on a pavement, pedestrian path, cycle path or cycle lane. 3 demerit points.',fineMin:'55 €',fineMax:'55 €',csn:'CSN 83'}
+   ]}}
 ]
 };
 
@@ -1471,10 +1504,17 @@ function filterLaws(){
   const q=document.getElementById('searchInput').value.toLowerCase();
   if(!q){renderLaws(getLaws()[currentCat]);return;}
   const all=Object.values(getLaws()).flat();
-  renderLaws(all.filter(l=>
-    l[lang].name.toLowerCase().includes(q)||
-    l.article.toLowerCase().includes(q)
-  ));
+  renderLaws(all.filter(function(l){
+    if(l[lang].name.toLowerCase().includes(q)) return true;
+    if(l.article.toLowerCase().includes(q)) return true;
+    if(l[lang].parts){
+      return l[lang].parts.some(function(p){
+        return p.label.toLowerCase().includes(q)||(p.desc&&p.desc.toLowerCase().includes(q));
+      });
+    }
+    if(l[lang].desc&&l[lang].desc.toLowerCase().includes(q)) return true;
+    return false;
+  }));
 }
 
 // ===== INIT =====
