@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"/>
 
 <style>
   * {
@@ -390,6 +389,7 @@
   <div class="law-switcher">
     <button class="law-btn active" onclick="setLaw('asl',this)">ASL</button>
     <button class="law-btn" onclick="setLaw('csl',this)">Ceļu satiksme</button>
+    <button class="law-btn" onclick="setLaw('aiz',this)">Aizturēšana</button>
   </div>
 </div>
 <div class="search-bar"><input type="text" id="searchInput" placeholder="Найти нарушение..." oninput="filterLaws()"/></div>
@@ -402,6 +402,8 @@ let lang='lv', currentCat='admin', currentLaw='asl';
 const BASE_ASL='https://likumi.lv/ta/id/314808-administrativo-sodu-likums-par-parkapumiem-parvaldes-sabiedriskas-kartibas-un-valsts-valodas-lietosanas-joma';
 const BASE_CSL='https://likumi.lv/ta/id/45467-celu-satiksmes-likums';
 const BASE_CSN='https://likumi.lv/ta/id/274865-celu-satiksmes-noteikumi';
+const BASE_AAL='https://likumi.lv/ta/id/329067-administrativas-atbildibas-likums';
+const BASE_LPP='https://likumi.lv/ta/id/67957-par-policiju';
 
 // CSN link helper: 'CSN 121.11' -> clickable badge linking to #p121
 function csnLink(ref){
@@ -468,15 +470,7 @@ const S={
   // Signs 830-849 - Parking orientation supplementary signs (white rect, black arrows)
   parkPerp:`<svg viewBox="0 0 90 52" width="70" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="88" height="50" rx="3" fill="white" stroke="#333" stroke-width="2"/><line x1="20" y1="43" x2="20" y2="17" stroke="#333" stroke-width="3" stroke-linecap="round"/><polygon points="20,10 15,22 25,22" fill="#333"/><line x1="45" y1="43" x2="45" y2="17" stroke="#333" stroke-width="3" stroke-linecap="round"/><polygon points="45,10 40,22 50,22" fill="#333"/><line x1="70" y1="43" x2="70" y2="17" stroke="#333" stroke-width="3" stroke-linecap="round"/><polygon points="70,10 65,22 75,22" fill="#333"/><text x="45" y="50" text-anchor="middle" font-size="7" fill="#555" font-family="Arial,sans-serif">830</text></svg>`,
   parkAngle:`<svg viewBox="0 0 90 52" width="70" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="88" height="50" rx="3" fill="white" stroke="#333" stroke-width="2"/><line x1="22" y1="42" x2="34" y2="14" stroke="#333" stroke-width="3" stroke-linecap="round"/><polygon points="36,9 28,18 38,21" fill="#333"/><line x1="45" y1="42" x2="57" y2="14" stroke="#333" stroke-width="3" stroke-linecap="round"/><polygon points="59,9 51,18 61,21" fill="#333"/><line x1="64" y1="42" x2="76" y2="14" stroke="#333" stroke-width="3" stroke-linecap="round"/><polygon points="78,9 70,18 80,21" fill="#333"/><text x="45" y="50" text-anchor="middle" font-size="7" fill="#555" font-family="Arial,sans-serif">831/832</text></svg>`,
-  parkParallel:`<svg viewBox="0 0 90 52" width="70" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="88" height="50" rx="3" fill="white" stroke="#333" stroke-width="2"/><rect x="14" y="18" width="20" height="20" rx="2" fill="none" stroke="#333" stroke-width="2"/><rect x="38" y="18" width="20" height="20" rx="2" fill="none" stroke="#333" stroke-width="2"/><rect x="62" y="18" width="20" height="20" rx="2" fill="none" stroke="#333" stroke-width="2"/><line x1="8" y1="44" x2="84" y2="44" stroke="#333" stroke-width="2.5"/><text x="45" y="51" text-anchor="middle" font-size="7" fill="#555" font-family="Arial,sans-serif">833</text></svg>`,
-  // Sign 312 - Aplī braucējs (Roundabout — mandatory circular traffic)
-  roundabout:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="#3182ce"/><path d="M30,14 A16,16,0,1,1,14,30" fill="none" stroke="white" stroke-width="6.5" stroke-linecap="round"/><polygon points="14,30 7,22 21,22" fill="white"/></svg>`,
-  // Dzelzceļa pārbrauktuve (Railway level crossing — St. Andrew's cross)
-  railCross:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="58" height="58" rx="4" fill="#e53e3e"/><line x1="11" y1="11" x2="49" y2="49" stroke="white" stroke-width="9" stroke-linecap="round"/><line x1="49" y1="11" x2="11" y2="49" stroke="white" stroke-width="9" stroke-linecap="round"/></svg>`,
-  // Sign 502 - Gājēju ceļš (Pedestrian path / crossing)
-  pedCross:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="58" height="58" rx="4" fill="#3182ce"/><circle cx="30" cy="13" r="5.5" fill="white"/><path d="M30,19 L30,36 M21,25 L39,25 M30,36 L20,52 M30,36 L40,52" fill="none" stroke="white" stroke-width="4.5" stroke-linecap="round"/></svg>`,
-  // Sign 408 - Apdzīšana aizliegta (No overtaking)
-  noOvertake:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="white" stroke="#e53e3e" stroke-width="6"/><rect x="28" y="26" width="17" height="10" rx="2" fill="#2d3748"/><rect x="31" y="20" width="10" height="8" rx="1" fill="#2d3748"/><rect x="11" y="26" width="17" height="10" rx="2" fill="#e53e3e"/><rect x="14" y="20" width="10" height="8" rx="1" fill="#e53e3e"/><line x1="7" y1="53" x2="53" y2="7" stroke="#e53e3e" stroke-width="5.5"/></svg>`
+  parkParallel:`<svg viewBox="0 0 90 52" width="70" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="88" height="50" rx="3" fill="white" stroke="#333" stroke-width="2"/><rect x="14" y="18" width="20" height="20" rx="2" fill="none" stroke="#333" stroke-width="2"/><rect x="38" y="18" width="20" height="20" rx="2" fill="none" stroke="#333" stroke-width="2"/><rect x="62" y="18" width="20" height="20" rx="2" fill="none" stroke="#333" stroke-width="2"/><line x1="8" y1="44" x2="84" y2="44" stroke="#333" stroke-width="2.5"/><text x="45" y="51" text-anchor="middle" font-size="7" fill="#555" font-family="Arial,sans-serif">833</text></svg>`
 };
 function sgn(svg,label){return '<div class="sign-chip">'+svg+'<span class="sign-num">'+label+'</span></div>';}
 
@@ -762,6 +756,84 @@ lang:[
 ]
 };
 
+// ===== AiZ UI STRINGS =====
+uiStrings.aiz={
+  ru:{subtitle:'Задержание · AAL / LPP',placeholder:'Найти основание для задержания...',min:'',max:'',desc:'Описание',howContest:'',sourceBtn:'Открыть закон на likumi.lv',warn:'',warnWord:'',empty:'Ничего не найдено.',pts:'',signs:''},
+  lv:{subtitle:'Aizturēšana · AAL / LPP',placeholder:'Meklēt aizturēšanas pamatu...',min:'',max:'',desc:'Apraksts',howContest:'',sourceBtn:'Atvērt likumu likumi.lv',warn:'',warnWord:'',empty:'Nekas netika atrasts.',pts:'',signs:''},
+  en:{subtitle:'Detention · AAL / LPP',placeholder:'Search grounds for detention...',min:'',max:'',desc:'Description',howContest:'',sourceBtn:'Open law on likumi.lv',warn:'',warnWord:'',empty:'Nothing found.',pts:'',signs:''}
+};
+
+// ===== AiZ CATEGORIES =====
+const aizCats={
+  aiztureshana:{
+    ru:{name:'Задержание',sec:'Основания для задержания и права'},
+    lv:{name:'Aizturēšana',sec:'Aizturēšanas pamati un tiesības'},
+    en:{name:'Detention',sec:'Grounds for detention and rights'}}
+};
+
+// ===== AiZ LAWS =====
+const aizLaws={
+aiztureshana:[
+ {article:'AAL 71.(4) pants',anchor:'#p72',defaultOpen:true,noFine:true,parts:true,signsSVG:[],
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Права задержанного лица',
+   parts:[
+    {label:'1. Право знать основание задержания',desc:'Задержанное лицо вправе знать основание задержания.',fineMin:'',fineMax:''},
+    {label:'2. Право потребовать уведомления родственников, учебного заведения или работодателя',desc:'Задержанное лицо вправе потребовать, чтобы о задержании было уведомлено его родственника, учебное заведение или работодателя. О задержании несовершеннолетнего обязательно уведомляется его представитель.',fineMin:'',fineMax:''},
+    {label:'3. Право ознакомиться с протоколом задержания',desc:'Задержанное лицо вправе ознакомиться с протоколом задержания и получить информацию о правах и обязанностях задержанного.',fineMin:'',fineMax:''},
+    {label:'4. Право высказать мнение об обоснованности задержания',desc:'Задержанное лицо вправе высказать своё мнение об обоснованности задержания.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Aizturētās personas tiesības',
+   parts:[
+    {label:'1. Tiesības zināt aizturēšanas pamatu',desc:'Aizturētajai personai ir tiesības zināt aizturēšanas pamatu.',fineMin:'',fineMax:''},
+    {label:'2. Tiesības pieprasīt paziņojumu tuviniekiem, mācību iestādei vai darba devējam',desc:'Aizturētajai personai ir tiesības pieprasīt, lai par aizturēšanu paziņo tās tuviniekam, mācību iestādei vai darba devējam. Par nepilngadīgas personas aizturēšanu obligāti paziņo tās pārstāvim.',fineMin:'',fineMax:''},
+    {label:'3. Tiesības iepazīties ar aizturēšanas protokolu',desc:'Aizturētajai personai ir tiesības iepazīties ar aizturēšanas protokolu un saņemt informāciju par aizturētā tiesībām un pienākumiem.',fineMin:'',fineMax:''},
+    {label:'4. Tiesības izteikt viedokli par aizturēšanas pamatotību',desc:'Aizturētajai personai ir tiesības izteikt savu viedokli par aizturēšanas pamatotību.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Rights of detained person',
+   parts:[
+    {label:'1. Right to know the grounds for detention',desc:'The detained person has the right to know the grounds for their detention.',fineMin:'',fineMax:''},
+    {label:'2. Right to request notification of relatives, educational institution or employer',desc:'The detained person has the right to request that their relatives, educational institution or employer be notified of the detention. For a minor, notification of their legal representative is mandatory.',fineMin:'',fineMax:''},
+    {label:'3. Right to review the detention protocol',desc:'The detained person has the right to review the detention protocol and receive information about the rights and duties of the detained person.',fineMin:'',fineMax:''},
+    {label:'4. Right to express opinion on the lawfulness of detention',desc:'The detained person has the right to express their opinion on the lawfulness of the detention.',fineMin:'',fineMax:''}
+   ]}},
+
+ {article:'AAL 71. pants',anchor:'#p71',noFine:true,parts:true,signsSVG:[],srcUrl:'AAL',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Административное задержание — основания',
+   parts:[
+    {label:'71.(1) основание 1 — невозможно установить личность на месте',desc:'Административное задержание применяется, если невозможно установить личность привлекаемого к ответственности лица непосредственно на месте.',fineMin:'',fineMax:''},
+    {label:'71.(1) основание 2 — прекращение правонарушения',desc:'Применяется, если необходимо прекратить административное правонарушение, а лицо не реагирует на требование его прекратить.',fineMin:'',fineMax:''},
+    {label:'71.(3) Информирование о правах',desc:'После задержания должностное лицо немедленно информирует задержанное лицо о его правах.',fineMin:'',fineMax:''},
+    {label:'71.(5) Максимальный срок задержания — 4 часа',desc:'Лицо может быть задержано не более чем на 4 часа с момента фактического задержания. Для лиц, находящихся в состоянии алкогольного или наркотического опьянения, срок может быть продлён.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Administratīvā aizturēšana',
+   parts:[
+    {label:'71.(1) pamats — nepieciešams noskaidrot personas identitāti',desc:'Administratīvo aizturēšanu piemēro, ja nav iespējams noskaidrot pie atbildības saucamās personas identitāti uz vietas.',fineMin:'',fineMax:''},
+    {label:'71.(1) pamats — pārkāpuma pārtraukšana',desc:'Aizturēšanu piemēro, ja nepieciešams pārtraukt administratīvo pārkāpumu un persona nereaģē uz aicinājumu to pārtraukt.',fineMin:'',fineMax:''},
+    {label:'71.(3) Informēšana par tiesībām',desc:'Pēc aizturēšanas amatpersona nekavējoties informē aizturēto personu par tās tiesībām.',fineMin:'',fineMax:''},
+    {label:'71.(5) Maksimālais aizturēšanas laiks',desc:'Personu drīkst aizturēt ne ilgāk kā uz četrām stundām no faktiskās aizturēšanas brīža. Personām, kuras atrodas alkohola vai narkotiku ietekmē, termiņu var pagarināt.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Administrative detention — grounds',
+   parts:[
+    {label:'71.(1) Ground 1 — unable to establish identity at the scene',desc:'Administrative detention applies when it is necessary to establish the identity of the person held liable and this cannot be done at the scene.',fineMin:'',fineMax:''},
+    {label:'71.(1) Ground 2 — stopping the ongoing violation',desc:'Applies when it is necessary to stop the administrative violation and the person does not respond to the request to stop.',fineMin:'',fineMax:''},
+    {label:'71.(3) Notification of rights',desc:'After detention, the official shall immediately inform the detained person of their rights.',fineMin:'',fineMax:''},
+    {label:'71.(5) Maximum detention period — 4 hours',desc:'A person may be detained for no more than 4 hours from the moment of actual detention. For persons under the influence of alcohol or narcotic substances, the period may be extended.',fineMin:'',fineMax:''}
+   ]}},
+
+ {article:'LPP 12.1.9. pants',anchor:'#p12',noFine:true,parts:false,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Полиция: доставка лиц, утративших способность самостоятельно передвигаться или ориентироваться (LPP 12.1.9)',
+   desc:'Полиция вправе доставить в учреждение по вытрезвлению лиц, которые в результате употребления алкоголя, наркотиков, психотропных или токсических веществ утратили способность самостоятельно передвигаться или ориентироваться либо могут причинить вред окружающим или себе. Доставка осуществляется в учреждение по вытрезвлению, медицинское учреждение или домой.'},
+  lv:{name:'Policija: personas nogadāšana iestādē, ja tā zaudējusi spēju pastāvīgi pārvietoties vai orientēties (LPP 12.1.9)',
+   desc:'Personas, kuras alkohola, narkotisko, psihotropo vai toksisko vielu lietošanas rezultātā zaudējušas spēju pastāvīgi pārvietoties vai orientēties vai var nodarīt kaitējumu apkārtējiem vai pašas sev, nogadāt iestādēs, kas sniedz atskurbšanas pakalpojumus, ārstniecības iestādēs vai mājoklī.'},
+  en:{name:'Police: transporting person who has lost the ability to move or orientate independently (LPP 12.1.9)',
+   desc:'Persons who, as a result of the use of alcohol, narcotic, psychotropic or toxic substances, have lost the ability to move or orientate independently, or may cause harm to others or themselves, shall be transported to facilities providing detoxification services, medical facilities or home.'}},
+
+]
+};
+
 // ===== CSL CATEGORIES =====
 const cslCats={
   parking:{ru:{name:'Остановка / стоянка',sec:'Нарушения остановки и стоянки · CSL 57. pants'},lv:{name:'Apstāšanās / Stāvēšana',sec:'Apstāšanās un stāvēšanas pārkāpumi · CSL 57. pants'},en:{name:'Stopping / Parking',sec:'Stopping and parking violations · CSL 57. pants'}},
@@ -1027,7 +1099,7 @@ parking:[
  {article:'CSL 57.4. pants',anchor:'#p57',warn:false,parts:true,singleFine:true,
   signsSVG:[sgn(S.edgeMark,'920/943/947')],
   fineMax:{ru:'30 €',lv:'30 €',en:'30 €'},
-  ru:{name:'Стоянка: нарушения аналогичные 57.1 (водитель отсутствует)',contest:'Оспорить, если знак установлен неправильно или не виден. Оплата в течение 15 дней при признании вины — скидка 50% (не применяется при фиксации фоторадаром).',
+  ru:{name:'Стоянка: нарушения аналогичные 57.1 (водитель отсутствует)',contest:'Оспорить, если знак установлен неправильно или не виден. Оплата в течение 15 дней — скидка 25%.',
    parts:[
     {label:'57.4.1. Стоянка на левой стороне дороги (если не разрешено)',desc:'Водитель отсутствует — вместо предупреждения сразу штраф.',fineMin:'30 €',fineMax:'30 €'},
     {label:'57.4.2. Стоянка на проезжей части при наличии обочины',desc:'',fineMin:'30 €',fineMax:'30 €'},
@@ -1037,7 +1109,7 @@ parking:[
     {label:'57.4.6. Стоянка в зоне знаков 920 / 943 / 947 (разметка края)',desc:'',fineMin:'30 €',fineMax:'30 €'},
     {label:'57.4.7. Стоянка ближе 100 м от ж/д переезда вне нас. пункта или ближе 50 м в нас. пункте',desc:'',fineMin:'30 €',fineMax:'30 €'},
     {label:'57.4.8. Стоянка в месте, к которому нельзя подъехать без нарушения ПДД',desc:'Блокировка других участников.',fineMin:'30 €',fineMax:'30 €'}]},
-  lv:{name:'Stāvēšana: pārkāpumi, analogi 57.1 (vadītājs nav klāt)',contest:'Var apstrīdēt, ja zīme uzstādīta nepareizi vai nav redzama. Samaksa 15 dienu laikā, atzīstot vainu — 50% atlaide (tikai pārkāpumiem, kas nav fiksēti ar fotoradaru).',
+  lv:{name:'Stāvēšana: pārkāpumi, analogi 57.1 (vadītājs nav klāt)',contest:'Var apstrīdēt, ja zīme uzstādīta nepareizi vai nav redzama. Samaksa 15 dienu laikā — 25% atlaide.',
    parts:[
     {label:'57.4.1. Stāvēšana ceļa kreisajā pusē, kad tas nav atļauts',desc:'Vadītāja prombūtne — brīdinājuma vietā uzreiz naudas sods.',fineMin:'30 €',fineMax:'30 €',csn:'CSN 114'},
     {label:'57.4.2. Stāvēšana uz brauktuves, ja ceļam ir nomale',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 114'},
@@ -1047,7 +1119,7 @@ parking:[
     {label:'57.4.6. Stāvēšana zīmju 920 / 943 / 947 darbības zonā (malas apzīmējums)',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 121.12'},
     {label:'57.4.7. Stāvēšana tuvāk par 100 m no dzelzceļa pārbrauktuves ārpus apdzīvotas vietas vai tuvāk par 50 m apdzīvotā vietā',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 122.1'},
     {label:'57.4.8. Stāvēšana vietā, kur nevar piebraukt, nepārkāpjot CSN',desc:'Citu dalībnieku bloķēšana.',fineMin:'30 €',fineMax:'30 €',csn:'CSN 114'}]},
-  en:{name:'Parking: violations analogous to 57.1 (driver absent)',contest:'Can be contested if the sign is incorrectly placed or not visible. Payment within 15 days with admission of guilt — 50% discount (only for violations not recorded by photo radar).',
+  en:{name:'Parking: violations analogous to 57.1 (driver absent)',contest:'Can be contested if the sign is incorrectly placed or not visible. Payment within 15 days — 25% discount.',
    parts:[
     {label:'57.4.1. Parking on the left side of the road (where not permitted)',desc:'Driver absent — fine instead of warning.',fineMin:'30 €',fineMax:'30 €'},
     {label:'57.4.2. Parking on the carriageway when a shoulder is available',desc:'',fineMin:'30 €',fineMax:'30 €'},
@@ -1061,7 +1133,7 @@ parking:[
  {article:'CSL 57.5. pants',anchor:'#p57',warn:false,parts:true,singleFine:true,
   signsSVG:[sgn(S.noStop,'326'),sgn(S.s327,'327'),sgn(S.s328,'328'),sgn(S.s329,'329'),sgn(S.s523,'523'),sgn(S.edgeMark,'944/945')],
   fineMax:{ru:'40 €',lv:'40 €',en:'40 €'},
-  ru:{name:'Стоянка: серьёзные нарушения',contest:'Оспорить, если знаки установлены неправильно или место нарушения обозначено не по нормам. Оплата в течение 15 дней при признании вины — скидка 50% (не применяется при фиксации фоторадаром).',
+  ru:{name:'Стоянка: серьёзные нарушения',contest:'Оспорить, если знаки установлены неправильно или место нарушения обозначено не по нормам. Оплата в 15 дней — скидка 25%.',
    parts:[
     {label:'57.5.1. Стоянка во 2-м ряду',desc:'Блокировка движения других ТС.',fineMin:'40 €',fineMax:'40 €'},
     {label:'57.5.3. Стоянка на проезжей части у опасного поворота / перегиба — видимость < 100 м (вне нас. пункта)',desc:'Частично или полностью на проезжей части в месте, где видимость хотя бы в одном направлении менее 100 м.',fineMin:'40 €',fineMax:'40 €'},
@@ -1076,7 +1148,7 @@ parking:[
     {label:'57.5.12. В зоне знаков 327 / 328 / 329 или на территории со знаком 523',desc:'Знаки 327 (стоянка запрещена), 328/329 (по чётным/нечётным дням), 523 (зона ограниченной стоянки).',fineMin:'40 €',fineMax:'40 €'},
     {label:'57.5.13. В зонах знаков 944 / 945 (специальная разметка края)',desc:'Знаки 944, 945 указывают особый запрет стоянки у края дороги.',fineMin:'40 €',fineMax:'40 €'},
     {label:'57.5.14. В туннелях',desc:'',fineMin:'40 €',fineMax:'40 €'}]},
-  lv:{name:'Stāvēšana: nopietni pārkāpumi',contest:'Var apstrīdēt, ja zīmes uzstādītas nepareizi vai pārkāpuma vieta nav apzīmēta atbilstoši normām. Samaksa 15 dienu laikā, atzīstot vainu — 50% atlaide (tikai pārkāpumiem, kas nav fiksēti ar fotoradaru).',
+  lv:{name:'Stāvēšana: nopietni pārkāpumi',contest:'Var apstrīdēt, ja zīmes uzstādītas nepareizi vai pārkāpuma vieta nav apzīmēta atbilstoši normām. Samaksa 15 dienu laikā — 25% atlaide.',
    parts:[
     {label:'57.5.1. Stāvēšana otrajā rindā',desc:'Citu TL kustības bloķēšana.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 116'},
     {label:'57.5.3. Stāvēšana uz brauktuves bīstamu pagriezienu tuvumā — redzamība < 100 m (ārpus apdzīvotas vietas)',desc:'Daļēji vai pilnīgi uz brauktuves vietā, kur redzamība vismaz vienā virzienā ir mazāka par 100 m.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 121.13'},
@@ -1091,7 +1163,7 @@ parking:[
     {label:'57.5.12. Zīmju 327 / 328 / 329 darbības zonā vai teritorijā ar zīmi 523',desc:'327 (stāvēšana aizliegta), 328/329 (nepāra/pāra datumos), 523 (ierobežotas stāvēšanas zona).',fineMin:'40 €',fineMax:'40 €',csn:'CSN 122.3'},
     {label:'57.5.13. Vietās ar zīmēm 944 / 945 (īpašs malas apzīmējums)',desc:'Zīmes 944, 945 norāda īpašu stāvēšanas aizliegumu pie ceļa malas.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 122.4'},
     {label:'57.5.14. Tuneļos',desc:'',fineMin:'40 €',fineMax:'40 €',csn:'CSN 121.2'}]},
-  en:{name:'Parking: serious violations',contest:'Can be contested if signs are incorrectly placed or the prohibited zone is not properly marked. Payment within 15 days with admission of guilt — 50% discount (only for violations not recorded by photo radar).',
+  en:{name:'Parking: serious violations',contest:'Can be contested if signs are incorrectly placed or the prohibited zone is not properly marked. Payment within 15 days — 25% discount.',
    parts:[
     {label:'57.5.1. Parking in second row',desc:'Blocking the movement of other vehicles.',fineMin:'40 €',fineMax:'40 €'},
     {label:'57.5.3. Parking on carriageway near dangerous bends — visibility < 100m (outside populated area)',desc:'Partially or fully on the carriageway where visibility in at least one direction is less than 100m.',fineMin:'40 €',fineMax:'40 €'},
@@ -1130,7 +1202,7 @@ parking:[
 ],
 
 alcohol:[
- {article:'CSL 62.1. pants',anchor:'#p62',warnMin:false,warn:false,pts:6,parts:false,signsSVG:[],
+ {csnRef:'CSN 25',article:'CSL 62.1. pants',anchor:'#p62',warnMin:false,warn:false,pts:6,parts:false,signsSVG:[],
   fineMax:{ru:'430 € + 6 мес. лишения',lv:'430 € + 6 mēn.',en:'430 € + 6 mo. suspension'},
   ru:{name:'0,21–0,50 промилле: проф. водители и стаж < 2 лет',
    desc:'D, D1, DE, D1E, TRAM, TROL категории или стаж < 2 лет. 6 учётных баллов.',
@@ -1142,7 +1214,7 @@ alcohol:[
    desc:'D, D1, DE, D1E, TRAM, TROL category drivers or drivers with < 2 years experience. 6 demerit points.',
    contest:'Can be contested if the two-stage testing procedure was violated or the device was faulty.'}},
 
- {article:'CSL 62.2.2. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:false,signsSVG:[],
+ {csnRef:'CSN 25',article:'CSL 62.2.2. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:false,signsSVG:[],
   fineMax:{ru:'640 € + 12 мес. лишения',lv:'640 € + 12 mēn.',en:'640 € + 12 mo. suspension'},
   ru:{name:'0,51–1,00 промилле: автомобиль, мотоцикл, мопед',
    desc:'Управление ТС (кроме вело/электросамоката) с 0,51–1,00 промилле. 8 учётных баллов. Лишение на 12 мес.',
@@ -1154,7 +1226,7 @@ alcohol:[
    desc:'Driving a vehicle (except bicycle/e-scooter) with 0.51–1.00 promille. 8 demerit points. Licence suspension 12 months.',
    contest:'Can be contested if the two-stage testing procedure was violated or significant time elapsed since driving.'}},
 
- {article:'CSL 62.3.2. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:false,signsSVG:[],
+ {csnRef:'CSN 25',article:'CSL 62.3.2. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:false,signsSVG:[],
   fineMax:{ru:'1 400 € + 3 года лишения',lv:'1 400 € + 3 gadi',en:'1 400 € + 3 years suspension'},
   ru:{name:'1,01–1,50 промилле: автомобиль, мотоцикл, мопед',
    desc:'Управление ТС с 1,01–1,50 промилле. 8 учётных баллов. Лишение на 3 года.',
@@ -1166,7 +1238,7 @@ alcohol:[
    desc:'Driving with 1.01–1.50 promille. 8 demerit points. Licence suspension 3 years.',
    contest:'Extremely difficult to contest. Grounds: protocol violation, device inaccuracy.'}},
 
- {article:'CSL 62.4.–62.5. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:true,signsSVG:[],
+ {csnRef:'CSN 25',article:'CSL 62.4.–62.5. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:true,signsSVG:[],
   fineMax:{ru:'2 000 € + 5 лет лишения',lv:'2 000 € + 5 gadi',en:'2 000 € + 5 years suspension'},
   ru:{name:'Более 1,50 промилле или наркотики / психотропные вещества',
    contest:'Оспорить при нарушении процедуры. При наркотиках: если препарат назначен врачом и уровень не свидетельствует об интоксикации.',
@@ -1187,7 +1259,7 @@ alcohol:[
     {label:'Narcotic, psychotropic or toxic substances',desc:'8 demerit points.',fineMin:'1 200 €',fineMax:'2 000 € + 5 years'}
    ]}},
 
- {article:'CSL 62.7.–62.8. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:true,signsSVG:[],
+ {csnRef:'CSN 25',article:'CSL 62.7.–62.8. pants',anchor:'#p62',warnMin:false,warn:false,pts:8,parts:true,signsSVG:[],
   fineMax:{ru:'2 000 € + 5 лет лишения',lv:'2 000 € + 5 gadi',en:'2 000 € + 5 years suspension'},
   ru:{name:'Употребление алкоголя после остановки / отказ от освидетельствования',
    contest:'Отказ уже является нарушением независимо от состояния. Оспорить практически невозможно.',
@@ -1208,7 +1280,7 @@ alcohol:[
     {label:'Refusing the medical examination',desc:'Refusing alcohol or drug test at the request of police.',fineMin:'1 200 €',fineMax:'2 000 € + 5 years'}
    ]}},
 
- {article:'CSL 62.6. pants',anchor:'#p62',warnMin:false,warn:false,pts:3,parts:false,signsSVG:[],
+ {csnRef:'CSN 25',article:'CSL 62.6. pants',anchor:'#p62',warnMin:false,warn:false,pts:3,parts:false,signsSVG:[],
   fineMax:{ru:'280 € (sans лишения)',lv:'280 € (bez tiesību atņemšanas)',en:'280 € (no licence suspension)'},
   ru:{name:'Управление под воздействием медикаментов или в состоянии усталости',
    desc:'Управление, когда медикаменты снижают скорость реакции, при болезни или при усталости, влияющей на дееспособность. 3 уч. балла. Лишения прав нет.',
@@ -1243,7 +1315,7 @@ signals:[
    contest:'Оспорить, если остановка была выполнена, но не зафиксирована. Требуется запись или свидетели.'},
   lv:{name:'Ceļa zīmes STOP (202) neievērošana',
    desc:'Zīmes 202 (STOP) prasības nepildīšana — pilnīga apstāšanās pirms zīmes vai stop līnijas. 6 uzskaites punkti.',
-   contest:'Var apstrīdēt, ja apstāšanās tika veikta, bet netika fiksēta. Nepiecieš.ams videoieraksts vai liecīnieki.'},
+   contest:'Var apstrīdēt, ja apstāšanās tika veikta, bet netika fiksēta. Nepieciešams videoieraksts vai liecīnieki.'},
   en:{name:'Failure to comply with STOP sign (202)',
    desc:'Failure to make a full stop before sign 202 (STOP) or stop line before proceeding. 6 demerit points.',
    contest:'Can be contested if the stop was made but not recorded. Video recording or witness statements required.'}},
@@ -1272,45 +1344,7 @@ signals:[
    contest:'Var apstrīdēt, ja zīme nebija redzama, bija bojāta vai uzstādīta bez pienācīga paziņojuma.'},
   en:{name:'Violation of no-entry sign (301) or one-way traffic',
    desc:'Entering a one-way street against traffic or violating sign 301 (no entry). 6 demerit points.',
-   contest:'Can be contested if the sign was not visible, damaged or placed without proper notification.'}},
-
- {csnRef:'CSN 65',article:'CSN 65. p. — zīme 312',anchor:'#p58',warnMin:false,warn:false,pts:4,parts:false,
-  signsSVG:[sgn(S.roundabout,'312')],
-  fineMax:{ru:'160 €',lv:'160 €',en:'160 €'},
-  ru:{name:'Непредоставление преимущества на кольцевом движении',
-   desc:'Въезд на кольцевую дорогу без уступления дороги транспортным средствам, уже находящимся на кольце. В Латвии с 2021 г. водитель, въезжающий на кольцо, обязан пропустить всех, кто уже движется по нему, независимо от наличия знаков «Дай дорогу». 4 уч. балла.',
-   contest:'Оспорить, если имеется видеозапись, подтверждающая фактическое предоставление преимущества, или если камера фиксации не обеспечивала чёткого обзора въезда.'},
-  lv:{name:'Priekšrocības nepiešķiršana aplī braucošam TL',
-   desc:'Iebraukšana aplī, nepiešķirot braukšanas priekšrocību TL, kas jau atrodas aplī. Latvijā kopš 2021. gada vadītājam, iebraucot aplī, vienmēr jāpiešķir priekšrocība aplī braucošajiem neatkarīgi no "Dod ceļu" zīmju klātbūtnes. 4 uzskaites punkti.',
-   contest:'Var apstrīdēt, ja ir videoieraksts, kas apliecina faktisku priekšrocības piešķiršanu, vai ja fiksācijas kamera nenodrošināja skaidru iebraukšanas skatu.'},
-  en:{name:'Failure to yield right of way at roundabout',
-   desc:'Entering a roundabout without yielding to vehicles already circulating on it. In Latvia since 2021, drivers entering a roundabout must always yield to those already on it, regardless of the presence of Give Way signs. 4 demerit points.',
-   contest:'Can be contested if video evidence proves right of way was actually given, or if the recording camera did not provide a clear view of the entry point.'}},
-
- {csnRef:'CSN 139',article:'CSN 139.–145. p. — dzelzceļa pārbrauktuve',anchor:'#p58',warnMin:false,warn:false,pts:6,parts:true,
-  signsSVG:[sgn(S.railCross,'Pārbrauktuve')],
-  fineMax:{ru:'500 € + лишение до 1 года',lv:'500 € + tiesības līdz 1 g.',en:'500 € + suspension up to 1 yr.'},
-  ru:{name:'Нарушения правил проезда железнодорожного переезда',
-   contest:'Оспорить крайне сложно. Возможные основания: техническая неисправность сигнального оборудования, зафиксированная актом, или вынужденная остановка ТС на переезде не по вине водителя.',
-   parts:[
-    {label:'Въезд на переезд при закрытом шлагбауме или мигающем красном сигнале',desc:'Пересечение переезда когда шлагбаум закрыт (опущен) или горит/мигает красный световой сигнал. Наиболее серьёзное нарушение, 6 уч. баллов.',fineMin:'280 €',fineMax:'500 €'},
-    {label:'Въезд на переезд без убеждения в отсутствии приближающегося поезда',desc:'Начало движения через переезд без достаточной проверки видимости в обе стороны и без убеждения, что поезд не приближается.',fineMin:'140 €',fineMax:'280 €'},
-    {label:'Остановка или стоянка на переезде или ближе 10 м',desc:'Остановка или стоянка непосредственно на ж/д путях или ближе 10 метров от ближнего рельса.',fineMin:'140 €',fineMax:'280 €'}
-   ]},
-  lv:{name:'Dzelzceļa pārbrauktuves noteikumu pārkāpumi',
-   contest:'Ārkārtīgi grūti apstrīdēt. Iespējamie pamati: signālierīces tehnisks bojājums, kas fiksēts aktā, vai TL piespiedu apstāšanās uz pārbrauktuves ne vadītāja vainas dēļ.',
-   parts:[
-    {label:'Izbraukšana uz pārbrauktuves, kad barjera slēgta vai deg/mirgo sarkanais signāls',desc:'Pārbrauktuves šķērsošana, kad barjera ir nolaistu vai aktīvs sarkanais gaismas signāls. Visnopietnākais pārkāpums, 6 uzskaites punkti.',fineMin:'280 €',fineMax:'500 €'},
-    {label:'Izbraukšana uz pārbrauktuves bez pārliecināšanās, ka vilciens netuvojas',desc:'Braukšanas uzsākšana pār pārbrauktuvi bez pietiekamas redzamības pārbaudes abos virzienos.',fineMin:'140 €',fineMax:'280 €'},
-    {label:'Apstāšanās vai stāvēšana uz pārbrauktuves vai tuvāk par 10 m',desc:'Apstāšanās vai stāvēšana tieši uz dzelzceļa sliedēm vai tuvāk par 10 metriem no tuvākās sliedes.',fineMin:'140 €',fineMax:'280 €'}
-   ]},
-  en:{name:'Violations of level crossing rules',
-   contest:'Extremely difficult to contest. Possible grounds: documented technical malfunction of signal equipment, or forced vehicle stop on crossing not caused by the driver.',
-   parts:[
-    {label:'Entering the crossing when barrier is closed or red signal is active',desc:'Crossing a level crossing when the barrier is lowered or the red flashing signal is on. Most serious violation, 6 demerit points.',fineMin:'280 €',fineMax:'500 €'},
-    {label:'Entering the crossing without verifying no train is approaching',desc:'Starting to cross without adequately checking visibility in both directions and ensuring no train is approaching.',fineMin:'140 €',fineMax:'280 €'},
-    {label:'Stopping or parking on the crossing or within 10m',desc:'Stopping or parking directly on the railway tracks or within 10 metres of the nearest rail.',fineMin:'140 €',fineMax:'280 €'}
-   ]}}
+   contest:'Can be contested if the sign was not visible, damaged or placed without proper notification.'}}
 ],
 
 other:[
@@ -1327,7 +1361,7 @@ other:[
    desc:'Using a mobile phone or other communication device without a hands-free device while driving. 3 demerit points.',
    contest:'Can be contested if a hands-free device was used or the vehicle was stationary at the time of recording.'}},
 
- {csnRef:'CSN 25.4',article:'CSL 58.4. pants',anchor:'#p58',warnMin:false,warn:false,pts:3,parts:false,
+ {csnRef:'CSN 26.4',article:'CSL 58.4. pants',anchor:'#p58',warnMin:false,warn:false,pts:3,parts:false,
   signsSVG:[],
   fineMax:{ru:'80 €',lv:'80 €',en:'80 €'},
   ru:{name:'Непристёгнутый ремень безопасности',
@@ -1412,69 +1446,15 @@ other:[
     {label:'54.3. Driving in a prohibited lane (sign 927)',desc:'Driving in a lane whose use is prohibited by sign 927 (lane use prohibition).',fineMin:'40 €',fineMax:'40 €',csn:'CSN 83'},
     {label:'54.5. Driving on oncoming tramway tracks',desc:'Entering tramway tracks in the opposite direction of travel.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 83'},
     {label:'54.8. Driving on pavements, pedestrian or cycle paths',desc:'Driving a vehicle on a pavement, pedestrian path, cycle path or cycle lane. 3 demerit points.',fineMin:'55 €',fineMax:'55 €',csn:'CSN 83'}
-   ]}},
-
- {csnRef:'CSN 71',article:'CSN 71. p. — gājēju pāreja',anchor:'#p58',warnMin:false,warn:false,pts:4,parts:false,
-  signsSVG:[sgn(S.pedCross,'502')],
-  fineMax:{ru:'160 €',lv:'160 €',en:'160 €'},
-  ru:{name:'Непредоставление преимущества пешеходу на переходе',
-   desc:'Водитель не уступил дорогу пешеходу, стоящему на нерегулируемом пешеходном переходе или переходящему его. В Латвии водитель обязан пропустить пешехода, который вступил на зебру или явно намеревается её перейти. 4 уч. балла.',
-   contest:'Оспорить, если пешеход не находился на проезжей части и явного намерения перейти не имел, если разметка зебры была стёрта или отсутствовала, либо если помеха движению не была создана.'},
-  lv:{name:'Priekšrocības nepiešķiršana gājējam uz pārejas',
-   desc:'Vadītājs nav piešķīris braukšanas priekšrocību gājējam, kurš atrodas uz neregulētas gājēju pārejas vai to šķērso. Latvijā vadītājam jāielaiž gājējs, kurš uzkāpis uz zebras vai acīmredzami gatavojas šķērsot. 4 uzskaites punkti.',
-   contest:'Var apstrīdēt, ja gājējs neatradās uz brauktuves un tam nebija acīmredzama nodoma šķērsot, ja zebras apzīmējums bija nodilums vai neskaidrs, vai ja ceļa kustībai faktiski netika traucēts.'},
-  en:{name:'Failure to yield to pedestrian at crossing',
-   desc:'Driver failed to give way to a pedestrian at or crossing an uncontrolled pedestrian crossing. In Latvia, drivers must yield to any pedestrian who has stepped onto the zebra crossing or clearly intends to cross. 4 demerit points.',
-   contest:'Can be contested if the pedestrian was not on the carriageway and showed no clear intention of crossing, if the zebra markings were worn or absent, or if no actual obstruction was created.'}},
-
- {csnRef:'CSN 91',article:'CSN 91.–98. p.',anchor:'#p58',warnMin:false,warn:false,pts:6,parts:true,
-  signsSVG:[sgn(S.noOvertake,'408')],
-  fineMax:{ru:'320 €',lv:'320 €',en:'320 €'},
-  ru:{name:'Нарушения правил обгона',
-   contest:'Оспорить, если выезд за линию разметки был вынужденным (объезд препятствия), или если разметка была нечёткой или отсутствовала. Видеорегистратор — ключевое доказательство. Оплата в течение 15 дней при признании вины — скидка 50% (не применяется при фиксации фоторадаром).',
-   parts:[
-    {label:'Обгон через сплошную разделительную линию',desc:'Пересечение непрерывной белой или жёлтой линии разметки для обгона. Наиболее распространённое нарушение. 6 уч. баллов.',fineMin:'160 €',fineMax:'320 €'},
-    {label:'Обгон в зоне знака 408 (обгон запрещён)',desc:'Выполнение обгона в зоне действия знака 408 — запрет обгона установлен дорожным знаком.',fineMin:'160 €',fineMax:'320 €'},
-    {label:'Обгон при ограниченной видимости: подъём / поворот / пересечение / переход',desc:'Обгон в местах с ограниченной видимостью — крутой подъём, поворот, перекрёсток, пешеходный переход.',fineMin:'160 €',fineMax:'320 €'},
-    {label:'Обгон в туннеле или на мосту',desc:'Запрет обгона в туннелях и на мостах, независимо от дорожной разметки.',fineMin:'160 €',fineMax:'320 €'}
-   ]},
-  lv:{name:'Apdzīšanas noteikumu pārkāpumi',
-   contest:'Var apstrīdēt, ja izbraukšana pāri marķējumam bija nepieciešama šķēršļa apbraukšanai, vai ja marķējums bija neskaidrs vai nodilums. Videoreģistratora ieraksts — galvenais pierādījums. Samaksa 15 dienu laikā, atzīstot vainu — 50% atlaide (tikai pārkāpumiem, kas nav fiksēti ar fotoradaru).',
-   parts:[
-    {label:'Apdzīšana pāri nepārtrauktajai dalīšanas līnijai',desc:'Nepārtrauktās baltas vai dzeltenas ceļa marķējuma līnijas šķērsošana apdzīšanai. Visbiežākais pārkāpums. 6 uzskaites punkti.',fineMin:'160 €',fineMax:'320 €'},
-    {label:'Apdzīšana zīmes 408 (apdzīšana aizliegta) darbības zonā',desc:'Apdzīšanas veikšana zīmes 408 (apdzīšana aizliegta) darbības zonā.',fineMin:'160 €',fineMax:'320 €'},
-    {label:'Apdzīšana ierobežotas redzamības vietā: kāpums / pagrieziens / krustojums / pāreja',desc:'Apdzīšana vietās ar ierobežotu redzamību — stāvs kāpums, pagrieziens, krustojums, gājēju pāreja.',fineMin:'160 €',fineMax:'320 €'},
-    {label:'Apdzīšana tunelī vai uz tilta',desc:'Apdzīšana tuneļos un uz tiltiem ir aizliegta neatkarīgi no ceļa marķējuma.',fineMin:'160 €',fineMax:'320 €'}
-   ]},
-  en:{name:'Overtaking violations',
-   contest:'Can be contested if crossing the line was forced (e.g. to avoid an obstacle), or if markings were unclear or absent. Dashcam footage is the key piece of evidence. Payment within 15 days with admission of guilt — 50% discount (only for violations not recorded by photo radar).',
-   parts:[
-    {label:'Overtaking across a solid dividing line',desc:'Crossing a continuous white or yellow road marking line to overtake. Most common violation. 6 demerit points.',fineMin:'160 €',fineMax:'320 €'},
-    {label:'Overtaking in the zone of sign 408 (no overtaking)',desc:'Performing an overtake in the active zone of sign 408 (overtaking prohibited).',fineMin:'160 €',fineMax:'320 €'},
-    {label:'Overtaking with limited visibility: hill / bend / junction / crossing',desc:'Overtaking in places with limited visibility — steep hill, sharp bend, junction, pedestrian crossing.',fineMin:'160 €',fineMax:'320 €'},
-    {label:'Overtaking in a tunnel or on a bridge',desc:'Overtaking is prohibited in tunnels and on bridges regardless of road markings.',fineMin:'160 €',fineMax:'320 €'}
-   ]}},
-
- {csnRef:'CSN 168',article:'CSN 168. p. — apgaismojums',anchor:'#p58',warnMin:true,warn:true,pts:1,parts:false,
-  signsSVG:[],
-  fineMax:{ru:'40 €',lv:'40 €',en:'40 €'},
-  ru:{name:'Нарушение требований освещения транспортного средства',
-   desc:'Движение без включённых фар ближнего света или дневных ходовых огней. В Латвии фары обязательны круглосуточно в течение всего года — в светлое и тёмное время суток. 1 уч. балл. Возможно предупреждение.',
-   contest:'Оспорить, если неисправность фары возникла непосредственно в ходе поездки, что подтверждается актом осмотра или чеком от мастерской. Нарушение легко устраняется на месте.'},
-  lv:{name:'TL apgaismojuma prasību pārkāpums',
-   desc:'Braukšana bez ieslēgtām tuvās gaismas lukturēm vai dienas gaitas lukturēm. Latvijā lukturi ir obligāti visu diennakti visu gadu — gan gaišajā, gan tumšajā laikā. 1 uzskaites punkts. Iespējams brīdinājums.',
-   contest:'Var apstrīdēt, ja luktura bojājums radies tieši braukšanas laikā, ko apliecina apskates akts vai darbnīcas čeks. Pārkāpumu var novērst uz vietas.'},
-  en:{name:'Vehicle lighting requirements violation',
-   desc:'Driving without dipped headlights or daytime running lights switched on. In Latvia headlights are mandatory 24 hours a day throughout the entire year — in both daylight and darkness. 1 demerit point. Warning possible.',
-   contest:'Can be contested if the headlight failure occurred during the journey itself, confirmed by an inspection report or workshop receipt. The violation can be remedied on the spot.'}}
+   ]}}
 ]
 };
 
 // ===== RENDERING FUNCTIONS =====
-function getCats(){return currentLaw==='asl'?aslCats:cslCats;}
-function getLaws(){return currentLaw==='asl'?aslLaws:cslLaws;}
-function getUI(){return currentLaw==='asl'?aslUI[lang]:uiStrings.csl[lang];}
-function getBase(){return currentLaw==='asl'?BASE_ASL:BASE_CSL;}
+function getCats(){return currentLaw==='asl'?aslCats:currentLaw==='csl'?cslCats:aizCats;}
+function getLaws(){return currentLaw==='asl'?aslLaws:currentLaw==='csl'?cslLaws:aizLaws;}
+function getUI(){return currentLaw==='asl'?aslUI[lang]:currentLaw==='csl'?uiStrings.csl[lang]:uiStrings.aiz[lang];}
+function getBase(){return currentLaw==='asl'?BASE_ASL:currentLaw==='csl'?BASE_CSL:BASE_LPP;}
 
 function setLaw(law,btn){
   currentLaw=law;
@@ -1501,20 +1481,23 @@ function setLang(l,btn){
   renderLaws(getLaws()[currentCat]);
 }
 
+const SVG_ASL={admin:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="9" width="18" height="12" rx="1"/><path d="M3 9l9-6 9 6"/><line x1="9" y1="21" x2="9" y2="15"/><line x1="15" y1="21" x2="15" y2="15"/></svg>`,order:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l8 4v6c0 5.5-4 9-8 10C8 21 4 17.5 4 12V6l8-4z"/></svg>`,lang:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><line x1="3" y1="12" x2="21" y2="12"/></svg>`};
+const SVG_CSL={parking:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 18V8h5a3.5 3.5 0 010 7H9"/></svg>`,speed:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3.5 17a9 9 0 1117 0"/><line x1="12" y1="17" x2="16" y2="12"/><circle cx="12" cy="17" r="1.5" fill="currentColor" stroke="none"/></svg>`,alcohol:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2l-2 8h12L16 2H8z"/><path d="M6 10c0 3.3 2.7 6 6 6s6-2.7 6-6"/><line x1="12" y1="16" x2="12" y2="21"/><line x1="9" y1="21" x2="15" y2="21"/></svg>`,signals:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="8" y="2" width="8" height="20" rx="2"/><circle cx="12" cy="7" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="17" r="2"/></svg>`,other:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="4,7 6,9 9,6"/><line x1="13" y1="7.5" x2="20" y2="7.5"/><polyline points="4,13 6,15 9,12"/><line x1="13" y1="13.5" x2="20" y2="13.5"/><polyline points="4,18 6,20 9,17"/><line x1="13" y1="18.5" x2="20" y2="18.5"/></svg>`};
+const SVG_AIZ={aiztureshana:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="12" r="4"/><circle cx="17" cy="12" r="4"/><line x1="11" y1="12" x2="13" y2="12"/><path d="M7 8V6a2 2 0 014 0v2"/><path d="M17 8V6a2 2 0 00-4 0v2"/></svg>`};
 function renderCats(){
   const cats=getCats();
-  const aslIcons={admin:'ti-building-bank',order:'ti-shield',lang:'ti-language'};
   const aslCounts={admin:'ASL 3–8',order:'ASL 9–13.1',lang:'ASL 14–28'};
-  const cslIcons={parking:'ti-parking',speed:'ti-gauge',alcohol:'ti-bottle',signals:'ti-traffic-lights',other:'ti-list-check'};
   const cslCounts={parking:'CSL 57. p.',speed:'CSL 55. p.',alcohol:'CSL 62. p.',signals:'CSN/CSL',other:'CSL 43–58. p.'};
-  const icons=currentLaw==='asl'?aslIcons:cslIcons;
-  const counts=currentLaw==='asl'?aslCounts:cslCounts;
-  document.getElementById('catGrid').innerHTML=Object.keys(cats).map(k=>`
-    <div class="cat-card${k===currentCat?' active':''}" onclick="selectCat(this,'${k}')">
-      <i class="ti ${icons[k]} cat-icon" aria-hidden="true"></i>
-      <div class="cat-name">${cats[k][lang].name}</div>
-      <div class="cat-count">${counts[k]}</div>
-    </div>`).join('');
+  const aizCounts={aiztureshana:'AAL 71 · LPP 12 · LPP 19'};
+  const svgMap=currentLaw==='asl'?SVG_ASL:currentLaw==='csl'?SVG_CSL:SVG_AIZ;
+  const counts=currentLaw==='asl'?aslCounts:currentLaw==='csl'?cslCounts:aizCounts;
+  document.getElementById('catGrid').innerHTML=Object.keys(cats).map(k=>
+    '<div class="cat-card'+(k===currentCat?' active':'')+'" onclick="selectCat(this,\''+k+'\')">'+
+    '<div class="cat-icon">'+(svgMap[k]||'')+'</div>'+
+    '<div class="cat-name">'+cats[k][lang].name+'</div>'+
+    '<div class="cat-count">'+counts[k]+'</div>'+
+    '</div>'
+  ).join('');
 }
 
 function selectCat(el,cat){
@@ -1536,14 +1519,17 @@ function renderPartsHTML(law){
   return law[lang].parts.map(function(p){
     var csnBadge = p.csn ? csnLink(p.csn) : '';
     var descHTML = p.desc ? '<div class="part-desc">'+p.desc+'</div>' : '';
-    var finesHTML;
-    if(law.singleFine){
-      finesHTML = '<div class="part-fine-box" style="flex:none;min-width:80px"><div class="fine-lbl">'+fl[lang]+'</div><div class="fine-val danger">'+p.fineMax+'</div></div>';
-    } else {
-      finesHTML = '<div class="part-fine-box"><div class="fine-lbl">'+t.min+'</div><div class="fine-val">'+p.fineMin+'</div></div>'
-               + '<div class="part-fine-box"><div class="fine-lbl">'+t.max+'</div><div class="fine-val danger">'+p.fineMax+'</div></div>';
+    var finesHTML='';
+    if(!law.noFine){
+      if(law.singleFine){
+        finesHTML='<div class="part-fine-box" style="flex:none;min-width:80px"><div class="fine-lbl">'+fl[lang]+'</div><div class="fine-val danger">'+p.fineMax+'</div></div>';
+      } else {
+        finesHTML='<div class="part-fine-box"><div class="fine-lbl">'+t.min+'</div><div class="fine-val">'+p.fineMin+'</div></div>'
+                 +'<div class="part-fine-box"><div class="fine-lbl">'+t.max+'</div><div class="fine-val danger">'+p.fineMax+'</div></div>';
+      }
     }
-    return '<div class="part-block"><div class="part-label">'+p.label+csnBadge+'</div>'+descHTML+'<div class="part-fines">'+finesHTML+'</div></div>';
+    var finesWrap=finesHTML?'<div class="part-fines">'+finesHTML+'</div>':'';
+    return '<div class="part-block"><div class="part-label">'+p.label+csnBadge+'</div>'+descHTML+finesWrap+'</div>';
   }).join('');
 }
 
@@ -1551,44 +1537,37 @@ function renderLaws(items){
   const t=getUI();
   const list=document.getElementById('lawsList');
   if(!items||!items.length){list.innerHTML=`<p class="empty">${t.empty}</p>`;return;}
-  list.innerHTML=items.map((law,i)=>{
-    const maxStr=law.fineMax?law.fineMax[lang]:'—';
-    const maxBadge=maxStr.split('/')[0].trim();
-    const ptsBadge=law.pts?`<span class="badge badge-pts">${law.pts} ${t.pts}</span>`:'';
-    const signHTML=(law.signsSVG&&law.signsSVG.length)
-      ? `<div class="signs-row">${law.signsSVG.join('')}</div>`
-      : '';
-    return `<div class="law-card" onclick="toggleLaw(this,${i})">
-      <div class="law-top">
-        <div class="law-name">${law[lang].name}</div>
-        <i class="ti ti-chevron-down arrow-icon" aria-hidden="true"></i>
-      </div>
-      <div class="law-meta">
-        ${law.warn?`<span class="badge badge-warn">${t.warn}</span>`:''}
-        <span class="badge badge-fine">max ${maxBadge}</span>
-        ${ptsBadge}
-        <span class="badge badge-article">${law.article}</span>
-      </div>
-      <div class="law-detail" id="detail-${i}">
-        ${signHTML}
-        ${law.parts?renderPartsHTML(law):`
-          <div class="dl">${t.desc}</div>
-          <div class="dt">${law[lang].desc}</div>
-          ${(function(){
-            var fl={ru:'Штраф',lv:'Sods',en:'Fine'};
-            if(law.singleFine){
-              return '<div class="fine-row"><div class="fine-box"><div class="fine-lbl">'+fl[lang]+'</div><div class="fine-val danger">'+maxStr+'</div></div></div>';
-            }
-            return '<div class="fine-row"><div class="fine-box"><div class="fine-lbl">'+t.min+'</div><div class="fine-val">'+getFineMin(law)+'</div></div><div class="fine-box"><div class="fine-lbl">'+t.max+'</div><div class="fine-val danger">'+maxStr+'</div></div></div>';
-          })()}`}
-        ${law.csnRef?'<div class="csn-card-ref">'+csnLinks(law.csnRef)+'</div>':''}
-        <div class="dl">${t.howContest}</div>
-        <div class="dt">${law[lang].contest}</div>
-        <a class="source-btn" href="${getBase()}${law.anchor}" target="_blank" onclick="event.stopPropagation()">
-          <i class="ti ti-external-link" aria-hidden="true"></i>${t.sourceBtn}
-        </a>
-      </div>
-    </div>`;
+  list.innerHTML=items.map(function(law,i){
+    var maxStr=law.fineMax?law.fineMax[lang]:'';
+    var maxBadge=maxStr.split('/')[0].trim();
+    var ptsBadge=law.pts?'<span class="badge badge-pts">'+law.pts+' '+t.pts+'</span>':'';
+    var signHTML=(law.signsSVG&&law.signsSVG.length)?'<div class="signs-row">'+law.signsSVG.join('')+'</div>':'';
+    var isAlwaysOpen=false;
+    var isDefaultOpen=law.defaultOpen===true;
+    var srcUrl=law.srcUrl==='AAL'?BASE_AAL:law.srcUrl==='LPP'?BASE_LPP:getBase();
+    var fineSection='';
+    if(!law.noFine){
+      if(law.singleFine){
+        var fl={ru:'Штраф',lv:'Sods',en:'Fine'};
+        fineSection='<div class="fine-row"><div class="fine-box"><div class="fine-lbl">'+fl[lang]+'</div><div class="fine-val danger">'+maxStr+'</div></div></div>';
+      } else {
+        fineSection='<div class="fine-row"><div class="fine-box"><div class="fine-lbl">'+t.min+'</div><div class="fine-val">'+getFineMin(law)+'</div></div><div class="fine-box"><div class="fine-lbl">'+t.max+'</div><div class="fine-val danger">'+maxStr+'</div></div></div>';
+      }
+    }
+    var metaBadges=law.warn?'<span class="badge badge-warn">'+t.warn+'</span>':'';
+    if(!law.noFine&&maxBadge) metaBadges+='<span class="badge badge-fine">max '+maxBadge+'</span>';
+    metaBadges+=ptsBadge+'<span class="badge badge-article">'+law.article+'</span>';
+    var detailContent=signHTML+(law.parts?renderPartsHTML(law):'<div class="dl">'+t.desc+'</div><div class="dt">'+law[lang].desc+'</div>'+fineSection);
+    if(law.csnRef) detailContent+='<div class="csn-card-ref">'+csnLinks(law.csnRef)+'</div>';
+    if(t.howContest&&law[lang].contest) detailContent+='<div class="dl">'+t.howContest+'</div><div class="dt">'+law[lang].contest+'</div>';
+    detailContent+='<a class="source-btn" href="'+srcUrl+law.anchor+'" target="_blank" onclick="event.stopPropagation()">↗'+t.sourceBtn+'</a>';
+    var cardClass='law-card'+(isDefaultOpen?' expanded':'');
+    var detailClass='law-detail'+(isDefaultOpen?' show':'');
+    return '<div class="'+cardClass+'" onclick="toggleLaw(this,'+i+')">'+
+      '<div class="law-top"><div class="law-name">'+law[lang].name+'</div><div class="arrow-icon"></div></div>'+
+      '<div class="law-meta">'+metaBadges+'</div>'+
+      '<div class="'+detailClass+'" id="detail-'+i+'">'+detailContent+'</div>'+
+      '</div>';
   }).join('');
 }
 
