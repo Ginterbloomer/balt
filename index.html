@@ -65,6 +65,13 @@
     color: var(--color-text-secondary);
     margin-top: 6px;
   }
+  .app-subtitle2 {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    margin-top: 1px;
+    opacity: 0.7;
+    font-style: italic;
+  }
   
   /* СТИЛЬ 1: ЯЗЫКОВЫЕ КНОПКИ (Тоже по центру) */
   .lang-switcher {
@@ -380,7 +387,8 @@
 
 <div class="app-header">
   <div class="app-title">BALT 1</div>
-  <div class="app-subtitle" id="appSubtitle">Административное право Латвии · ASL</div>
+  <div class="app-subtitle" id="appSubtitle">Latvijas administratīvās tiesības · ASL</div>
+  <div class="app-subtitle2" id="appSubtitle2">Administratīvo sodu likums</div>
   <div class="lang-switcher">
     <button class="lang-btn" onclick="setLang('ru',this)">RU</button>
     <button class="lang-btn active" onclick="setLang('lv',this)">LV</button>
@@ -1462,6 +1470,8 @@ function setLaw(law,btn){
   btn.classList.add('active');
   currentCat=Object.keys(getCats())[0];
   document.getElementById('appSubtitle').textContent=getUI().subtitle;
+  var sub2Map={asl:{ru:'Administratīvo sodu likums',lv:'Administratīvo sodu likums',en:'Administratīvo sodu likums'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'}};
+  document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
   document.getElementById('searchInput').placeholder=getUI().placeholder;
   document.getElementById('searchInput').value='';
   renderCats();
@@ -1474,6 +1484,8 @@ function setLang(l,btn){
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('appSubtitle').textContent=getUI().subtitle;
+  var sub2Map={asl:{ru:'Administratīvo sodu likums',lv:'Administratīvo sodu likums',en:'Administratīvo sodu likums'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'}};
+  document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
   document.getElementById('searchInput').placeholder=getUI().placeholder;
   renderCats();
   document.getElementById('sectionTitle').textContent=getCats()[currentCat][lang].sec;
@@ -1599,7 +1611,11 @@ function filterLaws(){
 // ===== INIT =====
 renderCats();
 document.getElementById('appSubtitle').textContent=getUI().subtitle;
+  var sub2Map={asl:{ru:'Administratīvo sodu likums',lv:'Administratīvo sodu likums',en:'Administratīvo sodu likums'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'}};
+  document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
 document.getElementById('searchInput').placeholder=getUI().placeholder;
 document.getElementById('sectionTitle').textContent=getCats()[currentCat][lang].sec;
 renderLaws(getLaws()[currentCat]);
 </script>
+</body>
+</html>
