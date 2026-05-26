@@ -398,6 +398,7 @@
     <button class="law-btn active" onclick="setLaw('asl',this)">ASL</button>
     <button class="law-btn" onclick="setLaw('csl',this)">Ceļu satiksme</button>
     <button class="law-btn" onclick="setLaw('aiz',this)">Aizturēšana</button>
+    <button class="law-btn" onclick="setLaw('aal',this)">AAL Process</button>
   </div>
 </div>
 <div class="search-bar"><input type="text" id="searchInput" placeholder="Найти нарушение..." oninput="filterLaws()"/></div>
@@ -841,6 +842,240 @@ aiztureshana:[
 
 ]
 };
+
+// ===== AAL UI STRINGS =====
+uiStrings.aal={
+  ru:{subtitle:'Административный процесс · AAL',placeholder:'Найти термин или участника...',min:'',max:'',desc:'Описание',howContest:'',sourceBtn:'Открыть закон на likumi.lv',warn:'',warnWord:'',empty:'Ничего не найдено.',pts:'',signs:''},
+  lv:{subtitle:'Administratīvā procesa tiesības · AAL',placeholder:'Meklēt terminu vai proceša dalībnieku...',min:'',max:'',desc:'Apraksts',howContest:'',sourceBtn:'Atvērt likumu likumi.lv',warn:'',warnWord:'',empty:'Nekas netika atrasts.',pts:'',signs:''},
+  en:{subtitle:'Administrative process law · AAL',placeholder:'Search term or process participant...',min:'',max:'',desc:'Description',howContest:'',sourceBtn:'Open law on likumi.lv',warn:'',warnWord:'',empty:'Nothing found.',pts:'',signs:''}
+};
+
+// ===== AAL CATEGORIES =====
+const aalCats={
+  dalibnieki:{
+    ru:{name:'Участники процесса',sec:'Права и обязанности · AAL 39.–49. pants'},
+    lv:{name:'Proceša dalībnieki',sec:'Tiesības un pienākumi · AAL 39.–49. pants'},
+    en:{name:'Process participants',sec:'Rights and duties · AAL 39.–49. pants'}},
+  termini:{
+    ru:{name:'Ключевые понятия',sec:'Процессуальные термины и определения · AAL'},
+    lv:{name:'Galvenie jēdzieni',sec:'Procesuālie termini un definīcijas · AAL'},
+    en:{name:'Key concepts',sec:'Procedural terms and definitions · AAL'}},
+  sodi:{
+    ru:{name:'Виды наказаний',sec:'Административные санкции · AAL 13.–26. pants'},
+    lv:{name:'Sodu veidi',sec:'Administratīvie sodi · AAL 13.–26. pants'},
+    en:{name:'Types of penalties',sec:'Administrative sanctions · AAL 13.–26. pants'}}
+};
+
+// ===== AAL LAWS =====
+const aalLaws={
+dalibnieki:[
+ {article:'AAL 40.–41. pants',anchor:'#p40',noFine:true,parts:true,signsSVG:[],srcUrl:'AAL',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Pie atbildības saucamā persona',
+   parts:[
+    {label:'Definīcija (AAL 40.)',desc:'Pie atbildības saucamā persona ir fiziskā persona vai juridiskā persona, par kuras izdarītu administratīvo pārkāpumu ir uzsākts administratīvā pārkāpuma process.',fineMin:'',fineMax:''},
+    {label:'Tiesības (AAL 41.(1))',desc:'1) iepazīties ar lietas materiāliem; 2) piedalīties lietas izskatīšanā; 3) sniegt paskaidrojumus; 4) lietot valodu, kurā spēj sazīnāties; 5) zināt, par kāda pārkāpuma izdarīšanu tiek saukta pie atbildības; 6) izteikt lūgumus; 7) iesniegt pierādījumus; 8) pārsūdzēt lēmumu; 9) īstenot aizstāvību ar aizstāvja līdzdalību; 10) atsaukt aizstāvja iesniegtu sūdzību vai pieteikumu.',fineMin:'',fineMax:''},
+    {label:'Pienākumi (AAL 41.(2))',desc:'1) noteiktā laikā ierasties norādītā vietā; 2) nekavēt un netruccēt procesa norisi; 3) paziņot par dzīvesvietas, juridiskās adreses vai e-pasta adrešu maiņu; 4) pārtraukt pārkāpumu, par kuru tiek saukta pie atbildības; 5) ievērot piemēroto procešu piespiedu līdzenelī.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Pie atbildības saucamā persona',
+   parts:[
+    {label:'Definīcija (AAL 40.)',desc:'Pie atbildības saucamā persona ir fiziskā persona vai juridiskā persona, par kuras izdarītu administratīvo pārkāpumu ir uzsākts administratīvā pārkāpuma process.',fineMin:'',fineMax:''},
+    {label:'Tiesības (AAL 41.(1))',desc:'1) iepazīties ar administratīvā pārkāpuma lietas materiāliem, izdarīt no tiem izrakstus, norakstus un izgatavet kopības; 2) piedalīties lietas izskatīšanā; 3) sniegt paskaidrojumus; 4) lietot valodu, kurā tā spēj sazīnāties, kā arī bez atlīdzības izmantot tulka palīdzību; 5) zināt, par kāda pārkāpuma izdarīšanu tā tiek saukta pie atbildības; 6) izteikt lūgumus; 7) iesniegt pierādījumus; 8) pārsūdzēt lieta pieņemto lēmumu; 9) īstenot aizstāvību ar pašas izvēlēta aizstāvja līdzdalību; 10) atsaukt aizstāvja iesniegtu sūdzību vai pieteikumu vai izteiktu lūgumu.',fineMin:'',fineMax:''},
+    {label:'Pienākumi (AAL 41.(2))',desc:'1) noteiktā laikā ierasties amatpersonas, augstākas amatpersonas vai tiesas norādītā vietā; 2) nekavēt un netraucēt administratīvā pārkāpuma procesa norisi; 3) paziņot amatpersonai par dzīvesvietas, juridiskās adreses vai elektroniškā pasta adrešu maiņu procesa laikā; 4) pārtraukt pārkāpumu, par kuru tā tiek saukta pie atbildības; 5) ievērot piemēroto procešu piespiedu līdzeņī.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Person held liable',
+   parts:[
+    {label:'Definition (AAL 40.)',desc:'The person held liable is a natural or legal person against whom administrative proceedings have been initiated for an administrative violation committed by that person.',fineMin:'',fineMax:''},
+    {label:'Rights (AAL 41.(1))',desc:'1) access to case materials, extracts and copies; 2) participate in the examination of the case; 3) submit explanations; 4) use their language and a free interpreter; 5) know what violation they are charged with; 6) make requests; 7) submit evidence; 8) appeal the decision; 9) exercise defence with a chosen defender; 10) withdraw a complaint or request submitted by the defender.',fineMin:'',fineMax:''},
+    {label:'Duties (AAL 41.(2))',desc:'1) appear at the designated time and place; 2) not obstruct or hinder the process; 3) notify of change of address or e-mail during proceedings; 4) stop the violation charged; 5) comply with the applied procedural compulsory measure.',fineMin:'',fineMax:''}
+   ]}},
+
+ {article:'AAL 43.–44. pants',anchor:'#p43',noFine:true,parts:true,signsSVG:[],srcUrl:'AAL',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Cietušais (cietušā tiesības un pienākumi)',
+   parts:[
+    {label:'Definīcija (AAL 43.)',desc:'Cietušais ir fiziskā vai juridiskā persona, kurai ar administratīvo pārkāpumu nodarīts zaudējums vai nemantisks kaitējums un attiecībā uz kuru amatpersona vai augstāka amatpersona pieņēmusi lēmumu par cietušā statusa piešķiršanu.',fineMin:'',fineMax:''},
+    {label:'Tiesības (AAL 44.(1))',desc:'1) iepazīties ar lietas materiāliem, izdarīt izrakstus un kopījas; 2) piedalīties lietas izskatīšanā; 3) lietot valodu, kurā spēj sazīnāties, un bez atlīdzības izmantot tulka palīdzību; 4) neliecināt pret sevi un savu saderīnāto, laulāto, vecākiem, bērniem, brāļiem un māsām; 5) izteikt lūgumus; 6) iesniegt pierādījumus; 7) pārsūdzēt lēmumu.',fineMin:'',fineMax:''},
+    {label:'Pienākumi (AAL 44.(3))',desc:'1) savās iespējās darīt visu, lai novērstu vai samazinātu kaitējuma apmēru; 2) noteiktā laikā ierasties; 3) sniegt tikai patīesas ziņas par visu, kas zināms saistībā ar konkrēto pārkāpumu; 4) nekavēt un netraucēt procesa norisi; 5) paziņot par dzīvesvietas maiņu; 6) ievērot noteikto kārtību procešu darbību veikšanas laikā.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Cietušais',
+   parts:[
+    {label:'Definīcija (AAL 43.)',desc:'Cietušais administratīvā pārkāpuma lietā ir fiziskā vai juridiskā persona, kurai ar administratīvo pārkāpumu nodarīts zaudējums vai nemantisks kaitējums un attiecībā uz kuru amatpersona vai augstāka amatpersona pieņēmusi attiecīgu lēmumu par cietušā statusa piešķiršanu.',fineMin:'',fineMax:''},
+    {label:'Tiesības (AAL 44.(1))',desc:'1) iepazīties ar lietas materiāliem, izdarīt no tiem izrakstus, norakstus un izgatavet kopības; 2) piedalīties lietas izskatīšanā; 3) lietot valodu, kurā viņš spēj sazīnāties, kā arī bez atlīdzības izmantot tulka palīdzību; 4) neliecināt pret sevi un savu saderīnāto, laulāto, vecākiem, vecvecākiem, bērniem, mazbērniem, brāļiem un māsām; 5) izteikt lūgumus; 6) iesniegt pierādījumus; 7) pārsūdzēt lēmumu.',fineMin:'',fineMax:''},
+    {label:'Pienākumi (AAL 44.(3))',desc:'1) savās iespējās darīt visu, lai novērstu vai samazinātu viņam radītā kaitējuma apmēru; 2) noteiktā laikā ierasties; 3) sniegt tikai patīesas ziņas un liecināt par visu, kas viņam zināms saistībā ar konkrēto pārkāpumu; 4) nekavēt un netraucēt procesa norisi; 5) paziņot par dzīvesvietas maiņu; 6) ievērot noteikto kārtību procešu darbību veikšanas laikā.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Victim',
+   parts:[
+    {label:'Definition (AAL 43.)',desc:'The victim in administrative proceedings is a natural or legal person who has suffered loss or non-material harm as a result of the administrative violation, and in respect of whom an official has issued a decision granting victim status.',fineMin:'',fineMax:''},
+    {label:'Rights (AAL 44.(1))',desc:'1) access to case materials, extracts and copies; 2) participate in the examination of the case; 3) use their language and a free interpreter; 4) not testify against themselves or close relatives (spouse, parents, children, siblings); 5) make requests; 6) submit evidence; 7) appeal the decision.',fineMin:'',fineMax:''},
+    {label:'Duties (AAL 44.(3))',desc:'1) do everything possible to prevent or reduce the harm; 2) appear at the designated time and place; 3) provide only truthful information about all facts known regarding the violation; 4) not obstruct proceedings; 5) notify of change of address; 6) observe established order during procedural acts.',fineMin:'',fineMax:''}
+   ]}},
+
+ {article:'AAL 45. pants',anchor:'#p45',noFine:true,parts:true,signsSVG:[],srcUrl:'AAL',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Aizskartais mantas īpašnieks',
+   parts:[
+    {label:'Definīcija (AAL 45.(1))',desc:'Aizskartais mantas īpašnieks ir mantas īpašnieks vai likumīgais valdītājs, kura tiesības rīkoties ar mantu ir ierobežotas vai atņemtas administratīvā pārkāpuma procesa ietvaros un kurš nav pie atbildības saucamā persona.',fineMin:'',fineMax:''},
+    {label:'Tiesības (AAL 45.(2))',desc:'1) iepazīties ar lēmumiem par rīdzību ar mantu; 2) piedalīties lietas izskatīšanā; 3) lietot valodu, kurā spēj sazīnāties, un bez atlīdzības izmantot tulka palīdzību; 4) izteikt lūgumus; 5) iesniegt pierādījumus; 6) pārsūdzēt lēmumu daļā par rīdzību ar mantu.',fineMin:'',fineMax:''},
+    {label:'Pienākumi (AAL 45.(3))',desc:'1) noteiktā laikā ierasties un ievērot noteikto kārtību; 2) sniegt tikai patīesas liecības; 3) nekavēt un netraucēt procesa norisi; 4) paziņot par dzīvesvietas maiņu procesa laikā.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Aizskartais mantas īpašnieks',
+   parts:[
+    {label:'Definīcija (AAL 45.(1))',desc:'Aizskartais mantas īpašnieks ir mantas īpašnieks vai likumīgais valdītājs, kura tiesības rīkoties ar mantu ir ierobežotas vai atņemtas administratīvā pārkāpuma procesa ietvaros un kurš nav pie atbildības saucamā persona.',fineMin:'',fineMax:''},
+    {label:'Tiesības (AAL 45.(2))',desc:'1) iepazīties ar lēmumiem, kas attiecas uz rīdzību ar mantu, izdarīt no tiem izrakstus un izgatavet kopības; 2) piedalīties lietas izskatīšanā; 3) lietot valodu, kurā viņš spēj sazīnāties, kā arī bez atlīdzības izmantot tulka palīdzību; 4) izteikt lūgumus; 5) iesniegt pierādījumus; 6) pārsūdzēt lēmumu daļā par rīdzību ar mantu.',fineMin:'',fineMax:''},
+    {label:'Pienākumi (AAL 45.(3))',desc:'1) noteiktā laikā ierasties norādītā vietā un ievērot noteikto kārtību izm. darbību veikšanas laikā; 2) sniegt tikai patīesas liecības; 3) nekavēt un netraucēt procesa norisi; 4) paziņot par dzīvesvietas maiņu procesa laikā.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Affected property owner',
+   parts:[
+    {label:'Definition (AAL 45.(1))',desc:'The affected property owner is the owner or lawful holder of property whose rights to dispose of the property have been restricted or removed within administrative proceedings and who is not the person held liable.',fineMin:'',fineMax:''},
+    {label:'Rights (AAL 45.(2))',desc:'1) access to decisions relating to the property; 2) participate in the examination of the case; 3) use their language and a free interpreter; 4) make requests; 5) submit evidence; 6) appeal the decision in the part relating to the property.',fineMin:'',fineMax:''},
+    {label:'Duties (AAL 45.(3))',desc:'1) appear at the designated time and observe established order; 2) provide only truthful testimony; 3) not obstruct proceedings; 4) notify of change of address during proceedings.',fineMin:'',fineMax:''}
+   ]}},
+
+ {article:'AAL 46.–48. pants',anchor:'#p46',noFine:true,parts:true,signsSVG:[],srcUrl:'AAL',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Amatpersona / Augstāka amatpersona / Tiesa',
+   parts:[
+    {label:'Amatpersona (AAL 46.)',desc:'Persona, kura atbilstoši normatīvajos aktos noteiktājai kompetencei veic administratīvā pārkāpuma procesu: uzsāk procesu, veic izmeklēšanas darbības, piemēro procešu piespiedu līdzeņus, pieņem lēmumu administratīvā pārkāpuma lietā.',fineMin:'',fineMax:''},
+    {label:'Augstāka amatpersona (AAL 47.)',desc:'Persona, kura atbilstoši normatīvajos aktos noteiktājai kompetencei ir pilnvarota veikt administratīvā pārkāpuma lietā pieņemtā lēmuma tiesīkuma un pamatotības kontroli.',fineMin:'',fineMax:''},
+    {label:'Tiesa (tiesnesis) (AAL 48.)',desc:'Administratīvā pārkāpuma procesā tiesa (tiesnesis) kontrolē administratīvā pārkāpuma procesa ietvaros pieņemto nolēmumu tiesīkumu un pamatotību.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Amatpersona / Augstāka amatpersona / Tiesa',
+   parts:[
+    {label:'Amatpersona (AAL 46.)',desc:'Amatpersona šā likuma izpratnē ir persona, kura atbilstoši normatīvajos aktos noteiktājai kompetencei veic administratīvā pārkāpuma procesu: uzsāk administratīvā pārkāpuma procesu, veic izmeklēšanas darbības, piemēro procešu piespiedu līdzeņus, pieņem lēmumu administratīvā pārkāpuma lietā.',fineMin:'',fineMax:''},
+    {label:'Augstāka amatpersona (AAL 47.)',desc:'Augstāka amatpersona šā likuma izpratnē ir persona, kura atbilstoši normatīvajos aktos noteiktājai kompetencei ir pilnvarota veikt administratīvā pārkāpuma lietā pieņemtā lēmuma tiesīkuma un pamatotības kontroli.',fineMin:'',fineMax:''},
+    {label:'Tiesa (tiesnesis) (AAL 48.)',desc:'Administratīvā pārkāpuma procesā tiesa (tiesnesis) kontrolē administratīvā pārkāpuma procesa ietvaros pieņemto nolēmumu tiesīkumu un pamatotību.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Official / Senior official / Court',
+   parts:[
+    {label:'Official (AAL 46.)',desc:'An official within the meaning of this Law is a person who, in accordance with their competence established by law, conducts administrative proceedings: initiates the process, conducts investigative acts, applies procedural compulsory measures, and issues a decision in the administrative case.',fineMin:'',fineMax:''},
+    {label:'Senior official (AAL 47.)',desc:'A senior official is a person who, in accordance with their competence established by law, is authorised to review the lawfulness and validity of a decision issued in the administrative case.',fineMin:'',fineMax:''},
+    {label:'Court / judge (AAL 48.)',desc:'In administrative proceedings, the court (judge) reviews the lawfulness and validity of decisions issued within administrative proceedings.',fineMin:'',fineMax:''}
+   ]}},
+
+ {article:'AAL 49. pants',anchor:'#p49',noFine:true,parts:true,signsSVG:[],srcUrl:'AAL',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Liecinieks',
+   parts:[
+    {label:'Definīcija (AAL 49.(1))',desc:'Liecinieks ir persona, kura uzaicināta sniegt ziņas (liecināt) par faktiem, kas jānoskaidro administratīvā pārkāpuma lietā.',fineMin:'',fineMax:''},
+    {label:'Tiesības (AAL 49.(3))',desc:'Lieciniekam izskaidro tiesības atteikties no liecināšanas pret sevi, savu saderīnāto, laulāto, vecākiem, vecvecākiem, bērniem, mazbērniem, brāļiem un māsām.',fineMin:'',fineMax:''},
+    {label:'Pienākumi (AAL 49.(2))',desc:'Pēc amatpersonas uzaicinājuma liecinieks ierodas norādītā vietā un laikā un sniedz liecības, paziņojot visu viņam administratīvā pārkāpuma lietā zināmo un atbildot uz jautājumiem. Brīdīnāts, ka par apzināti nepatiesu liecību vai par nepamatotu atteikšanos no liecināšanas var saukt pie kriminalātbildības.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Liecinieks',
+   parts:[
+    {label:'Definīcija (AAL 49.(1))',desc:'Liecinieks ir persona, kura uzaicināta sniegt ziņas (liecināt) par faktiem, kas jānoskaidro administratīvā pārkāpuma lietā.',fineMin:'',fineMax:''},
+    {label:'Tiesības (AAL 49.(3))',desc:'Lieciniekam izskaidro tiesības atteikties no liecināšanas un brīdīna, ka par apzināti nepatiesu liecību vai par nepamatotu atteikšanos no liecināšanas viņu var saukt pie kriminalātbildības. Pirms nopratināšanas liecinieks paraksta aplieciņājumu, ka viņš ir brīdīnāts par kriminalātbildību.',fineMin:'',fineMax:''},
+    {label:'Pienākumi (AAL 49.(2))',desc:'Pēc amatpersonas, augstākas amatpersonas vai tiesas uzaicinājuma ierodas norādītā vietā un laikā un sniedz liecības, paziņojot visu viņam zināmo un atbildot uz jautājumiem.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Witness',
+   parts:[
+    {label:'Definition (AAL 49.(1))',desc:'A witness is a person who has been summoned to provide information (testify) about facts to be established in the administrative case.',fineMin:'',fineMax:''},
+    {label:'Rights (AAL 49.(3))',desc:'The witness is informed of the right to refuse to testify against themselves or close relatives (spouse, parents, grandparents, children, grandchildren, siblings). They are warned that deliberately false testimony or unjustified refusal to testify may result in criminal liability.',fineMin:'',fineMax:''},
+    {label:'Duties (AAL 49.(2))',desc:'Upon summons from an official, senior official or court, the witness appears at the designated time and place and testifies, reporting everything known in the case and answering questions.',fineMin:'',fineMax:''}
+   ]}}
+],
+
+termini:[
+ {article:'AAL 5. pants',anchor:'#p5',noFine:true,parts:false,signsSVG:[],srcUrl:'AAL',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Administratīvais pārkāpums',desc:'Administratīvais pārkāpums ir personas prettiesiska, vainojama rīdzība (darbība vai bezdarbība), par kuru likumā vai pašvaldību saistošajos noteikumos paredzēta administratīvā atbildība.'},
+  lv:{name:'Administratīvais pārkāpums',desc:'Administratīvais pārkāpums ir personas prettiesiska, vainojama rīdzība (darbība vai bezdarbība), par kuru likumā vai pašvaldību saistošajos noteikumos paredzēta administratīvā atbildība.'},
+  en:{name:'Administrative violation',desc:'An administrative violation is an unlawful, culpable act (action or omission) of a person for which administrative liability is provided in a law or municipal binding regulations.'}},
+
+ {article:'AAL 14. pants',anchor:'#p14',noFine:true,parts:true,signsSVG:[],srcUrl:'AAL',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Administratīvā soda veidi',
+   parts:[
+    {label:'Pamatsodi',desc:'1) brīdinājums — rakstveida nosodījums; 2) naudas sods — noteikta naudas summa (1 vienība = 5 €, max fiziskām personām 400 vienības = 2 000 €).',fineMin:'',fineMax:''},
+    {label:'Papsīdsodi',desc:'3) tiesību atņemšana — 1 mēn. līdz 5 gadiem; 4) tiesību izmantošanas aizliegums — 1 mēn. līdz 2 gadiem.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Administratīvā soda veidi',
+   parts:[
+    {label:'Pamatsodi (AAL 14.(1))',desc:'1) brīdinājums — personas izdarītā administratīvā pārkāpuma nosodījums, ko izškīj rakstveida; 2) naudas sods — noteikta naudas summa (1 vienība = 5 €, maximālais fiziskām personām 400 vienības = 2 000 €).',fineMin:'',fineMax:''},
+    {label:'Papildsodi (AAL 14.(2))',desc:'3) tiesību atņemšana — no 1 mēneša līdz 5 gadiem; 4) tiesību izmantošanas aizliegums — no 1 mēneša līdz 2 gadiem.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Types of administrative penalties',
+   parts:[
+    {label:'Principal penalties (AAL 14.(1))',desc:'1) warning — written condemnation of the violation; 2) fine — monetary penalty (1 unit = 5 €, max for natural persons 400 units = 2 000 €).',fineMin:'',fineMax:''},
+    {label:'Additional penalties (AAL 14.(2))',desc:'3) suspension of rights — from 1 month to 5 years; 4) prohibition on exercise of rights — from 1 month to 2 years.',fineMin:'',fineMax:''}
+   ]}},
+
+ {article:'AAL 20.–21. pants',anchor:'#p20',noFine:true,parts:true,signsSVG:[],srcUrl:'AAL',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Apstākļi, kas mīkstinaatbildību / pastiprina',
+   parts:[
+    {label:'Atbildību mīkstināošie apstākļi (AAL 20.)',desc:'1) atzīst un nožēlo izdarīto; 2) labprātīgī atlīdzipījis zaudējumu vai novērsis kaitējumu; 3) pārkāpums izdarīts stipra psihiska uzbudinājuma vai smagu pers. apstākļu dēļ; 4) labprātīgī pieteicies pirms atklāšanas; 5) cietā prettiesiskas uzvedības ietekmē; 6) grūtniecības stāvoklī vai bērns līdz 1 gadam.',fineMin:'',fineMax:''},
+    {label:'Atbildību pastiprinājošie apstākļi (AAL 21.)',desc:'1) turpināts, neraugoties uz prasību izbeigt; 2) iesaistījis nepilngadīgo; 3) izdarīts stihiskas nelaimces apstākļos; 4) izdarīts alkohola vai narkotiku ietekmē; 5) motīvs ir naids pret personas iezīmēm; 6) izdarījusi personu grupa.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Atbildību mīkstināošie un pastiprinājošie apstākļi',
+   parts:[
+    {label:'Mīkstināošie apstākļi (AAL 20.)',desc:'1) atzīnis un nožēlojis izdarīto; 2) labprātīgī atlīdzipājis zaudējumu vai novērsis kaitējumu; 3) pārkāpums izdarīts stipra psihiska uzbudinājuma ietekmē vai smagu pers. apstākļu dēļ; 4) labprātīgī pieteicies pirms pārkāpuma atklāšanas; 5) cietā prettiesiskas vai amorālas uzvedības ietekmē; 6) sieviete grūtniecības stāvoklī vai ar bērnu līdz 1 gadam.',fineMin:'',fineMax:''},
+    {label:'Pastiprinājošie apstākļi (AAL 21.)',desc:'1) turpināta prettiesiskā rīdzība, neraugoties uz pilnvarotas amatpersonas prasību to izbeigt; 2) pilngadīga persona iesaistījusi nepilngadīgo; 3) izdarīts stihiskas nelaimces vai ārkārtējos apstākļos; 4) izdarīts alkohola, narkotiku vai citu ap. vielu ietekmē; 5) motīvs ir naids pret personas iezīmēm; 6) izdarījusi personu grupa.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Mitigating and aggravating circumstances',
+   parts:[
+    {label:'Mitigating circumstances (AAL 20.)',desc:'1) admitted and regretted the violation; 2) voluntarily compensated the loss or remedied the harm; 3) committed under strong emotional distress or difficult personal circumstances; 4) voluntarily came forward before discovery; 5) influenced by the victim\u0027s unlawful conduct; 6) pregnant woman or woman with a child under 1 year.',fineMin:'',fineMax:''},
+    {label:'Aggravating circumstances (AAL 21.)',desc:'1) unlawful conduct continued despite a demand to stop; 2) involved a minor in the commission; 3) committed during a natural disaster or extraordinary circumstances; 4) committed under influence of alcohol or drugs; 5) motivated by hatred of personal characteristics; 6) committed by a group of persons.',fineMin:'',fineMax:''}
+   ]}},
+
+ {article:'AAL 27.–36. pants',anchor:'#p27',noFine:true,parts:true,signsSVG:[],srcUrl:'AAL',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Pamatprincip i proceša',
+   parts:[
+    {label:'Nevainīguma prezumpcija (AAL 29.)',desc:'Persona netiek uzkatīta par vainīgu administratīvā pārkāpuma izdarīšanā, kamēr tās vaina nav pierādīta. Personai nav jāpierāda savs nevainīgums. Visas saprātīgās šaubas, ja tās nevar novērst, vērtē par labu personai.',fineMin:'',fineMax:''},
+    {label:'Tiesības uz aizstāvību (AAL 33.)',desc:'Pie atbildības saucamajai personai ir tiesības uz aizstāvību, proti, tiesības zināt, kādā pārkāpuma izdarīšanā to tur aizdomās, un izvēlēties savu aizstāvības pozīciju.',fineMin:'',fineMax:''},
+    {label:'Nevainīguma prezumpcija piemērošana praksē',desc:'Amatpersonai ir pienākums pierādīt pārkāpuma faktu, nevis personai — savu nevainīgumu. Šī principa pārkāpšana var but pamats lēmuma atcelšanai.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Proceša pamatprincipi',
+   parts:[
+    {label:'Nevainīguma prezumpcija (AAL 29.)',desc:'Persona netiek uzkatīta par vainīgu administratīvā pārkāpuma izdarīšanā, kamēr tās vaina nav pierādīta. Personai nav jāpierāda savs nevainīgums. Visas saprātīgās šaubas par vainu, ja tās nevar novērst ar pierādījumu pārbaudi, vērtē par labu personai.',fineMin:'',fineMax:''},
+    {label:'Tiesības uz aizstāvību (AAL 33.)',desc:'Pie atbildības saucamajai personai ir tiesības uz aizstāvību, proti, tiesības zināt, kādā pārkāpuma izdarīšanā to tur aizdomās, un izvēlēties savu aizstāvības pozīciju. Aizstāvību persona var īstenot pati, ar aizstāvja līdzdalību vai pārstāvja starpniecībā.',fineMin:'',fineMax:''},
+    {label:'Tiesības uz atlīdzīnājumu (AAL 34.)',desc:'Personai, kurai ar administratīvā pārkāpuma processā veicamu publisko tiesību juridiskās personas rīdzību nodarīts kaitējums, ir tiesības uz atlīdzīnājumu saskaņā ar normatīvajiem aktiem.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Basic principles of proceedings',
+   parts:[
+    {label:'Presumption of innocence (AAL 29.)',desc:'A person is not considered guilty of committing an administrative violation until their guilt has been proven. The person is not required to prove their innocence. All reasonable doubts about guilt, if they cannot be resolved by examining evidence, shall be interpreted in favour of the person.',fineMin:'',fineMax:''},
+    {label:'Right to defence (AAL 33.)',desc:'The person held liable has the right to a defence — the right to know what violation they are suspected of and to choose their defence position. The right may be exercised personally, through a defender, or through a representative.',fineMin:'',fineMax:''},
+    {label:'Right to redress (AAL 34.)',desc:'A person who has suffered harm as a result of actions by a public legal entity in administrative proceedings has the right to compensation in accordance with applicable law.',fineMin:'',fineMax:''}
+   ]}}
+],
+
+sodi:[
+ {article:'AAL 16. pants',anchor:'#p16',noFine:true,parts:true,signsSVG:[],srcUrl:'AAL',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Naudas sods — apmēri un nosacījumi',
+   parts:[
+    {label:'Naudas soda vienības (AAL 16.(2))',desc:'1 naudas soda vienība = 5 €. Minimālais sods — 2 vienības (10 €). Maximālais fiziskām personām — 400 vienības (2 000 €). Juridiskām personām — 4 000 vienības (20 000 €).',fineMin:'',fineMax:''},
+    {label:'Nepilngadīgajiem (AAL 16.(8))',desc:'Nepilngadīgajam piemēro pusi no tā naudas soda, kas par tādīos pašos apstākļos izdarītu pārkāpumu būtu piemērojams pilngadīgai personai.',fineMin:'',fineMax:''},
+    {label:'Atlīde ar 25% atlaidi (AAL prakse)',desc:'Ja naudas sods samaksāts 15 dienu laikā no lēmuma pieņemšanas, daudzos CSL pārkāpumu gadījumos tiek piemērota 25% atlaide.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Naudas sods — apmēri un nosacījumi',
+   parts:[
+    {label:'Naudas soda vienības (AAL 16.(2))',desc:'1 naudas soda vienība = 5 €. Minimālais naudas sods fiziskām un juridiskām personām — 2 naudas soda vienības (10 €). Maximālais naudas sods fiziskām personām — 400 vienības (2 000 €); juridiskām personām — 4 000 vienības (20 000 €).',fineMin:'',fineMax:''},
+    {label:'Nepilngadīgajiem (AAL 16.(8))',desc:'Nepilngadīgajam piemēro pusi no tā naudas soda, kas par tādīos pašos apstākļos izdarītu pārkāpumu būtu piemērojams pilngadīgai personai.',fineMin:'',fineMax:''},
+    {label:'Samaksā 15 dienu laikā — 25% atlaide',desc:'Vairākos likumos (t.sk. CSL) noteikts, ka, samaksājot naudas sodu 15 dienu laikā no lēmuma stāšanās spēkā, tiek piemērota 25% atlaide.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Fine — amounts and conditions',
+   parts:[
+    {label:'Fine units (AAL 16.(2))',desc:'1 fine unit = 5 €. Minimum fine for natural and legal persons — 2 units (10 €). Maximum fine for natural persons — 400 units (2 000 €); for legal persons — 4 000 units (20 000 €).',fineMin:'',fineMax:''},
+    {label:'For minors (AAL 16.(8))',desc:'A minor receives half the fine that would be applicable to an adult for the same violation under the same circumstances.',fineMin:'',fineMax:''},
+    {label:'Pay within 15 days — 25% discount',desc:'Several laws (including CSL) provide that paying the fine within 15 days of the decision entering into force entitles the person to a 25% discount.',fineMin:'',fineMax:''}
+   ]}},
+
+ {article:'AAL 17. pants',anchor:'#p17',noFine:true,parts:false,signsSVG:[],srcUrl:'AAL',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Tiesību atņemšana',desc:'Tiesību atņemšana ir personai piešķirto tiesību anālulēšana, nosakot tai aizliegumu noteiktu laiku atkārtoti iegūt šīs tiesības. Piemēro uz laiku no 1 mēneša līdz 5 gadiem. Pēc termiņa beigām — tiesības jāiegūst no jauna.'},
+  lv:{name:'Tiesību atņemšana',desc:'Tiesību atņemšana ir personai piešķirto tiesību anāulēšana, nosakot tai aizliegumu noteiktu laiku atkārtoti iegūt šīs tiesības. Ja personai tiesības nav piešķirtas, tiesību atņemšana izpaužas kā aizliegums noteiktu laiku iegūt šīs tiesības. Piemēro no 1 mēneša līdz 5 gadiem.'},
+  en:{name:'Suspension of rights',desc:'Suspension of rights is the revocation of rights granted to a person, with a prohibition on re-obtaining those rights for a specified period. Applied for a period of 1 month to 5 years. After the period expires, the rights must be re-obtained from scratch.'}},
+
+ {article:'AAL 24. pants',anchor:'#p24',noFine:true,parts:false,signsSVG:[],srcUrl:'AAL',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Administratīvās sodāmības dzēšana',desc:'Administratīvā sodāmība ir spēkā, kamēr nolēmums par sodu tiek izpildīts un gadu pēc izpildes. Persona tiek atzīta par administratīvi nesodītu gadu pēc soda izpildes.'},
+  lv:{name:'Administratīvās sodāmības dzēšana',desc:'Administratīvā sodāmība ir spēkā nolēmuma par sodu izpildes laikā, kā arī pēc tam līdz sodāmības dzēšanai. Persona uzkatīma par administratīvi nesodītu gadu pēc soda izpildes. Sodāmības dzēšanas termiņu skaita no dienas, kad pilļnīgī ir izpildīts pamatsods un papildsods.'},
+  en:{name:'Expiry of administrative conviction',desc:'An administrative conviction is in force while the penalty decision is being executed and for one year after execution. A person is considered free of an administrative conviction one year after the penalty has been fully served.'}}
+]
+};
+
 
 // ===== CSL CATEGORIES =====
 const cslCats={
@@ -1459,10 +1694,10 @@ other:[
 };
 
 // ===== RENDERING FUNCTIONS =====
-function getCats(){return currentLaw==='asl'?aslCats:currentLaw==='csl'?cslCats:aizCats;}
-function getLaws(){return currentLaw==='asl'?aslLaws:currentLaw==='csl'?cslLaws:aizLaws;}
-function getUI(){return currentLaw==='asl'?aslUI[lang]:currentLaw==='csl'?uiStrings.csl[lang]:uiStrings.aiz[lang];}
-function getBase(){return currentLaw==='asl'?BASE_ASL:currentLaw==='csl'?BASE_CSL:BASE_LPP;}
+function getCats(){return currentLaw==='asl'?aslCats:currentLaw==='csl'?cslCats:currentLaw==='aiz'?aizCats:aalCats;}
+function getLaws(){return currentLaw==='asl'?aslLaws:currentLaw==='csl'?cslLaws:currentLaw==='aiz'?aizLaws:aalLaws;}
+function getUI(){return currentLaw==='asl'?aslUI[lang]:currentLaw==='csl'?uiStrings.csl[lang]:currentLaw==='aiz'?uiStrings.aiz[lang]:uiStrings.aal[lang];}
+function getBase(){return currentLaw==='asl'?BASE_ASL:currentLaw==='csl'?BASE_CSL:currentLaw==='aiz'?BASE_LPP:BASE_AAL;}
 
 function setLaw(law,btn){
   currentLaw=law;
@@ -1496,13 +1731,16 @@ function setLang(l,btn){
 const SVG_ASL={admin:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="9" width="18" height="12" rx="1"/><path d="M3 9l9-6 9 6"/><line x1="9" y1="21" x2="9" y2="15"/><line x1="15" y1="21" x2="15" y2="15"/></svg>`,order:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l8 4v6c0 5.5-4 9-8 10C8 21 4 17.5 4 12V6l8-4z"/></svg>`,lang:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><line x1="3" y1="12" x2="21" y2="12"/></svg>`};
 const SVG_CSL={parking:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 18V8h5a3.5 3.5 0 010 7H9"/></svg>`,speed:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3.5 17a9 9 0 1117 0"/><line x1="12" y1="17" x2="16" y2="12"/><circle cx="12" cy="17" r="1.5" fill="currentColor" stroke="none"/></svg>`,alcohol:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2l-2 8h12L16 2H8z"/><path d="M6 10c0 3.3 2.7 6 6 6s6-2.7 6-6"/><line x1="12" y1="16" x2="12" y2="21"/><line x1="9" y1="21" x2="15" y2="21"/></svg>`,signals:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="8" y="2" width="8" height="20" rx="2"/><circle cx="12" cy="7" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="17" r="2"/></svg>`,other:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="4,7 6,9 9,6"/><line x1="13" y1="7.5" x2="20" y2="7.5"/><polyline points="4,13 6,15 9,12"/><line x1="13" y1="13.5" x2="20" y2="13.5"/><polyline points="4,18 6,20 9,17"/><line x1="13" y1="18.5" x2="20" y2="18.5"/></svg>`};
 const SVG_AIZ={aiztureshana:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="12" r="4"/><circle cx="17" cy="12" r="4"/><line x1="11" y1="12" x2="13" y2="12"/><path d="M7 8V6a2 2 0 014 0v2"/><path d="M17 8V6a2 2 0 00-4 0v2"/></svg>`};
+
+const SVG_AAL={dalibnieki:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="9" cy="7" r="3"/><path d="M3 21v-2a6 6 0 0112 0v2"/><circle cx="19" cy="8" r="2"/><path d="M19 14v7"/><path d="M22 17h-6"/></svg>`,termini:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16v16H4z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>`,sodi:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 4l6 6-9 9-6-6 9-9z"/><line x1="5" y1="19" x2="19" y2="5" stroke="none"/><line x1="3" y1="21" x2="9" y2="15"/></svg>`};
+const aalCounts={dalibnieki:'AAL 39.–49. p.',termini:'AAL termini',sodi:'AAL 13.–26. p.'};
 function renderCats(){
   const cats=getCats();
   const aslCounts={admin:'ASL 3–8',order:'ASL 9–13.1',lang:'ASL 14–28'};
   const cslCounts={parking:'CSL 57. p.',speed:'CSL 55. p.',alcohol:'CSL 62. p.',signals:'CSN/CSL',other:'CSL 43–58. p.'};
   const aizCounts={aiztureshana:'AAL 71 · LPP 12 · LPP 19'};
-  const svgMap=currentLaw==='asl'?SVG_ASL:currentLaw==='csl'?SVG_CSL:SVG_AIZ;
-  const counts=currentLaw==='asl'?aslCounts:currentLaw==='csl'?cslCounts:aizCounts;
+  const svgMap=currentLaw==='asl'?SVG_ASL:currentLaw==='csl'?SVG_CSL:currentLaw==='aiz'?SVG_AIZ:SVG_AAL;
+  const counts=currentLaw==='asl'?aslCounts:currentLaw==='csl'?cslCounts:currentLaw==='aiz'?aizCounts:aalCounts;
   document.getElementById('catGrid').innerHTML=Object.keys(cats).map(k=>
     '<div class="cat-card'+(k===currentCat?' active':'')+'" onclick="selectCat(this,\''+k+'\')">'+
     '<div class="cat-icon">'+(svgMap[k]||'')+'</div>'+
