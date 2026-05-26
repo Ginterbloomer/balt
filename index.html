@@ -387,8 +387,8 @@
 
 <div class="app-header">
   <div class="app-title">BALT 1</div>
-  <div class="app-subtitle" id="appSubtitle">Latvijas administratīvās tiesības · ASL</div>
-  <div class="app-subtitle2" id="appSubtitle2">Administratīvo sodu likums</div>
+  <div class="app-subtitle" id="appSubtitle">ASL</div>
+  <div class="app-subtitle2" id="appSubtitle2">Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā</div>
   <div class="lang-switcher">
     <button class="lang-btn" onclick="setLang('ru',this)">RU</button>
     <button class="lang-btn active" onclick="setLang('lv',this)">LV</button>
@@ -396,9 +396,9 @@
   </div>
   <div class="law-switcher">
     <button class="law-btn active" onclick="setLaw('asl',this)">ASL</button>
+    <button class="law-btn" onclick="setLaw('aal',this)">AAL</button>
     <button class="law-btn" onclick="setLaw('csl',this)">Ceļu satiksme</button>
     <button class="law-btn" onclick="setLaw('aiz',this)">Aizturēšana</button>
-    <button class="law-btn" onclick="setLaw('aal',this)">AAL Process</button>
   </div>
 </div>
 <div class="search-bar"><input type="text" id="searchInput" placeholder="Найти нарушение..." oninput="filterLaws()"/></div>
@@ -487,14 +487,14 @@ function sgn(svg,label){return '<div class="sign-chip">'+svg+'<span class="sign-
 // ===== UI STRINGS =====
 const uiStrings={
   asl:{
-    ru:{subtitle:'Административное право Латвии · ASL',placeholder:'Найти нарушение или штраф...',min:'Минимум',max:'Максимум',desc:'Описание',howContest:'Как оспорить',sourceBtn:'Открыть статью на likumi.lv',warn:'Возможно предупреждение',warnWord:'Предупреждение',empty:'Ничего не найдено.',pts:'очков',signs:'Знаки'},
-    lv:{subtitle:'Latvijas administratīvās tiesības · ASL',placeholder:'Meklēt pārkāpumu vai sodu...',min:'Minimums',max:'Maksimums',desc:'Apraksts',howContest:'Kā apstrīdēt',sourceBtn:'Atvērt pantu likumi.lv',warn:'Iespējams brīdinājums',warnWord:'Brīdinājums',empty:'Nekas netika atrasts.',pts:'punkti',signs:'Zīmes'},
-    en:{subtitle:'Latvian Administrative Law · ASL',placeholder:'Search violation or fine...',min:'Minimum',max:'Maximum',desc:'Description',howContest:'How to contest',sourceBtn:'Open article on likumi.lv',warn:'Warning possible',warnWord:'Warning',empty:'Nothing found.',pts:'points',signs:'Signs'}
+    ru:{subtitle:'ASL',placeholder:'Найти нарушение или штраф...',min:'Минимум',max:'Максимум',desc:'Описание',howContest:'Как оспорить',sourceBtn:'Открыть статью на likumi.lv',warn:'Возможно предупреждение',warnWord:'Предупреждение',empty:'Ничего не найдено.',pts:'очков',signs:'Знаки'},
+    lv:{subtitle:'ASL',placeholder:'Meklēt pārkāpumu vai sodu...',min:'Minimums',max:'Maksimums',desc:'Apraksts',howContest:'Kā apstrīdēt',sourceBtn:'Atvērt pantu likumi.lv',warn:'Iespējams brīdinājums',warnWord:'Brīdinājums',empty:'Nekas netika atrasts.',pts:'punkti',signs:'Zīmes'},
+    en:{subtitle:'ASL',placeholder:'Search violation or fine...',min:'Minimum',max:'Maximum',desc:'Description',howContest:'How to contest',sourceBtn:'Open article on likumi.lv',warn:'Warning possible',warnWord:'Warning',empty:'Nothing found.',pts:'points',signs:'Signs'}
   },
   csl:{
-    ru:{subtitle:'Дорожное право Латвии · CSL / CSN',placeholder:'Найти нарушение или штраф...',min:'Минимум',max:'Максимум',desc:'Описание',howContest:'Как оспорить',sourceBtn:'Открыть закон на likumi.lv',warn:'Возможно предупреждение',warnWord:'Предупреждение',empty:'Ничего не найдено.',pts:'очков',signs:'Знаки'},
-    lv:{subtitle:'Latvijas ceļu satiksmes tiesības · CSL / CSN',placeholder:'Meklēt pārkāpumu vai sodu...',min:'Minimums',max:'Maksimums',desc:'Apraksts',howContest:'Kā apstrīdēt',sourceBtn:'Atvērt likumu likumi.lv',warn:'Iespējams brīdinājums',warnWord:'Brīdinājums',empty:'Nekas netika atrasts.',pts:'punkti',signs:'Zīmes'},
-    en:{subtitle:'Latvian Road Traffic Law · CSL / CSN',placeholder:'Search violation or fine...',min:'Minimum',max:'Maximum',desc:'Description',howContest:'How to contest',sourceBtn:'Open law on likumi.lv',warn:'Warning possible',warnWord:'Warning',empty:'Nothing found.',pts:'points',signs:'Signs'}
+    ru:{subtitle:'CSL / CSN',placeholder:'Найти нарушение или штраф...',min:'Минимум',max:'Максимум',desc:'Описание',howContest:'Как оспорить',sourceBtn:'Открыть закон на likumi.lv',warn:'Возможно предупреждение',warnWord:'Предупреждение',empty:'Ничего не найдено.',pts:'очков',signs:'Знаки'},
+    lv:{subtitle:'CSL / CSN',placeholder:'Meklēt pārkāpumu vai sodu...',min:'Minimums',max:'Maksimums',desc:'Apraksts',howContest:'Kā apstrīdēt',sourceBtn:'Atvērt likumu likumi.lv',warn:'Iespējams brīdinājums',warnWord:'Brīdinājums',empty:'Nekas netika atrasts.',pts:'punkti',signs:'Zīmes'},
+    en:{subtitle:'CSL / CSN',placeholder:'Search violation or fine...',min:'Minimum',max:'Maximum',desc:'Description',howContest:'How to contest',sourceBtn:'Open law on likumi.lv',warn:'Warning possible',warnWord:'Warning',empty:'Nothing found.',pts:'points',signs:'Signs'}
   }
 };
 
@@ -503,9 +503,9 @@ const uiStrings={
 
 
 const aslUI={
-  ru:{subtitle:'Административное право Латвии · ASL',placeholder:'Найти нарушение или штраф...',min:'Минимум',max:'Максимум',desc:'Описание',howContest:'Как оспорить',sourceBtn:'Открыть статью на likumi.lv',warn:'Возможно предупреждение',warnWord:'Предупреждение',empty:'Ничего не найдено.'},
-  lv:{subtitle:'Latvijas administratīvās tiesības · ASL',placeholder:'Meklēt pārkāpumu vai sodu...',min:'Minimums',max:'Maksimums',desc:'Apraksts',howContest:'Kā apstrīdēt',sourceBtn:'Atvērt pantu likumi.lv',warn:'Iespējams brīdinājums',warnWord:'Brīdinājums',empty:'Nekas netika atrasts.'},
-  en:{subtitle:'Latvian Administrative Law · ASL',placeholder:'Search violation or fine...',min:'Minimum',max:'Maximum',desc:'Description',howContest:'How to contest',sourceBtn:'Open article on likumi.lv',warn:'Warning possible',warnWord:'Warning',empty:'Nothing found.'}
+  ru:{subtitle:'ASL',placeholder:'Найти нарушение или штраф...',min:'Минимум',max:'Максимум',desc:'Описание',howContest:'Как оспорить',sourceBtn:'Открыть статью на likumi.lv',warn:'Возможно предупреждение',warnWord:'Предупреждение',empty:'Ничего не найдено.'},
+  lv:{subtitle:'ASL',placeholder:'Meklēt pārkāpumu vai sodu...',min:'Minimums',max:'Maksimums',desc:'Apraksts',howContest:'Kā apstrīdēt',sourceBtn:'Atvērt pantu likumi.lv',warn:'Iespējams brīdinājums',warnWord:'Brīdinājums',empty:'Nekas netika atrasts.'},
+  en:{subtitle:'ASL',placeholder:'Search violation or fine...',min:'Minimum',max:'Maximum',desc:'Description',howContest:'How to contest',sourceBtn:'Open article on likumi.lv',warn:'Warning possible',warnWord:'Warning',empty:'Nothing found.'}
 };
 
 const aslCats={
@@ -767,9 +767,9 @@ lang:[
 
 // ===== AiZ UI STRINGS =====
 uiStrings.aiz={
-  ru:{subtitle:'Задержание · AAL / LPP',placeholder:'Найти основание для задержания...',min:'',max:'',desc:'Описание',howContest:'',sourceBtn:'Открыть закон на likumi.lv',warn:'',warnWord:'',empty:'Ничего не найдено.',pts:'',signs:''},
-  lv:{subtitle:'Aizturēšana · AAL / LPP',placeholder:'Meklēt aizturēšanas pamatu...',min:'',max:'',desc:'Apraksts',howContest:'',sourceBtn:'Atvērt likumu likumi.lv',warn:'',warnWord:'',empty:'Nekas netika atrasts.',pts:'',signs:''},
-  en:{subtitle:'Detention · AAL / LPP',placeholder:'Search grounds for detention...',min:'',max:'',desc:'Description',howContest:'',sourceBtn:'Open law on likumi.lv',warn:'',warnWord:'',empty:'Nothing found.',pts:'',signs:''}
+  ru:{subtitle:'Aizturēšana',placeholder:'Найти основание для задержания...',min:'',max:'',desc:'Описание',howContest:'',sourceBtn:'Открыть закон на likumi.lv',warn:'',warnWord:'',empty:'Ничего не найдено.',pts:'',signs:''},
+  lv:{subtitle:'Aizturēšana',placeholder:'Meklēt aizturēšanas pamatu...',min:'',max:'',desc:'Apraksts',howContest:'',sourceBtn:'Atvērt likumu likumi.lv',warn:'',warnWord:'',empty:'Nekas netika atrasts.',pts:'',signs:''},
+  en:{subtitle:'Aizturēšana',placeholder:'Search grounds for detention...',min:'',max:'',desc:'Description',howContest:'',sourceBtn:'Open law on likumi.lv',warn:'',warnWord:'',empty:'Nothing found.',pts:'',signs:''}
 };
 
 // ===== AiZ CATEGORIES =====
@@ -835,7 +835,7 @@ aiztureshana:[
   fineMax:{ru:'',lv:'',en:''},
   ru:{name:'Полиция: доставка лиц, утративших способность самостоятельно передвигаться или ориентироваться (LPP 12.1.9)',
    desc:'Полиция вправе доставить в учреждение по вытрезвлению лиц, которые в результате употребления алкоголя, наркотиков, психотропных или токсических веществ утратили способность самостоятельно передвигаться или ориентироваться либо могут причинить вред окружающим или себе. Доставка осуществляется в учреждение по вытрезвлению, медицинское учреждение или домой.'},
-  lv:{name:'Policija: personas nogadāšana iestādē, ja tā zaudējusi spēju pastāvīgi pārvietoties vai orientēties (LPP 12.1.9)',
+  lv:{name:'Policija: personas nogādāšana iestādē, ja tā zaudējusi spēju pastāvīgi pārvietoties vai orientēties (LPP 12.1.9)',
    desc:'Personas, kuras alkohola, narkotisko, psihotropo vai toksisko vielu lietošanas rezultātā zaudējušas spēju pastāvīgi pārvietoties vai orientēties vai var nodarīt kaitējumu apkārtējiem vai pašas sev, nogadāt iestādēs, kas sniedz atskurbšanas pakalpojumus, ārstniecības iestādēs vai mājoklī.'},
   en:{name:'Police: transporting person who has lost the ability to move or orientate independently (LPP 12.1.9)',
    desc:'Persons who, as a result of the use of alcohol, narcotic, psychotropic or toxic substances, have lost the ability to move or orientate independently, or may cause harm to others or themselves, shall be transported to facilities providing detoxification services, medical facilities or home.'}},
@@ -845,16 +845,16 @@ aiztureshana:[
 
 // ===== AAL UI STRINGS =====
 uiStrings.aal={
-  ru:{subtitle:'Административный процесс · AAL',placeholder:'Найти термин или участника...',min:'',max:'',desc:'Описание',howContest:'',sourceBtn:'Открыть закон на likumi.lv',warn:'',warnWord:'',empty:'Ничего не найдено.',pts:'',signs:''},
-  lv:{subtitle:'Administratīvā procesa tiesības · AAL',placeholder:'Meklēt terminu vai proceša dalībnieku...',min:'',max:'',desc:'Apraksts',howContest:'',sourceBtn:'Atvērt likumu likumi.lv',warn:'',warnWord:'',empty:'Nekas netika atrasts.',pts:'',signs:''},
-  en:{subtitle:'Administrative process law · AAL',placeholder:'Search term or process participant...',min:'',max:'',desc:'Description',howContest:'',sourceBtn:'Open law on likumi.lv',warn:'',warnWord:'',empty:'Nothing found.',pts:'',signs:''}
+  ru:{subtitle:'AAL',placeholder:'Найти термин или участника...',min:'',max:'',desc:'Описание',howContest:'',sourceBtn:'Открыть закон на likumi.lv',warn:'',warnWord:'',empty:'Ничего не найдено.',pts:'',signs:''},
+  lv:{subtitle:'AAL',placeholder:'Meklēt terminu vai proceša dalībnieku...',min:'',max:'',desc:'Apraksts',howContest:'',sourceBtn:'Atvērt likumu likumi.lv',warn:'',warnWord:'',empty:'Nekas netika atrasts.',pts:'',signs:''},
+  en:{subtitle:'AAL',placeholder:'Search term or process participant...',min:'',max:'',desc:'Description',howContest:'',sourceBtn:'Open law on likumi.lv',warn:'',warnWord:'',empty:'Nothing found.',pts:'',signs:''}
 };
 
 // ===== AAL CATEGORIES =====
 const aalCats={
   dalibnieki:{
     ru:{name:'Участники процесса',sec:'Права и обязанности · AAL 39.–49. pants'},
-    lv:{name:'Proceša dalībnieki',sec:'Tiesības un pienākumi · AAL 39.–49. pants'},
+    lv:{name:'Procesa dalībnieki',sec:'Tiesības un pienākumi · AAL 39.–49. pants'},
     en:{name:'Process participants',sec:'Rights and duties · AAL 39.–49. pants'}},
   termini:{
     ru:{name:'Ключевые понятия',sec:'Процессуальные термины и определения · AAL'},
@@ -874,14 +874,14 @@ dalibnieki:[
   ru:{name:'Pie atbildības saucamā persona',
    parts:[
     {label:'Definīcija (AAL 40.)',desc:'Pie atbildības saucamā persona ir fiziskā persona vai juridiskā persona, par kuras izdarītu administratīvo pārkāpumu ir uzsākts administratīvā pārkāpuma process.',fineMin:'',fineMax:''},
-    {label:'Tiesības (AAL 41.(1))',desc:'1) iepazīties ar lietas materiāliem; 2) piedalīties lietas izskatīšanā; 3) sniegt paskaidrojumus; 4) lietot valodu, kurā spēj sazīnāties; 5) zināt, par kāda pārkāpuma izdarīšanu tiek saukta pie atbildības; 6) izteikt lūgumus; 7) iesniegt pierādījumus; 8) pārsūdzēt lēmumu; 9) īstenot aizstāvību ar aizstāvja līdzdalību; 10) atsaukt aizstāvja iesniegtu sūdzību vai pieteikumu.',fineMin:'',fineMax:''},
-    {label:'Pienākumi (AAL 41.(2))',desc:'1) noteiktā laikā ierasties norādītā vietā; 2) nekavēt un netruccēt procesa norisi; 3) paziņot par dzīvesvietas, juridiskās adreses vai e-pasta adrešu maiņu; 4) pārtraukt pārkāpumu, par kuru tiek saukta pie atbildības; 5) ievērot piemēroto procešu piespiedu līdzenelī.',fineMin:'',fineMax:''}
+    {label:'Tiesības (AAL 41.(1))',desc:'1) iepazīties ar lietas materiāliem; 2) piedalīties lietas izskatīšanā; 3) sniegt paskaidrojumus; 4) lietot valodu, kurā spēj sazināties; 5) zināt, par kāda pārkāpuma izdarīšanu tiek saukta pie atbildības; 6) izteikt lūgumus; 7) iesniegt pierādījumus; 8) pārsūdzēt lēmumu; 9) īstenot aizstāvību ar aizstāvja līdzdalību; 10) atsaukt aizstāvja iesniegtu sūdzību vai pieteikumu.',fineMin:'',fineMax:''},
+    {label:'Pienākumi (AAL 41.(2))',desc:'1) noteiktā laikā ierasties norādītā vietā; 2) nekavēt un netraučēt procesa norisi; 3) paziņot par dzīvesvietas, juridiskās adreses vai e-pasta adrešu maiņu; 4) pārtraukt pārkāpumu, par kuru tiek saukta pie atbildības; 5) ievērot piemēroto procešu piespiedu līdzenelī.',fineMin:'',fineMax:''}
    ]},
   lv:{name:'Pie atbildības saucamā persona',
    parts:[
     {label:'Definīcija (AAL 40.)',desc:'Pie atbildības saucamā persona ir fiziskā persona vai juridiskā persona, par kuras izdarītu administratīvo pārkāpumu ir uzsākts administratīvā pārkāpuma process.',fineMin:'',fineMax:''},
-    {label:'Tiesības (AAL 41.(1))',desc:'1) iepazīties ar administratīvā pārkāpuma lietas materiāliem, izdarīt no tiem izrakstus, norakstus un izgatavet kopības; 2) piedalīties lietas izskatīšanā; 3) sniegt paskaidrojumus; 4) lietot valodu, kurā tā spēj sazīnāties, kā arī bez atlīdzības izmantot tulka palīdzību; 5) zināt, par kāda pārkāpuma izdarīšanu tā tiek saukta pie atbildības; 6) izteikt lūgumus; 7) iesniegt pierādījumus; 8) pārsūdzēt lieta pieņemto lēmumu; 9) īstenot aizstāvību ar pašas izvēlēta aizstāvja līdzdalību; 10) atsaukt aizstāvja iesniegtu sūdzību vai pieteikumu vai izteiktu lūgumu.',fineMin:'',fineMax:''},
-    {label:'Pienākumi (AAL 41.(2))',desc:'1) noteiktā laikā ierasties amatpersonas, augstākas amatpersonas vai tiesas norādītā vietā; 2) nekavēt un netraucēt administratīvā pārkāpuma procesa norisi; 3) paziņot amatpersonai par dzīvesvietas, juridiskās adreses vai elektroniškā pasta adrešu maiņu procesa laikā; 4) pārtraukt pārkāpumu, par kuru tā tiek saukta pie atbildības; 5) ievērot piemēroto procešu piespiedu līdzeņī.',fineMin:'',fineMax:''}
+    {label:'Tiesības (AAL 41.(1))',desc:'1) iepazīties ar administratīvā pārkāpuma lietas materiāliem, izdarīt no tiem izrakstus, norakstus un izgatavot kopības; 2) piedalīties lietas izskatīšanā; 3) sniegt paskaidrojumus; 4) lietot valodu, kurā tā spēj sazināties, kā arī bez atlīdzības izmantot tulka palīdzību; 5) zināt, par kāda pārkāpuma izdarīšanu tā tiek saukta pie atbildības; 6) izteikt lūgumus; 7) iesniegt pierādījumus; 8) pārsūdzēt lieta pieņemto lēmumu; 9) īstenot aizstāvību ar pašas izvēlēta aizstāvja līdzdalību; 10) atsaukt aizstāvja iesniegtu sūdzību vai pieteikumu vai izteiktu lūgumu.',fineMin:'',fineMax:''},
+    {label:'Pienākumi (AAL 41.(2))',desc:'1) noteiktā laikā ierasties amatpersonas, augstākas amatpersonas vai tiesas norādītā vietā; 2) nekavēt un netraucēt administratīvā pārkāpuma procesa norisi; 3) paziņot amatpersonai par dzīvesvietas, juridiskās adreses vai elektroniškā pasta adrešu maiņu procesa laikā; 4) pārtraukt pārkāpumu, par kuru tā tiek saukta pie atbildības; 5) ievērot piemēroto procesuālo piespiedu līdzekļi.',fineMin:'',fineMax:''}
    ]},
   en:{name:'Person held liable',
    parts:[
@@ -895,13 +895,13 @@ dalibnieki:[
   ru:{name:'Cietušais (cietušā tiesības un pienākumi)',
    parts:[
     {label:'Definīcija (AAL 43.)',desc:'Cietušais ir fiziskā vai juridiskā persona, kurai ar administratīvo pārkāpumu nodarīts zaudējums vai nemantisks kaitējums un attiecībā uz kuru amatpersona vai augstāka amatpersona pieņēmusi lēmumu par cietušā statusa piešķiršanu.',fineMin:'',fineMax:''},
-    {label:'Tiesības (AAL 44.(1))',desc:'1) iepazīties ar lietas materiāliem, izdarīt izrakstus un kopījas; 2) piedalīties lietas izskatīšanā; 3) lietot valodu, kurā spēj sazīnāties, un bez atlīdzības izmantot tulka palīdzību; 4) neliecināt pret sevi un savu saderīnāto, laulāto, vecākiem, bērniem, brāļiem un māsām; 5) izteikt lūgumus; 6) iesniegt pierādījumus; 7) pārsūdzēt lēmumu.',fineMin:'',fineMax:''},
+    {label:'Tiesības (AAL 44.(1))',desc:'1) iepazīties ar lietas materiāliem, izdarīt izrakstus un kopījas; 2) piedalīties lietas izskatīšanā; 3) lietot valodu, kurā spēj sazināties, un bez atlīdzības izmantot tulka palīdzību; 4) neliecināt pret sevi un savu saderīnāto, laulāto, vecākiem, bērniem, brāļiem un māsām; 5) izteikt lūgumus; 6) iesniegt pierādījumus; 7) pārsūdzēt lēmumu.',fineMin:'',fineMax:''},
     {label:'Pienākumi (AAL 44.(3))',desc:'1) savās iespējās darīt visu, lai novērstu vai samazinātu kaitējuma apmēru; 2) noteiktā laikā ierasties; 3) sniegt tikai patīesas ziņas par visu, kas zināms saistībā ar konkrēto pārkāpumu; 4) nekavēt un netraucēt procesa norisi; 5) paziņot par dzīvesvietas maiņu; 6) ievērot noteikto kārtību procešu darbību veikšanas laikā.',fineMin:'',fineMax:''}
    ]},
   lv:{name:'Cietušais',
    parts:[
     {label:'Definīcija (AAL 43.)',desc:'Cietušais administratīvā pārkāpuma lietā ir fiziskā vai juridiskā persona, kurai ar administratīvo pārkāpumu nodarīts zaudējums vai nemantisks kaitējums un attiecībā uz kuru amatpersona vai augstāka amatpersona pieņēmusi attiecīgu lēmumu par cietušā statusa piešķiršanu.',fineMin:'',fineMax:''},
-    {label:'Tiesības (AAL 44.(1))',desc:'1) iepazīties ar lietas materiāliem, izdarīt no tiem izrakstus, norakstus un izgatavet kopības; 2) piedalīties lietas izskatīšanā; 3) lietot valodu, kurā viņš spēj sazīnāties, kā arī bez atlīdzības izmantot tulka palīdzību; 4) neliecināt pret sevi un savu saderīnāto, laulāto, vecākiem, vecvecākiem, bērniem, mazbērniem, brāļiem un māsām; 5) izteikt lūgumus; 6) iesniegt pierādījumus; 7) pārsūdzēt lēmumu.',fineMin:'',fineMax:''},
+    {label:'Tiesības (AAL 44.(1))',desc:'1) iepazīties ar lietas materiāliem, izdarīt no tiem izrakstus, norakstus un izgatavot kopības; 2) piedalīties lietas izskatīšanā; 3) lietot valodu, kurā viņš spēj sazināties, kā arī bez atlīdzības izmantot tulka palīdzību; 4) neliecināt pret sevi un savu saderīnāto, laulāto, vecākiem, vecvecākiem, bērniem, mazbērniem, brāļiem un māsām; 5) izteikt lūgumus; 6) iesniegt pierādījumus; 7) pārsūdzēt lēmumu.',fineMin:'',fineMax:''},
     {label:'Pienākumi (AAL 44.(3))',desc:'1) savās iespējās darīt visu, lai novērstu vai samazinātu viņam radītā kaitējuma apmēru; 2) noteiktā laikā ierasties; 3) sniegt tikai patīesas ziņas un liecināt par visu, kas viņam zināms saistībā ar konkrēto pārkāpumu; 4) nekavēt un netraucēt procesa norisi; 5) paziņot par dzīvesvietas maiņu; 6) ievērot noteikto kārtību procešu darbību veikšanas laikā.',fineMin:'',fineMax:''}
    ]},
   en:{name:'Victim',
@@ -916,14 +916,14 @@ dalibnieki:[
   ru:{name:'Aizskartais mantas īpašnieks',
    parts:[
     {label:'Definīcija (AAL 45.(1))',desc:'Aizskartais mantas īpašnieks ir mantas īpašnieks vai likumīgais valdītājs, kura tiesības rīkoties ar mantu ir ierobežotas vai atņemtas administratīvā pārkāpuma procesa ietvaros un kurš nav pie atbildības saucamā persona.',fineMin:'',fineMax:''},
-    {label:'Tiesības (AAL 45.(2))',desc:'1) iepazīties ar lēmumiem par rīdzību ar mantu; 2) piedalīties lietas izskatīšanā; 3) lietot valodu, kurā spēj sazīnāties, un bez atlīdzības izmantot tulka palīdzību; 4) izteikt lūgumus; 5) iesniegt pierādījumus; 6) pārsūdzēt lēmumu daļā par rīdzību ar mantu.',fineMin:'',fineMax:''},
+    {label:'Tiesības (AAL 45.(2))',desc:'1) iepazīties ar lēmumiem par rīdzību ar mantu; 2) piedalīties lietas izskatīšanā; 3) lietot valodu, kurā spēj sazināties, un bez atlīdzības izmantot tulka palīdzību; 4) izteikt lūgumus; 5) iesniegt pierādījumus; 6) pārsūdzēt lēmumu daļā par rīdzību ar mantu.',fineMin:'',fineMax:''},
     {label:'Pienākumi (AAL 45.(3))',desc:'1) noteiktā laikā ierasties un ievērot noteikto kārtību; 2) sniegt tikai patīesas liecības; 3) nekavēt un netraucēt procesa norisi; 4) paziņot par dzīvesvietas maiņu procesa laikā.',fineMin:'',fineMax:''}
    ]},
   lv:{name:'Aizskartais mantas īpašnieks',
    parts:[
     {label:'Definīcija (AAL 45.(1))',desc:'Aizskartais mantas īpašnieks ir mantas īpašnieks vai likumīgais valdītājs, kura tiesības rīkoties ar mantu ir ierobežotas vai atņemtas administratīvā pārkāpuma procesa ietvaros un kurš nav pie atbildības saucamā persona.',fineMin:'',fineMax:''},
-    {label:'Tiesības (AAL 45.(2))',desc:'1) iepazīties ar lēmumiem, kas attiecas uz rīdzību ar mantu, izdarīt no tiem izrakstus un izgatavet kopības; 2) piedalīties lietas izskatīšanā; 3) lietot valodu, kurā viņš spēj sazīnāties, kā arī bez atlīdzības izmantot tulka palīdzību; 4) izteikt lūgumus; 5) iesniegt pierādījumus; 6) pārsūdzēt lēmumu daļā par rīdzību ar mantu.',fineMin:'',fineMax:''},
-    {label:'Pienākumi (AAL 45.(3))',desc:'1) noteiktā laikā ierasties norādītā vietā un ievērot noteikto kārtību izm. darbību veikšanas laikā; 2) sniegt tikai patīesas liecības; 3) nekavēt un netraucēt procesa norisi; 4) paziņot par dzīvesvietas maiņu procesa laikā.',fineMin:'',fineMax:''}
+    {label:'Tiesības (AAL 45.(2))',desc:'1) iepazīties ar lēmumiem, kas attiecas uz rīdzību ar mantu, izdarīt no tiem izrakstus un izgatavot kopības; 2) piedalīties lietas izskatīšanā; 3) lietot valodu, kurā viņš spēj sazināties, kā arī bez atlīdzības izmantot tulka palīdzību; 4) izteikt lūgumus; 5) iesniegt pierādījumus; 6) pārsūdzēt lēmumu daļā par rīdzību ar mantu.',fineMin:'',fineMax:''},
+    {label:'Pienākumi (AAL 45.(3))',desc:'1) noteiktā laikā ierasties norādītā vietā un ievērot noteikto kārtību izmeklēšanas darbību veikšanas laikā; 2) sniegt tikai patīesas liecības; 3) nekavēt un netraucēt procesa norisi; 4) paziņot par dzīvesvietas maiņu procesa laikā.',fineMin:'',fineMax:''}
    ]},
   en:{name:'Affected property owner',
    parts:[
@@ -936,15 +936,15 @@ dalibnieki:[
   fineMax:{ru:'',lv:'',en:''},
   ru:{name:'Amatpersona / Augstāka amatpersona / Tiesa',
    parts:[
-    {label:'Amatpersona (AAL 46.)',desc:'Persona, kura atbilstoši normatīvajos aktos noteiktājai kompetencei veic administratīvā pārkāpuma procesu: uzsāk procesu, veic izmeklēšanas darbības, piemēro procešu piespiedu līdzeņus, pieņem lēmumu administratīvā pārkāpuma lietā.',fineMin:'',fineMax:''},
-    {label:'Augstāka amatpersona (AAL 47.)',desc:'Persona, kura atbilstoši normatīvajos aktos noteiktājai kompetencei ir pilnvarota veikt administratīvā pārkāpuma lietā pieņemtā lēmuma tiesīkuma un pamatotības kontroli.',fineMin:'',fineMax:''},
-    {label:'Tiesa (tiesnesis) (AAL 48.)',desc:'Administratīvā pārkāpuma procesā tiesa (tiesnesis) kontrolē administratīvā pārkāpuma procesa ietvaros pieņemto nolēmumu tiesīkumu un pamatotību.',fineMin:'',fineMax:''}
+    {label:'Amatpersona (AAL 46.)',desc:'Persona, kura atbilstoši normatīvajos aktos noteiktājai kompetencei veic administratīvā pārkāpuma procesu: uzsāk procesu, veic izmeklēšanas darbības, piemēro procesuālos piespiedu līdzekļus, pieņem lēmumu administratīvā pārkāpuma lietā.',fineMin:'',fineMax:''},
+    {label:'Augstāka amatpersona (AAL 47.)',desc:'Persona, kura atbilstoši normatīvajos aktos noteiktājai kompetencei ir pilnvarota veikt administratīvā pārkāpuma lietā pieņemtā lēmuma tiesiskuma un pamatotības kontroli.',fineMin:'',fineMax:''},
+    {label:'Tiesa (tiesnesis) (AAL 48.)',desc:'Administratīvā pārkāpuma procesā tiesa (tiesnesis) kontrolē administratīvā pārkāpuma procesa ietvaros pieņemto nolēmumu tiesiskumu un pamatotību.',fineMin:'',fineMax:''}
    ]},
   lv:{name:'Amatpersona / Augstāka amatpersona / Tiesa',
    parts:[
-    {label:'Amatpersona (AAL 46.)',desc:'Amatpersona šā likuma izpratnē ir persona, kura atbilstoši normatīvajos aktos noteiktājai kompetencei veic administratīvā pārkāpuma procesu: uzsāk administratīvā pārkāpuma procesu, veic izmeklēšanas darbības, piemēro procešu piespiedu līdzeņus, pieņem lēmumu administratīvā pārkāpuma lietā.',fineMin:'',fineMax:''},
-    {label:'Augstāka amatpersona (AAL 47.)',desc:'Augstāka amatpersona šā likuma izpratnē ir persona, kura atbilstoši normatīvajos aktos noteiktājai kompetencei ir pilnvarota veikt administratīvā pārkāpuma lietā pieņemtā lēmuma tiesīkuma un pamatotības kontroli.',fineMin:'',fineMax:''},
-    {label:'Tiesa (tiesnesis) (AAL 48.)',desc:'Administratīvā pārkāpuma procesā tiesa (tiesnesis) kontrolē administratīvā pārkāpuma procesa ietvaros pieņemto nolēmumu tiesīkumu un pamatotību.',fineMin:'',fineMax:''}
+    {label:'Amatpersona (AAL 46.)',desc:'Amatpersona šā likuma izpratnē ir persona, kura atbilstoši normatīvajos aktos noteiktājai kompetencei veic administratīvā pārkāpuma procesu: uzsāk administratīvā pārkāpuma procesu, veic izmeklēšanas darbības, piemēro procesuālos piespiedu līdzekļus, pieņem lēmumu administratīvā pārkāpuma lietā.',fineMin:'',fineMax:''},
+    {label:'Augstāka amatpersona (AAL 47.)',desc:'Augstāka amatpersona šā likuma izpratnē ir persona, kura atbilstoši normatīvajos aktos noteiktājai kompetencei ir pilnvarota veikt administratīvā pārkāpuma lietā pieņemtā lēmuma tiesiskuma un pamatotības kontroli.',fineMin:'',fineMax:''},
+    {label:'Tiesa (tiesnesis) (AAL 48.)',desc:'Administratīvā pārkāpuma procesā tiesa (tiesnesis) kontrolē administratīvā pārkāpuma procesa ietvaros pieņemto nolēmumu tiesiskumu un pamatotību.',fineMin:'',fineMax:''}
    ]},
   en:{name:'Official / Senior official / Court',
    parts:[
@@ -1002,12 +1002,12 @@ termini:[
 
  {article:'AAL 20.–21. pants',anchor:'#p20',noFine:true,parts:true,signsSVG:[],srcUrl:'AAL',
   fineMax:{ru:'',lv:'',en:''},
-  ru:{name:'Apstākļi, kas mīkstinaatbildību / pastiprina',
+  ru:{name:'Apstākļi, kas mīkstinoš.ie un pastiprinošie apstākļi',
    parts:[
-    {label:'Atbildību mīkstināošie apstākļi (AAL 20.)',desc:'1) atzīst un nožēlo izdarīto; 2) labprātīgī atlīdzipījis zaudējumu vai novērsis kaitējumu; 3) pārkāpums izdarīts stipra psihiska uzbudinājuma vai smagu pers. apstākļu dēļ; 4) labprātīgī pieteicies pirms atklāšanas; 5) cietā prettiesiskas uzvedības ietekmē; 6) grūtniecības stāvoklī vai bērns līdz 1 gadam.',fineMin:'',fineMax:''},
-    {label:'Atbildību pastiprinājošie apstākļi (AAL 21.)',desc:'1) turpināts, neraugoties uz prasību izbeigt; 2) iesaistījis nepilngadīgo; 3) izdarīts stihiskas nelaimces apstākļos; 4) izdarīts alkohola vai narkotiku ietekmē; 5) motīvs ir naids pret personas iezīmēm; 6) izdarījusi personu grupa.',fineMin:'',fineMax:''}
+    {label:'Atbildību mīkstinošie apstākļi (AAL 20.)',desc:'1) atzīst un nožēlo izdarīto; 2) labprātīgī atlīdzipījis zaudējumu vai novērsis kaitējumu; 3) pārkāpums izdarīts stipra psihiska uzbudinājuma vai smagu pers. apstākļu dēļ; 4) labprātīgī pieteicies pirms atklāšanas; 5) cietā prettiesiskas uzvedības ietekmē; 6) grūtniecības stāvoklī vai bērns līdz 1 gadam.',fineMin:'',fineMax:''},
+    {label:'Atbildību pastiprinošie apstākļi (AAL 21.)',desc:'1) turpināts, neraugoties uz prasību izbeigt; 2) iesaistījis nepilngadīgo; 3) izdarīts stihiskas nelaimces apstākļos; 4) izdarīts alkohola vai narkotiku ietekmē; 5) motīvs ir naids pret personas iezīmēm; 6) izdarījusi personu grupa.',fineMin:'',fineMax:''}
    ]},
-  lv:{name:'Atbildību mīkstināošie un pastiprinājošie apstākļi',
+  lv:{name:'Atbildību mīkstinošie un pastiprinošie apstākļi',
    parts:[
     {label:'Mīkstināošie apstākļi (AAL 20.)',desc:'1) atzīnis un nožēlojis izdarīto; 2) labprātīgī atlīdzipājis zaudējumu vai novērsis kaitējumu; 3) pārkāpums izdarīts stipra psihiska uzbudinājuma ietekmē vai smagu pers. apstākļu dēļ; 4) labprātīgī pieteicies pirms pārkāpuma atklāšanas; 5) cietā prettiesiskas vai amorālas uzvedības ietekmē; 6) sieviete grūtniecības stāvoklī vai ar bērnu līdz 1 gadam.',fineMin:'',fineMax:''},
     {label:'Pastiprinājošie apstākļi (AAL 21.)',desc:'1) turpināta prettiesiskā rīdzība, neraugoties uz pilnvarotas amatpersonas prasību to izbeigt; 2) pilngadīga persona iesaistījusi nepilngadīgo; 3) izdarīts stihiskas nelaimces vai ārkārtējos apstākļos; 4) izdarīts alkohola, narkotiku vai citu ap. vielu ietekmē; 5) motīvs ir naids pret personas iezīmēm; 6) izdarījusi personu grupa.',fineMin:'',fineMax:''}
@@ -1026,7 +1026,7 @@ termini:[
     {label:'Tiesības uz aizstāvību (AAL 33.)',desc:'Pie atbildības saucamajai personai ir tiesības uz aizstāvību, proti, tiesības zināt, kādā pārkāpuma izdarīšanā to tur aizdomās, un izvēlēties savu aizstāvības pozīciju.',fineMin:'',fineMax:''},
     {label:'Nevainīguma prezumpcija piemērošana praksē',desc:'Amatpersonai ir pienākums pierādīt pārkāpuma faktu, nevis personai — savu nevainīgumu. Šī principa pārkāpšana var but pamats lēmuma atcelšanai.',fineMin:'',fineMax:''}
    ]},
-  lv:{name:'Proceša pamatprincipi',
+  lv:{name:'Procesa pamatprincipi',
    parts:[
     {label:'Nevainīguma prezumpcija (AAL 29.)',desc:'Persona netiek uzkatīta par vainīgu administratīvā pārkāpuma izdarīšanā, kamēr tās vaina nav pierādīta. Personai nav jāpierāda savs nevainīgums. Visas saprātīgās šaubas par vainu, ja tās nevar novērst ar pierādījumu pārbaudi, vērtē par labu personai.',fineMin:'',fineMax:''},
     {label:'Tiesības uz aizstāvību (AAL 33.)',desc:'Pie atbildības saucamajai personai ir tiesības uz aizstāvību, proti, tiesības zināt, kādā pārkāpuma izdarīšanā to tur aizdomās, un izvēlēties savu aizstāvības pozīciju. Aizstāvību persona var īstenot pati, ar aizstāvja līdzdalību vai pārstāvja starpniecībā.',fineMin:'',fineMax:''},
@@ -1065,13 +1065,13 @@ sodi:[
  {article:'AAL 17. pants',anchor:'#p17',noFine:true,parts:false,signsSVG:[],srcUrl:'AAL',
   fineMax:{ru:'',lv:'',en:''},
   ru:{name:'Tiesību atņemšana',desc:'Tiesību atņemšana ir personai piešķirto tiesību anālulēšana, nosakot tai aizliegumu noteiktu laiku atkārtoti iegūt šīs tiesības. Piemēro uz laiku no 1 mēneša līdz 5 gadiem. Pēc termiņa beigām — tiesības jāiegūst no jauna.'},
-  lv:{name:'Tiesību atņemšana',desc:'Tiesību atņemšana ir personai piešķirto tiesību anāulēšana, nosakot tai aizliegumu noteiktu laiku atkārtoti iegūt šīs tiesības. Ja personai tiesības nav piešķirtas, tiesību atņemšana izpaužas kā aizliegums noteiktu laiku iegūt šīs tiesības. Piemēro no 1 mēneša līdz 5 gadiem.'},
+  lv:{name:'Tiesību atņemšana',desc:'Tiesību atņemšana ir personai piešķirto tiesību anūlēšana, nosakot tai aizliegumu noteiktu laiku atkārtoti iegūt šīs tiesības. Ja personai tiesības nav piešķirtas, tiesību atņemšana izpaužas kā aizliegums noteiktu laiku iegūt šīs tiesības. Piemēro no 1 mēneša līdz 5 gadiem.'},
   en:{name:'Suspension of rights',desc:'Suspension of rights is the revocation of rights granted to a person, with a prohibition on re-obtaining those rights for a specified period. Applied for a period of 1 month to 5 years. After the period expires, the rights must be re-obtained from scratch.'}},
 
  {article:'AAL 24. pants',anchor:'#p24',noFine:true,parts:false,signsSVG:[],srcUrl:'AAL',
   fineMax:{ru:'',lv:'',en:''},
   ru:{name:'Administratīvās sodāmības dzēšana',desc:'Administratīvā sodāmība ir spēkā, kamēr nolēmums par sodu tiek izpildīts un gadu pēc izpildes. Persona tiek atzīta par administratīvi nesodītu gadu pēc soda izpildes.'},
-  lv:{name:'Administratīvās sodāmības dzēšana',desc:'Administratīvā sodāmība ir spēkā nolēmuma par sodu izpildes laikā, kā arī pēc tam līdz sodāmības dzēšanai. Persona uzkatīma par administratīvi nesodītu gadu pēc soda izpildes. Sodāmības dzēšanas termiņu skaita no dienas, kad pilļnīgī ir izpildīts pamatsods un papildsods.'},
+  lv:{name:'Administratīvās sodāmības dzēšana',desc:'Administratīvā sodāmība ir spēkā nolēmuma par sodu izpildes laikā, kā arī pēc tam līdz sodāmības dzēšanai. Persona uzkatīma par administratīvi nesodītu gadu pēc soda izpildes. Sodāmības dzēšanas termiņu skaiča no dienas, kad pilļnīgī ir izpildīts pamatsods un papildsods.'},
   en:{name:'Expiry of administrative conviction',desc:'An administrative conviction is in force while the penalty decision is being executed and for one year after execution. A person is considered free of an administrative conviction one year after the penalty has been fully served.'}}
 ]
 };
@@ -1450,7 +1450,7 @@ alcohol:[
   ru:{name:'0,21–0,50 промилле: проф. водители и стаж < 2 лет',
    desc:'D, D1, DE, D1E, TRAM, TROL категории или стаж < 2 лет. 6 учётных баллов.',
    contest:'Оспорить при нарушении процедуры двухэтапного освидетельствования или неисправности прибора.'},
-  lv:{name:'0,21–0,50 promiles: prof. vadītāji un stāžs < 2 g.',
+  lv:{name:'0,21–0,50 promiles: profesionālie vadītāji un stāžs < 2 gadi',
    desc:'D, D1, DE, D1E, TRAM, TROL kategoriju vadītāji vai ar stāžu < 2 g. 6 uzskaites punkti.',
    contest:'Var apstrīdēt pie divu posmu pārbaudes procedūras pārkāpuma vai ierīces neprecizitātes.'},
   en:{name:'0.21–0.50 promille: professional drivers and licence < 2 years',
@@ -1528,7 +1528,7 @@ alcohol:[
   ru:{name:'Управление под воздействием медикаментов или в состоянии усталости',
    desc:'Управление, когда медикаменты снижают скорость реакции, при болезни или при усталости, влияющей на дееспособность. 3 уч. балла. Лишения прав нет.',
    contest:'Оспорить, если медикаменты фактически не влияли на дееспособность или состояние было неправильно оценено.'},
-  lv:{name:'TL vadīšana medikamentu ietekmē vai noguruma stāvoklī',
+  lv:{name:'TL vadīšana medikamentu ietekmē vai būtiska noguruma stāvoklī',
    desc:'TL vadīšana, kad medikamenti samazina reakcijas ātrumu, slimojot vai noguruma pakāpē, kas ietekmē darbspējas. 3 uzskaites punkti. Nav tiesību atņemšanas.',
    contest:'Var apstrīdēt, ja medikamenti reālajā situācijā nemazināja darbspējas.'},
   en:{name:'Driving under medication or in state of fatigue',
@@ -1543,8 +1543,8 @@ signals:[
   ru:{name:'Проезд на запрещающий сигнал светофора',
    desc:'Проезд на красный или красно-жёлтый сигнал. 6 уч. баллов. Повторное нарушение в течение года — лишение прав.',
    contest:'Оспорить, если светофор был неисправен или смена сигнала произошла в момент уже начатого манёвра. Требуется запись камеры.'},
-  lv:{name:'Braūkšana caur aizliedzošu luksofora signālu',
-   desc:'Braūkšana caur sarkanu vai sarkani dzeltenu luksofora signālu. 6 uzskaites punkti. Atkārtota pārkāpšana gadā — tiesību atņemšana.',
+  lv:{name:'Braukšana caur aizliedzošu luksofora signālu',
+   desc:'Braukšana caur sarkanu vai sarkani dzeltenu luksofora signālu. 6 uzskaites punkti. Atkārtota pārkāpšana gadā — tiesību atņemšana.',
    contest:'Var apstrīdēt, ja luksofors bija bojāts vai signāla maiņa notika jau uzsākta manēvera laikā.'},
   en:{name:'Driving through a prohibitory traffic light signal',
    desc:'Driving through a red or red-yellow traffic light. 6 demerit points. Repeated violation within a year — licence suspension.',
@@ -1597,7 +1597,7 @@ other:[
   ru:{name:'Использование мобильного телефона во время вождения',
    desc:'Использование телефона или другого устройства без hands-free во время движения. 3 уч. балла.',
    contest:'Оспорить, если использовалось hands-free или ТС стояло в момент фиксации.'},
-  lv:{name:'Mobilā tālruņa lietošana braūkšanas laikā',
+  lv:{name:'Mobilā tālruņa lietošana braukšanas laikā',
    desc:'Mobilā telefona vai citas komunikācijas ierīces lietošana bez briva roku ierīces TL vadīšanas laikā. 3 uzskaites punkti.',
    contest:'Var apstrīdēt, ja tika izmantota brīvroku ierīce vai TL stāvēja fiksācijas brīdī.'},
   en:{name:'Using a mobile phone while driving',
@@ -1625,7 +1625,7 @@ other:[
     {label:'Никогда не имел прав для данной категории',desc:'Первичное нарушение.',fineMin:'140 €',fineMax:'350 €'},
     {label:'Права аннулированы, приостановлены или срок истёк',desc:'Управление в период запрета.',fineMin:'280 €',fineMax:'700 € + лишение до 12 мес.'}
    ]},
-  lv:{name:'TL vadīšana bez tiesībam / ar atņemtām tiesībām',
+  lv:{name:'TL vadīšana bez tiesībām / ar atņemtām tiesībām',
    contest:'Var apstrīdēt tikai pie tehniskām kļūdām dokumentos.',
    parts:[
     {label:'Nekad nav bijušas tiesības attiecīgajai kategorijai',desc:'Primārs pārkāpums.',fineMin:'140 €',fineMax:'350 €'},
@@ -1655,7 +1655,7 @@ other:[
   ru:{name:'Управление ТС без техосмотра / с техническими неисправностями',
    desc:'Управление ТС без действующего талона техосмотра или с неисправностями, угрожающими безопасности.',
    contest:'Оспорить, если ТО был пройден, но талон не обновлён в системе, или неисправность возникла в пути.'},
-  lv:{name:'TL vadīšana bez tehniskās apskates / ar tehniskiem defektiem',
+  lv:{name:'TL vadīšana bez tehniskās apskates / ar tehniskiem trūkumiem',
    desc:'TL vadīšana bez spēkā esoša tehniskās apskates talona vai ar drošību apdraudošī tehniskām kļūdām.',
    contest:'Var apstrīdēt, ja TA bija nekārtota, bet talons netika atjaunināts sistēmā.'},
   en:{name:'Driving without technical inspection / with technical defects',
@@ -1705,7 +1705,7 @@ function setLaw(law,btn){
   btn.classList.add('active');
   currentCat=Object.keys(getCats())[0];
   document.getElementById('appSubtitle').textContent=getUI().subtitle;
-  var sub2Map={asl:{ru:'Administratīvo sodu likums',lv:'Administratīvo sodu likums',en:'Administratīvo sodu likums'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'}};
+  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'}};
   document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
   document.getElementById('searchInput').placeholder=getUI().placeholder;
   document.getElementById('searchInput').value='';
@@ -1719,7 +1719,7 @@ function setLang(l,btn){
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('appSubtitle').textContent=getUI().subtitle;
-  var sub2Map={asl:{ru:'Administratīvo sodu likums',lv:'Administratīvo sodu likums',en:'Administratīvo sodu likums'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'}};
+  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'}};
   document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
   document.getElementById('searchInput').placeholder=getUI().placeholder;
   renderCats();
@@ -1849,7 +1849,7 @@ function filterLaws(){
 // ===== INIT =====
 renderCats();
 document.getElementById('appSubtitle').textContent=getUI().subtitle;
-  var sub2Map={asl:{ru:'Administratīvo sodu likums',lv:'Administratīvo sodu likums',en:'Administratīvo sodu likums'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'}};
+  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'}};
   document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
 document.getElementById('searchInput').placeholder=getUI().placeholder;
 document.getElementById('sectionTitle').textContent=getCats()[currentCat][lang].sec;
