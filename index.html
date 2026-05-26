@@ -612,6 +612,7 @@
     <button class="law-btn" onclick="setLaw('aal',this)">AAL</button>
     <button class="law-btn" onclick="setLaw('csl',this)">Ceļu satiksme</button>
     <button class="law-btn" onclick="setLaw('aiz',this)">Aizturēšana</button>
+    <button class="law-btn" onclick="setLaw('lpp',this)">LPP</button>
   </div>
 </div>
 <div class="search-bar"><input type="text" id="searchInput" placeholder="Найти нарушение..." oninput="filterLaws()"/></div>
@@ -1290,6 +1291,216 @@ sodi:[
 };
 
 
+// ===== LPP UI STRINGS =====
+uiStrings.lpp={
+  ru:{subtitle:'LPP',placeholder:'Meklēt pantu...',min:'',max:'',desc:'Apraksts',howContest:'',sourceBtn:'Atvērt LPP likumi.lv',warn:'',warnWord:'',empty:'Nekas netika atrasts.',pts:'',signs:''},
+  lv:{subtitle:'LPP',placeholder:'Meklēt pantu...',min:'',max:'',desc:'Apraksts',howContest:'',sourceBtn:'Atvērt LPP likumi.lv',warn:'',warnWord:'',empty:'Nekas netika atrasts.',pts:'',signs:''},
+  en:{subtitle:'LPP',placeholder:'Search article...',min:'',max:'',desc:'Description',howContest:'',sourceBtn:'Open LPP on likumi.lv',warn:'',warnWord:'',empty:'Nothing found.',pts:'',signs:''}
+};
+
+// ===== LPP CATEGORIES =====
+const lppCats={
+  visparigie:{
+    ru:{name:'Vispārīgi',sec:'Definīcija, uzdevumi, principi · LPP 1.–8. pants'},
+    lv:{name:'Vispārīgi',sec:'Definīcija, uzdevumi, principi · LPP 1.–8. pants'},
+    en:{name:'General',sec:'Definition, tasks, principles · LPP 1.–8. pants'}},
+  pienakumi:{
+    ru:{name:'Pienākumi',sec:'Policijas darbinieka pienākumi · LPP 9.–11. pants'},
+    lv:{name:'Pienākumi',sec:'Policijas darbinieka pienākumi · LPP 9.–11. pants'},
+    en:{name:'Duties',sec:'Police officer duties · LPP 9.–11. pants'}},
+  tiesibas:{
+    ru:{name:'Tiesības',sec:'Policijas darbinieka tiesības · LPP 12. pants'},
+    lv:{name:'Tiesības',sec:'Policijas darbinieka tiesības · LPP 12. pants'},
+    en:{name:'Rights',sec:'Police officer rights · LPP 12. pants'}},
+  speks:{
+    ru:{name:'Spēka pielietošana',sec:'Fizisks spēks, speciālie līdzekļi, šaujamierocis · LPP 13.–14. pants'},
+    lv:{name:'Spēka pielietošana',sec:'Fizisks spēks, speciālie līdzeķļi, šaujamierocis · LPP 13.–14. pants'},
+    en:{name:'Use of force',sec:'Physical force, special means, firearms · LPP 13.–14. pants'}}
+};
+
+// ===== LPP LAWS =====
+const lppLaws={
+visparigie:[
+ {article:'LPP 1.–3. pants',anchor:'#p1',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Policija — definīcija un uzdevumi',
+   parts:[
+    {label:'LPP 1. Definīcija',desc:'Latvijas Republikas policija ir apbruņota militarizēta valsts organizācija, kura darbojas Iekšlietu ministrijas sastāvā un kuras pienākums ir aizsargāt personu dzīvību, veselību, tiesības un brīvības, īpašumu, sabiedrības un valsts intereses no noziedzīgiem un citiem prettiesiskiem apdraudējumiem.',fineMin:'',fineMax:''},
+    {label:'LPP 2. Policijas darbinieks',desc:'Policijas darbinieks ir valsts kalpotājs, kas ieņem noteiktu amatu policijas iestādē, kam ir speciālā dienesta pakāpe un kas ir nodevis zvērestu. Pildot dienesta pienākumus, policijas darbinieks savas kompetences ietvaros pārstāv valsts varu.',fineMin:'',fineMax:''},
+    {label:'LPP 3. Uzdevumi',desc:'Policijas uzdevumi: garantēt personu un sabiedrības drošību; novērst noziegumus un citus likumpārkāpumus; atklāt noziegumus, meklēt personas, kas tos izdarījušas; sniegt palīdzību personu tiesību aizsardzībā; izpildīt administratīvos un kriminālsodus. Nevienam nav tiesību iejaukties policijas rīcībā, kad tā pilda pienākumus.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Policija — definīcija un uzdevumi',
+   parts:[
+    {label:'LPP 1. Definīcija',desc:'Latvijas Republikas policija ir apbruņota militarizēta valsts organizācija, kura darbojas Iekšlietu ministrijas sastāvā un kuras pienākums ir aizsargāt personu dzīvību, veselību, tiesības un brīvības, īpašumu, sabiedrības un valsts intereses no noziedzīgiem un citiem prettiesiskiem apdraudējumiem.',fineMin:'',fineMax:''},
+    {label:'LPP 2. Policijas darbinieks',desc:'Policijas darbinieks ir valsts kalpotājs, kas ieņem noteiktu amatu policijas iestādē, kam ir speciālā dienesta pakāpe un kas ir nodevis zvērestu. Pildot dienesta pienākumus, policijas darbinieks savas kompetences ietvaros pārstāv valsts varu.',fineMin:'',fineMax:''},
+    {label:'LPP 3. Uzdevumi',desc:'Policijas uzdevumi: garantēt personu un sabiedrības drošību; novērst noziegumus un citus likumpārkāpumus; atklāt noziegumus, meklēt personas, kas tos izdarījušas; sniegt palīdzību personu tiesību aizsardzībā; izpildīt administratīvos un kriminālsodus. Nevienam nav tiesību iejaukties policijas rīcībā, kad tā pilda pienākumus.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Police — definition and tasks',
+   parts:[
+    {label:'LPP 1. Definition',desc:'The police of the Republic of Latvia is an armed militarised state organisation operating within the Ministry of Interior, whose duty is to protect the life, health, rights and freedoms of persons, property, and societal and state interests from criminal and other unlawful threats.',fineMin:'',fineMax:''},
+    {label:'LPP 2. Police officer',desc:'A police officer is a civil servant holding a specific post in a police institution with a special service rank who has taken an oath. In performing their duties, a police officer represents state authority within their competence.',fineMin:'',fineMax:''},
+    {label:'LPP 3. Tasks',desc:'Police tasks: guarantee personal and public safety; prevent crimes and other violations; detect crimes and find perpetrators; assist in protecting rights; execute administrative and criminal penalties. No one has the right to interfere in police actions when performing their duties.',fineMin:'',fineMax:''}
+   ]}},
+
+ {article:'LPP 5. pants',anchor:'#p5',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Policijas darbības principi un personas tiesības',
+   parts:[
+    {label:'Darbības principi',desc:'Policijas darbība tiek organizēta, ievērojot likumību, humānismu, cilvēka tiesības, sociālo taisnīgumu, atklātumu, vienvadību un balstoties uz iedzīvotāju palīdzību. Policija aizsargā personu tiesības un likumīgās intereses neatkarīgi no pilsonības, sociālā, mantiskā un cita stāvokļa, rases, dzimuma, reliģijas vai politiskās pārliecības.',fineMin:'',fineMax:''},
+    {label:'Tiesību ierobežošana',desc:'Šo tiesību un brīvību ierobežošana ir pieļaujama, tikai pamatojoties uz likumu un likumā noteiktajā kārtībā. Ikreiz, kad policijai nākas ierobežot personu tiesības un brīvības, policijas darbinieks sniedz paskaidrojumu, kurā pamato katru konkrēto ierobežojumu. Pēc pieprasījuma jānosauc uzvārds, amats, dienesta vieta un jāuzrāda dienesta apliecība.',fineMin:'',fineMax:''},
+    {label:'Aizturēto tiesības (LPP 5. pants)',desc:'Policija dod iespēju aizturētajām un apcietinātajām personām realizēt tiesības uz juridisko palīdzību un, ja šīs personas vēlas, nekavējoties paziņo viņu atrašanās vietu ģimenei un darbavietas vai mācību iestādes administrācijai. Policija nodrošina aizturēto personu veselības aizsardzību un veic neatliekamus pasākumus medicīniskās palīdzības sniegšanai.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Policijas darbības principi un personas tiesības',
+   parts:[
+    {label:'Darbības principi',desc:'Policijas darbība tiek organizēta, ievērojot likumību, humānismu, cilvēka tiesības, sociālo taisnīgumu, atklātumu, vienvadību un balstoties uz iedzīvotāju palīdzību. Policija aizsargā personu tiesības un likumīgās intereses neatkarīgi no pilsonības, sociālā, mantiskā un cita stāvokļa, rases, dzimuma, reliģijas vai politiskās pārliecības.',fineMin:'',fineMax:''},
+    {label:'Tiesību ierobežošana',desc:'Šo tiesību un brīvību ierobežošana ir pieļaujama, tikai pamatojoties uz likumu un likumā noteiktajā kārtībā. Ikreiz, kad policijai nākas ierobežot personu tiesības un brīvības, policijas darbinieks sniedz paskaidrojumu, kurā pamato katru konkrēto ierobežojumu. Pēc pieprasījuma jānosauc uzvārds, amats, dienesta vieta un jāuzrāda dienesta apliecība.',fineMin:'',fineMax:''},
+    {label:'Aizturēto personas tiesības',desc:'Policija dod iespēju aizturētajām un apcietinātajām personām realizēt tiesības uz juridisko palīdzību un, ja šīs personas vēlas, nekavējoties paziņo viņu atrašanās vietu ģimenei un darbavietas vai mācību iestādes administrācijai. Policija nodrošina aizturēto personu veselības aizsardzību un veic neatliekamus pasākumus medicīniskās palīdzības sniegšanai.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Police operating principles and personal rights',
+   parts:[
+    {label:'Operating principles',desc:'Police operations are organised observing legality, humanism, human rights, social justice, openness, unified command and based on public assistance. Police protect personal rights and legitimate interests regardless of citizenship, social status, race, gender, religion or political conviction.',fineMin:'',fineMax:''},
+    {label:'Restriction of rights',desc:'Restriction of rights and freedoms is only permitted on the basis of law and in the manner established by law. Whenever police must restrict personal rights, the officer provides an explanation justifying each specific restriction. Upon request, the officer must state their surname, position, service location and show their service ID.',fineMin:'',fineMax:''},
+    {label:'Rights of detained persons',desc:'Police allow detained and arrested persons to exercise the right to legal assistance and, if requested, immediately inform their family and employer or educational institution of their whereabouts. Police ensure health protection of detained persons and take urgent measures to provide medical assistance.',fineMin:'',fineMax:''}
+   ]}}
+],
+
+pienakumi:[
+ {article:'LPP 9. pants',anchor:'#p9',noFine:true,parts:false,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Policijas darbinieka pamatprincips — rīkoties jebkurā laikā un vietā',desc:'Jebkura policijas darbinieka pienākums ir visā Latvijas Republikas teritorijā neatkarīgi no ieņemamā amata, atrašanās vietas un laika — gadījumā, ja pie viņa griežas personas ar pieteikumu vai ziņojumu par notikumu, kurš apdraud personu un sabiedrības drošību, kā arī pašam konstatējot tādu notikumu — veikt iespējamos pasākumus, lai novērstu likumpārkāpumu, glābtu cilvēkus un sniegtu viņiem palīdzību, konstatētu likumpārkāpušās personas, apsargātu notikuma vietu un paziņotu tuvākajai policijas iestādei.'},
+  lv:{name:'LPP 9. Policijas darbinieka pamatprincips — rīkoties jebkurā laikā un vietā',desc:'Jebkura policijas darbinieka pienākums ir visā Latvijas Republikas teritorijā neatkarīgi no ieņemamā amata, atrašanās vietas un laika — gadījumā, ja pie viņa griežas personas ar pieteikumu vai ziņojumu par notikumu, kurš apdraud personu un sabiedrības drošību, kā arī pašam konstatējot tādu notikumu — veikt iespējamos pasākumus, lai novērstu likumpārkāpumu, glābtu cilvēkus un sniegtu viņiem palīdzību, konstatētu likumpārkāpušās personas, apsargātu notikuma vietu un paziņotu tuvākajai policijas iestādei.'},
+  en:{name:'LPP 9. Basic principle — act at any time and place',desc:'It is the duty of every police officer throughout the territory of the Republic of Latvia, regardless of position, location or time — when persons approach with a report of an incident threatening personal or public safety, or when discovering such an incident themselves — to take all possible measures to prevent the violation, save people, assist them, identify perpetrators, secure the scene and notify the nearest police authority.'}},
+
+ {article:'LPP 10. pants',anchor:'#p10',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'LPP 10. Policijas darbinieka pamatpienākumi',
+   parts:[
+    {label:'Kārtības nodrošināšana (10.1)',desc:'Nodrošināt kārtību uz ceļiem, ielās, laukumos, parkos, sabiedriskā transportā, lidostās, ostās, stacijās un citās sabiedriskajās vietās, lai garantētu personu un sabiedrības drošību.',fineMin:'',fineMax:''},
+    {label:'Reģistrēšana un reaģēšana (10.2)',desc:'Reģistrēt informāciju par noziegumiem, likumpārkāpumiem un to izdarītājiem, kā arī par notikumiem, kuri apdraud sabiedrības drošību, un nekavējoties reaģēt uz tiem. Ziņot par avārijām, ugunsgrēkiem, katastrofām un citiem draudiem.',fineMin:'',fineMax:''},
+    {label:'Neatliekamā palīdzība (10.3)',desc:'Sniegt medicīnisko un citu neatliekamo palīdzību personām, kuras cietušas likumpārkāpumu rezultātā, nelaimes gadījumos vai atrodas bezpalīdzības stāvoklī, arī tad, ja tās reibuma stāvoklī zaudējušas spēju patstāvīgi pārvietoties vai var nodarīt kaitējumu apkārtējiem vai pašas sev.',fineMin:'',fineMax:''},
+    {label:'Pārkāpumu novēršana un atklāšana (10.4–10.6)',desc:'Izdarīt izziņu; veikt operatīvās meklēšanas pasākumus; atklāt, pārtraukt un novērst noziegumus; meklēt personas, kas slēpjas; novērst un pārtraukt administratīvos pārkāpumus, sastādīt protokolus, izskatīt lietas vai nodot pēc pakļautības.',fineMin:'',fineMax:''},
+    {label:'Aizturēto apsargāšana un konvojēšana (10.8)',desc:'Apsargāt, konvojēt un uzturēt aizturētās un apcietinātās personas. Savas kompetences ietvaros izpildīt kriminālsodus un administratīvos sodus.',fineMin:'',fineMax:''},
+    {label:'Satiksmes regulēšana (10.11)',desc:'Regulēt transportlīdzekļu un gājēju kustību, veikt satiksmes uzraudzību, kontrolēt ceļu un ielu stāvokli, kā arī satiksmes līdzekļu tehnisko stāvokli.',fineMin:'',fineMax:''},
+    {label:'Liecinieku un cietušo aizsardzība (10.16)',desc:'Gādāt par liecinieku, cietušo, citu personu un to ģimenes locekļu drošību, kā arī par viņu mantas apsardzību, ja apdraudēta šo personu dzīvība, veselība vai manta sakarā ar palīdzību, ko tās sniegušas tiesībaizsardzības iestādēm.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'LPP 10. Policijas darbinieka pamatpienākumi',
+   parts:[
+    {label:'Kārtības nodrošināšana (10.1)',desc:'Nodrošināt kārtību uz ceļiem, ielās, laukumos, parkos, sabiedriskā transportā, lidostās, ostās, stacijās un citās sabiedriskajās vietās, lai garantētu personu un sabiedrības drošību.',fineMin:'',fineMax:''},
+    {label:'Reģistrēšana un reaģēšana (10.2)',desc:'Reģistrēt informāciju par noziegumiem, likumpārkāpumiem un to izdarītājiem, kā arī par notikumiem, kuri apdraud sabiedrības drošību, un nekavējoties reaģēt uz tiem. Ziņot par avārijām, ugunsgrēkiem un citiem draudiem.',fineMin:'',fineMax:''},
+    {label:'Neatliekamā palīdzība (10.3)',desc:'Sniegt medicīnisko un citu neatliekamo palīdzību personām, kuras cietušas likumpārkāpumu rezultātā, nelaimes gadījumos vai atrodas bezpalīdzības stāvoklī, arī tad, ja tās reibuma stāvoklī zaudējušas spēju patstāvīgi pārvietoties vai var nodarīt kaitējumu apkārtējiem vai pašas sev.',fineMin:'',fineMax:''},
+    {label:'Pārkāpumu novēršana un atklāšana (10.4–10.6)',desc:'Izdarīt izziņu; veikt operatīvās meklēšanas pasākumus; atklāt, pārtraukt un novērst noziegumus; meklēt personas, kas slēpjas no tiesvedības; novērst un pārtraukt administratīvos pārkāpumus, sastādīt protokolus.',fineMin:'',fineMax:''},
+    {label:'Aizturēto apsargāšana (10.8)',desc:'Apsargāt, konvojēt un uzturēt aizturētās un apcietinātās personas. Savas kompetences ietvaros izpildīt kriminālsodus un administratīvos sodus.',fineMin:'',fineMax:''},
+    {label:'Satiksmes regulēšana (10.11)',desc:'Regulēt transportlīdzekļu un gājēju kustību, veikt satiksmes uzraudzību, kontrolēt ceļu un ielu stāvokli, kā arī satiksmes regulēšanas līdzekļu un satiksmes līdzekļu tehnisko stāvokli.',fineMin:'',fineMax:''},
+    {label:'Liecinieku un cietušo aizsardzība (10.16)',desc:'Gādāt par liecinieku, cietušo un to ģimenes locekļu drošību, kā arī par viņu mantas apsardzību, ja apdraudēta dzīvība, veselība vai manta sakarā ar palīdzību, ko sniegušas tiesībaizsardzības iestādēm.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'LPP 10. Basic duties of a police officer',
+   parts:[
+    {label:'Maintaining order (10.1)',desc:'Maintain order on roads, streets, squares, parks, public transport, airports, ports, stations and other public places to guarantee personal and public safety.',fineMin:'',fineMax:''},
+    {label:'Registration and response (10.2)',desc:'Register information about crimes, violations and their perpetrators, and about events threatening public safety, and respond immediately. Report accidents, fires, disasters and other threats.',fineMin:'',fineMax:''},
+    {label:'Emergency assistance (10.3)',desc:'Provide medical and other emergency assistance to persons who have suffered from violations, accidents or are in a helpless state, including those who have lost the ability to move independently or may cause harm to others due to intoxication.',fineMin:'',fineMax:''},
+    {label:'Preventing and detecting violations (10.4–10.6)',desc:'Conduct inquiry; carry out operational search measures; detect, stop and prevent crimes; search for persons hiding from justice; prevent and stop administrative violations, compile protocols.',fineMin:'',fineMax:''},
+    {label:'Guarding detained persons (10.8)',desc:'Guard, escort and hold detained and arrested persons. Execute criminal and administrative penalties within the scope of competence.',fineMin:'',fineMax:''},
+    {label:'Traffic regulation (10.11)',desc:'Regulate vehicle and pedestrian traffic, conduct traffic surveillance, monitor road and street conditions and the technical condition of vehicles.',fineMin:'',fineMax:''},
+    {label:'Protection of witnesses and victims (10.16)',desc:'Ensure the safety of witnesses, victims and their family members, and the protection of their property, if their life, health or property is threatened due to assistance provided to law enforcement.',fineMin:'',fineMax:''}
+   ]}}
+],
+
+tiesibas:[
+ {article:'LPP 12. pants',anchor:'#p12',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'LPP 12. Policijas darbinieka vispārējās tiesības',
+   parts:[
+    {label:'12.1–12.2. Dokumentu pārbaude un prasības izpilde',desc:'Prasīt, lai personas pārtrauc likumpārkāpumus. Pārbaudīt personām, kuras tiek turētas aizdomās par likumpārkāpumu, personību apliecinošos dokumentus un citus dokumentus, kas nepieciešami tiesību normu ievērošanas pārbaudei.',fineMin:'',fineMax:''},
+    {label:'12.3. Izsaukums uz policijas iestādi',desc:'Izsaukt uz policijas iestādi jebkuru personu sakarā ar lietām un materiāliem, kuru izskatīšana ir policijas kompetencē. Ja personas bez attaisnojoša iemesla neierodas pēc izsaukuma — likumā noteiktajā kārtībā veikt to piespiedu atvešanu.',fineMin:'',fineMax:''},
+    {label:'12.4. Protokoli un administratīvā aizturēšana',desc:'Sastādīt protokolus par administratīvajiem pārkāpumiem. Likumā paredzētajos gadījumos nogādāt policijas iestādē likumpārkāpējus, izdarīt personas apskati, mantu un dokumentu izņemšanu, administratīvi aizturēt likumpārkāpējus.',fineMin:'',fineMax:''},
+    {label:'12.7. Aizturēšana aizdomu gadījumā',desc:'Likumā noteiktajā kārtībā aizturēt un turēt apsardzībā personas, kuras tiek turētas aizdomās par noziegumu vai administratīvā pārkāpuma izdarīšanu.',fineMin:'',fineMax:''},
+    {label:'12.8. Nepilngadīgo aizturēšana',desc:'Aizturēt personas vecumā līdz 16 gadiem, kuras patvaļīgi pametušas dzīvesvietu vai bērnu iestādi, un turēt tās policijas iestādē līdz nodošanai vecākiem vai bērnu iestādēm.',fineMin:'',fineMax:''},
+    {label:'12.9. Intoksikētu personu nogādāšana',desc:'Nogādāt medicīnas iestādēs vai mājoklī personas, kuras alkohola, toksisko vai narkotisko vielu lietošanas rezultātā zaudējušas spēju patstāvīgi pārvietoties vai orientēties vai var nodarīt kaitējumu apkārtējiem vai pašas sev. Ja tas nav iespējams — nogādāt policijas iestādē līdz atskurbšanai, bet ne ilgāk par 12 stundām.',fineMin:'',fineMax:''},
+    {label:'12.10. Intoksikētu personu aizturēšana mājoklī',desc:'Aizturēt uz rakstveida pieteikuma pamata personas, kuras atrodas mājoklī alkohola vai narkotiku reibuma stāvoklī un var nodarīt kaitējumu sev vai apkārtējiem, ja apkārtējie baidās palikt vienatnē ar šo personu. Uzturēt medicīnas vai policijas iestādē līdz atskurbšanai.',fineMin:'',fineMax:''},
+    {label:'12.11. Psihiski traucētas personas',desc:'Aizturēt personas, kurām ir nepārprotami psihiski traucējumi un kuras ar savām darbībām rada acīmredzamas briesmas sev vai apkārtējiem, un uzturēt tās policijas iestādē līdz nodošanai ārstnieciskajai iestādei vai nogādāšanai mājoklī.',fineMin:'',fineMax:''},
+    {label:'12.16. Iekļūšana telpās',desc:'Jebkurā diennakts laikā iekļūt dzīvoklī bez tajā dzīvojošo atļaujas (ja nepieciešams, lietojot fizisku spēku), ja persona aizturama nozieguma vietā vai apdraudēta citu personu dzīvība. Par katru šādu iekļūšanu 24 stundu laikā rakstveidā jāziņo prokuroram.',fineMin:'',fineMax:''},
+    {label:'12.17. Alkohola pārbaude',desc:'Likumā noteiktajos gadījumos apsekot personas, lai konstatētu, vai tās ir lietojušas alkoholu, toksiskās vai narkotiskās vielas, vai nosūtīt tās apsekošanai uz medicīnas iestādēm.',fineMin:'',fineMax:''},
+    {label:'12.20. Transportlīdzekļa apturēšana un vadītāja atstādināšana',desc:'Apturēt transportlīdzekli un izdarīt tā apskati, ja ir pamats domāt, ka vadītājs pārkāpis ceļu satiksmes noteikumus. Atstādināt no vadīšanas personas ar alkohola, toksisko vai narkotisko vielu lietošanas pazīmēm vai bez dokumentiem.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'LPP 12. Policijas darbinieka vispārējās tiesības',
+   parts:[
+    {label:'12.1–12.2. Dokumentu pārbaude un prasības izpilde',desc:'Prasīt, lai personas pārtrauc likumpārkāpumus. Pārbaudīt personām, kuras tiek turētas aizdomās par likumpārkāpumu, personību apliecinošos dokumentus un citus dokumentus, kas nepieciešami tiesību normu ievērošanas pārbaudei.',fineMin:'',fineMax:''},
+    {label:'12.3. Izsaukums uz policijas iestādi',desc:'Izsaukt uz policijas iestādi jebkuru personu sakarā ar lietām un materiāliem, kuru izskatīšana ir policijas kompetencē. Ja personas bez attaisnojoša iemesla neierodas pēc izsaukuma — likumā noteiktajā kārtībā veikt to piespiedu atvešanu.',fineMin:'',fineMax:''},
+    {label:'12.4. Protokoli un administratīvā aizturēšana',desc:'Sastādīt protokolus par administratīvajiem pārkāpumiem. Likumā paredzētajos gadījumos nogādāt policijas iestādē likumpārkāpējus, izdarīt personas apskati, mantu un dokumentu izņemšanu un apskati, administratīvi aizturēt likumpārkāpējus un piemērot administratīvos sodus.',fineMin:'',fineMax:''},
+    {label:'12.7. Aizturēšana aizdomu gadījumā',desc:'Likumā noteiktajā kārtībā aizturēt un turēt apsardzībā personas, kuras tiek turētas aizdomās par noziegumu vai administratīvā pārkāpuma izdarīšanu.',fineMin:'',fineMax:''},
+    {label:'12.8. Nepilngadīgo aizturēšana',desc:'Aizturēt personas vecumā līdz 16 gadiem, kuras patvaļīgi pametušas dzīvesvietu vai bērnu iestādi, un turēt tās policijas iestādē līdz nodošanai vecākiem, viņu aizstājējiem vai bērnu iestādēm.',fineMin:'',fineMax:''},
+    {label:'12.9. Intoksikētu personu nogādāšana (LPP 12.1.9)',desc:'Nogādāt medicīnas iestādēs vai mājoklī personas, kuras alkohola, toksisko vai narkotisko vielu lietošanas rezultātā zaudējušas spēju patstāvīgi pārvietoties vai orientēties vai var nodarīt kaitējumu apkārtējiem vai pašas sev. Ja tas nav iespējams — nogādāt policijas iestādē līdz atskurbšanai, bet ne ilgāk par 12 stundām.',fineMin:'',fineMax:''},
+    {label:'12.10. Intoksikētu personu aizturēšana mājoklī',desc:'Aizturēt uz rakstveida pieteikuma pamata personas, kuras atrodas mājoklī alkohola vai narkotiku reibuma stāvoklī un var nodarīt kaitējumu sev vai apkārtējiem, ja apkārtējie baidās palikt vienatnē ar šo personu. Uzturēt medicīnas vai policijas iestādē līdz atskurbšanai vai apstākļu noskaidrošanai.',fineMin:'',fineMax:''},
+    {label:'12.11. Psihiski traucētas personas',desc:'Aizturēt personas, kurām ir nepārprotami psihiski traucējumi un kuras ar savām darbībām rada acīmredzamas briesmas sev vai apkārtējiem, un uzturēt tās policijas iestādē līdz nodošanai ārstnieciskajai iestādei vai nogādāšanai mājoklī.',fineMin:'',fineMax:''},
+    {label:'12.16. Iekļūšana telpās',desc:'Jebkurā diennakts laikā iekļūt dzīvoklī bez tajā dzīvojošo atļaujas (ja nepieciešams, lietojot fizisku spēku), ja persona aizturama nozieguma vietā vai apdraudēta citu personu dzīvība. Par katru šādu iekļūšanu 24 stundu laikā rakstveidā jāziņo prokuroram.',fineMin:'',fineMax:''},
+    {label:'12.17. Alkohola un narkotiku pārbaude',desc:'Likumā noteiktajos gadījumos apsekot personas, lai konstatētu, vai tās ir lietojušas alkoholu, toksiskās vai narkotiskās vielas, vai nosūtīt tās apsekošanai uz medicīnas iestādēm, ja atzinums nepieciešams likumpārkāpuma fakta apstiprināšanai.',fineMin:'',fineMax:''},
+    {label:'12.20. Transportlīdzekļa apturēšana un atstādināšana',desc:'Apturēt transportlīdzekli un izdarīt tā apskati, ja ir pamats domāt, ka vadītājs pārkāpis ceļu satiksmes noteikumus. Aizliegt lietot transportlīdzekļus, kuru tehniskais stāvoklis apdraud kustības drošību. Atstādināt no vadīšanas personas ar alkohola vai narkotiku pazīmēm vai bez dokumentiem.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'LPP 12. General rights of a police officer',
+   parts:[
+    {label:'12.1–12.2. Document checks and compliance demands',desc:'Require persons to stop violations. Check identity documents and other relevant documents of persons suspected of violations in areas under police supervision.',fineMin:'',fineMax:''},
+    {label:'12.3. Summoning to police station',desc:'Summon any person to the police station in matters within police competence. If they fail to appear without justification, compulsory escorting may be carried out as established by law.',fineMin:'',fineMax:''},
+    {label:'12.4. Protocols and administrative detention',desc:'Compile administrative violation protocols. In cases provided by law, bring violators to the police station, conduct body searches, seize documents and property, administratively detain violators and apply administrative penalties.',fineMin:'',fineMax:''},
+    {label:'12.7. Detention on suspicion',desc:'Detain and hold persons suspected of committing a crime or administrative violation as established by law.',fineMin:'',fineMax:''},
+    {label:'12.8. Detention of minors',desc:'Detain persons under 16 who have voluntarily left their home or a children’s institution, and hold them at the police station until handed over to parents or a children’s institution.',fineMin:'',fineMax:''},
+    {label:'12.9. Transportation of intoxicated persons (LPP 12.1.9)',desc:'Transport to medical facilities or home persons who, due to alcohol, toxic or narcotic substance use, have lost the ability to move or orientate independently, or may cause harm to others or themselves. If not possible, bring to police station until sober, up to 12 hours.',fineMin:'',fineMax:''},
+    {label:'12.10. Detention of intoxicated persons at home',desc:'Detain based on written application persons who are in their home in a state of intoxication and may cause harm to themselves or others, if those nearby are afraid to be left alone with them. Hold at medical or police facility until sober.',fineMin:'',fineMax:''},
+    {label:'12.11. Persons with mental disorders',desc:'Detain persons with evident mental disorders who pose obvious danger to themselves or others, and hold them at the police station until transfer to a medical institution or return home.',fineMin:'',fineMax:''},
+    {label:'12.16. Entry onto premises',desc:'Enter a dwelling at any time without the occupants’ permission (using force if necessary) when a person is to be detained at the scene of a crime or another person’s life is threatened. Such entry must be reported in writing to the prosecutor within 24 hours.',fineMin:'',fineMax:''},
+    {label:'12.17. Alcohol and drug testing',desc:'In cases established by law, examine persons to determine whether they have consumed alcohol, toxic or narcotic substances, or send them for examination to medical facilities when an opinion is needed to confirm a violation.',fineMin:'',fineMax:''},
+    {label:'12.20. Vehicle stop and driver suspension',desc:'Stop a vehicle and inspect it if there are grounds to believe the driver has violated traffic rules. Prohibit use of vehicles whose technical condition endangers traffic safety. Suspend from driving persons with signs of alcohol or drug use or without the required documents.',fineMin:'',fineMax:''}
+   ]}}
+],
+
+speks:[
+ {article:'LPP 13. pants',anchor:'#p13',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'LPP 13. Fizisks spēks un speciālie līdzekļi',
+   parts:[
+    {label:'Speciālie līdzekļi — saraksts',desc:'Policijas darbiniekam ir tiesības lietot fizisku spēku, speciālos cīņas paņēmienus, roku dzelžus, durkļus, dunčus, stekus, asaras izraisošas vielas, speciālas krāsvielas, psiholoģiskas iedarbības gaismas un skaņu ierīces, ierīces telpu atvēršanai, šķēršļu sagraušanas un transporta apstādināšanas līdzekļus, ūdensmetējus, bruņumašīnas, helikopterus, dienesta suņus un zirgus.',fineMin:'',fineMax:''},
+    {label:'Pamati spēka pielietošanai (13.1–13.6)',desc:'Spēks lietojams, lai: 1) atvairītu uzbrukumu personām vai policistiem; 2) atvairītu uzbrukumu ēkām un transportlīdzekļiem vai atbrīvotu to; 3) atbrīvotu ķīlniekus; 4) novērstu masu nekārtības; 5) aizturētu un konvojētu likumpārkāpējus; 6) pārtrauktu ļaunprātīgu nepakļaušanos likumīgām prasībām.',fineMin:'',fineMax:''},
+    {label:'Proporcionalitāte un medicīniskā palīdzība',desc:'Speciālo līdzekļu veidu un fiziska spēka intensitāti nosaka, ņemot vērā konkrēto situāciju, pārkāpuma raksturu un pārkāpēja individuālās iezīmes, maksimāli ierobežojot nodarīto kaitējumu. Ja ir cietušie — nekavējoties sniegt medicīnisko palīdzību un ziņot prokuroram.',fineMin:'',fineMax:''},
+    {label:'Aizliegumi — sievietes, invalīdi, mazgadīgie',desc:'Aizliegts lietot speciālos cīņas paņēmienus, roku dzelžus, stekus un dienesta suņus pret sievietēm, personām ar redzamām invaliditātes pazīmēm un mazgadīgām personām, izņemot gadījumus, kad tās izdara grupveida uzbrukumu vai izrāda bruņotu pretošanos.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'LPP 13. Fizisks spēks un speciālie līdzekļi',
+   parts:[
+    {label:'Speciālie līdzekļi — saraksts',desc:'Policijas darbiniekam ir tiesības lietot fizisku spēku, speciālos cīņas paņēmienus, roku dzelžus, stekus, asaras izraisošas vielas, speciālas krāsvielas, psiholoģiskas iedarbības ierīces, ierīces telpu atvēršanai, šķēršļu sagraušanas un transporta apstādināšanas līdzekļus, ūdensmetējus, bruņumašīnas, helikopterus, dienesta suņus un zirgus.',fineMin:'',fineMax:''},
+    {label:'Pamati spēka pielietošanai (13.1–13.6)',desc:'Spēks lietojams, lai: 1) atvairītu uzbrukumu personām vai policistiem; 2) atvairītu uzbrukumu ēkām un transportlīdzekļiem vai atbrīvotu to; 3) atbrīvotu ķīlniekus; 4) novērstu masu nekārtības; 5) aizturētu un konvojētu likumpārkāpējus; 6) pārtrauktu ļaunprātīgu nepakļaušanos likumīgām prasībām.',fineMin:'',fineMax:''},
+    {label:'Proporcionalitāte un medicīniskā palīdzība',desc:'Speciālo līdzekļu veidu un intensitāti nosaka, ņemot vērā konkrēto situāciju, pārkāpuma raksturu un pārkāpēja individuālās iezīmes, maksimāli ierobežojot nodarīto kaitējumu. Ja ir cietušie — nekavējoties sniegt medicīnisko palīdzību un rakstveidā ziņot prokuroram.',fineMin:'',fineMax:''},
+    {label:'Aizliegumi — sievietes, invalīdi, mazgadīgie',desc:'Aizliegts lietot speciālos cīņas paņēmienus, roku dzelžus, stekus un dienesta suņus pret sievietēm, personām ar redzamām invaliditātes pazīmēm un mazgadīgām personām, izņemot gadījumus, kad tās izdara grupveida uzbrukumu vai izrāda bruņotu pretošanos.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'LPP 13. Physical force and special means',
+   parts:[
+    {label:'Special means — list',desc:'A police officer has the right to use physical force, special combat techniques, handcuffs, batons, tear-causing substances, special colouring agents, psychological impact devices, door-opening devices, barrier-breaking and vehicle stop means, water cannons, armoured vehicles, helicopters, service dogs and horses.',fineMin:'',fineMax:''},
+    {label:'Grounds for use of force (13.1–13.6)',desc:'Force may be used to: 1) repel attacks on persons or officers; 2) repel attacks on buildings or vehicles or to free them; 3) free hostages; 4) prevent mass disorder; 5) detain and escort violators; 6) stop malicious non-compliance with lawful demands.',fineMin:'',fineMax:''},
+    {label:'Proportionality and medical assistance',desc:'The type and intensity of special means and force are determined by the specific situation, the nature of the violation and the individual characteristics of the offender, minimising harm caused. If there are casualties — immediately provide medical assistance and report to the prosecutor.',fineMin:'',fineMax:''},
+    {label:'Prohibitions — women, disabled persons, minors',desc:'Prohibited from using special combat techniques, handcuffs, batons and service dogs against women, persons with visible signs of disability and minors, except when they carry out group attacks or offer armed resistance.',fineMin:'',fineMax:''}
+   ]}},
+
+ {article:'LPP 14. pants',anchor:'#p14',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'LPP 14. Šaujamierocis — pielietošanas tiesības',
+   parts:[
+    {label:'Pamati (14.1–14.7)',desc:'Policijas darbinieks ir tiesīgs pielietot šaujamieroci galējas nepieciešamības situācijā, lai: 1) aizsargātu sevi vai citus no uzbrukuma, kas reāli apdraud dzīvību; 2) atbrīvotu ķīlniekus; 3) atvairītu grupveida vai bruņotu uzbrukumu policistiem; 4) atvairītu uzbrukumu apsargājamiem objektiem; 5) aizturētu personu, kas izrāda bruņotu pretošanos vai pārsteigta smaga nozieguma izdarīšanā; 6) apturētu transportlīdzekli, ja vadītājs rada draudus dzīvībai; 7) padarītu nekaitīgu dzīvnieku, kurš apdraud cilvēku.',fineMin:'',fineMax:''},
+    {label:'Brīdinājuma prasība',desc:'Pirms šaujamieroča pielietošanas ir jābrīdina par nodomu to darīt. Ja nepieciešams, var izdarīt arī brīdinājuma šāvienu.',fineMin:'',fineMax:''},
+    {label:'Bez brīdinājuma — izņēmumi',desc:'Bez brīdinājuma šaujamieroci var pielietot, ja: uzbrukums ir pēkšņs vai tiek izmantoti ieroči vai transportlīdzekļi; tas nepieciešams ķīlnieku atbrīvošanai; notiek bēgšana no apcietinājuma, pielietojot ieroci vai izmantojot transportlīdzekli braukšanas laikā.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'LPP 14. Šaujamierocis — pielietošanas tiesības',
+   parts:[
+    {label:'Pamati (14.1–14.7)',desc:'Policijas darbinieks ir tiesīgs pielietot šaujamieroci galējas nepieciešamības situācijā, lai: 1) aizsargātu sevi vai citus no uzbrukuma, kas reāli apdraud dzīvību; 2) atbrīvotu ķīlniekus; 3) atvairītu grupveida vai bruņotu uzbrukumu policistiem; 4) atvairītu uzbrukumu apsargājamiem objektiem; 5) aizturētu personu, kas izrāda bruņotu pretošanos vai pārsteigta smaga nozieguma vietā; 6) apturētu transportlīdzekli, ja vadītājs rada draudus dzīvībai; 7) padarītu nekaitīgu dzīvnieku, kas apdraud cilvēku.',fineMin:'',fineMax:''},
+    {label:'Brīdinājuma prasība',desc:'Pirms šaujamieroča pielietošanas ir jābrīdina par nodomu to darīt. Ja nepieciešams, var izdarīt arī brīdinājuma šāvienu.',fineMin:'',fineMax:''},
+    {label:'Bez brīdinājuma — izņēmumi',desc:'Bez brīdinājuma šaujamieroci var pielietot, ja: uzbrukums ir pēkšņs vai tiek izmantoti ieroči vai mehāniskie transportlīdzekļi; tas nepieciešams ķīlnieku atbrīvošanai; notiek bēgšana no apcietinājuma, pielietojot ieroci vai izmantojot transportlīdzekli tā braukšanas laikā.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'LPP 14. Firearm — right to use',
+   parts:[
+    {label:'Grounds (14.1–14.7)',desc:'A police officer is entitled to use a firearm in situations of extreme necessity to: 1) protect themselves or others from an attack genuinely threatening life; 2) free hostages; 3) repel group or armed attacks on officers; 4) repel attacks on guarded facilities; 5) detain a person offering armed resistance or caught at the scene of a serious crime; 6) stop a vehicle if the driver poses a real threat to life; 7) render an animal harmless that threatens a person.',fineMin:'',fineMax:''},
+    {label:'Warning requirement',desc:'Before using a firearm, a warning of intent must be given. If necessary, a warning shot may also be fired.',fineMin:'',fineMax:''},
+    {label:'Without warning — exceptions',desc:'A firearm may be used without warning if: the attack is sudden or weapons or vehicles are used; it is necessary to free hostages; a person is escaping from custody using a weapon or vehicle while it is moving.',fineMin:'',fineMax:''}
+   ]}}
+]
+};
+
+
 // ===== CSL CATEGORIES =====
 const cslCats={
   parking:{ru:{name:'Остановка / стоянка',sec:'Нарушения остановки и стоянки · CSL 57. pants'},lv:{name:'Apstāšanās / Stāvēšana',sec:'Apstāšanās un stāvēšanas pārkāpumi · CSL 57. pants'},en:{name:'Stopping / Parking',sec:'Stopping and parking violations · CSL 57. pants'}},
@@ -1907,10 +2118,10 @@ other:[
 };
 
 // ===== RENDERING FUNCTIONS =====
-function getCats(){return currentLaw==='asl'?aslCats:currentLaw==='csl'?cslCats:currentLaw==='aiz'?aizCats:aalCats;}
-function getLaws(){return currentLaw==='asl'?aslLaws:currentLaw==='csl'?cslLaws:currentLaw==='aiz'?aizLaws:aalLaws;}
-function getUI(){return currentLaw==='asl'?aslUI[lang]:currentLaw==='csl'?uiStrings.csl[lang]:currentLaw==='aiz'?uiStrings.aiz[lang]:uiStrings.aal[lang];}
-function getBase(){return currentLaw==='asl'?BASE_ASL:currentLaw==='csl'?BASE_CSL:currentLaw==='aiz'?BASE_LPP:BASE_AAL;}
+function getCats(){return currentLaw==='asl'?aslCats:currentLaw==='csl'?cslCats:currentLaw==='aiz'?aizCats:currentLaw==='aal'?aalCats:lppCats;}
+function getLaws(){return currentLaw==='asl'?aslLaws:currentLaw==='csl'?cslLaws:currentLaw==='aiz'?aizLaws:currentLaw==='aal'?aalLaws:lppLaws;}
+function getUI(){return currentLaw==='asl'?aslUI[lang]:currentLaw==='csl'?uiStrings.csl[lang]:currentLaw==='aiz'?uiStrings.aiz[lang]:currentLaw==='aal'?uiStrings.aal[lang]:uiStrings.lpp[lang];}
+function getBase(){return currentLaw==='asl'?BASE_ASL:currentLaw==='csl'?BASE_CSL:currentLaw==='aiz'?BASE_LPP:currentLaw==='aal'?BASE_AAL:BASE_LPP;}
 
 function setLaw(law,btn){
   currentLaw=law;
@@ -1918,7 +2129,7 @@ function setLaw(law,btn){
   btn.classList.add('active');
   currentCat=Object.keys(getCats())[0];
   document.getElementById('appSubtitle').textContent=getUI().subtitle;
-  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'}};
+  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'}};
   document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
   document.getElementById('searchInput').placeholder=getUI().placeholder;
   document.getElementById('searchInput').value='';
@@ -1932,7 +2143,7 @@ function setLang(l,btn){
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('appSubtitle').textContent=getUI().subtitle;
-  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'}};
+  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'}};
   document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
   document.getElementById('searchInput').placeholder=getUI().placeholder;
   renderCats();
@@ -1947,13 +2158,16 @@ const SVG_AIZ={aiztureshana:`<svg width="22" height="22" viewBox="0 0 24 24" fil
 
 const SVG_AAL={dalibnieki:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="9" cy="7" r="3"/><path d="M3 21v-2a6 6 0 0112 0v2"/><circle cx="19" cy="8" r="2"/><path d="M19 14v7"/><path d="M22 17h-6"/></svg>`,termini:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16v16H4z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>`,sodi:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 4l6 6-9 9-6-6 9-9z"/><line x1="5" y1="19" x2="19" y2="5" stroke="none"/><line x1="3" y1="21" x2="9" y2="15"/></svg>`};
 const aalCounts={dalibnieki:'AAL 39.–49. p.',termini:'AAL termini',sodi:'AAL 13.–26. p.'};
+
+const SVG_LPP={visparigie:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l8 4v6c0 5.5-4 9-8 10C8 21 4 17.5 4 12V6l8-4z"/></svg>`,pienakumi:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="7" y="2" width="10" height="8" rx="1"/><path d="M7 10l-4 11h18L17 10"/><circle cx="12" cy="15" r="2"/></svg>`,tiesibas:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"/><path d="M3 10l9-7 9 7"/><path d="M5 10c0 3 2 5 4 5s4-2 4-5H5z"/><path d="M11 17c0 3 2 5 4 5s4-2 4-5h-8z"/></svg>`,speks:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 10h14v4H3z"/><path d="M17 12h2a2 2 0 002-2V8h-5"/><path d="M7 14v4h4v-4"/><line x1="3" y1="12" x2="1" y2="12"/></svg>`};
+const lppCounts={visparigie:'LPP 1.–8. pants',pienakumi:'LPP 9.–11. pants',tiesibas:'LPP 12. pants',speks:'LPP 13.–14. pants'};
 function renderCats(){
   const cats=getCats();
   const aslCounts={admin:'ASL 3–8',order:'ASL 9–13.1',lang:'ASL 14–28'};
   const cslCounts={parking:'CSL 57. p.',speed:'CSL 55. p.',alcohol:'CSL 62. p.',signals:'CSN/CSL',other:'CSL 43–58. p.'};
   const aizCounts={aiztureshana:'AAL 71 · LPP 12 · LPP 19'};
-  const svgMap=currentLaw==='asl'?SVG_ASL:currentLaw==='csl'?SVG_CSL:currentLaw==='aiz'?SVG_AIZ:SVG_AAL;
-  const counts=currentLaw==='asl'?aslCounts:currentLaw==='csl'?cslCounts:currentLaw==='aiz'?aizCounts:aalCounts;
+  const svgMap=currentLaw==='asl'?SVG_ASL:currentLaw==='csl'?SVG_CSL:currentLaw==='aiz'?SVG_AIZ:currentLaw==='aal'?SVG_AAL:SVG_LPP;
+  const counts=currentLaw==='asl'?aslCounts:currentLaw==='csl'?cslCounts:currentLaw==='aiz'?aizCounts:currentLaw==='aal'?aalCounts:lppCounts;
   document.getElementById('catGrid').innerHTML=Object.keys(cats).map(k=>
     '<div class="cat-card'+(k===currentCat?' active':'')+'" onclick="selectCat(this,\''+k+'\')">'+
     '<div class="cat-icon">'+(svgMap[k]||'')+'</div>'+
@@ -2062,7 +2276,7 @@ function filterLaws(){
 // ===== INIT =====
 renderCats();
 document.getElementById('appSubtitle').textContent=getUI().subtitle;
-  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'}};
+  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'}};
   document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
 document.getElementById('searchInput').placeholder=getUI().placeholder;
 document.getElementById('sectionTitle').textContent=getCats()[currentCat][lang].sec;
