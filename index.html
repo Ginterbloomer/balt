@@ -36,6 +36,107 @@
     /* Ограничиваем максимальную ширину приложения для баланса на больших экранах */
     --max-app-width: 600px;
   }
+
+  /* ===== DARK MODE ===== */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-border-secondary: #2d3748;
+      --color-border-tertiary: #2d3748;
+      --color-text-primary: #f7fafc;
+      --color-text-secondary: #a0aec0;
+      --color-background-primary: #1a202c;
+      --color-background-secondary: #171923;
+
+      --color-brand: #63b3ed;
+      --color-brand-light: #1a2a3a;
+      --color-danger: #fc8181;
+      --color-danger-light: #2d1a1a;
+      --color-success: #68d391;
+      --color-success-light: #1a2d1f;
+      --color-warning: #f6ad55;
+      --color-warning-light: #2d2210;
+    }
+
+    /* Cards and surfaces */
+    .law-card {
+      background: #1e2535;
+      border-color: #2d3748;
+    }
+    .law-card:hover { background: #232d42; }
+    .law-card.expanded { background: #1e2535; }
+    .law-detail { border-top-color: #2d3748; }
+    .part-block { border-bottom-color: #2d3748; }
+    .fine-box { background: #171923; }
+    .part-fine-box { background: #171923; }
+
+    /* Category cards */
+    .cat-card {
+      background: #1e2535;
+      border-color: #2d3748;
+    }
+    .cat-card:hover { background: #232d42; }
+    .cat-card.active {
+      background: #1a2a3a;
+      border-color: var(--color-brand);
+    }
+
+    /* Header */
+    .app-header { background: #1a202c; border-bottom-color: #2d3748; }
+
+    /* Search */
+    .search-bar { background: #1a202c; border-bottom-color: #2d3748; }
+    .search-input {
+      background: #171923;
+      border-color: #2d3748;
+      color: var(--color-text-primary);
+    }
+    .search-input:focus { border-color: var(--color-brand); }
+    .search-input::placeholder { color: #4a5568; }
+
+    /* Law switcher */
+    .law-switcher { background: #1e2535; }
+    .law-btn.active { background: #1a2a3a; color: var(--color-brand); }
+
+    /* Badges */
+    .badge-article { background: #2d3748; color: #a0aec0; }
+    .badge-fine { background: #2d1a1a; color: #fc8181; }
+    .badge-warn { background: #2d2210; color: #f6ad55; }
+    .badge-pts { background: #1a2a3a; color: #63b3ed; }
+
+    /* Source button */
+    .source-btn {
+      background: #1a2a3a;
+      border-color: #2d3748;
+      color: var(--color-brand);
+    }
+    .source-btn:hover { background: #1d3a5c; }
+
+    /* CSN badges */
+    .csn-badge { background: #1a2a3a; color: var(--color-brand); }
+    .csn-badge:hover { background: var(--color-brand); color: #1a202c; }
+    .csn-card-ref { background: #1a2a3a; }
+
+    /* Favourites */
+    .fav-law-badge { background: #2d3748; border-color: #4a5568; }
+    .fav-empty { color: #4a5568; }
+
+    /* DL labels */
+    .dl { color: #4a5568; }
+
+    /* Signs */
+    .sign-chip { background: #2d3748; border-color: #4a5568; }
+
+    /* Arrow */
+    .arrow-icon {
+      border-color: #4a5568;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #171923; }
+    ::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #4a5568; }
+  }
   
   /* Центрируем всё приложение на экране */
   body {
@@ -221,6 +322,8 @@
     font-weight: 500;
     color: var(--color-text-primary);
     line-height: 1.4;
+    flex: 1;
+    min-width: 0;
   }
   .arrow-icon {
     font-size: 16px;
@@ -389,6 +492,97 @@
   .signs-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;align-items:flex-end;}
   .sign-chip{display:flex;flex-direction:column;align-items:center;gap:3px;}
   .sign-num{font-size:10px;color:var(--color-text-secondary);font-weight:500;}
+  /* ===== THEME TOGGLE ===== */
+  .theme-toggle-btn{background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:var(--color-text-secondary);transition:all 0.15s;display:flex;align-items:center;}
+  .theme-toggle-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary);}
+
+  /* Manual dark theme override (set via JS, overrides prefers-color-scheme) */
+  [data-theme="dark"] {
+    --color-border-secondary: #2d3748;
+    --color-border-tertiary: #2d3748;
+    --color-text-primary: #f7fafc;
+    --color-text-secondary: #a0aec0;
+    --color-background-primary: #1a202c;
+    --color-background-secondary: #171923;
+    --color-brand: #63b3ed;
+    --color-brand-light: #1a2a3a;
+    --color-danger: #fc8181;
+    --color-danger-light: #2d1a1a;
+    --color-success: #68d391;
+    --color-success-light: #1a2d1f;
+    --color-warning: #f6ad55;
+    --color-warning-light: #2d2210;
+  }
+  [data-theme="light"] {
+    --color-border-secondary: #e2e8f0;
+    --color-border-tertiary: #edf2f7;
+    --color-text-primary: #1a202c;
+    --color-text-secondary: #718096;
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f7fafc;
+    --color-brand: #3182ce;
+    --color-brand-light: #ebf8ff;
+    --color-danger: #e53e3e;
+    --color-danger-light: #fff5f5;
+    --color-success: #38a169;
+    --color-success-light: #f0fff4;
+    --color-warning: #dd6b20;
+    --color-warning-light: #fffaf0;
+  }
+
+  /* Card/surface colours in dark mode (both auto and manual) */
+  @media (prefers-color-scheme: dark) { body:not([data-theme="light"]) .law-card,
+  [data-theme="dark"] .law-card { background:#1e2535; border-color:#2d3748; } }
+
+  [data-theme="dark"] .law-card { background:#1e2535; border-color:#2d3748; }
+  [data-theme="dark"] .law-card:hover { background:#232d42; }
+  [data-theme="dark"] .law-detail { border-top-color:#2d3748; }
+  [data-theme="dark"] .part-block { border-bottom-color:#2d3748; }
+  [data-theme="dark"] .fine-box,[data-theme="dark"] .part-fine-box { background:#171923; }
+  [data-theme="dark"] .cat-card { background:#1e2535; border-color:#2d3748; }
+  [data-theme="dark"] .cat-card:hover { background:#232d42; }
+  [data-theme="dark"] .cat-card.active { background:#1a2a3a; border-color:var(--color-brand); }
+  [data-theme="dark"] .app-header { background:#1a202c; border-bottom-color:#2d3748; }
+  [data-theme="dark"] .search-bar { background:#1a202c; border-bottom-color:#2d3748; }
+  [data-theme="dark"] .search-input { background:#171923; border-color:#2d3748; color:var(--color-text-primary); }
+  [data-theme="dark"] .search-input::placeholder { color:#4a5568; }
+  [data-theme="dark"] .law-switcher { background:#1e2535; }
+  [data-theme="dark"] .law-btn.active { background:#1a2a3a; color:var(--color-brand); }
+  [data-theme="dark"] .badge-article { background:#2d3748; color:#a0aec0; }
+  [data-theme="dark"] .badge-fine { background:#2d1a1a; color:#fc8181; }
+  [data-theme="dark"] .badge-warn { background:#2d2210; color:#f6ad55; }
+  [data-theme="dark"] .badge-pts { background:#1a2a3a; color:#63b3ed; }
+  [data-theme="dark"] .source-btn { background:#1a2a3a; border-color:#2d3748; color:var(--color-brand); }
+  [data-theme="dark"] .source-btn:hover { background:#1d3a5c; }
+  [data-theme="dark"] .csn-badge { background:#1a2a3a; color:var(--color-brand); }
+  [data-theme="dark"] .csn-badge:hover { background:var(--color-brand); color:#1a202c; }
+  [data-theme="dark"] .csn-card-ref { background:#1a2a3a; }
+  [data-theme="dark"] .fav-law-badge { background:#2d3748; border-color:#4a5568; }
+  [data-theme="dark"] .dl { color:#4a5568; }
+  [data-theme="dark"] .sign-chip { background:#2d3748; border-color:#4a5568; }
+  [data-theme="dark"] .arrow-icon { border-color:#4a5568; }
+
+  /* Light mode forces (override OS dark) */
+  [data-theme="light"] .law-card { background:#ffffff; border-color:#e2e8f0; }
+  [data-theme="light"] .cat-card { background:#ffffff; border-color:#e2e8f0; }
+  [data-theme="light"] .app-header { background:#ffffff; }
+  [data-theme="light"] .search-input { background:#ffffff; color:#1a202c; }
+  [data-theme="light"] .law-switcher { background:#f7fafc; }
+
+  /* ===== FAVOURITES ===== */
+  .fav-btn{background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-secondary);display:flex;align-items:center;flex-shrink:0;border-radius:4px;transition:color 0.15s,transform 0.15s;width:26px;justify-content:center;}
+  .fav-btn:hover{color:#f6ad55;transform:scale(1.15);}
+  .fav-btn.active{color:#f6ad55;}
+  .fav-btn.active svg polygon{fill:#f6ad55;}
+  .fav-tab-btn{background:none;border:none;cursor:pointer;padding:6px 10px;border-radius:8px;font-size:14px;color:var(--color-text-secondary);transition:all 0.15s;position:relative;display:flex;align-items:center;gap:4px;}
+  .fav-tab-btn:hover,.fav-tab-btn.active{color:#f6ad55;background:rgba(246,173,85,0.1);}
+  .fav-count{font-size:10px;font-weight:700;background:#f6ad55;color:white;border-radius:8px;padding:1px 5px;min-width:16px;text-align:center;}
+  .fav-law-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;background:var(--color-background-secondary);color:var(--color-text-secondary);border:1px solid var(--color-border-secondary);}
+  .fav-empty{text-align:center;padding:48px 24px;color:var(--color-text-secondary);}
+  .fav-empty svg{margin:0 auto 12px;display:block;opacity:0.3;}
+  .fav-empty-title{font-size:16px;font-weight:600;margin-bottom:6px;color:var(--color-text-primary);}
+  .fav-empty-sub{font-size:13px;opacity:0.7;}
+
   /* ===== MOBILE RESPONSIVE ===== */
   @media (max-width: 600px) {
     :root {
@@ -602,6 +796,11 @@
   <div class="app-title">BALT 1</div>
   <div class="app-subtitle" id="appSubtitle">ASL</div>
   <div class="app-subtitle2" id="appSubtitle2">Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā</div>
+  <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Mainit temu"><svg id="iconSun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg id="iconMoon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
+  <button class="fav-tab-btn" id="favTabBtn" onclick="showFavourites(this)" title="Favorīti">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+    <span class="fav-count" id="favCount" style="display:none">0</span>
+  </button>
   <div class="lang-switcher">
     <button class="lang-btn" onclick="setLang('ru',this)">RU</button>
     <button class="lang-btn active" onclick="setLang('lv',this)">LV</button>
@@ -2117,6 +2316,202 @@ other:[
 ]
 };
 
+// ===== THEME =====
+const THEME_KEY='balt1_theme';
+
+function getSystemTheme(){
+  return window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+}
+
+function applyTheme(theme){
+  var html=document.documentElement;
+  if(theme==='auto'){
+    html.removeAttribute('data-theme');
+  } else {
+    html.setAttribute('data-theme',theme);
+  }
+  var isDark=(theme==='dark')||(theme==='auto'&&getSystemTheme()==='dark');
+  var sun=document.getElementById('iconSun');
+  var moon=document.getElementById('iconMoon');
+  if(sun) sun.style.display=isDark?'block':'none';
+  if(moon) moon.style.display=isDark?'none':'block';
+  var btn=document.getElementById('themeToggleBtn');
+  if(btn) btn.title=isDark?'Gaišā tēma':'Tumšā tēma';
+}
+
+function toggleTheme(){
+  var html=document.documentElement;
+  var current=html.getAttribute('data-theme')||'auto';
+  var isDark=(current==='dark')||(current==='auto'&&getSystemTheme()==='dark');
+  var next=isDark?'light':'dark';
+  localStorage.setItem(THEME_KEY,next);
+  applyTheme(next);
+}
+
+function initTheme(){
+  var saved=localStorage.getItem(THEME_KEY)||'auto';
+  applyTheme(saved);
+  // Listen for OS theme changes (when in auto mode)
+  if(window.matchMedia){
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){
+      if(!localStorage.getItem(THEME_KEY)||localStorage.getItem(THEME_KEY)==='auto'){
+        applyTheme('auto');
+      }
+    });
+  }
+}
+
+// ===== FAVOURITES =====
+const FAV_KEY='balt1_fav';
+let showingFavs=false;
+
+const STAR_FULL='<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" stroke="currentColor" stroke-width="1.5"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>';
+const STAR_EMPTY='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>';
+
+function getFavs(){try{return JSON.parse(localStorage.getItem(FAV_KEY)||'[]');}catch(e){return[];}}
+function saveFavs(f){try{localStorage.setItem(FAV_KEY,JSON.stringify(f));}catch(e){}}
+function isFav(article){return getFavs().some(function(f){return f.article===article;});}
+
+function toggleFav(article,lawType,catKey,name,event){
+  event.stopPropagation();
+  var favs=getFavs();
+  var idx=favs.findIndex(function(f){return f.article===article;});
+  if(idx>=0){favs.splice(idx,1);}
+  else{favs.push({article:article,law:lawType,cat:catKey,name:name});}
+  saveFavs(favs);
+  updateFavCount();
+  // Re-render current view
+  if(showingFavs){renderFavourites();}
+  else{renderLaws(getLaws()[currentCat]);updateFavCount();initTheme();}
+}
+
+function updateFavCount(){
+  var n=getFavs().length;
+  var el=document.getElementById('favCount');
+  var btn=document.getElementById('favTabBtn');
+  if(el){el.textContent=n;el.style.display=n>0?'':'none';}
+  if(btn){btn.classList.toggle('active',showingFavs);}
+}
+
+function showFavourites(btn){
+  showingFavs=true;
+  document.querySelectorAll('.law-btn').forEach(function(b){b.classList.remove('active');});
+  updateFavCount();
+  // Update subtitle
+  var subtitles={ru:'Мои сохранённые статьи',lv:'Mans saglabātās kartiņas',en:'My saved cards'};
+  document.getElementById('appSubtitle').textContent=subtitles[lang]||'Favourites';
+  document.getElementById('appSubtitle2').textContent='';
+  renderFavourites();
+}
+
+function getAllLaws(){
+  return {asl:aslLaws,csl:cslLaws,aiz:aizLaws,aal:aalLaws,lpp:lppLaws};
+}
+
+function findLawByArticle(article){
+  var all=getAllLaws();
+  for(var lawKey in all){
+    var sections=all[lawKey];
+    for(var catKey in sections){
+      var cards=sections[catKey];
+      for(var i=0;i<cards.length;i++){
+        if(cards[i].article===article){
+          return{law:cards[i],lawKey:lawKey,catKey:catKey,idx:i};
+        }
+      }
+    }
+  }
+  return null;
+}
+
+function renderFavourites(){
+  var favs=getFavs();
+  var list=document.getElementById('lawsList');
+  var cats=document.getElementById('catGrid');
+  var sec=document.getElementById('sectionTitle');
+  if(cats)cats.innerHTML='';
+  if(sec)sec.textContent='';
+
+  if(!list)return;
+
+  if(favs.length===0){
+    var empty={ru:'Нет сохранённых статей. Нажмите ☆ на любой карточке, чтобы добавить в избранное.',lv:'Nav saglabātu kartiņu. Nospied ☆ uz jebkuras kartiņas, lai pievienotu favorītiem.',en:'No saved cards yet. Tap ☆ on any card to add it to favourites.'};
+    list.innerHTML='<div class="fav-empty"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg><div class="fav-empty-title">'+{ru:'Нет избранного',lv:'Nav favorītu',en:'No favourites'}[lang]+'</div><div class="fav-empty-sub">'+empty[lang]+'</div></div>';
+    return;
+  }
+
+  var lawLabels={asl:'ASL',csl:'CSL/CSN',aiz:'Aizturēšana',aal:'AAL',lpp:'LPP'};
+  var items=[];
+  favs.forEach(function(fav){
+    var found=findLawByArticle(fav.article);
+    if(found)items.push({law:found.law,lawKey:found.lawKey,catKey:found.catKey,idx:found.idx});
+  });
+
+  var prevLaw=null;
+  list.innerHTML=items.map(function(item,i){
+    var law=item.law;
+    var maxStr=law.fineMax?law.fineMax[lang]:'';
+    var maxBadge=maxStr.split('/')[0].trim();
+    var ptsBadge=law.pts?'<span class="badge badge-pts">'+law.pts+' '+getUIFor(item.lawKey).pts+'</span>':'';
+    var lawLabel=lawLabels[item.lawKey]||item.lawKey.toUpperCase();
+    var t=getUIFor(item.lawKey);
+    var signHTML=(law.signsSVG&&law.signsSVG.length)?'<div class="signs-row">'+law.signsSVG.join('')+'</div>':'';
+    var fineSection='';
+    if(!law.noFine){
+      var fl={ru:'Штраф',lv:'Sods',en:'Fine'};
+      if(law.singleFine){fineSection='<div class="fine-row"><div class="fine-box"><div class="fine-lbl">'+fl[lang]+'</div><div class="fine-val danger">'+maxStr+'</div></div></div>';}
+      else if(maxBadge){fineSection='<div class="fine-row"><div class="fine-box"><div class="fine-lbl">'+t.min+'</div><div class="fine-val">'+getFineMinFor(law)+'</div></div><div class="fine-box"><div class="fine-lbl">'+t.max+'</div><div class="fine-val danger">'+maxStr+'</div></div></div>';}
+    }
+    var metaBadges='<span class="fav-law-badge">'+lawLabel+'</span> ';
+    if(law.warn)metaBadges+='<span class="badge badge-warn">'+t.warn+'</span>';
+    if(!law.noFine&&maxBadge)metaBadges+='<span class="badge badge-fine">max '+maxBadge+'</span>';
+    metaBadges+=ptsBadge+'<span class="badge badge-article">'+law.article+'</span>';
+    var detailContent=signHTML+(law.parts?renderPartsHTMLFor(law,item.lawKey):'<div class="dl">'+t.desc+'</div><div class="dt">'+law[lang].desc+'</div>'+fineSection);
+    if(law.csnRef)detailContent+='<div class="csn-card-ref">'+csnLinks(law.csnRef)+'</div>';
+    if(t.howContest&&law[lang]&&law[lang].contest)detailContent+='<div class="dl">'+t.howContest+'</div><div class="dt">'+law[lang].contest+'</div>';
+    var srcUrl=law.srcUrl==='AAL'?BASE_AAL:law.srcUrl==='LPP'?BASE_LPP:item.lawKey==='lpp'?BASE_LPP:item.lawKey==='aiz'?BASE_LPP:item.lawKey==='aal'?BASE_AAL:item.lawKey==='csl'?BASE_CSL:BASE_ASL;
+    detailContent+='<a class="source-btn" href="'+srcUrl+law.anchor+'" target="_blank" onclick="event.stopPropagation()">↗'+t.sourceBtn+'</a>';
+    var starClass=isFav(law.article)?'active':'';
+    return '<div class="law-card" onclick="toggleLaw(this,'+i+')">'+
+      '<div class="law-top"><div class="law-name">'+law[lang].name+'</div>'+
+      '<button class="fav-btn '+starClass+'" onclick="toggleFav(\''+law.article.replace(/'/g,"\\'")+'\',\''+item.lawKey+'\',\''+item.catKey+'\',\''+law[lang].name.replace(/'/g,"\\'")+'\',event)" title="Noņemt no favorītiem">'+
+      (starClass?STAR_FULL:STAR_EMPTY)+'</button>'+
+      '<div class="arrow-icon"></div></div>'+
+      '<div class="law-meta">'+metaBadges+'</div>'+
+      '<div class="law-detail" id="detail-fav-'+i+'">'+detailContent+'</div>'+
+      '</div>';
+  }).join('');
+}
+
+function getUIFor(lawKey){
+  if(lawKey==='asl')return aslUI[lang];
+  if(lawKey==='csl')return uiStrings.csl[lang];
+  if(lawKey==='aiz')return uiStrings.aiz[lang];
+  if(lawKey==='aal')return uiStrings.aal[lang];
+  return uiStrings.lpp[lang];
+}
+
+function getFineMinFor(law){
+  if(law.warnMin)return{ru:'Предупреждение',lv:'Brīdinājums',en:'Warning'}[lang];
+  return law.fineMin||'—';
+}
+
+function renderPartsHTMLFor(law,lawKey){
+  var t=getUIFor(lawKey);
+  var fl={ru:'Штраф',lv:'Sods',en:'Fine'};
+  return law[lang].parts.map(function(p){
+    var csnBadge=p.csn?csnLink(p.csn):'';
+    var descHTML=p.desc?'<div class="part-desc">'+p.desc+'</div>':'';
+    var finesHTML='';
+    if(!law.noFine){
+      if(law.singleFine){finesHTML='<div class="part-fine-box" style="flex:none;min-width:80px"><div class="fine-lbl">'+fl[lang]+'</div><div class="fine-val danger">'+p.fineMax+'</div></div>';}
+      else{finesHTML='<div class="part-fine-box"><div class="fine-lbl">'+t.min+'</div><div class="fine-val">'+p.fineMin+'</div></div><div class="part-fine-box"><div class="fine-lbl">'+t.max+'</div><div class="fine-val danger">'+p.fineMax+'</div></div>';}
+    }
+    var finesWrap=finesHTML?'<div class="part-fines">'+finesHTML+'</div>':'';
+    return '<div class="part-block"><div class="part-label">'+p.label+csnBadge+'</div>'+descHTML+finesWrap+'</div>';
+  }).join('');
+}
+
 // ===== RENDERING FUNCTIONS =====
 function getCats(){return currentLaw==='asl'?aslCats:currentLaw==='csl'?cslCats:currentLaw==='aiz'?aizCats:currentLaw==='aal'?aalCats:lppCats;}
 function getLaws(){return currentLaw==='asl'?aslLaws:currentLaw==='csl'?cslLaws:currentLaw==='aiz'?aizLaws:currentLaw==='aal'?aalLaws:lppLaws;}
@@ -2240,8 +2635,14 @@ function renderLaws(items){
     detailContent+='<a class="source-btn" href="'+srcUrl+law.anchor+'" target="_blank" onclick="event.stopPropagation()">↗'+t.sourceBtn+'</a>';
     var cardClass='law-card'+(isDefaultOpen?' expanded':'');
     var detailClass='law-detail'+(isDefaultOpen?' show':'');
+    var starCls=isFav(law.article)?'active':'';
+    var starSvg=starCls?STAR_FULL:STAR_EMPTY;
+    var favArticle=law.article.replace(/'/g,"\\'");
+    var favName=law[lang].name.replace(/'/g,"\\'");
     return '<div class="'+cardClass+'" onclick="toggleLaw(this,'+i+')">'+
-      '<div class="law-top"><div class="law-name">'+law[lang].name+'</div><div class="arrow-icon"></div></div>'+
+      '<div class="law-top"><div class="law-name">'+law[lang].name+'</div>'+
+      '<button class="fav-btn '+starCls+'" onclick="toggleFav(\''+favArticle+'\',\''+currentLaw+'\',\''+currentCat+'\',\''+favName+'\',event)">'+starSvg+'</button>'+
+      '<div class="arrow-icon"></div></div>'+
       '<div class="law-meta">'+metaBadges+'</div>'+
       '<div class="'+detailClass+'" id="detail-'+i+'">'+detailContent+'</div>'+
       '</div>';
