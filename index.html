@@ -1,4 +1,11 @@
-
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>BALT 1</title>
+</head>
+<body>
 <style>
   * {
     box-sizing: border-box;
@@ -46,12 +53,12 @@
   
   /* HEADER - ТЕПЕРЬ ВСЁ ПО ЦЕНТРУ */
   .app-header {
-    padding: 2rem 1rem 1.5rem;
+    padding: 1.25rem 1rem 1rem;
     border-bottom: 1px solid var(--color-border-tertiary);
     display: flex;
     flex-direction: column;
-    align-items: center; /* Центрирует элементы по горизонтали */
-    text-align: center;  /* Центрирует текст внутри элементов */
+    align-items: center;
+    text-align: center;
     background: var(--color-background-primary);
   }
   .app-title {
@@ -130,9 +137,9 @@
   /* КАТЕГОРИИ */
   .categories {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 12px;
-    padding: 1.25rem 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+    padding: 12px 14px;
   }
   .cat-card {
     background: var(--color-background-primary);
@@ -376,12 +383,218 @@
   </style>
 <style>
   .law-switcher{display:flex;gap:8px;margin-top:12px;justify-content:center;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:4px;}
-  .law-btn{font-size:12px;font-weight:500;padding:6px 18px;border-radius:var(--border-radius-md);border:none;cursor:pointer;background:transparent;color:var(--color-text-secondary);transition:all 0.2s ease;}
+  .law-btn{font-size:12px;font-weight:500;padding:8px 16px;min-height:36px;border-radius:var(--border-radius-md);border:none;cursor:pointer;background:transparent;color:var(--color-text-secondary);transition:all 0.2s ease;}
   .law-btn.active{background:var(--color-background-primary);color:var(--color-brand);box-shadow:0 1px 4px rgba(0,0,0,0.08);}
   .badge-pts{background:#faf5ff;color:#6b46c1;}
   .signs-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;align-items:flex-end;}
   .sign-chip{display:flex;flex-direction:column;align-items:center;gap:3px;}
   .sign-num{font-size:10px;color:var(--color-text-secondary);font-weight:500;}
+  /* ===== MOBILE RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    :root {
+      --max-app-width: 100%;
+    }
+
+    body {
+      font-size: 14px;
+    }
+
+    .app-header {
+      padding: 12px 14px 10px;
+    }
+
+    .app-title {
+      font-size: 22px;
+    }
+
+    .app-subtitle {
+      font-size: 12px;
+    }
+
+    .app-subtitle2 {
+      font-size: 10px;
+    }
+
+    /* Law switcher - scrollable on mobile */
+    .law-switcher {
+      gap: 6px;
+      padding: 4px 6px;
+      overflow-x: auto;
+      justify-content: flex-start;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .law-switcher::-webkit-scrollbar { display: none; }
+
+    .law-btn {
+      font-size: 12px;
+      padding: 8px 14px;
+      white-space: nowrap;
+      min-height: 36px;
+      flex-shrink: 0;
+    }
+
+    /* Lang switcher */
+    .lang-switcher {
+      gap: 4px;
+    }
+    .lang-btn {
+      font-size: 11px;
+      padding: 4px 8px;
+      min-height: 32px;
+    }
+
+    /* Search */
+    .search-bar {
+      padding: 8px 14px;
+    }
+    .search-input {
+      font-size: 14px;
+      padding: 10px 12px;
+      min-height: 44px;
+    }
+
+    /* Categories grid - 2 columns on mobile */
+    .categories {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      padding: 10px 14px;
+    }
+
+    .cat-card {
+      padding: 10px 8px;
+    }
+
+    .cat-name {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .cat-count {
+      font-size: 10px;
+    }
+
+    /* Laws list */
+    .laws-list {
+      padding: 0 14px 20px;
+    }
+
+    /* Law cards */
+    .law-top {
+      padding: 12px 14px;
+      gap: 8px;
+    }
+
+    .law-name {
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .law-meta {
+      padding: 0 14px 10px;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 10px;
+      padding: 2px 7px;
+    }
+
+    .law-detail {
+      padding: 12px 14px 14px;
+    }
+
+    /* Fine boxes - full width on mobile */
+    .fine-row {
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .fine-box {
+      flex: 1 1 calc(50% - 6px);
+      min-width: 100px;
+    }
+
+    /* Parts */
+    .part-block {
+      padding: 10px 0;
+    }
+
+    .part-label {
+      font-size: 12px;
+    }
+
+    .part-desc {
+      font-size: 12px;
+    }
+
+    .part-fines {
+      gap: 6px;
+    }
+
+    .part-fine-box {
+      min-width: 80px;
+    }
+
+    /* Signs row - smaller chips on mobile */
+    .signs-row {
+      gap: 6px;
+    }
+
+    .sign-chip {
+      font-size: 10px;
+    }
+
+    /* Source button */
+    .source-btn {
+      font-size: 12px;
+      padding: 8px 12px;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* CSN badges */
+    .csn-badge {
+      font-size: 10px;
+      padding: 2px 6px;
+    }
+
+    .csn-card-ref {
+      font-size: 11px;
+      padding: 4px 8px;
+    }
+
+    /* Section title */
+    .section-title {
+      padding: 8px 14px 4px;
+      font-size: 11px;
+    }
+
+    /* DL/DT description */
+    .dl {
+      font-size: 11px;
+      margin-top: 10px;
+    }
+
+    .dt {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+  }
+
+  /* Very small phones */
+  @media (max-width: 380px) {
+    .categories {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+    .app-title { font-size: 20px; }
+    .law-btn { padding: 7px 10px; font-size: 11px; }
+  }
+
 </style>
 
 
