@@ -3225,6 +3225,11 @@ function getUI(){return currentLaw==='asl'?aslUI[lang]:currentLaw==='csl'?uiStri
 function getBase(){return currentLaw==='asl'?BASE_ASL:currentLaw==='csl'?BASE_CSL:currentLaw==='aiz'?BASE_AAL:currentLaw==='aal'?BASE_AAL:currentLaw==='lpp'?BASE_LPP:BASE_AAL;}
 
 function setLaw(law,btn){
+  showingProto=false;
+  showingFavs=false;
+  var _cg=document.getElementById('catGrid');
+  if(_cg) _cg.style.display='';
+  document.getElementById('protocolBtn').classList.remove('active');
   currentLaw=law;
   document.querySelectorAll('.law-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
