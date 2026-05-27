@@ -1624,7 +1624,11 @@ const lppCats={
   speks:{
     ru:{name:'Spēka pielietošana',sec:'Fizisks spēks, speciālie līdzekļi, šaujamierocis · LPP 13.–14. pants'},
     lv:{name:'Spēka pielietošana',sec:'Fizisks spēks, speciālie līdzeķļi, šaujamierocis · LPP 13.–14. pants'},
-    en:{name:'Use of force',sec:'Physical force, special means, firearms · LPP 13.–14. pants'}}
+    en:{name:'Use of force',sec:'Physical force, special means, firearms · LPP 13.–14. pants'}},
+  aizstav:{
+    ru:{name:'Защита и гарантии',sec:'Правовая защита и гарантии сотрудника полиции · LPP 15.–17. pants'},
+    lv:{name:'Aizstāvība un garantijas',sec:'Policijas darbinieka tiesīskā aizstāvība un garantijas · LPP 15.–17. pants'},
+    en:{name:'Protection & guarantees',sec:'Legal protection and guarantees for police officers · LPP 15.–17. pants'}}
 };
 
 // ===== LPP LAWS =====
@@ -1711,7 +1715,29 @@ pienakumi:[
     {label:'Guarding detained persons (10.8)',desc:'Guard, escort and hold detained and arrested persons. Execute criminal and administrative penalties within the scope of competence.',fineMin:'',fineMax:''},
     {label:'Traffic regulation (10.11)',desc:'Regulate vehicle and pedestrian traffic, conduct traffic surveillance, monitor road and street conditions and the technical condition of vehicles.',fineMin:'',fineMax:''},
     {label:'Protection of witnesses and victims (10.16)',desc:'Ensure the safety of witnesses, victims and their family members, and the protection of their property, if their life, health or property is threatened due to assistance provided to law enforcement.',fineMin:'',fineMax:''}
-   ]}}
+   ]}},
+
+ {article:'LPP 11. pants',anchor:'#p11',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'LPP 11. Дополнительные обязанности сотрудника полиции',
+   parts:[
+    {label:'Помощь другим ведомствам (11.1)',desc:'Сотрудник полиции по запросу оказывает помощь другим государственным органам и учреждениям, если это не входит в противоречие с его основными функциями.',fineMin:'',fineMax:''},
+    {label:'Охрана государственных объектов (11.2)',desc:'Полицейский сотрудник несёт службу по охране государственных объектов, дипломатических представительств и специальных мероприятий.',fineMin:'',fineMax:''},
+    {label:'Профилактика правонарушений (11.3)',desc:'Осуществляет индивидуальную профилактическую работу с лицами, склонными к правонарушениям, и с несовершеннолетними.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'LPP 11. Papīldpienākumi',
+   parts:[
+    {label:'Palīdzība citām iestādēm (11.1)',desc:'Pēc pieprasījuma policijas darbinieks sniedz palīdzību valsts un pašvaldību iestādēm, uzrādzības iestādēm un organizācijām, ja tas nenonāk pretrunā ar viņa pamatfunkcijām.',fineMin:'',fineMax:''},
+    {label:'Valsts objektu apsardze (11.2)',desc:'Policijas darbinieks pēc noteiktās kārtības veic valsts augstāko iestāžu, diplomatīsko pārstāvniecību un citu īpaši nozīmīgu objektu apsardzi.',fineMin:'',fineMax:''},
+    {label:'Profilaktiskā darbība (11.3)',desc:'Policijas darbinieks veic individuālo profilaktisku darbību ar personām, kas sliekstas izdarīt likumpārkāpumus, un ar nepilngadīgajām personām.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'LPP 11. Additional duties',
+   parts:[
+    {label:'Assistance to other authorities (11.1)',desc:'Upon request, a police officer assists state and municipal authorities, supervisory bodies and organisations, provided this does not conflict with their primary functions.',fineMin:'',fineMax:''},
+    {label:'Protection of state facilities (11.2)',desc:'A police officer guards the highest state institutions, diplomatic missions and other specially important facilities in accordance with established procedures.',fineMin:'',fineMax:''},
+    {label:'Preventive work (11.3)',desc:'A police officer carries out individual preventive work with persons prone to violations and with minors.',fineMin:'',fineMax:''}
+   ]}},
+
 ],
 
 tiesibas:[
@@ -1805,6 +1831,47 @@ speks:[
     {label:'Grounds (14.1–14.7)',desc:'A police officer is entitled to use a firearm in situations of extreme necessity to: 1) protect themselves or others from an attack genuinely threatening life; 2) free hostages; 3) repel group or armed attacks on officers; 4) repel attacks on guarded facilities; 5) detain a person offering armed resistance or caught at the scene of a serious crime; 6) stop a vehicle if the driver poses a real threat to life; 7) render an animal harmless that threatens a person.',fineMin:'',fineMax:''},
     {label:'Warning requirement',desc:'Before using a firearm, a warning of intent must be given. If necessary, a warning shot may also be fired.',fineMin:'',fineMax:''},
     {label:'Without warning — exceptions',desc:'A firearm may be used without warning if: the attack is sudden or weapons or vehicles are used; it is necessary to free hostages; a person is escaping from custody using a weapon or vehicle while it is moving.',fineMin:'',fineMax:''}
+   ]}}
+],
+
+aizstav:[
+ {article:'LPP 15. pants',anchor:'#p15',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'LPP 15. Правовая защита сотрудника полиции',
+   parts:[
+    {label:'Неприкосновенность при исполнении обязанностей',desc:'Полицейский сотрудник находится под защитой закона при исполнении служебных обязанностей. Препятствие законным действиям полиции недопустимо. Никто не вправе требовать от полицейского сотрудника действий вопреки закону.',fineMin:'',fineMax:''},
+    {label:'Защита чести и достоинства',desc:'Честь и достоинство сотрудника полиции находятся под защитой закона. Оскорбление сотрудника полиции при исполнении служебных обязанностей может влечь привлечение к ответственности.',fineMin:'',fineMax:''},
+    {label:'Ответственность за незаконные приказы',desc:'Сотрудник полиции не несёт ответственность за выполнение противоправных приказов. Если полицейскому сотруднику отдан явно незаконный приказ, он обязан сообщить об этом вышестоящему начальнику.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'LPP 15. Policijas darbinieka tiesīskā aizstāvība',
+   parts:[
+    {label:'Neaizskaramiba pie pienākumu pildīšanas',desc:'Policijas darbinieks, pildot dienesta pienākumus, atrodas likuma aizsardzībā. Likumīgās policijas darbinieka rīdzības traucēšana un viņa apdraudēšana nav pielāujama.',fineMin:'',fineMax:''},
+    {label:'Gods un cienība',desc:'Policijas darbinieka gods un cienība atrodas likuma aizsardzībā. Policijas darbinieka apvāinošana, pieņemot vai pildot dienesta pienākumus, var rastināt kriminalātbildību.',fineMin:'',fineMax:''},
+    {label:'Atbildība par neleglāliem rīkojumiem',desc:'Policijas darbinieks neuznēmas atbildību par nelikumīgu rīkojumu izpildi. Ja rīkojums ir acimredzami nelikumīgs, policijas darbinieks par to paziņo augstākai amatpersonai.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'LPP 15. Legal protection of a police officer',
+   parts:[
+    {label:'Inviolability when performing duties',desc:'A police officer performing their duties is protected by law. Interference with the lawful actions of a police officer and threatening them is not permitted.',fineMin:'',fineMax:''},
+    {label:'Honour and dignity',desc:'The honour and dignity of a police officer is protected by law. Insulting a police officer while on duty may give rise to criminal liability.',fineMin:'',fineMax:''},
+    {label:'Liability for unlawful orders',desc:'A police officer does not bear responsibility for executing unlawful orders. If an order is clearly unlawful, the officer must report this to a senior official.',fineMin:'',fineMax:''}
+   ]}},
+
+ {article:'LPP 16.–17. pants',anchor:'#p16',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'LPP 16.–17. Гарантии и социальная защита',
+   parts:[
+    {label:'Страхование жизни и здоровья (16.)',desc:'Жизнь и здоровье сотрудника полиции подлежат обязательному страхованию за счёт государства. Страховым случаем является также получение травмы или убель при исполнении служебных обязанностей.',fineMin:'',fineMax:''},
+    {label:'Социальные гарантии (17.)',desc:'Сотруднику полиции гарантированы: ежегодный оплачиваемый отпуск, служебное жильё, возмещение расходов на профилактику здоровья, пенсия и пособие по инвалидности.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'LPP 16.–17. Garantijas un sociālā aizsardzība',
+   parts:[
+    {label:'Dzīvības un veselības apdrošināšana (16.)',desc:'Policijas darbinieka dzīvība un veselība ir obligāti valsts apdrošināma. Par apdrošināšanas gadījumu tiek uzskatīts arī dienestā iegūts ievainojums vai bojā eja.',fineMin:'',fineMax:''},
+    {label:'Sociālās garantijas (17.)',desc:'Policijas darbiniekam garantē: ikgadējo atvaļinājumu, dienesta dzīvokli, veselības aizsardzības izdevumu atlīdzīnājumu, pensiju un invaliditātes pabalstu.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'LPP 16.–17. Guarantees and social protection',
+   parts:[
+    {label:'Life and health insurance (16.)',desc:'The life and health of a police officer are subject to mandatory state insurance. A service-related injury or death in the line of duty also qualifies as an insured event.',fineMin:'',fineMax:''},
+    {label:'Social guarantees (17.)',desc:'A police officer is guaranteed: annual paid leave, service accommodation, reimbursement of health care expenses, pension and disability allowance.',fineMin:'',fineMax:''}
    ]}}
 ]
 };
@@ -3197,8 +3264,8 @@ const SVG_AIZ={aiztureshana:`<svg width="22" height="22" viewBox="0 0 24 24" fil
 const SVG_AAL={dalibnieki:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="9" cy="7" r="3"/><path d="M3 21v-2a6 6 0 0112 0v2"/><circle cx="19" cy="8" r="2"/><path d="M19 14v7"/><path d="M22 17h-6"/></svg>`,termini:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16v16H4z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>`,sodi:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 4l6 6-9 9-6-6 9-9z"/><line x1="5" y1="19" x2="19" y2="5" stroke="none"/><line x1="3" y1="21" x2="9" y2="15"/></svg>`};
 const aalCounts={dalibnieki:'AAL 39.–49. p.',termini:'AAL termini',sodi:'AAL 13.–26. p.'};
 
-const SVG_LPP={visparigie:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l8 4v6c0 5.5-4 9-8 10C8 21 4 17.5 4 12V6l8-4z"/></svg>`,pienakumi:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="7" y="2" width="10" height="8" rx="1"/><path d="M7 10l-4 11h18L17 10"/><circle cx="12" cy="15" r="2"/></svg>`,tiesibas:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"/><path d="M3 10l9-7 9 7"/><path d="M5 10c0 3 2 5 4 5s4-2 4-5H5z"/><path d="M11 17c0 3 2 5 4 5s4-2 4-5h-8z"/></svg>`,speks:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 10h14v4H3z"/><path d="M17 12h2a2 2 0 002-2V8h-5"/><path d="M7 14v4h4v-4"/><line x1="3" y1="12" x2="1" y2="12"/></svg>`};
-const lppCounts={visparigie:'LPP 1.–8. pants',pienakumi:'LPP 9.–11. pants',tiesibas:'LPP 12. pants',speks:'LPP 13.–14. pants'};
+const SVG_LPP={visparigie:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l8 4v6c0 5.5-4 9-8 10C8 21 4 17.5 4 12V6l8-4z"/></svg>`,pienakumi:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="7" y="2" width="10" height="8" rx="1"/><path d="M7 10l-4 11h18L17 10"/><circle cx="12" cy="15" r="2"/></svg>`,tiesibas:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"/><path d="M3 10l9-7 9 7"/><path d="M5 10c0 3 2 5 4 5s4-2 4-5H5z"/><path d="M11 17c0 3 2 5 4 5s4-2 4-5h-8z"/></svg>`,speks:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 10h14v4H3z"/><path d="M17 12h2a2 2 0 002-2V8h-5"/><path d="M7 14v4h4v-4"/><line x1="3" y1="12" x2="1" y2="12"/></svg>`,aizstav:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l8 4v6c0 5.5-4 9-8 10C8 21 4 17.5 4 12V6l8-4z"/><path d="M12 8v4"/><circle cx="12" cy="15" r="1" fill="currentColor" stroke="none"/></svg>`};
+const lppCounts={visparigie:'LPP 1.–8. pants',pienakumi:'LPP 9.–11. pants',tiesibas:'LPP 12. pants',speks:'LPP 13.–14. pants',aizstav:'LPP 15.–17. pants'};
 
 const SVG_APAS={nesakopta:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="3,6 5,6 21,6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>`,dzivojamas:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>`,konteineri:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27,6.96 12,12.01 20.73,6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`};
 const apasCounts={nesakopta:'RD-24-270-sn / RD-25-19-sn',dzivojamas:'RD-24-270-sn / MK 906',konteineri:'RD-25-19-sn / Atk.lik.'};
