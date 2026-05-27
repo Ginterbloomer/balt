@@ -870,7 +870,7 @@ let lang='lv', currentCat='admin', currentLaw='asl';
 const BASE_ASL='https://likumi.lv/ta/id/314808-administrativo-sodu-likums-par-parkapumiem-parvaldes-sabiedriskas-kartibas-un-valsts-valodas-lietosanas-joma';
 const BASE_CSL='https://likumi.lv/ta/id/45467-celu-satiksmes-likums';
 const BASE_CSN='https://likumi.lv/ta/id/274865-celu-satiksmes-noteikumi';
-const BASE_AAL='https://likumi.lv/ta/id/329067-administrativas-atbildibas-likums';
+const BASE_AAL='https://likumi.lv/ta/id/303007-administrativas-atbildibas-likums';
 const BASE_LPP='https://likumi.lv/ta/id/67957-par-policiju';
 
 // CSN link helper: 'CSN 121.11' -> clickable badge linking to #p121
@@ -881,6 +881,27 @@ function csnLink(ref){
   return '<a href="'+BASE_CSN+'#p'+m[1]+'" target="_blank" class="csn-badge" onclick="event.stopPropagation()">'+ref+'</a>';
 }
 // For compound refs like 'CSN 121.1 · CSN 121.2'
+function lawBadges(refs){
+  // refs = comma-separated 'KEY' or 'KEY:#p21' pairs
+  var urlMap={
+    RD24:{label:'RD-24-270-sn',url:BASE_RD24},
+    RD25:{label:'RD-25-19-sn',url:BASE_RD25},
+    ATK:{label:'Atk.lik.',url:BASE_ATK},
+    MK906:{label:'MK Nr.906',url:BASE_MK906},
+    DMPL:{label:'DMPL',url:BASE_DMPL}
+  };
+  return refs.split(',').map(function(entry){
+    var parts=entry.trim().split(':');
+    var key=parts[0];
+    var anchor=parts.length>1?':'+parts[1]:'';
+    // anchor format: ':#p21' → '#p21'
+    var hash=parts.length>1?parts[1]:'';
+    var r=urlMap[key];
+    if(!r) return '';
+    return '<a href="'+r.url+(hash?'#'+hash:'')+'" target="_blank" class="csn-badge" style="text-decoration:none" onclick="event.stopPropagation()">'+r.label+(hash?' · '+hash.replace('p',''):'')+'</a>';
+  }).join('');
+}
+
 function csnLinks(refs){
   if(!refs) return '';
   return refs.split(' · ').map(csnLink).join('');
@@ -1242,7 +1263,7 @@ const aizCats={
 // ===== AiZ LAWS =====
 const aizLaws={
 aiztureshana:[
- {article:'AAL 71.(4) pants',anchor:'#p72',defaultOpen:true,noFine:true,parts:true,signsSVG:[],
+ {article:'AAL 71.(4) pants',anchor:'#p71',srcUrl:'AAL',defaultOpen:true,noFine:true,parts:true,signsSVG:[],
   fineMax:{ru:'',lv:'',en:''},
   ru:{name:'Права задержанного лица',
    parts:[
@@ -1754,10 +1775,10 @@ uiStrings.apas={
 };
 
 // ===== APAS BASE URLs =====
-const BASE_RD24='https://likumi.lv/ta/id/353601';
-const BASE_RD25='https://likumi.lv/ta/id/358562';
-const BASE_ATK='https://likumi.lv/ta/id/235334-atkritumu-apsaimniekosanas-likums';
-const BASE_MK906='https://likumi.lv/ta/id/315840';
+const BASE_RD24='https://likumi.lv/ta/id/353198-rigas-valstspilsetas-pasvaldibas-teritorijas-kopsanas-un-buvju-uzturesanas-saistosie-noteikumi';
+const BASE_RD25='https://likumi.lv/ta/id/366864-par-sadzives-atkritumu-apsaimniekosanu-rigas-valstspilsetas-pasvaldibas-administrativaja-teritorija';
+const BASE_ATK='https://likumi.lv/ta/id/221378-atkritumu-apsaimniekosanas-likums';
+const BASE_MK906='https://likumi.lv/ta/id/218830-dzivojamas-majas-sanitaras-apkopes-noteikumi';
 const BASE_DMPL='https://likumi.lv/ta/id/193573-dzivojamas-majas-parvaldisanas-likums';
 
 // Abbreviation legend HTML for APAS cards
@@ -1799,7 +1820,7 @@ const apasCats={
 // ===== APAS LAWS =====
 const apasLaws={
 nesakopta:[
- {article:'RD-24-270-sn 2.1; 4.1.1; 22; 23',anchor:'',abbrev:'nesakopta',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+ {article:'RD-24-270-sn 2.1; 4.1.1; 22; 23',anchor:'',abbrev:'nesakopta',lawRefs:'RD24:p2',srcRaw:BASE_RD24,noFine:true,parts:true,signsSVG:[],
   fineMax:{ru:'',lv:'',en:''},
   ru:{name:'Захламлённая территория мелким бытовым мусором',
    parts:[
@@ -1829,7 +1850,7 @@ nesakopta:[
      fineMin:'',fineMax:''}
    ]}},
 
- {article:'RD-24-270-sn 2.3; 4.1.1 · MK 906 4.p. · DMPL 6.p. 2.d. 1a; 29; 30',anchor:'',abbrev:'nesakopta',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+ {article:'RD-24-270-sn 2.3; 4.1.1 · MK 906 4.p. · DMPL 6.p. 2.d. 1a; 29; 30',anchor:'',abbrev:'nesakopta',lawRefs:'RD24:p2,MK906:p4,DMPL:p6',srcRaw:BASE_RD24,noFine:true,parts:true,signsSVG:[],
   fineMax:{ru:'',lv:'',en:''},
   ru:{name:'Захламлённая территория мелким мусором — к территории привязан жилой дом',
    parts:[
@@ -1879,7 +1900,7 @@ nesakopta:[
 ],
 
 dzivojamas:[
- {article:'Atk.lik. 43.1; 44.1 · RD-25-19-sn 21.1',anchor:'',abbrev:'konteineri',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+ {article:'Atk.lik. 43.1; 44.1 · RD-25-19-sn 21.1',anchor:'',abbrev:'konteineri',lawRefs:'ATK:p43,RD25:p21',srcRaw:BASE_RD25,noFine:true,parts:true,signsSVG:[],
   fineMax:{ru:'',lv:'',en:''},
   ru:{name:'Захламлённая территория у контейнеров (мелкие отходы)',
    parts:[
@@ -1918,7 +1939,7 @@ dzivojamas:[
      fineMin:'',fineMax:''}
    ]}},
 
- {article:'RD-25-19-sn 21.1; 21.5; 27 · Atk.lik. 43.1; 44.1',anchor:'',abbrev:'konteineri',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+ {article:'RD-25-19-sn 21.1; 21.5; 27 · Atk.lik. 43.1; 44.1',anchor:'',abbrev:'konteineri',lawRefs:'RD25:p21,ATK:p43',srcRaw:BASE_RD25,noFine:true,parts:true,signsSVG:[],
   fineMax:{ru:'',lv:'',en:''},
   ru:{name:'Захламлённая территория у контейнеров (крупногабаритные отходы)',
    parts:[
@@ -1959,7 +1980,7 @@ dzivojamas:[
 ],
 
 konteineri:[
- {article:'RD-25-19-sn 27 · Atk.lik. 43.1; 44.1',anchor:'',abbrev:'konteineri',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+ {article:'RD-25-19-sn 27 · Atk.lik. 43.1; 44.1',anchor:'',abbrev:'konteineri',lawRefs:'RD25:p27,ATK:p43',srcRaw:BASE_RD25,noFine:true,parts:true,signsSVG:[],
   fineMax:{ru:'',lv:'',en:''},
   ru:{name:'Захламлённая территория крупногабаритными отходами (вне площадки контейнеров)',
    parts:[
@@ -2817,7 +2838,7 @@ function renderPartsHTMLFor(law,lawKey){
 function getCats(){return currentLaw==='asl'?aslCats:currentLaw==='csl'?cslCats:currentLaw==='aiz'?aizCats:currentLaw==='aal'?aalCats:currentLaw==='lpp'?lppCats:apasCats;}
 function getLaws(){return currentLaw==='asl'?aslLaws:currentLaw==='csl'?cslLaws:currentLaw==='aiz'?aizLaws:currentLaw==='aal'?aalLaws:currentLaw==='lpp'?lppLaws:apasLaws;}
 function getUI(){return currentLaw==='asl'?aslUI[lang]:currentLaw==='csl'?uiStrings.csl[lang]:currentLaw==='aiz'?uiStrings.aiz[lang]:currentLaw==='aal'?uiStrings.aal[lang]:currentLaw==='lpp'?uiStrings.lpp[lang]:uiStrings.apas[lang];}
-function getBase(){return currentLaw==='asl'?BASE_ASL:currentLaw==='csl'?BASE_CSL:currentLaw==='aiz'?BASE_LPP:currentLaw==='aal'?BASE_AAL:currentLaw==='lpp'?BASE_LPP:BASE_AAL;}
+function getBase(){return currentLaw==='asl'?BASE_ASL:currentLaw==='csl'?BASE_CSL:currentLaw==='aiz'?BASE_AAL:currentLaw==='aal'?BASE_AAL:currentLaw==='lpp'?BASE_LPP:BASE_AAL;}
 
 function setLaw(law,btn){
   currentLaw=law;
@@ -2920,7 +2941,7 @@ function renderLaws(items){
     var signHTML=(law.signsSVG&&law.signsSVG.length)?'<div class="signs-row">'+law.signsSVG.join('')+'</div>':'';
     var isAlwaysOpen=false;
     var isDefaultOpen=law.defaultOpen===true;
-    var srcUrl=law.srcUrl==='AAL'?BASE_AAL:law.srcUrl==='LPP'?BASE_LPP:getBase();
+    var srcUrl=law.srcRaw?law.srcRaw:(law.srcUrl==='AAL'?BASE_AAL:law.srcUrl==='LPP'?BASE_LPP:getBase());
     var fineSection='';
     if(!law.noFine){
       if(law.singleFine){
@@ -2935,6 +2956,7 @@ function renderLaws(items){
     metaBadges+=ptsBadge+'<span class="badge badge-article">'+law.article+'</span>';
     var detailContent=signHTML+(law.parts?renderPartsHTML(law):'<div class="dl">'+t.desc+'</div><div class="dt">'+law[lang].desc+'</div>'+fineSection);
     if(law.csnRef) detailContent+='<div class="csn-card-ref">'+csnLinks(law.csnRef)+'</div>';
+    if(law.lawRefs) detailContent+='<div class="csn-card-ref">'+lawBadges(law.lawRefs)+'</div>';
     if(law.abbrev){
       var abbrevMap={nesakopta:ABBREV_NESAKOPTA,konteineri:ABBREV_KONTEINERI};
       var abbrevBox=abbrevMap[law.abbrev];
