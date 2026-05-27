@@ -607,6 +607,13 @@
   [data-theme="light"] .fav-law-badge { background:#edf2f7 !important; border-color:#e2e8f0 !important; color:#4a5568 !important; }
   [data-theme="light"] .section-title { color:#718096 !important; }
 
+  /* ===== ABBREVIATION LEGEND ===== */
+  .abbrev-box{margin-top:14px;padding:10px 14px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border-left:3px solid var(--color-brand);}
+  .abbrev-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-text-secondary);margin-bottom:6px;}
+  .abbrev-item{font-size:12px;line-height:1.7;color:var(--color-text-secondary);}
+  .abbrev-item strong{color:var(--color-text-primary);font-weight:600;}
+  [data-theme="dark"] .abbrev-box{background:#171923;border-left-color:var(--color-brand);}
+
   /* ===== FAVOURITES ===== */
   .fav-btn{background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-secondary);display:flex;align-items:center;flex-shrink:0;border-radius:4px;transition:color 0.15s,transform 0.15s;width:26px;justify-content:center;}
   .fav-btn:hover{color:#f6ad55;transform:scale(1.15);}
@@ -850,6 +857,7 @@
     <button class="law-btn" onclick="setLaw('csl',this)">Ceļu satiksme</button>
     <button class="law-btn" onclick="setLaw('aiz',this)">Aizturēšana</button>
     <button class="law-btn" onclick="setLaw('lpp',this)">LPP</button>
+    <button class="law-btn" onclick="setLaw('apas',this)">APAS</button>
   </div>
 </div>
 <div class="search-bar"><input type="text" id="searchInput" placeholder="Найти нарушение..." oninput="filterLaws()"/></div>
@@ -1560,7 +1568,7 @@ const lppLaws={
 visparigie:[
  {article:'LPP 1.–3. pants',anchor:'#p1',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
   fineMax:{ru:'',lv:'',en:''},
-  ru:{name:'Policija — definīcija un uzdevumi',
+  ru:{name:'Полиция — определение и задачи',
    parts:[
     {label:'LPP 1. Definīcija',desc:'Latvijas Republikas policija ir apbruņota militarizēta valsts organizācija, kura darbojas Iekšlietu ministrijas sastāvā un kuras pienākums ir aizsargāt personu dzīvību, veselību, tiesības un brīvības, īpašumu, sabiedrības un valsts intereses no noziedzīgiem un citiem prettiesiskiem apdraudējumiem.',fineMin:'',fineMax:''},
     {label:'LPP 2. Policijas darbinieks',desc:'Policijas darbinieks ir valsts kalpotājs, kas ieņem noteiktu amatu policijas iestādē, kam ir speciālā dienesta pakāpe un kas ir nodevis zvērestu. Pildot dienesta pienākumus, policijas darbinieks savas kompetences ietvaros pārstāv valsts varu.',fineMin:'',fineMax:''},
@@ -1581,7 +1589,7 @@ visparigie:[
 
  {article:'LPP 5. pants',anchor:'#p5',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
   fineMax:{ru:'',lv:'',en:''},
-  ru:{name:'Policijas darbības principi un personas tiesības',
+  ru:{name:'Принципы деятельности полиции и права личности',
    parts:[
     {label:'Darbības principi',desc:'Policijas darbība tiek organizēta, ievērojot likumību, humānismu, cilvēka tiesības, sociālo taisnīgumu, atklātumu, vienvadību un balstoties uz iedzīvotāju palīdzību. Policija aizsargā personu tiesības un likumīgās intereses neatkarīgi no pilsonības, sociālā, mantiskā un cita stāvokļa, rases, dzimuma, reliģijas vai politiskās pārliecības.',fineMin:'',fineMax:''},
     {label:'Tiesību ierobežošana',desc:'Šo tiesību un brīvību ierobežošana ir pieļaujama, tikai pamatojoties uz likumu un likumā noteiktajā kārtībā. Ikreiz, kad policijai nākas ierobežot personu tiesības un brīvības, policijas darbinieks sniedz paskaidrojumu, kurā pamato katru konkrēto ierobežojumu. Pēc pieprasījuma jānosauc uzvārds, amats, dienesta vieta un jāuzrāda dienesta apliecība.',fineMin:'',fineMax:''},
@@ -1604,13 +1612,13 @@ visparigie:[
 pienakumi:[
  {article:'LPP 9. pants',anchor:'#p9',noFine:true,parts:false,signsSVG:[],srcUrl:'LPP',
   fineMax:{ru:'',lv:'',en:''},
-  ru:{name:'Policijas darbinieka pamatprincips — rīkoties jebkurā laikā un vietā',desc:'Jebkura policijas darbinieka pienākums ir visā Latvijas Republikas teritorijā neatkarīgi no ieņemamā amata, atrašanās vietas un laika — gadījumā, ja pie viņa griežas personas ar pieteikumu vai ziņojumu par notikumu, kurš apdraud personu un sabiedrības drošību, kā arī pašam konstatējot tādu notikumu — veikt iespējamos pasākumus, lai novērstu likumpārkāpumu, glābtu cilvēkus un sniegtu viņiem palīdzību, konstatētu likumpārkāpušās personas, apsargātu notikuma vietu un paziņotu tuvākajai policijas iestādei.'},
+  ru:{name:'LPP 9. Основной принцип — действовать в любое время и в любом месте',desc:'Jebkura policijas darbinieka pienākums ir visā Latvijas Republikas teritorijā neatkarīgi no ieņemamā amata, atrašanās vietas un laika — gadījumā, ja pie viņa griežas personas ar pieteikumu vai ziņojumu par notikumu, kurš apdraud personu un sabiedrības drošību, kā arī pašam konstatējot tādu notikumu — veikt iespējamos pasākumus, lai novērstu likumpārkāpumu, glābtu cilvēkus un sniegtu viņiem palīdzību, konstatētu likumpārkāpušās personas, apsargātu notikuma vietu un paziņotu tuvākajai policijas iestādei.'},
   lv:{name:'LPP 9. Policijas darbinieka pamatprincips — rīkoties jebkurā laikā un vietā',desc:'Jebkura policijas darbinieka pienākums ir visā Latvijas Republikas teritorijā neatkarīgi no ieņemamā amata, atrašanās vietas un laika — gadījumā, ja pie viņa griežas personas ar pieteikumu vai ziņojumu par notikumu, kurš apdraud personu un sabiedrības drošību, kā arī pašam konstatējot tādu notikumu — veikt iespējamos pasākumus, lai novērstu likumpārkāpumu, glābtu cilvēkus un sniegtu viņiem palīdzību, konstatētu likumpārkāpušās personas, apsargātu notikuma vietu un paziņotu tuvākajai policijas iestādei.'},
   en:{name:'LPP 9. Basic principle — act at any time and place',desc:'It is the duty of every police officer throughout the territory of the Republic of Latvia, regardless of position, location or time — when persons approach with a report of an incident threatening personal or public safety, or when discovering such an incident themselves — to take all possible measures to prevent the violation, save people, assist them, identify perpetrators, secure the scene and notify the nearest police authority.'}},
 
  {article:'LPP 10. pants',anchor:'#p10',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
   fineMax:{ru:'',lv:'',en:''},
-  ru:{name:'LPP 10. Policijas darbinieka pamatpienākumi',
+  ru:{name:'LPP 10. Основные обязанности сотрудника полиции',
    parts:[
     {label:'Kārtības nodrošināšana (10.1)',desc:'Nodrošināt kārtību uz ceļiem, ielās, laukumos, parkos, sabiedriskā transportā, lidostās, ostās, stacijās un citās sabiedriskajās vietās, lai garantētu personu un sabiedrības drošību.',fineMin:'',fineMax:''},
     {label:'Reģistrēšana un reaģēšana (10.2)',desc:'Reģistrēt informāciju par noziegumiem, likumpārkāpumiem un to izdarītājiem, kā arī par notikumiem, kuri apdraud sabiedrības drošību, un nekavējoties reaģēt uz tiem. Ziņot par avārijām, ugunsgrēkiem, katastrofām un citiem draudiem.',fineMin:'',fineMax:''},
@@ -1645,7 +1653,7 @@ pienakumi:[
 tiesibas:[
  {article:'LPP 12. pants',anchor:'#p12',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
   fineMax:{ru:'',lv:'',en:''},
-  ru:{name:'LPP 12. Policijas darbinieka vispārējās tiesības',
+  ru:{name:'LPP 12. Общие права сотрудника полиции',
    parts:[
     {label:'12.1–12.2. Dokumentu pārbaude un prasības izpilde',desc:'Prasīt, lai personas pārtrauc likumpārkāpumus. Pārbaudīt personām, kuras tiek turētas aizdomās par likumpārkāpumu, personību apliecinošos dokumentus un citus dokumentus, kas nepieciešami tiesību normu ievērošanas pārbaudei.',fineMin:'',fineMax:''},
     {label:'12.3. Izsaukums uz policijas iestādi',desc:'Izsaukt uz policijas iestādi jebkuru personu sakarā ar lietām un materiāliem, kuru izskatīšana ir policijas kompetencē. Ja personas bez attaisnojoša iemesla neierodas pēc izsaukuma — likumā noteiktajā kārtībā veikt to piespiedu atvešanu.',fineMin:'',fineMax:''},
@@ -1692,7 +1700,7 @@ tiesibas:[
 speks:[
  {article:'LPP 13. pants',anchor:'#p13',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
   fineMax:{ru:'',lv:'',en:''},
-  ru:{name:'LPP 13. Fizisks spēks un speciālie līdzekļi',
+  ru:{name:'LPP 13. Физическая сила и специальные средства',
    parts:[
     {label:'Speciālie līdzekļi — saraksts',desc:'Policijas darbiniekam ir tiesības lietot fizisku spēku, speciālos cīņas paņēmienus, roku dzelžus, durkļus, dunčus, stekus, asaras izraisošas vielas, speciālas krāsvielas, psiholoģiskas iedarbības gaismas un skaņu ierīces, ierīces telpu atvēršanai, šķēršļu sagraušanas un transporta apstādināšanas līdzekļus, ūdensmetējus, bruņumašīnas, helikopterus, dienesta suņus un zirgus.',fineMin:'',fineMax:''},
     {label:'Pamati spēka pielietošanai (13.1–13.6)',desc:'Spēks lietojams, lai: 1) atvairītu uzbrukumu personām vai policistiem; 2) atvairītu uzbrukumu ēkām un transportlīdzekļiem vai atbrīvotu to; 3) atbrīvotu ķīlniekus; 4) novērstu masu nekārtības; 5) aizturētu un konvojētu likumpārkāpējus; 6) pārtrauktu ļaunprātīgu nepakļaušanos likumīgām prasībām.',fineMin:'',fineMax:''},
@@ -1716,7 +1724,7 @@ speks:[
 
  {article:'LPP 14. pants',anchor:'#p14',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
   fineMax:{ru:'',lv:'',en:''},
-  ru:{name:'LPP 14. Šaujamierocis — pielietošanas tiesības',
+  ru:{name:'LPP 14. Огнестрельное оружие — право на применение',
    parts:[
     {label:'Pamati (14.1–14.7)',desc:'Policijas darbinieks ir tiesīgs pielietot šaujamieroci galējas nepieciešamības situācijā, lai: 1) aizsargātu sevi vai citus no uzbrukuma, kas reāli apdraud dzīvību; 2) atbrīvotu ķīlniekus; 3) atvairītu grupveida vai bruņotu uzbrukumu policistiem; 4) atvairītu uzbrukumu apsargājamiem objektiem; 5) aizturētu personu, kas izrāda bruņotu pretošanos vai pārsteigta smaga nozieguma izdarīšanā; 6) apturētu transportlīdzekli, ja vadītājs rada draudus dzīvībai; 7) padarītu nekaitīgu dzīvnieku, kurš apdraud cilvēku.',fineMin:'',fineMax:''},
     {label:'Brīdinājuma prasība',desc:'Pirms šaujamieroča pielietošanas ir jābrīdina par nodomu to darīt. Ja nepieciešams, var izdarīt arī brīdinājuma šāvienu.',fineMin:'',fineMax:''},
@@ -1733,6 +1741,261 @@ speks:[
     {label:'Grounds (14.1–14.7)',desc:'A police officer is entitled to use a firearm in situations of extreme necessity to: 1) protect themselves or others from an attack genuinely threatening life; 2) free hostages; 3) repel group or armed attacks on officers; 4) repel attacks on guarded facilities; 5) detain a person offering armed resistance or caught at the scene of a serious crime; 6) stop a vehicle if the driver poses a real threat to life; 7) render an animal harmless that threatens a person.',fineMin:'',fineMax:''},
     {label:'Warning requirement',desc:'Before using a firearm, a warning of intent must be given. If necessary, a warning shot may also be fired.',fineMin:'',fineMax:''},
     {label:'Without warning — exceptions',desc:'A firearm may be used without warning if: the attack is sudden or weapons or vehicles are used; it is necessary to free hostages; a person is escaping from custody using a weapon or vehicle while it is moving.',fineMin:'',fineMax:''}
+   ]}}
+]
+};
+
+
+// ===== APAS UI STRINGS =====
+uiStrings.apas={
+  ru:{subtitle:'APAS',placeholder:'Meklēt pārkāpumu...',min:'',max:'',desc:'Apraksts',howContest:'Kā apstrīdēt',sourceBtn:'Atvērt noteikumus likumi.lv',warn:'',warnWord:'',empty:'Nekas netika atrasts.',pts:'',signs:''},
+  lv:{subtitle:'APAS',placeholder:'Meklēt pārkāpumu...',min:'',max:'',desc:'Apraksts',howContest:'Kā apstrīdēt',sourceBtn:'Atvērt noteikumus likumi.lv',warn:'',warnWord:'',empty:'Nekas netika atrasts.',pts:'',signs:''},
+  en:{subtitle:'APAS',placeholder:'Search violation...',min:'',max:'',desc:'Description',howContest:'How to contest',sourceBtn:'Open regulations on likumi.lv',warn:'',warnWord:'',empty:'Nothing found.',pts:'',signs:''}
+};
+
+// ===== APAS BASE URLs =====
+const BASE_RD24='https://likumi.lv/ta/id/353601';
+const BASE_RD25='https://likumi.lv/ta/id/358562';
+const BASE_ATK='https://likumi.lv/ta/id/235334-atkritumu-apsaimniekosanas-likums';
+const BASE_MK906='https://likumi.lv/ta/id/315840';
+const BASE_DMPL='https://likumi.lv/ta/id/193573-dzivojamas-majas-parvaldisanas-likums';
+
+// Abbreviation legend HTML for APAS cards
+const ABBREV_NESAKOPTA={
+  lv:`<div class="abbrev-box"><div class="abbrev-title">Saīsinājumi</div><div class="abbrev-item"><strong>RD</strong> — Rīgas dome</div><div class="abbrev-item"><strong>RD-24-270-sn</strong> — Rīgas domes 2024. gada 270. saistošie noteikumi</div><div class="abbrev-item"><strong>MK Nr.906</strong> — Ministru kabineta 2015. gada noteikumi Nr.906 "Dzīvojamās mājas pārvaldīšanas un apsaimniekošanas minimālo prasību noteikumi"</div><div class="abbrev-item"><strong>DMPL</strong> — Dzīvojamās mājas pārvaldīšanas likums</div><div class="abbrev-item"><strong>sn</strong> — saistošie noteikumi</div></div>`,
+  ru:`<div class="abbrev-box"><div class="abbrev-title">Сокращения</div><div class="abbrev-item"><strong>RD</strong> — Rīgas dome (Рижская дума)</div><div class="abbrev-item"><strong>RD-24-270-sn</strong> — Обязательные правила Рижской думы 2024 года №270</div><div class="abbrev-item"><strong>MK Nr.906</strong> — Постановление Кабинета министров №906 «Минимальные требования к управлению жилым домом»</div><div class="abbrev-item"><strong>DMPL</strong> — Dzīvojamās mājas pārvaldīšanas likums (Закон об управлении жилыми домами)</div><div class="abbrev-item"><strong>sn</strong> — saistošie noteikumi (обязательные правила)</div></div>`,
+  en:`<div class="abbrev-box"><div class="abbrev-title">Abbreviations</div><div class="abbrev-item"><strong>RD</strong> — Rīgas dome (Riga City Council)</div><div class="abbrev-item"><strong>RD-24-270-sn</strong> — Riga City Council 2024 Binding Regulations No.270</div><div class="abbrev-item"><strong>MK Nr.906</strong> — Cabinet of Ministers Regulations No.906 on minimum requirements for residential building management</div><div class="abbrev-item"><strong>DMPL</strong> — Dzīvojamās mājas pārvaldīšanas likums (Residential Buildings Management Law)</div><div class="abbrev-item"><strong>sn</strong> — saistošie noteikumi (binding regulations)</div></div>`
+};
+const ABBREV_KONTEINERI={
+  lv:`<div class="abbrev-box"><div class="abbrev-title">Saīsinājumi</div><div class="abbrev-item"><strong>RD-25-19-sn</strong> — Rīgas domes 2025. gada 19. saistošie noteikumi "Par atkritumu apsaimniekošanu Rīgā"</div><div class="abbrev-item"><strong>Atk.lik.</strong> — Atkritumu apsaimniekošanas likums</div><div class="abbrev-item"><strong>sn</strong> — saistošie noteikumi</div></div>`,
+  ru:`<div class="abbrev-box"><div class="abbrev-title">Сокращения</div><div class="abbrev-item"><strong>RD-25-19-sn</strong> — Обязательные правила Рижской думы 2025 года №19 «Об управлении отходами в Риге»</div><div class="abbrev-item"><strong>Atk.lik.</strong> — Atkritumu apsaimniekošanas likums (Закон об обращении с отходами)</div><div class="abbrev-item"><strong>sn</strong> — saistošie noteikumi (обязательные правила)</div></div>`,
+  en:`<div class="abbrev-box"><div class="abbrev-title">Abbreviations</div><div class="abbrev-item"><strong>RD-25-19-sn</strong> — Riga City Council 2025 Binding Regulations No.19 "On Waste Management in Riga"</div><div class="abbrev-item"><strong>Atk.lik.</strong> — Atkritumu apsaimniekošanas likums (Waste Management Law)</div><div class="abbrev-item"><strong>sn</strong> — saistošie noteikumi (binding regulations)</div></div>`
+};
+
+// Helper: render legal reference chips for APAS cards
+function apasRef(label,url,articles){
+  var chips=articles.split(';').map(function(a){
+    return '<a href="'+url+(a.trim()?'':'') +'" target="_blank" class="csn-badge" style="text-decoration:none" onclick="event.stopPropagation()">'+label+' '+a.trim()+'</a>';
+  }).join('');
+  return chips;
+}
+
+// ===== APAS CATEGORIES =====
+const apasCats={
+  nesakopta:{
+    ru:{name:'Неухоженная территория',sec:'Мелкие отходы, захламлённость, piegružojums · RD-24-270-sn'},
+    lv:{name:'Nesakopta teritorija',sec:'Sīkie atkritumi, piegružojums · RD-24-270-sn'},
+    en:{name:'Unmaintained territory',sec:'Small waste, littering · RD-24-270-sn'}},
+  dzivojamas:{
+    ru:{name:'Территория жилого дома',sec:'Pārvaldīšanas pienākumi · RD-24-270-sn / MK 906'},
+    lv:{name:'Dzīvojamās mājas teritorija',sec:'Pārvaldīšanas pienākumi · RD-24-270-sn / MK 906'},
+    en:{name:'Residential building territory',sec:'Management duties · RD-24-270-sn / MK 906'}},
+  konteineri:{
+    ru:{name:'Территория у контейнеров',sec:'Konteineru laukums · RD-25-19-sn / Atk.lik.'},
+    lv:{name:'Atkritumu konteineru apkārtne',sec:'Konteineru laukums · RD-25-19-sn / Atk.lik.'},
+    en:{name:'Waste container area',sec:'Container area · RD-25-19-sn / Atk.lik.'}}
+};
+
+// ===== APAS LAWS =====
+const apasLaws={
+nesakopta:[
+ {article:'RD-24-270-sn 2.1; 4.1.1; 22; 23',anchor:'',abbrev:'nesakopta',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Захламлённая территория мелким бытовым мусором',
+   parts:[
+    {label:'Pārkāpuma apraksts',
+     desc:'Teritorija piegružota ar sīkiem sadzīves atkritumiem. Teritorijai nav piesaistīta dzīvojamā māja.',
+     fineMin:'',fineMax:''},
+    {label:'Juridiskais pamats',
+     desc:'RD-24-270-sn – 2.1. punkts (piegružojuma aizliegums); 4.1.1. punkts (atbildīgā persona); 22. pants (atbildība); 23. pants (sods).',
+     fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Piegružota teritorija ar sīkiem sadzīves atkritumiem',
+   parts:[
+    {label:'Pārkāpuma apraksts',
+     desc:'Teritorija piegružota ar sīkiem sadzīves atkritumiem. Teritorijai nav piesaistīta dzīvojamā māja.',
+     fineMin:'',fineMax:''},
+    {label:'Juridiskais pamats',
+     desc:'RD-24-270-sn – 2.1. punkts (piegružojuma aizliegums); 4.1.1. punkts (atbildīgā persona); 22. pants (atbildība); 23. pants (sods).',
+     fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Territory littered with small household waste',
+   parts:[
+    {label:'Description',
+     desc:'Territory littered with small household waste. No residential building is linked to the territory.',
+     fineMin:'',fineMax:''},
+    {label:'Legal basis',
+     desc:'RD-24-270-sn – clause 2.1 (prohibition of littering); clause 4.1.1 (responsible person); Art. 22 (liability); Art. 23 (penalty).',
+     fineMin:'',fineMax:''}
+   ]}},
+
+ {article:'RD-24-270-sn 2.3; 4.1.1 · MK 906 4.p. · DMPL 6.p. 2.d. 1a; 29; 30',anchor:'',abbrev:'nesakopta',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Захламлённая территория мелким мусором — к территории привязан жилой дом',
+   parts:[
+    {label:'Pārkāpuma apraksts',
+     desc:'Teritorija piegružota ar sīkiem sadzīves atkritumiem. Teritorijai IR piesaistīta dzīvojamā māja — atbildīgā ir mājas pārvaldīšanas organizācija vai dzīvokļu īpašnieki.',
+     fineMin:'',fineMax:''},
+    {label:'RD-24-270-sn pamats',
+     desc:'RD-24-270-sn – 2.3. punkts (sanitārās tīrības prasības); 4.1.1. punkts (atbildīgā persona).',
+     fineMin:'',fineMax:''},
+    {label:'MK Nr.906 pamats',
+     desc:'MK noteikumi Nr.906 – 4. punkts (dzīvojamās mājas pārvaldīšanas minimālās prasības attiecībā uz sanitāro uzturēšanu).',
+     fineMin:'',fineMax:''},
+    {label:'Dzīvojamās mājas pārvaldīšanas likums',
+     desc:'DMPL 6. panta 2. daļas 1a apakšpunkts (pārvaldnieka pienākums uzturēt kārtību); 29. pants; 30. pants (atbildība).',
+     fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Piegružota teritorija ar sīkiem sadzīves atkritumiem — teritorijai piesaistīta dzīvojamā māja',
+   parts:[
+    {label:'Pārkāpuma apraksts',
+     desc:'Teritorija piegružota ar sīkiem sadzīves atkritumiem. Teritorijai IR piesaistīta dzīvojamā māja — atbildīgā ir mājas pārvaldīšanas organizācija vai dzīvokļu īpašnieki.',
+     fineMin:'',fineMax:''},
+    {label:'RD-24-270-sn pamats',
+     desc:'RD-24-270-sn – 2.3. punkts (sanitārās tīrības prasības); 4.1.1. punkts (atbildīgā persona).',
+     fineMin:'',fineMax:''},
+    {label:'MK Nr.906 pamats',
+     desc:'MK noteikumi Nr.906 – 4. punkts (dzīvojamās mājas pārvaldīšanas minimālās prasības attiecībā uz sanitāro uzturēšanu).',
+     fineMin:'',fineMax:''},
+    {label:'Dzīvojamās mājas pārvaldīšanas likums',
+     desc:'DMPL 6. panta 2. daļas 1a apakšpunkts (pārvaldnieka pienākums uzturēt kārtību); 29. pants; 30. pants (atbildība).',
+     fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Territory littered with small household waste — residential building linked to territory',
+   parts:[
+    {label:'Description',
+     desc:'Territory littered with small household waste. A residential building IS linked to the territory — the responsible party is the building management organisation or flat owners.',
+     fineMin:'',fineMax:''},
+    {label:'RD-24-270-sn basis',
+     desc:'RD-24-270-sn – clause 2.3 (sanitary cleanliness requirements); clause 4.1.1 (responsible person).',
+     fineMin:'',fineMax:''},
+    {label:'MK Nr.906 basis',
+     desc:'Cabinet of Ministers Regulations Nr.906 – clause 4 (minimum requirements for residential building management regarding sanitary maintenance).',
+     fineMin:'',fineMax:''},
+    {label:'Residential Buildings Management Law',
+     desc:'RBML Art. 6 para 2 sub-clause 1a (manager duty to maintain order); Art. 29; Art. 30 (liability).',
+     fineMin:'',fineMax:''}
+   ]}}
+],
+
+dzivojamas:[
+ {article:'Atk.lik. 43.1; 44.1 · RD-25-19-sn 21.1',anchor:'',abbrev:'konteineri',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Захламлённая территория у контейнеров (мелкие отходы)',
+   parts:[
+    {label:'Pārkāpuma apraksts',
+     desc:'Teritorija pie atkritumu konteineriem piegružota ar sīkiem atkritumiem, kas novietoti ārpus konteineriem vai atstāti uz zemes.',
+     fineMin:'',fineMax:''},
+    {label:'Atkritumu apsaimniekošanas likums',
+     desc:'Atkritumu apsaimniekošanas likums – 43.1 punkts (atkritumu apsaimniekošanas prasības); 44.1 punkts (atbildība par atkritumu novietošanu ārpus paredzētās vietas).',
+     fineMin:'',fineMax:''},
+    {label:'RD-25-19-sn pamats',
+     desc:'RD-25-19-sn – 21.1 punkts (prasības atkritumu konteineru laukumu uzturēšanai).',
+     fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Piegružota teritorija pie atkritumu konteineriem (sīkie atkritumi)',
+   parts:[
+    {label:'Pārkāpuma apraksts',
+     desc:'Teritorija pie atkritumu konteineriem piegružota ar sīkiem atkritumiem, kas novietoti ārpus konteineriem vai atstāti uz zemes.',
+     fineMin:'',fineMax:''},
+    {label:'Atkritumu apsaimniekošanas likums',
+     desc:'Atkritumu apsaimniekošanas likums – 43.1. punkts (atkritumu apsaimniekošanas prasības); 44.1. punkts (atbildība par atkritumu novietošanu ārpus paredzētās vietas).',
+     fineMin:'',fineMax:''},
+    {label:'RD-25-19-sn pamats',
+     desc:'RD-25-19-sn – 21.1. punkts (prasības atkritumu konteineru laukumu uzturēšanai un tīrīšanai).',
+     fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Territory littered near waste containers (small waste)',
+   parts:[
+    {label:'Description',
+     desc:'The area near waste containers is littered with small waste items left outside the containers or on the ground.',
+     fineMin:'',fineMax:''},
+    {label:'Waste Management Law',
+     desc:'Waste Management Law – clause 43.1 (waste management requirements); clause 44.1 (liability for placing waste outside designated areas).',
+     fineMin:'',fineMax:''},
+    {label:'RD-25-19-sn basis',
+     desc:'RD-25-19-sn – clause 21.1 (requirements for maintaining and cleaning waste container areas).',
+     fineMin:'',fineMax:''}
+   ]}},
+
+ {article:'RD-25-19-sn 21.1; 21.5; 27 · Atk.lik. 43.1; 44.1',anchor:'',abbrev:'konteineri',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Захламлённая территория у контейнеров (крупногабаритные отходы)',
+   parts:[
+    {label:'Pārkāpuma apraksts',
+     desc:'Pie atkritumu konteineriem novietoti lielgabarīta atkritumi (mēbeles, tehnika u.c.), kas netiek likti konteineros.',
+     fineMin:'',fineMax:''},
+    {label:'RD-25-19-sn pamats',
+     desc:'RD-25-19-sn – 21.1. punkts (konteineru laukuma uzturēšana); 21.5. punkts (aizliegums novietot lielgabarītu); 27. punkts (atbildīgā persona un atbildība).',
+     fineMin:'',fineMax:''},
+    {label:'Atkritumu apsaimniekošanas likums',
+     desc:'Atkritumu apsaimniekošanas likums – 43.1. punkts; 44.1. punkts (atbildība par nepareizu atkritumu novietošanu).',
+     fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Piegružota teritorija pie atkritumu konteineriem (Lielgabarīta atkritumi)',
+   parts:[
+    {label:'Pārkāpuma apraksts',
+     desc:'Pie atkritumu konteineriem novietoti lielgabarīta atkritumi (mēbeles, sadzīves tehnika u.c.), kas netiek likti konteineros un nav saskaņots to izgāzums.',
+     fineMin:'',fineMax:''},
+    {label:'RD-25-19-sn pamats',
+     desc:'RD-25-19-sn – 21.1. punkts (konteineru laukuma uzturēšana); 21.5. punkts (aizliegums novietot lielgabarīta atkritumus ārpus paredzētās vietas); 27. punkts (atbildīgā persona un atbildība).',
+     fineMin:'',fineMax:''},
+    {label:'Atkritumu apsaimniekošanas likums',
+     desc:'Atkritumu apsaimniekošanas likums – 43.1. punkts; 44.1. punkts (atbildība par nepareizu atkritumu novietošanu).',
+     fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Territory littered near waste containers (Bulky waste)',
+   parts:[
+    {label:'Description',
+     desc:'Bulky waste items (furniture, appliances, etc.) have been placed near waste containers without authorisation and cannot be placed inside the containers.',
+     fineMin:'',fineMax:''},
+    {label:'RD-25-19-sn basis',
+     desc:'RD-25-19-sn – clause 21.1 (container area maintenance); clause 21.5 (prohibition of placing bulky waste outside designated area); clause 27 (responsible person and liability).',
+     fineMin:'',fineMax:''},
+    {label:'Waste Management Law',
+     desc:'Waste Management Law – clause 43.1; clause 44.1 (liability for improper waste placement).',
+     fineMin:'',fineMax:''}
+   ]}}
+],
+
+konteineri:[
+ {article:'RD-25-19-sn 27 · Atk.lik. 43.1; 44.1',anchor:'',abbrev:'konteineri',noFine:true,parts:true,signsSVG:[],srcUrl:'LPP',
+  fineMax:{ru:'',lv:'',en:''},
+  ru:{name:'Захламлённая территория крупногабаритными отходами (вне площадки контейнеров)',
+   parts:[
+    {label:'Pārkāpuma apraksts',
+     desc:'Lielgabarīta atkritumi atstāti ārpus atkritumu konteineru laukuma — uz ietves, pagalmā, starp mājām vai citā neparedzētā vietā.',
+     fineMin:'',fineMax:''},
+    {label:'RD-25-19-sn pamats',
+     desc:'RD-25-19-sn – 27. punkts (aizliegums novietot atkritumus ārpus norādītajām vietām; atbildīgā persona).',
+     fineMin:'',fineMax:''},
+    {label:'Atkritumu apsaimniekošanas likums',
+     desc:'Atkritumu apsaimniekošanas likums – 43.1. punkts; 44.1. punkts (atbildība par neatļautu atkritumu izmešanu vidē).',
+     fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Piegružota teritorija ar Lielgabarīta atkritumiem (ārpus konteineru laukuma)',
+   parts:[
+    {label:'Pārkāpuma apraksts',
+     desc:'Lielgabarīta atkritumi atstāti ārpus atkritumu konteineru laukuma — uz ietves, pagalmā, starp mājām vai citā neparedzētā vietā, nepiesakoties lielgabarītu vākšanai.',
+     fineMin:'',fineMax:''},
+    {label:'RD-25-19-sn pamats',
+     desc:'RD-25-19-sn – 27. punkts (aizliegums novietot atkritumus ārpus norādītajām vietām; atbildīgā persona un atbildība).',
+     fineMin:'',fineMax:''},
+    {label:'Atkritumu apsaimniekošanas likums',
+     desc:'Atkritumu apsaimniekošanas likums – 43.1. punkts; 44.1. punkts (atbildība par neatļautu atkritumu izmešanu vidē).',
+     fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Territory littered with Bulky waste (outside container area)',
+   parts:[
+    {label:'Description',
+     desc:'Bulky waste items have been left outside the designated waste container area — on pavements, in courtyards, between buildings or other unauthorised locations without arranging a bulky waste collection.',
+     fineMin:'',fineMax:''},
+    {label:'RD-25-19-sn basis',
+     desc:'RD-25-19-sn – clause 27 (prohibition of placing waste outside designated areas; responsible person and liability).',
+     fineMin:'',fineMax:''},
+    {label:'Waste Management Law',
+     desc:'Waste Management Law – clause 43.1; clause 44.1 (liability for unlawful disposal of waste into the environment).',
+     fineMin:'',fineMax:''}
    ]}}
 ]
 };
@@ -2551,10 +2814,10 @@ function renderPartsHTMLFor(law,lawKey){
 }
 
 // ===== RENDERING FUNCTIONS =====
-function getCats(){return currentLaw==='asl'?aslCats:currentLaw==='csl'?cslCats:currentLaw==='aiz'?aizCats:currentLaw==='aal'?aalCats:lppCats;}
-function getLaws(){return currentLaw==='asl'?aslLaws:currentLaw==='csl'?cslLaws:currentLaw==='aiz'?aizLaws:currentLaw==='aal'?aalLaws:lppLaws;}
-function getUI(){return currentLaw==='asl'?aslUI[lang]:currentLaw==='csl'?uiStrings.csl[lang]:currentLaw==='aiz'?uiStrings.aiz[lang]:currentLaw==='aal'?uiStrings.aal[lang]:uiStrings.lpp[lang];}
-function getBase(){return currentLaw==='asl'?BASE_ASL:currentLaw==='csl'?BASE_CSL:currentLaw==='aiz'?BASE_LPP:currentLaw==='aal'?BASE_AAL:BASE_LPP;}
+function getCats(){return currentLaw==='asl'?aslCats:currentLaw==='csl'?cslCats:currentLaw==='aiz'?aizCats:currentLaw==='aal'?aalCats:currentLaw==='lpp'?lppCats:apasCats;}
+function getLaws(){return currentLaw==='asl'?aslLaws:currentLaw==='csl'?cslLaws:currentLaw==='aiz'?aizLaws:currentLaw==='aal'?aalLaws:currentLaw==='lpp'?lppLaws:apasLaws;}
+function getUI(){return currentLaw==='asl'?aslUI[lang]:currentLaw==='csl'?uiStrings.csl[lang]:currentLaw==='aiz'?uiStrings.aiz[lang]:currentLaw==='aal'?uiStrings.aal[lang]:currentLaw==='lpp'?uiStrings.lpp[lang]:uiStrings.apas[lang];}
+function getBase(){return currentLaw==='asl'?BASE_ASL:currentLaw==='csl'?BASE_CSL:currentLaw==='aiz'?BASE_LPP:currentLaw==='aal'?BASE_AAL:currentLaw==='lpp'?BASE_LPP:BASE_AAL;}
 
 function setLaw(law,btn){
   currentLaw=law;
@@ -2562,7 +2825,7 @@ function setLaw(law,btn){
   btn.classList.add('active');
   currentCat=Object.keys(getCats())[0];
   document.getElementById('appSubtitle').textContent=getUI().subtitle;
-  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'}};
+  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'},apas:{ru:'Administratīvie pārkāpumi · Saistošie noteikumi',lv:'Administratīvie pārkāpumi · Saistošie noteikumi',en:'Administrative violations · Binding regulations'}};
   document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
   document.getElementById('searchInput').placeholder=getUI().placeholder;
   document.getElementById('searchInput').value='';
@@ -2576,7 +2839,7 @@ function setLang(l,btn){
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('appSubtitle').textContent=getUI().subtitle;
-  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'}};
+  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'},apas:{ru:'Administratīvie pārkāpumi · Saistošie noteikumi',lv:'Administratīvie pārkāpumi · Saistošie noteikumi',en:'Administrative violations · Binding regulations'}};
   document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
   document.getElementById('searchInput').placeholder=getUI().placeholder;
   renderCats();
@@ -2594,13 +2857,16 @@ const aalCounts={dalibnieki:'AAL 39.–49. p.',termini:'AAL termini',sodi:'AAL 1
 
 const SVG_LPP={visparigie:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l8 4v6c0 5.5-4 9-8 10C8 21 4 17.5 4 12V6l8-4z"/></svg>`,pienakumi:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="7" y="2" width="10" height="8" rx="1"/><path d="M7 10l-4 11h18L17 10"/><circle cx="12" cy="15" r="2"/></svg>`,tiesibas:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"/><path d="M3 10l9-7 9 7"/><path d="M5 10c0 3 2 5 4 5s4-2 4-5H5z"/><path d="M11 17c0 3 2 5 4 5s4-2 4-5h-8z"/></svg>`,speks:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 10h14v4H3z"/><path d="M17 12h2a2 2 0 002-2V8h-5"/><path d="M7 14v4h4v-4"/><line x1="3" y1="12" x2="1" y2="12"/></svg>`};
 const lppCounts={visparigie:'LPP 1.–8. pants',pienakumi:'LPP 9.–11. pants',tiesibas:'LPP 12. pants',speks:'LPP 13.–14. pants'};
+
+const SVG_APAS={nesakopta:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="3,6 5,6 21,6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>`,dzivojamas:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>`,konteineri:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27,6.96 12,12.01 20.73,6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`};
+const apasCounts={nesakopta:'RD-24-270-sn / RD-25-19-sn',dzivojamas:'RD-24-270-sn / MK 906',konteineri:'RD-25-19-sn / Atk.lik.'};
 function renderCats(){
   const cats=getCats();
   const aslCounts={admin:'ASL 3–8',order:'ASL 9–13.1',lang:'ASL 14–28'};
   const cslCounts={parking:'CSL 57. p.',speed:'CSL 55. p.',alcohol:'CSL 62. p.',signals:'CSN/CSL',other:'CSL 43–58. p.'};
   const aizCounts={aiztureshana:'AAL 71 · LPP 12 · LPP 19'};
-  const svgMap=currentLaw==='asl'?SVG_ASL:currentLaw==='csl'?SVG_CSL:currentLaw==='aiz'?SVG_AIZ:currentLaw==='aal'?SVG_AAL:SVG_LPP;
-  const counts=currentLaw==='asl'?aslCounts:currentLaw==='csl'?cslCounts:currentLaw==='aiz'?aizCounts:currentLaw==='aal'?aalCounts:lppCounts;
+  const svgMap=currentLaw==='asl'?SVG_ASL:currentLaw==='csl'?SVG_CSL:currentLaw==='aiz'?SVG_AIZ:currentLaw==='aal'?SVG_AAL:currentLaw==='lpp'?SVG_LPP:SVG_APAS;
+  const counts=currentLaw==='asl'?aslCounts:currentLaw==='csl'?cslCounts:currentLaw==='aiz'?aizCounts:currentLaw==='aal'?aalCounts:currentLaw==='lpp'?lppCounts:apasCounts;
   document.getElementById('catGrid').innerHTML=Object.keys(cats).map(k=>
     '<div class="cat-card'+(k===currentCat?' active':'')+'" onclick="selectCat(this,\''+k+'\')">'+
     '<div class="cat-icon">'+(svgMap[k]||'')+'</div>'+
@@ -2669,6 +2935,11 @@ function renderLaws(items){
     metaBadges+=ptsBadge+'<span class="badge badge-article">'+law.article+'</span>';
     var detailContent=signHTML+(law.parts?renderPartsHTML(law):'<div class="dl">'+t.desc+'</div><div class="dt">'+law[lang].desc+'</div>'+fineSection);
     if(law.csnRef) detailContent+='<div class="csn-card-ref">'+csnLinks(law.csnRef)+'</div>';
+    if(law.abbrev){
+      var abbrevMap={nesakopta:ABBREV_NESAKOPTA,konteineri:ABBREV_KONTEINERI};
+      var abbrevBox=abbrevMap[law.abbrev];
+      if(abbrevBox) detailContent+=abbrevBox[lang]||abbrevBox.lv;
+    }
     if(t.howContest&&law[lang].contest) detailContent+='<div class="dl">'+t.howContest+'</div><div class="dt">'+law[lang].contest+'</div>';
     detailContent+='<a class="source-btn" href="'+srcUrl+law.anchor+'" target="_blank" onclick="event.stopPropagation()">↗'+t.sourceBtn+'</a>';
     var cardClass='law-card'+(isDefaultOpen?' expanded':'');
@@ -2735,7 +3006,7 @@ function filterLaws(){
 // ===== INIT =====
 renderCats();
 document.getElementById('appSubtitle').textContent=getUI().subtitle;
-  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'}};
+  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'},apas:{ru:'Administratīvie pārkāpumi · Saistošie noteikumi',lv:'Administratīvie pārkāpumi · Saistošie noteikumi',en:'Administrative violations · Binding regulations'}};
   document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
 document.getElementById('searchInput').placeholder=getUI().placeholder;
 document.getElementById('sectionTitle').textContent=getCats()[currentCat][lang].sec;
