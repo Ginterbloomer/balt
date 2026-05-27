@@ -39,7 +39,7 @@
 
   /* ===== DARK MODE ===== */
   @media (prefers-color-scheme: dark) {
-    :root {
+    html:not([data-theme="light"]) {
       --color-border-secondary: #2d3748;
       --color-border-tertiary: #2d3748;
       --color-text-primary: #f7fafc;
@@ -58,84 +58,84 @@
     }
 
     /* Cards and surfaces */
-    .law-card {
+    html:not([data-theme="light"]) .law-card {
       background: #1e2535;
       border-color: #2d3748;
     }
-    .law-card:hover { background: #232d42; }
-    .law-card.expanded { background: #1e2535; }
-    .law-detail { border-top-color: #2d3748; }
-    .part-block { border-bottom-color: #2d3748; }
-    .fine-box { background: #171923; }
-    .part-fine-box { background: #171923; }
+    html:not([data-theme="light"]) .law-card:hover { background: #232d42; }
+    html:not([data-theme="light"]) .law-card.expanded { background: #1e2535; }
+    html:not([data-theme="light"]) .law-detail { border-top-color: #2d3748; }
+    html:not([data-theme="light"]) .part-block { border-bottom-color: #2d3748; }
+    html:not([data-theme="light"]) .fine-box { background: #171923; }
+    html:not([data-theme="light"]) .part-fine-box { background: #171923; }
 
     /* Category cards */
-    .cat-card {
+    html:not([data-theme="light"]) .cat-card {
       background: #1e2535;
       border-color: #2d3748;
     }
-    .cat-card:hover { background: #232d42; }
-    .cat-card.active {
+    html:not([data-theme="light"]) .cat-card:hover { background: #232d42; }
+    html:not([data-theme="light"]) .cat-card.active {
       background: #1a2a3a;
       border-color: var(--color-brand);
     }
 
     /* Header */
-    .app-header { background: #1a202c; border-bottom-color: #2d3748; }
+    html:not([data-theme="light"]) .app-header { background: #1a202c; border-bottom-color: #2d3748; }
 
     /* Search */
-    .search-bar { background: #1a202c; border-bottom-color: #2d3748; }
-    .search-input {
+    html:not([data-theme="light"]) .search-bar { background: #1a202c; border-bottom-color: #2d3748; }
+    html:not([data-theme="light"]) .search-input {
       background: #171923;
       border-color: #2d3748;
       color: var(--color-text-primary);
     }
-    .search-input:focus { border-color: var(--color-brand); }
-    .search-input::placeholder { color: #4a5568; }
+    html:not([data-theme="light"]) .search-input:focus { border-color: var(--color-brand); }
+    html:not([data-theme="light"]) .search-input::placeholder { color: #4a5568; }
 
     /* Law switcher */
-    .law-switcher { background: #1e2535; }
-    .law-btn.active { background: #1a2a3a; color: var(--color-brand); }
+    html:not([data-theme="light"]) .law-switcher { background: #1e2535; }
+    html:not([data-theme="light"]) .law-btn.active { background: #1a2a3a; color: var(--color-brand); }
 
     /* Badges */
-    .badge-article { background: #2d3748; color: #a0aec0; }
-    .badge-fine { background: #2d1a1a; color: #fc8181; }
-    .badge-warn { background: #2d2210; color: #f6ad55; }
-    .badge-pts { background: #1a2a3a; color: #63b3ed; }
+    html:not([data-theme="light"]) .badge-article { background: #2d3748; color: #a0aec0; }
+    html:not([data-theme="light"]) .badge-fine { background: #2d1a1a; color: #fc8181; }
+    html:not([data-theme="light"]) .badge-warn { background: #2d2210; color: #f6ad55; }
+    html:not([data-theme="light"]) .badge-pts { background: #1a2a3a; color: #63b3ed; }
 
     /* Source button */
-    .source-btn {
+    html:not([data-theme="light"]) .source-btn {
       background: #1a2a3a;
       border-color: #2d3748;
       color: var(--color-brand);
     }
-    .source-btn:hover { background: #1d3a5c; }
+    html:not([data-theme="light"]) .source-btn:hover { background: #1d3a5c; }
 
     /* CSN badges */
-    .csn-badge { background: #1a2a3a; color: var(--color-brand); }
-    .csn-badge:hover { background: var(--color-brand); color: #1a202c; }
-    .csn-card-ref { background: #1a2a3a; }
+    html:not([data-theme="light"]) .csn-badge { background: #1a2a3a; color: var(--color-brand); }
+    html:not([data-theme="light"]) .csn-badge:hover { background: var(--color-brand); color: #1a202c; }
+    html:not([data-theme="light"]) .csn-card-ref { background: #1a2a3a; }
 
     /* Favourites */
-    .fav-law-badge { background: #2d3748; border-color: #4a5568; }
-    .fav-empty { color: #4a5568; }
+    html:not([data-theme="light"]) .fav-law-badge { background: #2d3748; border-color: #4a5568; }
+    html:not([data-theme="light"]) .fav-empty { color: #4a5568; }
 
     /* DL labels */
-    .dl { color: #4a5568; }
+    html:not([data-theme="light"]) .dl { color: #4a5568; }
 
     /* Signs */
-    .sign-chip { background: #2d3748; border-color: #4a5568; }
+    html:not([data-theme="light"]) .sign-chip { background: #2d3748; border-color: #4a5568; }
 
     /* Arrow */
-    .arrow-icon {
+    html:not([data-theme="light"]) .arrow-icon {
       border-color: #4a5568;
     }
 
     /* Scrollbar */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #171923; }
-    ::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #4a5568; }
+    html:not([data-theme="light"]) ::-webkit-scrollbar { width: 6px; }
+    html:not([data-theme="light"]) ::-webkit-scrollbar-track { background: #171923; }
+    html:not([data-theme="light"]) ::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 3px; }
+    html:not([data-theme="light"]) ::-webkit-scrollbar-thumb:hover { background: #4a5568; }
   }
   
   /* Центрируем всё приложение на экране */
@@ -562,12 +562,50 @@
   [data-theme="dark"] .sign-chip { background:#2d3748; border-color:#4a5568; }
   [data-theme="dark"] .arrow-icon { border-color:#4a5568; }
 
-  /* Light mode forces (override OS dark) */
-  [data-theme="light"] .law-card { background:#ffffff; border-color:#e2e8f0; }
-  [data-theme="light"] .cat-card { background:#ffffff; border-color:#e2e8f0; }
-  [data-theme="light"] .app-header { background:#ffffff; }
-  [data-theme="light"] .search-input { background:#ffffff; color:#1a202c; }
-  [data-theme="light"] .law-switcher { background:#f7fafc; }
+  /* ===== LIGHT MODE FORCE (overrides OS dark + manual dark) ===== */
+  [data-theme="light"] body { background:#f7fafc; color:#1a202c; }
+  [data-theme="light"] .law-card { background:#ffffff !important; border-color:#e2e8f0 !important; }
+  [data-theme="light"] .law-card:hover { background:#f8fafc !important; }
+  [data-theme="light"] .law-card.expanded { background:#ffffff !important; }
+  [data-theme="light"] .law-name { color:#1a202c !important; }
+  [data-theme="light"] .law-detail { border-top-color:#e2e8f0 !important; background:#ffffff; }
+  [data-theme="light"] .part-block { border-bottom-color:#edf2f7 !important; }
+  [data-theme="light"] .fine-box { background:#f7fafc !important; }
+  [data-theme="light"] .part-fine-box { background:#f7fafc !important; }
+  [data-theme="light"] .fine-lbl { color:#718096 !important; }
+  [data-theme="light"] .fine-val { color:#1a202c !important; }
+  [data-theme="light"] .fine-val.danger { color:#e53e3e !important; }
+  [data-theme="light"] .cat-card { background:#ffffff !important; border-color:#e2e8f0 !important; }
+  [data-theme="light"] .cat-card:hover { background:#f0f4f8 !important; }
+  [data-theme="light"] .cat-card.active { background:#ebf8ff !important; border-color:#3182ce !important; }
+  [data-theme="light"] .cat-name { color:#1a202c !important; }
+  [data-theme="light"] .cat-count { color:#718096 !important; }
+  [data-theme="light"] .app-header { background:#ffffff !important; border-bottom-color:#edf2f7 !important; }
+  [data-theme="light"] .app-title { color:#1a202c !important; }
+  [data-theme="light"] .app-subtitle,[data-theme="light"] .app-subtitle2 { color:#718096 !important; }
+  [data-theme="light"] .search-bar { background:#ffffff !important; border-bottom-color:#edf2f7 !important; }
+  [data-theme="light"] .search-input { background:#f7fafc !important; border-color:#e2e8f0 !important; color:#1a202c !important; }
+  [data-theme="light"] .search-input::placeholder { color:#a0aec0 !important; }
+  [data-theme="light"] .law-switcher { background:#f7fafc !important; }
+  [data-theme="light"] .law-btn { color:#718096 !important; }
+  [data-theme="light"] .law-btn.active { background:#ebf8ff !important; color:#3182ce !important; }
+  [data-theme="light"] .badge-article { background:#edf2f7 !important; color:#4a5568 !important; }
+  [data-theme="light"] .badge-fine { background:#fff5f5 !important; color:#e53e3e !important; }
+  [data-theme="light"] .badge-warn { background:#fffaf0 !important; color:#dd6b20 !important; }
+  [data-theme="light"] .badge-pts { background:#ebf8ff !important; color:#3182ce !important; }
+  [data-theme="light"] .source-btn { background:#ebf8ff !important; border-color:#bee3f8 !important; color:#3182ce !important; }
+  [data-theme="light"] .source-btn:hover { background:#bee3f8 !important; }
+  [data-theme="light"] .csn-badge { background:#ebf8ff !important; color:#3182ce !important; }
+  [data-theme="light"] .csn-card-ref { background:#ebf8ff !important; }
+  [data-theme="light"] .dl { color:#718096 !important; }
+  [data-theme="light"] .dt { color:#1a202c !important; }
+  [data-theme="light"] .part-label { color:#1a202c !important; }
+  [data-theme="light"] .part-desc { color:#4a5568 !important; }
+  [data-theme="light"] .sign-chip { background:#f7fafc !important; border-color:#e2e8f0 !important; }
+  [data-theme="light"] .sign-num { color:#4a5568 !important; }
+  [data-theme="light"] .arrow-icon { border-color:#a0aec0 !important; }
+  [data-theme="light"] .fav-law-badge { background:#edf2f7 !important; border-color:#e2e8f0 !important; color:#4a5568 !important; }
+  [data-theme="light"] .section-title { color:#718096 !important; }
 
   /* ===== FAVOURITES ===== */
   .fav-btn{background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-secondary);display:flex;align-items:center;flex-shrink:0;border-radius:4px;transition:color 0.15s,transform 0.15s;width:26px;justify-content:center;}
@@ -1720,7 +1758,7 @@ speed:[
     {label:'< 7,5 \u0442 (\u043b\u0435\u0433\u043a\u043e\u0432\u043e\u0439, \u043c\u043e\u0442\u043e\u0446\u0438\u043a\u043b, \u043c\u043e\u043f\u0435\u0434)',desc:'\u041f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435, \u043b\u044e\u0431\u043e\u0435 \u043c\u0435\u0441\u0442\u043e.',fineMin:'\u041f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435',fineMax:'\u041f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435'},
     {label:'> 7,5 \u0442 (\u0433\u0440\u0443\u0437\u043e\u0432\u043e\u0439, \u0441 \u043f\u0440\u0438\u0446\u0435\u043f\u043e\u043c)',desc:'\u041f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435 \u0438\u043b\u0438 \u0448\u0442\u0440\u0430\u0444.',fineMin:'\u041f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435',fineMax:'10 \u20ac'}
    ]},
-  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana l\u012bdz 10 km/st',contest:'Var apstr\u012bd\u0113t, ja \u0101truma ierobežojuma z\u012bme nav pareizi izvietota.',
+  lv:{name:'\u0100truma p\u0101rsnieg\u0161ana l\u012bdz 10 km/st',contest:'Var apstr\u012bd\u0113t, ja \u0101truma ierobežojuma z\u012bme nav pareizi izvietota.',
    parts:[
     {label:'< 7,5 t (vieglais, motocikls, mop\u0113ds)',desc:'Tikai br\u012bdin\u0101jums, jebkur\u0101 viet\u0101.',fineMin:'Br\u012bdin\u0101jums',fineMax:'Br\u012bdin\u0101jums'},
     {label:'> 7,5 t (kravas, ar piekabi)',desc:'Br\u012bdin\u0101jums vai naudas sods.',fineMin:'Br\u012bdin\u0101jums',fineMax:'10 \u20ac'}
@@ -1741,7 +1779,7 @@ speed:[
     {label:'> 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'',fineMin:'\u041f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435',fineMax:'40 \u20ac'},
     {label:'> 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'\u0411\u0435\u0437 \u043f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u044f.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'}
    ]},
-  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana par 11\u201320 km/st',contest:'Var apstr\u012bd\u0113t, ja \u0101truma ierobežojuma z\u012bme bija boj\u0101ta vai neredzama.',
+  lv:{name:'\u0100truma p\u0101rsnieg\u0161ana par 11\u201320 km/st',contest:'Var apstr\u012bd\u0113t, ja \u0101truma ierobežojuma z\u012bme bija boj\u0101ta vai neredzama.',
    parts:[
     {label:'< 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'',fineMin:'Br\u012bdin\u0101jums',fineMax:'20 \u20ac'},
     {label:'< 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona (519/555/533)',desc:'Divk\u0101r\u0161ots sods.',fineMin:'Br\u012bdin\u0101jums',fineMax:'40 \u20ac'},
@@ -1766,7 +1804,7 @@ speed:[
     {label:'> 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'1 \u0443\u0447. \u0431\u0430\u043b\u043b.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'},
     {label:'> 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'1 \u0443\u0447. \u0431\u0430\u043b\u043b.',fineMin:'160 \u20ac',fineMax:'160 \u20ac'}
    ]},
-  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana par 21\u201330 km/st',contest:'Var apstr\u012bd\u0113t pie rad\u0101ra k\u013c\u016bdas (pie\u013ca\u0173jama \u00b13 km/st vai 3%).',
+  lv:{name:'\u0100truma p\u0101rsnieg\u0161ana par 21\u201330 km/st',contest:'Var apstr\u012bd\u0113t pie rad\u0101ra k\u013c\u016bdas (pie\u013ca\u0173jama \u00b13 km/st vai 3%).',
    parts:[
     {label:'< 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'1 uzskaites punkts.',fineMin:'40 \u20ac',fineMax:'40 \u20ac'},
     {label:'< 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'1 uzskaites punkts.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'},
@@ -1791,7 +1829,7 @@ speed:[
     {label:'> 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'2 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'160 \u20ac',fineMax:'160 \u20ac'},
     {label:'> 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'2 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'320 \u20ac',fineMax:'320 \u20ac'}
    ]},
-  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana par 31\u201340 km/st',contest:'Var apstr\u012bd\u0113t pie rad\u0101ra k\u013c\u016bdas vai nepareizas z\u012bmes.',
+  lv:{name:'\u0100truma p\u0101rsnieg\u0161ana par 31\u201340 km/st',contest:'Var apstr\u012bd\u0113t pie rad\u0101ra k\u013c\u016bdas vai nepareizas z\u012bmes.',
    parts:[
     {label:'< 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'2 uzskaites punkti.',fineMin:'80 \u20ac',fineMax:'80 \u20ac'},
     {label:'< 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'2 uzskaites punkti.',fineMin:'160 \u20ac',fineMax:'160 \u20ac'},
@@ -1816,7 +1854,7 @@ speed:[
     {label:'> 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'3 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'320 \u20ac',fineMax:'440 \u20ac'},
     {label:'> 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'3 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'480 \u20ac',fineMax:'620 \u20ac'}
    ]},
-  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana par 41\u201350 km/st',contest:'Var apstr\u012bd\u0113t pie rad\u0101ra k\u013c\u016bdas (\u00b13 km/st vai 3%).',
+  lv:{name:'\u0100truma p\u0101rsnieg\u0161ana par 41\u201350 km/st',contest:'Var apstr\u012bd\u0113t pie rad\u0101ra k\u013c\u016bdas (\u00b13 km/st vai 3%).',
    parts:[
     {label:'< 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'3 uzskaites punkti.',fineMin:'160 \u20ac',fineMax:'220 \u20ac'},
     {label:'< 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'3 uzskaites punkti.',fineMin:'240 \u20ac',fineMax:'320 \u20ac'},
@@ -1841,7 +1879,7 @@ speed:[
     {label:'> 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'4 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'480 \u20ac',fineMax:'640 \u20ac + 6 \u043c\u0435\u0441. \u043b\u0438\u0448\u0435\u043d\u0438\u044f'},
     {label:'> 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'4 \u0443\u0447. \u0431\u0430\u043b\u043b\u0430.',fineMin:'700 \u20ac',fineMax:'880 \u20ac + 12 \u043c\u0435\u0441. \u043b\u0438\u0448\u0435\u043d\u0438\u044f'}
    ]},
-  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana par 51\u201360 km/st',contest:'Var apstr\u012bd\u0113t pie m\u0113r\u012b\u0161anas proced\u016bras p\u0101rkāpuma vai ierīces k\u013c\u016bdas.',
+  lv:{name:'\u0100truma p\u0101rsnieg\u0161ana par 51\u201360 km/st',contest:'Var apstr\u012bd\u0113t pie m\u0113r\u012b\u0161anas proced\u016bras p\u0101rkāpuma vai ierīces k\u013c\u016bdas.',
    parts:[
     {label:'< 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'4 uzskaites punkti.',fineMin:'240 \u20ac',fineMax:'320 \u20ac + 3 m\u0113n.'},
     {label:'< 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'4 uzskaites punkti.',fineMin:'360 \u20ac',fineMax:'460 \u20ac + 6 m\u0113n.'},
@@ -1866,7 +1904,7 @@ speed:[
     {label:'> 7,5 \u0442 \u2014 \u0432\u043d\u0435 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442\u0430',desc:'6 \u0443\u0447. \u0431\u0430\u043b\u043b\u043e\u0432.',fineMin:'720 \u20ac',fineMax:'960 \u20ac + 12\u201318 \u043c\u0435\u0441. \u043b\u0438\u0448\u0435\u043d\u0438\u044f'},
     {label:'> 7,5 \u0442 \u2014 \u043d\u0430\u0441. \u043f\u0443\u043d\u043a\u0442 / \u0436\u0438\u043b\u0430\u044f \u0437\u043e\u043d\u0430',desc:'6 \u0443\u0447. \u0431\u0430\u043b\u043b\u043e\u0432.',fineMin:'1\u202f040 \u20ac',fineMax:'1\u202f400 \u20ac + 12\u201324 \u043c\u0435\u0441. \u043b\u0438\u0448\u0435\u043d\u0438\u044f'}
    ]},
-  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana par 61\u201370 km/st \u26a0\ufe0f (grozījumi 28.05.2024)',contest:'Bieži fiksē ar fotoradaru. Var apstr\u012bd\u0113t pie proced\u016bras p\u0101rkāpuma vai ierīces k\u013c\u016bdas.',
+  lv:{name:'\u0100truma p\u0101rsnieg\u0161ana par 61\u201370 km/st \u26a0\ufe0f (grozījumi 28.05.2024)',contest:'Bieži fiksē ar fotoradaru. Var apstr\u012bd\u0113t pie proced\u016bras p\u0101rkāpuma vai ierīces k\u013c\u016bdas.',
    parts:[
     {label:'< 7,5 t \u2014 \u0101rpus apdzīvot\u0101s vietas',desc:'5\u20136 uzskaites punkti.',fineMin:'720 \u20ac',fineMax:'960 \u20ac + 9 m\u0113n.'},
     {label:'< 7,5 t \u2014 apdzīvota vieta / dz\u012bvojam\u0101 zona',desc:'5\u20136 uzskaites punkti.',fineMin:'1\u202f040 \u20ac',fineMax:'1\u202f400 \u20ac + 9\u201312 m\u0113n.'},
@@ -1885,7 +1923,7 @@ speed:[
   signsSVG:[sgn(S.lim(130),'309-130')],
   fineMax:{ru:'2\u202f000 \u20ac + \u0434\u043e 36 \u043c\u0435\u0441. \u043b\u0438\u0448\u0435\u043d\u0438\u044f',lv:'2\u202f000 \u20ac + l\u012bdz 36 m\u0113n.',en:'2\u202f000 \u20ac + up to 36 mo. suspension'},
   ru:{name:'\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u0438 \u0431\u043e\u043b\u0435\u0435 \u0447\u0435\u043c \u043d\u0430 70 \u043a\u043c/\u0447 \u26a0\ufe0f (\u043f\u043e\u043f\u0440\u0430\u0432\u043a\u0438 28.05.2024)',desc:'\u041c\u0430\u043a\u0441\u0438\u043c\u0430\u043b\u044c\u043d\u043e\u0435 \u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0438\u0435. \u0428\u0442\u0440\u0430\u0444 1\u202f400\u20132\u202f000 \u20ac + \u043b\u0438\u0448\u0435\u043d\u0438\u0435 \u043f\u0440\u0430\u0432 \u043d\u0430 12\u201336 \u043c\u0435\u0441\u044f\u0446\u0435\u0432. 8 \u0443\u0447\u0451\u0442\u043d\u044b\u0445 \u0431\u0430\u043b\u043b\u043e\u0432.',contest:'\u041e\u0441\u043f\u043e\u0440\u0438\u0442\u044c \u043a\u0440\u0430\u0439\u043d\u0435 \u0441\u043b\u043e\u0436\u043d\u043e. \u041e\u0441\u043d\u043e\u0432\u0430\u043d\u0438\u044f: \u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0438\u0435 \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u044b \u0438\u043b\u0438 \u043f\u043e\u0433\u0440\u0435\u0448\u043d\u043e\u0441\u0442\u044c \u043f\u0440\u0438\u0431\u043e\u0440\u0430.'},
-  lv:{name:'\u0100\u0101truma p\u0101rsnieg\u0161ana par vair\u0101k nek\u0101 70 km/st \u26a0\ufe0f (grozījumi 28.05.2024)',desc:'Maksim\u0101lais p\u0101rkāpuma l\u012dmenis. Sods 1\u202f400\u20132\u202f000 \u20ac + ties\u012bbu at\u0146em\u0161ana uz 12\u201336 m\u0113ne\u0161iem. 8 uzskaites punkti.',contest:'Ļoti grūti apstr\u012bd\u0113t. M\u0113r\u012b\u0161anas proced\u016bra un ierīces k\u013c\u016bda \u2014 vienīgie pamati.'},
+  lv:{name:'\u0100truma p\u0101rsnieg\u0161ana par vair\u0101k nek\u0101 70 km/st \u26a0\ufe0f (grozījumi 28.05.2024)',desc:'Maksim\u0101lais p\u0101rkāpuma l\u012dmenis. Sods 1\u202f400\u20132\u202f000 \u20ac + ties\u012bbu at\u0146em\u0161ana uz 12\u201336 m\u0113ne\u0161iem. 8 uzskaites punkti.',contest:'Ļoti grūti apstr\u012bd\u0113t. M\u0113r\u012b\u0161anas proced\u016bra un ierīces k\u013c\u016bda \u2014 vienīgie pamati.'},
   en:{name:'Speeding more than 70 km/h over limit \u26a0\ufe0f (amendment 28.05.2024)',desc:'Maximum speeding offence. Fine 1\u202f400\u20132\u202f000 \u20ac + licence suspension 12\u201336 months. 8 demerit points.',contest:'Extremely difficult to contest. Measurement procedure and device error are the only grounds.'}}
 ],
 
@@ -2658,12 +2696,32 @@ function toggleLaw(card,i){
 }
 
 function filterLaws(){
-  const q=document.getElementById('searchInput').value.toLowerCase();
+  const q=document.getElementById('searchInput').value.trim().toLowerCase();
   if(!q){renderLaws(getLaws()[currentCat]);return;}
   const all=Object.values(getLaws()).flat();
+
+  // Check if query looks like a fine amount (digits only or "X €")
+  const numQ=q.replace(/[€\s]/g,'');
+  const isNumQ=/^\d+$/.test(numQ);
+
+  function fineMatches(str){
+    if(!str) return false;
+    // Extract numbers from fine string and compare
+    var nums=str.match(/\d+/g)||[];
+    return nums.some(function(n){ return n===numQ; });
+  }
+
   renderLaws(all.filter(function(l){
     if(l[lang].name.toLowerCase().includes(q)) return true;
     if(l.article.toLowerCase().includes(q)) return true;
+    // Search in fine amounts
+    if(isNumQ){
+      if(l.fineMax&&l.fineMax[lang]&&fineMatches(l.fineMax[lang])) return true;
+      if(l.fineMin&&fineMatches(l.fineMin)) return true;
+      if(l[lang].parts&&l[lang].parts.some(function(p){
+        return fineMatches(p.fineMax)||fineMatches(p.fineMin);
+      })) return true;
+    }
     if(l[lang].parts){
       return l[lang].parts.some(function(p){
         return p.label.toLowerCase().includes(q)||(p.desc&&p.desc.toLowerCase().includes(q));
