@@ -2,7 +2,7 @@
 <html lang="lv">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BALT 1</title>
 </head>
 <body>
@@ -12,6 +12,7 @@
     margin: 0;
     padding: 0;
   }
+  html { overflow-x: hidden; }
   
   /* Переменные для быстрой кастомизации */
   :root {
@@ -485,8 +486,8 @@
   .csn-card-ref{font-size:12px;color:var(--color-brand);background:var(--color-brand-light);border-radius:var(--border-radius-md);padding:5px 12px;margin-top:10px;display:inline-flex;gap:8px;font-weight:500;flex-wrap:wrap;align-items:center;}
   </style>
 <style>
-  .law-switcher{display:flex;gap:8px;margin-top:12px;justify-content:center;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:4px;}
-  .law-btn{font-size:12px;font-weight:500;padding:8px 16px;min-height:36px;border-radius:var(--border-radius-md);border:none;cursor:pointer;background:transparent;color:var(--color-text-secondary);transition:all 0.2s ease;}
+  .law-switcher{display:flex;gap:6px;margin-top:12px;justify-content:flex-start;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:4px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}.law-switcher::-webkit-scrollbar{display:none;}
+  .law-btn{font-size:12px;font-weight:500;padding:8px 14px;min-height:36px;white-space:nowrap;flex-shrink:0;border-radius:var(--border-radius-md);border:none;cursor:pointer;background:transparent;color:var(--color-text-secondary);transition:all 0.2s ease;}
   .law-btn.active{background:var(--color-background-primary);color:var(--color-brand);box-shadow:0 1px 4px rgba(0,0,0,0.08);}
   .badge-pts{background:#faf5ff;color:#6b46c1;}
   .signs-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;align-items:flex-end;}
@@ -606,6 +607,50 @@
   [data-theme="light"] .arrow-icon { border-color:#a0aec0 !important; }
   [data-theme="light"] .fav-law-badge { background:#edf2f7 !important; border-color:#e2e8f0 !important; color:#4a5568 !important; }
   [data-theme="light"] .section-title { color:#718096 !important; }
+
+  /* ===== PROTOCOL HELPER ===== */
+  .proto-btn{border:1px solid var(--color-brand)!important;color:var(--color-brand)!important;}
+  .proto-btn.active{background:var(--color-brand)!important;color:#fff!important;}
+  .proto-container{padding:14px;max-width:var(--max-app-width);margin:0 auto;}
+  .proto-header{font-size:13px;font-weight:700;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;}
+  .proto-types{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px;}
+  .proto-type-btn{padding:14px 12px;border-radius:var(--border-radius-lg);border:2px solid var(--color-border-secondary);background:var(--color-background-primary);cursor:pointer;text-align:left;transition:all 0.15s;}
+  .proto-type-btn:hover{border-color:var(--color-brand);background:var(--color-brand-light);}
+  .proto-type-btn.selected{border-color:var(--color-brand);background:var(--color-brand-light);}
+  .proto-type-icon{font-size:24px;display:block;margin-bottom:6px;}
+  .proto-type-name{font-size:13px;font-weight:600;color:var(--color-text-primary);}
+  .proto-type-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px;}
+  .proto-section{margin-bottom:18px;}
+  .proto-section-title{font-size:12px;font-weight:700;color:var(--color-brand);text-transform:uppercase;letter-spacing:0.5px;padding:8px 0 6px;border-bottom:1px solid var(--color-border-secondary);margin-bottom:10px;}
+  .proto-step{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--color-border-tertiary);}
+  .proto-step:last-child{border-bottom:none;}
+  .proto-check{width:22px;height:22px;min-width:22px;border-radius:5px;border:2px solid var(--color-border-secondary);background:var(--color-background-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;margin-top:1px;}
+  .proto-check.done{background:var(--color-brand);border-color:var(--color-brand);}
+  .proto-check.done::after{content:'✓';color:#fff;font-size:13px;font-weight:700;}
+  .proto-check.warn{border-color:#e53e3e;}
+  .proto-check.done.warn{background:#e53e3e;border-color:#e53e3e;}
+  .proto-step-text{flex:1;}
+  .proto-step-label{font-size:13px;color:var(--color-text-primary);line-height:1.4;}
+  .proto-step-label.done-text{text-decoration:line-through;color:var(--color-text-secondary);}
+  .proto-step-note{font-size:11px;color:var(--color-text-secondary);margin-top:3px;}
+  .proto-step-law{font-size:10px;color:var(--color-brand);font-weight:600;margin-top:2px;}
+  .proto-mandatory{font-size:9px;font-weight:700;color:#e53e3e;text-transform:uppercase;letter-spacing:0.3px;margin-left:6px;}
+  .proto-progress{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:12px 14px;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+  .proto-progress-bar{flex:1;height:6px;background:var(--color-border-secondary);border-radius:3px;overflow:hidden;}
+  .proto-progress-fill{height:100%;background:var(--color-brand);border-radius:3px;transition:width 0.3s;}
+  .proto-progress-text{font-size:12px;font-weight:600;color:var(--color-text-secondary);white-space:nowrap;}
+  .proto-reset{font-size:12px;color:var(--color-text-secondary);text-decoration:underline;cursor:pointer;background:none;border:none;padding:0;}
+  .proto-reset:hover{color:var(--color-text-primary);}
+  .proto-done-banner{background:#f0fff4;border:1px solid #9ae6b4;border-radius:var(--border-radius-lg);padding:16px;text-align:center;margin-top:12px;}
+  .proto-done-banner .done-icon{font-size:32px;display:block;margin-bottom:6px;}
+  .proto-done-banner .done-title{font-size:15px;font-weight:700;color:#276749;}
+  .proto-done-banner .done-sub{font-size:12px;color:#2f855a;margin-top:4px;}
+  [data-theme="dark"] .proto-type-btn{background:var(--color-background-primary);border-color:#2d3748;}
+  [data-theme="dark"] .proto-type-btn.selected,[data-theme="dark"] .proto-type-btn:hover{background:#1a2a3a;border-color:var(--color-brand);}
+  [data-theme="dark"] .proto-check{background:#1e2535;border-color:#4a5568;}
+  [data-theme="dark"] .proto-done-banner{background:#1a2d1f;border-color:#276749;}
+  [data-theme="dark"] .proto-done-banner .done-title{color:#68d391;}
+  [data-theme="dark"] .proto-done-banner .done-sub{color:#48bb78;}
 
   /* ===== ABBREVIATION LEGEND ===== */
   .abbrev-box{margin-top:14px;padding:10px 14px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border-left:3px solid var(--color-brand);}
@@ -854,10 +899,11 @@
   <div class="law-switcher">
     <button class="law-btn active" onclick="setLaw('asl',this)">ASL</button>
     <button class="law-btn" onclick="setLaw('aal',this)">AAL</button>
-    <button class="law-btn" onclick="setLaw('csl',this)">Ceļu satiksme</button>
+    <button class="law-btn" onclick="setLaw('csl',this)">CSN/CSL</button>
     <button class="law-btn" onclick="setLaw('aiz',this)">Aizturēšana</button>
     <button class="law-btn" onclick="setLaw('lpp',this)">LPP</button>
     <button class="law-btn" onclick="setLaw('apas',this)">APAS</button>
+    <button class="law-btn proto-btn" onclick="showProtocol(this)" id="protocolBtn">Protokols</button>
   </div>
 </div>
 <div class="search-bar"><input type="text" id="searchInput" placeholder="Найти нарушение..." oninput="filterLaws()"/></div>
@@ -1526,20 +1572,17 @@ sodi:[
   ru:{name:'Naudas sods — apmēri un nosacījumi',
    parts:[
     {label:'Naudas soda vienības (AAL 16.(2))',desc:'1 naudas soda vienība = 5 €. Minimālais sods — 2 vienības (10 €). Maximālais fiziskām personām — 400 vienības (2 000 €). Juridiskām personām — 4 000 vienības (20 000 €).',fineMin:'',fineMax:''},
-    {label:'Nepilngadīgajiem (AAL 16.(8))',desc:'Nepilngadīgajam piemēro pusi no tā naudas soda, kas par tādīos pašos apstākļos izdarītu pārkāpumu būtu piemērojams pilngadīgai personai.',fineMin:'',fineMax:''},
-    {label:'Atlīde ar 25% atlaidi (AAL prakse)',desc:'Ja naudas sods samaksāts 15 dienu laikā no lēmuma pieņemšanas, daudzos CSL pārkāpumu gadījumos tiek piemērota 25% atlaide.',fineMin:'',fineMax:''}
+    {label:'Nepilngadīgajiem (AAL 16.(8))',desc:'Nepilngadīgajam piemēro pusi no tā naudas soda, kas par tādīos pašos apstākļos izdarītu pārkāpumu būtu piemērojams pilngadīgai personai.',fineMin:'',fineMax:''}
    ]},
   lv:{name:'Naudas sods — apmēri un nosacījumi',
    parts:[
     {label:'Naudas soda vienības (AAL 16.(2))',desc:'1 naudas soda vienība = 5 €. Minimālais naudas sods fiziskām un juridiskām personām — 2 naudas soda vienības (10 €). Maximālais naudas sods fiziskām personām — 400 vienības (2 000 €); juridiskām personām — 4 000 vienības (20 000 €).',fineMin:'',fineMax:''},
-    {label:'Nepilngadīgajiem (AAL 16.(8))',desc:'Nepilngadīgajam piemēro pusi no tā naudas soda, kas par tādīos pašos apstākļos izdarītu pārkāpumu būtu piemērojams pilngadīgai personai.',fineMin:'',fineMax:''},
-    {label:'Samaksā 15 dienu laikā — 25% atlaide',desc:'Vairākos likumos (t.sk. CSL) noteikts, ka, samaksājot naudas sodu 15 dienu laikā no lēmuma stāšanās spēkā, tiek piemērota 25% atlaide.',fineMin:'',fineMax:''}
+    {label:'Nepilngadīgajiem (AAL 16.(8))',desc:'Nepilngadīgajam piemēro pusi no tā naudas soda, kas par tādīos pašos apstākļos izdarītu pārkāpumu būtu piemērojams pilngadīgai personai.',fineMin:'',fineMax:''}
    ]},
   en:{name:'Fine — amounts and conditions',
    parts:[
     {label:'Fine units (AAL 16.(2))',desc:'1 fine unit = 5 €. Minimum fine for natural and legal persons — 2 units (10 €). Maximum fine for natural persons — 400 units (2 000 €); for legal persons — 4 000 units (20 000 €).',fineMin:'',fineMax:''},
-    {label:'For minors (AAL 16.(8))',desc:'A minor receives half the fine that would be applicable to an adult for the same violation under the same circumstances.',fineMin:'',fineMax:''},
-    {label:'Pay within 15 days — 25% discount',desc:'Several laws (including CSL) provide that paying the fine within 15 days of the decision entering into force entitles the person to a 25% discount.',fineMin:'',fineMax:''}
+    {label:'For minors (AAL 16.(8))',desc:'A minor receives half the fine that would be applicable to an adult for the same violation under the same circumstances.',fineMin:'',fineMax:''}
    ]}},
 
  {article:'AAL 17. pants',anchor:'#p17',noFine:true,parts:false,signsSVG:[],srcUrl:'AAL',
@@ -2287,7 +2330,7 @@ parking:[
  {article:'CSL 57.4. pants',anchor:'#p57',warn:false,parts:true,singleFine:true,
   signsSVG:[sgn(S.edgeMark,'920/943/947')],
   fineMax:{ru:'30 €',lv:'30 €',en:'30 €'},
-  ru:{name:'Стоянка: нарушения аналогичные 57.1 (водитель отсутствует)',contest:'Оспорить, если знак установлен неправильно или не виден. Оплата в течение 15 дней — скидка 25%.',
+  ru:{name:'Стоянка: нарушения аналогичные 57.1 (водитель отсутствует)',contest:'Оспорить, если знак установлен неправильно или не виден.',
    parts:[
     {label:'57.4.1. Стоянка на левой стороне дороги (если не разрешено)',desc:'Водитель отсутствует — вместо предупреждения сразу штраф.',fineMin:'30 €',fineMax:'30 €'},
     {label:'57.4.2. Стоянка на проезжей части при наличии обочины',desc:'',fineMin:'30 €',fineMax:'30 €'},
@@ -2297,7 +2340,7 @@ parking:[
     {label:'57.4.6. Стоянка в зоне знаков 920 / 943 / 947 (разметка края)',desc:'',fineMin:'30 €',fineMax:'30 €'},
     {label:'57.4.7. Стоянка ближе 100 м от ж/д переезда вне нас. пункта или ближе 50 м в нас. пункте',desc:'',fineMin:'30 €',fineMax:'30 €'},
     {label:'57.4.8. Стоянка в месте, к которому нельзя подъехать без нарушения ПДД',desc:'Блокировка других участников.',fineMin:'30 €',fineMax:'30 €'}]},
-  lv:{name:'Stāvēšana: pārkāpumi, analogi 57.1 (vadītājs nav klāt)',contest:'Var apstrīdēt, ja zīme uzstādīta nepareizi vai nav redzama. Samaksa 15 dienu laikā — 25% atlaide.',
+  lv:{name:'Stāvēšana: pārkāpumi, analogi 57.1 (vadītājs nav klāt)',contest:'Var apstrīdēt, ja zīme uzstādīta nepareizi vai nav redzama.',
    parts:[
     {label:'57.4.1. Stāvēšana ceļa kreisajā pusē, kad tas nav atļauts',desc:'Vadītāja prombūtne — brīdinājuma vietā uzreiz naudas sods.',fineMin:'30 €',fineMax:'30 €',csn:'CSN 114'},
     {label:'57.4.2. Stāvēšana uz brauktuves, ja ceļam ir nomale',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 114'},
@@ -2307,7 +2350,7 @@ parking:[
     {label:'57.4.6. Stāvēšana zīmju 920 / 943 / 947 darbības zonā (malas apzīmējums)',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 121.12'},
     {label:'57.4.7. Stāvēšana tuvāk par 100 m no dzelzceļa pārbrauktuves ārpus apdzīvotas vietas vai tuvāk par 50 m apdzīvotā vietā',desc:'',fineMin:'30 €',fineMax:'30 €',csn:'CSN 122.1'},
     {label:'57.4.8. Stāvēšana vietā, kur nevar piebraukt, nepārkāpjot CSN',desc:'Citu dalībnieku bloķēšana.',fineMin:'30 €',fineMax:'30 €',csn:'CSN 114'}]},
-  en:{name:'Parking: violations analogous to 57.1 (driver absent)',contest:'Can be contested if the sign is incorrectly placed or not visible. Payment within 15 days — 25% discount.',
+  en:{name:'Parking: violations analogous to 57.1 (driver absent)',contest:'Can be contested if the sign is incorrectly placed or not visible.',
    parts:[
     {label:'57.4.1. Parking on the left side of the road (where not permitted)',desc:'Driver absent — fine instead of warning.',fineMin:'30 €',fineMax:'30 €'},
     {label:'57.4.2. Parking on the carriageway when a shoulder is available',desc:'',fineMin:'30 €',fineMax:'30 €'},
@@ -2321,7 +2364,7 @@ parking:[
  {article:'CSL 57.5. pants',anchor:'#p57',warn:false,parts:true,singleFine:true,
   signsSVG:[sgn(S.noStop,'326'),sgn(S.s327,'327'),sgn(S.s328,'328'),sgn(S.s329,'329'),sgn(S.s523,'523'),sgn(S.edgeMark,'944/945')],
   fineMax:{ru:'40 €',lv:'40 €',en:'40 €'},
-  ru:{name:'Стоянка: серьёзные нарушения',contest:'Оспорить, если знаки установлены неправильно или место нарушения обозначено не по нормам. Оплата в 15 дней — скидка 25%.',
+  ru:{name:'Стоянка: серьёзные нарушения',contest:'Оспорить, если знаки установлены неправильно или место нарушения обозначено не по нормам.',
    parts:[
     {label:'57.5.1. Стоянка во 2-м ряду',desc:'Блокировка движения других ТС.',fineMin:'40 €',fineMax:'40 €'},
     {label:'57.5.3. Стоянка на проезжей части у опасного поворота / перегиба — видимость < 100 м (вне нас. пункта)',desc:'Частично или полностью на проезжей части в месте, где видимость хотя бы в одном направлении менее 100 м.',fineMin:'40 €',fineMax:'40 €'},
@@ -2336,7 +2379,7 @@ parking:[
     {label:'57.5.12. В зоне знаков 327 / 328 / 329 или на территории со знаком 523',desc:'Знаки 327 (стоянка запрещена), 328/329 (по чётным/нечётным дням), 523 (зона ограниченной стоянки).',fineMin:'40 €',fineMax:'40 €'},
     {label:'57.5.13. В зонах знаков 944 / 945 (специальная разметка края)',desc:'Знаки 944, 945 указывают особый запрет стоянки у края дороги.',fineMin:'40 €',fineMax:'40 €'},
     {label:'57.5.14. В туннелях',desc:'',fineMin:'40 €',fineMax:'40 €'}]},
-  lv:{name:'Stāvēšana: nopietni pārkāpumi',contest:'Var apstrīdēt, ja zīmes uzstādītas nepareizi vai pārkāpuma vieta nav apzīmēta atbilstoši normām. Samaksa 15 dienu laikā — 25% atlaide.',
+  lv:{name:'Stāvēšana: nopietni pārkāpumi',contest:'Var apstrīdēt, ja zīmes uzstādītas nepareizi vai pārkāpuma vieta nav apzīmēta atbilstoši normām.',
    parts:[
     {label:'57.5.1. Stāvēšana otrajā rindā',desc:'Citu TL kustības bloķēšana.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 116'},
     {label:'57.5.3. Stāvēšana uz brauktuves bīstamu pagriezienu tuvumā — redzamība < 100 m (ārpus apdzīvotas vietas)',desc:'Daļēji vai pilnīgi uz brauktuves vietā, kur redzamība vismaz vienā virzienā ir mazāka par 100 m.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 121.13'},
@@ -2351,7 +2394,7 @@ parking:[
     {label:'57.5.12. Zīmju 327 / 328 / 329 darbības zonā vai teritorijā ar zīmi 523',desc:'327 (stāvēšana aizliegta), 328/329 (nepāra/pāra datumos), 523 (ierobežotas stāvēšanas zona).',fineMin:'40 €',fineMax:'40 €',csn:'CSN 122.3'},
     {label:'57.5.13. Vietās ar zīmēm 944 / 945 (īpašs malas apzīmējums)',desc:'Zīmes 944, 945 norāda īpašu stāvēšanas aizliegumu pie ceļa malas.',fineMin:'40 €',fineMax:'40 €',csn:'CSN 122.4'},
     {label:'57.5.14. Tuneļos',desc:'',fineMin:'40 €',fineMax:'40 €',csn:'CSN 121.2'}]},
-  en:{name:'Parking: serious violations',contest:'Can be contested if signs are incorrectly placed or the prohibited zone is not properly marked. Payment within 15 days — 25% discount.',
+  en:{name:'Parking: serious violations',contest:'Can be contested if signs are incorrectly placed or the prohibited zone is not properly marked.',
    parts:[
     {label:'57.5.1. Parking in second row',desc:'Blocking the movement of other vehicles.',fineMin:'40 €',fineMax:'40 €'},
     {label:'57.5.3. Parking on carriageway near dangerous bends — visibility < 100m (outside populated area)',desc:'Partially or fully on the carriageway where visibility in at least one direction is less than 100m.',fineMin:'40 €',fineMax:'40 €'},
@@ -2638,6 +2681,282 @@ other:[
 ]
 };
 
+// ===== PROTOCOL HELPER =====
+const PROTO_TYPES=[
+  {id:'parking',icon:'🚗',
+   lv:{name:'Stāvēšanas pārkāpums',sub:'CSL 57. pants'},
+   ru:{name:'Нарушение стоянки',sub:'CSL 57. pants'},
+   en:{name:'Parking violation',sub:'CSL 57. pants'}},
+  {id:'speed',icon:'💨',
+   lv:{name:'Ātruma pārsniegšana',sub:'CSL 55. pants'},
+   ru:{name:'Превышение скорости',sub:'CSL 55. pants'},
+   en:{name:'Speed violation',sub:'CSL 55. pants'}},
+  {id:'alcohol',icon:'🍺',
+   lv:{name:'Alkohols / narkotikas',sub:'CSL 62. pants'},
+   ru:{name:'Алкоголь / наркотики',sub:'CSL 62. pants'},
+   en:{name:'Alcohol / drugs',sub:'CSL 62. pants'}},
+  {id:'aiztureshana',icon:'🔒',
+   lv:{name:'Administratīvā aizturēšana',sub:'AAL 71. pants'},
+   ru:{name:'Административное задержание',sub:'AAL 71. pants'},
+   en:{name:'Administrative detention',sub:'AAL 71. pants'}},
+  {id:'nesakopta',icon:'🗑️',
+   lv:{name:'Nesakopta teritorija',sub:'RD-24-270-sn / RD-25-19-sn'},
+   ru:{name:'Неухоженная территория',sub:'RD-24-270-sn / RD-25-19-sn'},
+   en:{name:'Unmaintained territory',sub:'RD-24-270-sn / RD-25-19-sn'}},
+  {id:'other',icon:'📋',
+   lv:{name:'Cits pārkāpums',sub:'Vispārējais protokols'},
+   ru:{name:'Другое нарушение',sub:'Общий протокол'},
+   en:{name:'Other violation',sub:'General protocol'}}
+];
+
+const PROTO_STEPS={
+  parking:{
+    lv:[
+      {s:'foto',title:'Fotografē TL numura zīmi (skaidri salasāma)',note:'Vismaz 2 foto — no priekšas un sāniem',law:'',mandatory:true},
+      {s:'foto2',title:'Fotografē TL atrašanās vietu kontekstā',note:'Redzama iela, māja vai zīme, attālums no tās',law:'',mandatory:true},
+      {s:'signs',title:'Fotografē tuvākās ceļazīmes vai iezīmējumu',note:'Ja ir 327-329, 830-849 vai dzeltenā līnija',law:'CSL 57.',mandatory:false},
+      {s:'time',title:'Fiksē precīzu datumu un laiku',note:'',law:'AAL 103.(2)',mandatory:true},
+      {s:'address',title:'Fiksē precīzu adresi (iela, mājas nr., koordinātes)',note:'',law:'',mandatory:true},
+      {s:'owner',title:'Noskaidro TL īpašnieku (pēc numura)',note:'Ja TL nav klāt — protokolu noformē uz īpašnieku',law:'',mandatory:true},
+      {s:'present',title:'Pārbaudi — vai vadītājs / īpašnieks ir klāt?',note:'Ja klāt — uzaicini sniegt paskaidrojumu',law:'AAL 103.',mandatory:false},
+      {s:'norm',title:'Noteic pārkāpto normu (CSL 57.x daļa, punkts)',note:'Atsauce uz konkrētu apakšpunktu, nevis visu pantu',law:'CSL 57.',mandatory:true},
+      {s:'protocol',title:'Aizpildi protokola obligātās ailes',note:'Pārkāpuma apraksts, norma, sods, amatpersonas dati',law:'AAL 103.',mandatory:true},
+      {s:'sign',title:'Lūdz parakstīties vai fiksē atteikumu',note:'Atteikšanās parakstīt — neaptur procesa norisi',law:'AAL 103.(6)',mandatory:true}
+    ],
+    ru:[
+      {s:'foto',title:'Сфотографируй номерной знак ТС (чётко читаем)',note:'Минимум 2 фото — спереди и сбоку',law:'',mandatory:true},
+      {s:'foto2',title:'Сфотографируй ТС в контексте места',note:'Видна улица, дом или знак и расстояние до него',law:'',mandatory:true},
+      {s:'signs',title:'Сфотографируй ближайшие знаки или разметку',note:'Если есть 327-329, 830-849 или жёлтая линия',law:'CSL 57.',mandatory:false},
+      {s:'time',title:'Зафиксируй точную дату и время',note:'',law:'AAL 103.(2)',mandatory:true},
+      {s:'address',title:'Зафиксируй точный адрес (улица, номер дома, координаты)',note:'',law:'',mandatory:true},
+      {s:'owner',title:'Установи владельца ТС (по номеру)',note:'Если ТС нет рядом — протокол оформляется на владельца',law:'',mandatory:true},
+      {s:'present',title:'Проверь — присутствует ли водитель / владелец?',note:'Если присутствует — предложи дать объяснения',law:'AAL 103.',mandatory:false},
+      {s:'norm',title:'Определи нарушенную норму (CSL 57.x часть, пункт)',note:'Ссылка на конкретный подпункт, а не весь статью',law:'CSL 57.',mandatory:true},
+      {s:'protocol',title:'Заполни обязательные поля протокола',note:'Описание нарушения, норма, санкция, данные должностного лица',law:'AAL 103.',mandatory:true},
+      {s:'sign',title:'Попроси подписать или зафикисруй отказ',note:'Отказ от подписи не останавливает процесс',law:'AAL 103.(6)',mandatory:true}
+    ]},
+  speed:{
+    lv:[
+      {s:'radar',title:'Fiksē ātruma mērījumu (radars / kamera)',note:'Mērījuma rezultāts — skaitlis km/h, datums, laiks, vieta',law:'CSN 99-100',mandatory:true},
+      {s:'foto',title:'Fotografē TL (numura zīme redzama) un mērījumu',note:'',law:'',mandatory:true},
+      {s:'limit',title:'Noskaidro atļauto ātrumu konkrētajā vietā',note:'Apdzīvota vieta / ārpus / ekspresceļš / tunelis',law:'CSN 99',mandatory:true},
+      {s:'excess',title:'Aprēķini pārsniegumu (fakts. − atļ.) km/h',note:'No pārsnieguma atkarīgs pārkāpuma smagums',law:'CSL 55.',mandatory:true},
+      {s:'norm',title:'Noteic piemērojamo normu (CSL 55.1 – 55.7)',note:'',law:'CSL 55.',mandatory:true},
+      {s:'owner',title:'Noskaidro vadītāja identitāti',note:'Dokuments + vizuālā pārbaude',law:'AAL 103.',mandatory:true},
+      {s:'explain',title:'Piedāvā sniegt paskaidrojumu',note:'',law:'AAL 41.',mandatory:false},
+      {s:'pts',title:'Pārbaud uzskaites punktus (ja ir)',note:'Ja > 10 punktiem — var aizlegt vadīt',law:'',mandatory:false},
+      {s:'protocol',title:'Aizpildi protokolu',note:'Mērījums, norma, sods, vadītāja dati',law:'AAL 103.',mandatory:true}
+    ],
+    ru:[
+      {s:'radar',title:'Зафикисруй показания радара / камеры',note:'Результат в км/ч, дата, время, место',law:'CSN 99-100',mandatory:true},
+      {s:'foto',title:'Сфотографируй ТС (номер виден) и показания',note:'',law:'',mandatory:true},
+      {s:'limit',title:'Установи разрешённую скорость на данном участке',note:'Населённый пункт / вне / шоссе / тоннель',law:'CSN 99',mandatory:true},
+      {s:'excess',title:'Вычисли превышение (факт. − разреш.) км/ч',note:'От превышения зависит тяжесть нарушения',law:'CSL 55.',mandatory:true},
+      {s:'norm',title:'Определи применяемую норму (CSL 55.1 – 55.7)',note:'',law:'CSL 55.',mandatory:true},
+      {s:'owner',title:'Установи личность водителя',note:'Документ + визуальная проверка',law:'AAL 103.',mandatory:true},
+      {s:'explain',title:'Предложи дать объяснения',note:'',law:'AAL 41.',mandatory:false},
+      {s:'pts',title:'Проверь учётные баллы (если есть)',note:'Если > 10 баллов — возможно лишение права вождения',law:'',mandatory:false},
+      {s:'protocol',title:'Заполни протокол',note:'Измерение, норма, санкция, данные водителя',law:'AAL 103.',mandatory:true}
+    ]},
+  alcohol:{
+    lv:[
+      {s:'signs',title:'Fiksē ārējās intoksikācijas pazīmes',note:'Smarža, koordinācija, runa, acu zīlītes',law:'',mandatory:true},
+      {s:'alktest1',title:'Veic alkotesta pārbaudi (1. mērījums)',note:'Pirms testa – informē par tiesībām',law:'CSL 62. / LPP 12.17',mandatory:true},
+      {s:'alktest2',title:'2. alkotests pēc 15-20 minūtēm (ja pozitīvs)',note:'Ja atsakās – fiksē atteikumu, tas pielīdzināms pozitīvam',law:'CSL 62.',mandatory:true},
+      {s:'result',title:'Fiksē mērījuma rezultātu (promiles / mg/l)',note:'Līmenis nosaka pārkāpuma kategoriju',law:'CSL 62.',mandatory:true},
+      {s:'atstadina',title:'Atstādini no TL vadīšanas',note:'Ja ir alkohols – obligāti, neatkarīgi no līmeņa',law:'LPP 12.20',mandatory:true},
+      {s:'identity',title:'Noskaidro vadītāja identitāti',note:'',law:'',mandatory:true},
+      {s:'norm',title:'Noteic piemērojamo normu (CSL 62.1–62.8)',note:'Atkarīgs no promilēm un atkārtotības',law:'CSL 62.',mandatory:true},
+      {s:'explain',title:'Piedāvā sniegt paskaidrojumu',note:'Tiesības klusēt – obligāti jāpaziņo',law:'AAL 41. / AAL 71.(3)',mandatory:false},
+      {s:'protocol',title:'Aizpildi protokolu',note:'Alkotesta dati, norma, sods',law:'AAL 103.',mandatory:true}
+    ],
+    ru:[
+      {s:'signs',title:'Зафиксируй внешние признаки интоксикации',note:'Запах, координация, речь, зрачки',law:'',mandatory:true},
+      {s:'alktest1',title:'Проведи алкотест (1-е измерение)',note:'Перед тестом — сообщи о правах',law:'CSL 62. / LPP 12.17',mandatory:true},
+      {s:'alktest2',title:'2-й алкотест через 15-20 минут (если позитивный)',note:'Отказ — фиксируется и приравнивается к позитивному результату',law:'CSL 62.',mandatory:true},
+      {s:'result',title:'Зафикисруй результат (промилле / мг/л)',note:'Уровень определяет категорию нарушения',law:'CSL 62.',mandatory:true},
+      {s:'atstadina',title:'Отстрани от управления ТС',note:'При наличии алкоголя — обязательно, независимо от уровня',law:'LPP 12.20',mandatory:true},
+      {s:'identity',title:'Установи личность водителя',note:'',law:'',mandatory:true},
+      {s:'norm',title:'Определи применяемую норму (CSL 62.1–62.8)',note:'Зависит от промилле и повторности',law:'CSL 62.',mandatory:true},
+      {s:'explain',title:'Предложи дать объяснения',note:'Право молчать — обязательно сообщить',law:'AAL 41. / AAL 71.(3)',mandatory:false},
+      {s:'protocol',title:'Заполни протокол',note:'Данные алкотеста, норма, санкция',law:'AAL 103.',mandatory:true},
+      {s:'sign',title:'Попроси подписать или зафиксируй отказ',note:'',law:'AAL 103.(6)',mandatory:true}
+    ]},
+  aiztureshana:{
+    lv:[
+      {s:'grund',title:'Noteic aizturēšanas pamatu (AAL 71.(1))',note:'Identitātes noskaidrošana VAI pārkāpuma pārtraukšana',law:'AAL 71.(1)',mandatory:true},
+      {s:'inform',title:'Nekavējoties informē par aizturēšanas pamatu',note:'Saprotamā valodā — AAL 71.(3) pienākums',law:'AAL 71.(3)',mandatory:true},
+      {s:'rights',title:'Paziņo tiesības (klusēšana, advokāts, paziņojums)',note:'AAL 71.(4) — visi 4 punkti',law:'AAL 71.(4)',mandatory:true},
+      {s:'identity',title:'Noskaidro personas identitāti',note:'Pase, ID karte vai cits dokuments',law:'',mandatory:true},
+      {s:'notify',title:'Pēc pieprasījuma — paziņo tuviniekiem / darba devējam',note:'Nepilngadīgam — obligāti paziņo pārstāvim',law:'AAL 71.(4)',mandatory:false},
+      {s:'protocol',title:'Sastādi aizturēšanas protokolu',note:'Laiks, vieta, pamats, personas dati, tiesību paziņošana',law:'AAL 71.',mandatory:true},
+      {s:'timer',title:'Sāc laika skaitīšanu — max 4 stundas',note:'No faktiskās aizturēšanas brīža',law:'AAL 71.(5)',mandatory:true},
+      {s:'medical',title:'Pārbaudi veselības stāvokli',note:'Ja ir ievainojumi vai slimība — neatliekamā palīdzība',law:'LPP 10.3',mandatory:false},
+      {s:'sign',title:'Lūdz parakstīties uz protokola vai fiksē atteikumu',note:'',law:'AAL 103.(6)',mandatory:true}
+    ],
+    ru:[
+      {s:'grund',title:'Определи основание задержания (AAL 71.(1))',note:'Установление личности ИЛИ прекращение нарушения',law:'AAL 71.(1)',mandatory:true},
+      {s:'inform',title:'Немедленно сообщи об основании задержания',note:'На понятном языке — обязанность по AAL 71.(3)',law:'AAL 71.(3)',mandatory:true},
+      {s:'rights',title:'Сообщи о правах (молчание, адвокат, уведомление)',note:'AAL 71.(4) — все 4 пункта',law:'AAL 71.(4)',mandatory:true},
+      {s:'identity',title:'Установи личность задержанного',note:'Паспорт, ID-карта или иной документ',law:'',mandatory:true},
+      {s:'notify',title:'По требованию — уведоми родственников / работодателя',note:'Несовершеннолетнему — представителя обязательно',law:'AAL 71.(4)',mandatory:false},
+      {s:'protocol',title:'Составь протокол задержания',note:'Время, место, основание, данные лица, уведомление о правах',law:'AAL 71.',mandatory:true},
+      {s:'timer',title:'Начни отсчёт времени — макс. 4 часа',note:'С момента фактического задержания',law:'AAL 71.(5)',mandatory:true},
+      {s:'medical',title:'Проверь состояние здоровья',note:'При травмах или болезни — неотложная помощь',law:'LPP 10.3',mandatory:false},
+      {s:'sign',title:'Попроси подписать протокол или зафиксируй отказ',note:'',law:'AAL 103.(6)',mandatory:true}
+    ]},
+  nesakopta:{
+    lv:[
+      {s:'foto1',title:'Fotografē piegružoto teritoriju — vispārējs skats',note:'Redzama iela / adrese / orientieri',law:'',mandatory:true},
+      {s:'foto2',title:'Fotografē atkritumu tuvplānu',note:'Redzams atkritumu veids (sīkie / lielgabarīta)',law:'',mandatory:true},
+      {s:'address',title:'Fiksē precīzu adresi vai kadastra numuru',note:'',law:'',mandatory:true},
+      {s:'owner',title:'Noskaidro teritorijas atbildīgo personu',note:'Pašvaldību reģistrs, mājas pārvaldnieks vai zemesgrāmata',law:'RD-24-270-sn 4.1.1',mandatory:true},
+      {s:'house',title:'Pārbaudi — vai teritorijai piesaistīta dzīvojamā māja?',note:'Ja jā — citi noteikumi (RD-24-270-sn 2.3 + MK906)',law:'RD-24-270-sn',mandatory:true},
+      {s:'type',title:'Noteic atkritumu veidu (sīkie / lielgabarīta / konteineru apkārtne)',note:'No veida atkarīgs piemērojamais pants',law:'',mandatory:true},
+      {s:'norm',title:'Noteic piemērojamo normu',note:'RD-24-270-sn / RD-25-19-sn / Atk.lik. — konkrēts punkts',law:'',mandatory:true},
+      {s:'protocol',title:'Aizpildi administratīvā pārkāpuma protokolu',note:'Norma, apraksts, atbildīgā persona, foto pielikums',law:'AAL 103.',mandatory:true}
+    ],
+    ru:[
+      {s:'foto1',title:'Сфотографируй захламлённую территорию — общий вид',note:'Видна улица / адрес / ориентиры',law:'',mandatory:true},
+      {s:'foto2',title:'Сфотографируй мусор крупным планом',note:'Виден тип отходов (мелкие / крупногабаритные)',law:'',mandatory:true},
+      {s:'address',title:'Зафиксируй точный адрес или кадастровый номер',note:'',law:'',mandatory:true},
+      {s:'owner',title:'Установи ответственное лицо за территорию',note:'Реестр самоуправления, управляющий дома или земельная книга',law:'RD-24-270-sn 4.1.1',mandatory:true},
+      {s:'house',title:'Проверь — привязан ли к территории жилой дом?',note:'Если да — другие правила (RD-24-270-sn 2.3 + MK906)',law:'RD-24-270-sn',mandatory:true},
+      {s:'type',title:'Определи тип отходов (мелкие / крупногаб. / у контейнеров)',note:'От типа зависит применяемый пункт закона',law:'',mandatory:true},
+      {s:'norm',title:'Определи применяемую норму',note:'RD-24-270-sn / RD-25-19-sn / Atk.lik. — конкретный пункт',law:'',mandatory:true},
+      {s:'protocol',title:'Заполни протокол об административном нарушении',note:'Норма, описание, ответственное лицо, приложение фото',law:'AAL 103.',mandatory:true},
+    ]},
+  other:{
+    lv:[
+      {s:'fact',title:'Fiksē pārkāpuma faktu (ko, kad, kur, kā)',note:'',law:'',mandatory:true},
+      {s:'foto',title:'Fotografē vai video pierādījumi',note:'',law:'',mandatory:false},
+      {s:'identity',title:'Noskaidro personas identitāti',note:'',law:'',mandatory:true},
+      {s:'norm',title:'Noteic piemērojamo tiesību normu',note:'Pants, daļa, punkts — precīzi',law:'',mandatory:true},
+      {s:'explain',title:'Piedāvā sniegt paskaidrojumu',note:'Tiesības klusēt obligāti jāpaziņo',law:'AAL 41.',mandatory:false},
+      {s:'protocol',title:'Aizpildi protokolu',note:'',law:'AAL 103.',mandatory:true}
+    ],
+    ru:[
+      {s:'fact',title:'Зафиксируй факт нарушения (что, когда, где, как)',note:'',law:'',mandatory:true},
+      {s:'foto',title:'Фото или видео доказательства',note:'',law:'',mandatory:false},
+      {s:'identity',title:'Установи личность лица',note:'',law:'',mandatory:true},
+      {s:'norm',title:'Определи применяемую правовую норму',note:'Статья, часть, пункт — точно',law:'',mandatory:true},
+      {s:'explain',title:'Предложи дать объяснения',note:'Право молчать — обязательно сообщить',law:'AAL 41.',mandatory:false},
+      {s:'protocol',title:'Заполни протокол',note:'',law:'AAL 103.',mandatory:true},
+      {s:'sign',title:'Попроси подписать или зафиксируй отказ',note:'',law:'AAL 103.(6)',mandatory:true}
+    ]}
+};
+
+let protoType=null;
+let protoChecked={};
+let showingProto=false;
+
+function showProtocol(btn){
+  showingProto=true;
+  showingFavs=false;
+  document.querySelectorAll('.law-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.getElementById('appSubtitle').textContent={lv:'Protokola palīgs',ru:'Помощник протокола',en:'Protocol helper'}[lang];
+  document.getElementById('appSubtitle2').textContent={lv:'Soli pa solim',ru:'Шаг за шагом',en:'Step by step'}[lang];
+  protoType=null; protoChecked={};
+  renderProtocol();
+}
+
+function selectProtoType(id){
+  protoType=id; protoChecked={};
+  renderProtocol();
+}
+
+function toggleProtoStep(id){
+  protoChecked[id]=!protoChecked[id];
+  renderProtocol();
+}
+
+function resetProto(){
+  protoChecked={};
+  renderProtocol();
+}
+
+function renderProtocol(){
+  var cats=document.getElementById('catGrid');
+  var sec=document.getElementById('sectionTitle');
+  var list=document.getElementById('lawsList');
+  if(cats){cats.innerHTML='';cats.style.display='none';}
+  if(sec) sec.textContent='';
+  if(!list) return;
+
+  var labels={
+    lv:{selectType:'Izvēlies pārkāpuma veidu',checklist:'Darbību saraksts',mandatory:'Obligāts',
+        progress:'Izpildīts',reset:'Sākt no sākuma',done:'Protokols gatavs!',doneSub:'Pārbaud visus obligātos soļus pirms nodod.'},
+    ru:{selectType:'Выбери тип нарушения',checklist:'Список действий',mandatory:'Обязательно',
+        progress:'Выполнено',reset:'Начать заново',done:'Протокол готов!',doneSub:'Проверь все обязательные шаги перед сдачей.'},
+    en:{selectType:'Select violation type',checklist:'Action checklist',mandatory:'Required',
+        progress:'Completed',reset:'Start over',done:'Protocol complete!',doneSub:'Review all mandatory steps before submitting.'}
+  }[lang]||{};
+
+  if(!protoType){
+    // Show type selector
+    list.innerHTML='<div class="proto-container">'+
+      '<div class="proto-header">'+labels.selectType+'</div>'+
+      '<div class="proto-types">'+
+      PROTO_TYPES.map(function(t){
+        var info=t[lang]||t.lv;
+        return '<button class="proto-type-btn" onclick="selectProtoType(\''+t.id+'\')">'+
+          '<span class="proto-type-icon">'+t.icon+'</span>'+
+          '<div class="proto-type-name">'+info.name+'</div>'+
+          '<div class="proto-type-sub">'+info.sub+'</div>'+
+          '</button>';
+      }).join('')+
+      '</div></div>';
+    return;
+  }
+
+  var steps=PROTO_STEPS[protoType];
+  var langSteps=steps?(steps[lang]||steps.lv):[];
+  var total=langSteps.length;
+  var done=langSteps.filter(function(s){return protoChecked[s.s];}).length;
+  var mandatoryTotal=langSteps.filter(function(s){return s.mandatory;}).length;
+  var mandatoryDone=langSteps.filter(function(s){return s.mandatory&&protoChecked[s.s];}).length;
+  var pct=total>0?Math.round(done/total*100):0;
+  var allMandatoryDone=mandatoryDone===mandatoryTotal;
+  var typeInfo=PROTO_TYPES.find(function(t){return t.id===protoType;});
+  var typeName=typeInfo?(typeInfo[lang]||typeInfo.lv).name:'';
+
+  var stepsHtml=langSteps.map(function(step){
+    var isDone=protoChecked[step.s];
+    return '<div class="proto-step" onclick="toggleProtoStep(\''+step.s+'\')" style="cursor:pointer">'+
+      '<div class="proto-check'+(isDone?' done':'')+(step.mandatory?' warn':'')+'"></div>'+
+      '<div class="proto-step-text">'+
+      '<div class="proto-step-label'+(isDone?' done-text':'')+'">'+ step.title+
+      (step.mandatory?'<span class="proto-mandatory">'+labels.mandatory+'</span>':'')+
+      '</div>'+
+      (step.note?'<div class="proto-step-note">'+step.note+'</div>':'')+
+      (step.law?'<div class="proto-step-law">'+step.law+'</div>':'')+
+      '</div></div>';
+  }).join('');
+
+  var doneBanner=allMandatoryDone&&done===total?
+    '<div class="proto-done-banner"><span class="done-icon">✅</span>'+
+    '<div class="done-title">'+labels.done+'</div>'+
+    '<div class="done-sub">'+labels.doneSub+'</div></div>':'';
+
+  list.innerHTML='<div class="proto-container">'+
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">'+
+    '<button onclick="protoType=null;renderProtocol()" style="background:none;border:none;cursor:pointer;font-size:18px;padding:0;color:var(--color-text-secondary)">←</button>'+
+    '<div style="font-size:15px;font-weight:600;color:var(--color-text-primary)">'+(typeInfo?typeInfo.icon+' ':'')+typeName+'</div>'+
+    '</div>'+
+    '<div class="proto-progress">'+
+    '<div class="proto-progress-bar"><div class="proto-progress-fill" style="width:'+pct+'%"></div></div>'+
+    '<div class="proto-progress-text">'+done+'/'+total+' '+labels.progress+'</div>'+
+    '<button class="proto-reset" onclick="event.stopPropagation();resetProto()">'+labels.reset+'</button>'+
+    '</div>'+
+    '<div class="proto-section">'+
+    '<div class="proto-section-title">'+labels.checklist+'</div>'+
+    stepsHtml+
+    '</div>'+
+    doneBanner+
+    '</div>';
+}
+
 // ===== THEME =====
 const THEME_KEY='balt1_theme';
 
@@ -2716,7 +3035,7 @@ function updateFavCount(){
 }
 
 function showFavourites(btn){
-  showingFavs=true;
+  showingFavs=true;var _cg2=document.getElementById('catGrid');if(_cg2)_cg2.style.display='';
   document.querySelectorAll('.law-btn').forEach(function(b){b.classList.remove('active');});
   updateFavCount();
   // Update subtitle
@@ -2859,6 +3178,8 @@ function setLang(l,btn){
   lang=l;
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+  if(showingProto){renderProtocol();return;}
+  if(showingFavs){renderFavourites();return;}
   document.getElementById('appSubtitle').textContent=getUI().subtitle;
   var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'},apas:{ru:'Administratīvie pārkāpumi · Saistošie noteikumi',lv:'Administratīvie pārkāpumi · Saistošie noteikumi',en:'Administrative violations · Binding regulations'}};
   document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
