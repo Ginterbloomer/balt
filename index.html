@@ -4,629 +4,154 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BALT 1</title>
-</head>
-<body>
 <style>
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  html { overflow-x: hidden; }
-  
-  /* Переменные для быстрой кастомизации */
-  :root {
-    --border-radius-md: 6px;
-    --border-radius-lg: 12px;
-    --color-border-secondary: #e2e8f0;
-    --color-border-tertiary: #edf2f7;
-    --color-text-primary: #1a202c;
-    --color-text-secondary: #718096;
-    --color-background-primary: #ffffff;
-    --color-background-secondary: #f7fafc;
-    
-    --color-brand: #3182ce; 
-    --color-brand-light: #ebf8ff;
-    --color-danger: #e53e3e;
-    --color-danger-light: #fff5f5;
-    --color-success: #38a169;
-    --color-success-light: #f0fff4;
-    --color-warning: #dd6b20;
-    --color-warning-light: #fffaf0;
-  
-    /* Ограничиваем максимальную ширину приложения для баланса на больших экранах */
+:root {
+    --border-radius-md: 6px;--border-radius-lg: 12px;
+    --color-border-secondary: #e2e8f0;--color-border-tertiary: #edf2f7;
+    --color-text-primary: #1a202c;--color-text-secondary: #718096;
+    --color-background-primary: #ffffff;--color-background-secondary: #f7fafc;
+    --color-brand: #3182ce;--color-brand-light: #ebf8ff;
+    --color-danger: #e53e3e;--color-danger-light: #fff5f5;
+    --color-success: #38a169;--color-success-light: #f0fff4;
+    --color-warning: #dd6b20;--color-warning-light: #fffaf0;
     --max-app-width: 600px;
   }
-
-  /* ===== DARK MODE ===== */
-  @media (prefers-color-scheme: dark) {
-    html:not([data-theme="light"]) {
-      --color-border-secondary: #2d3748;
-      --color-border-tertiary: #2d3748;
-      --color-text-primary: #f7fafc;
-      --color-text-secondary: #a0aec0;
-      --color-background-primary: #1a202c;
-      --color-background-secondary: #171923;
-
-      --color-brand: #63b3ed;
-      --color-brand-light: #1a2a3a;
-      --color-danger: #fc8181;
-      --color-danger-light: #2d1a1a;
-      --color-success: #68d391;
-      --color-success-light: #1a2d1f;
-      --color-warning: #f6ad55;
-      --color-warning-light: #2d2210;
-    }
-
-    /* Cards and surfaces */
-    html:not([data-theme="light"]) .law-card {
-      background: #1e2535;
-      border-color: #2d3748;
-    }
-    html:not([data-theme="light"]) .law-card:hover { background: #232d42; }
-    html:not([data-theme="light"]) .law-card.expanded { background: #1e2535; }
-    html:not([data-theme="light"]) .law-detail { border-top-color: #2d3748; }
-    html:not([data-theme="light"]) .part-block { border-bottom-color: #2d3748; }
-    html:not([data-theme="light"]) .fine-box { background: #171923; }
-    html:not([data-theme="light"]) .part-fine-box { background: #171923; }
-
-    /* Category cards */
-    html:not([data-theme="light"]) .cat-card {
-      background: #1e2535;
-      border-color: #2d3748;
-    }
-    html:not([data-theme="light"]) .cat-card:hover { background: #232d42; }
-    html:not([data-theme="light"]) .cat-card.active {
-      background: #1a2a3a;
-      border-color: var(--color-brand);
-    }
-
-    /* Header */
-    html:not([data-theme="light"]) .app-header { background: #1a202c; border-bottom-color: #2d3748; }
-
-    /* Search */
-    html:not([data-theme="light"]) .search-bar { background: #1a202c; border-bottom-color: #2d3748; }
-    html:not([data-theme="light"]) .search-input {
-      background: #171923;
-      border-color: #2d3748;
-      color: var(--color-text-primary);
-    }
-    html:not([data-theme="light"]) .search-input:focus { border-color: var(--color-brand); }
-    html:not([data-theme="light"]) .search-input::placeholder { color: #4a5568; }
-
-    /* Law switcher */
-    html:not([data-theme="light"]) .law-switcher { background: #1e2535; }
-    html:not([data-theme="light"]) .law-btn.active { background: #1a2a3a; color: var(--color-brand); }
-
-    /* Badges */
-    html:not([data-theme="light"]) .badge-article { background: #2d3748; color: #a0aec0; }
-    html:not([data-theme="light"]) .badge-fine { background: #2d1a1a; color: #fc8181; }
-    html:not([data-theme="light"]) .badge-warn { background: #2d2210; color: #f6ad55; }
-    html:not([data-theme="light"]) .badge-pts { background: #1a2a3a; color: #63b3ed; }
-
-    /* Source button */
-    html:not([data-theme="light"]) .source-btn {
-      background: #1a2a3a;
-      border-color: #2d3748;
-      color: var(--color-brand);
-    }
-    html:not([data-theme="light"]) .source-btn:hover { background: #1d3a5c; }
-
-    /* CSN badges */
-    html:not([data-theme="light"]) .csn-badge { background: #1a2a3a; color: var(--color-brand); }
-    html:not([data-theme="light"]) .csn-badge:hover { background: var(--color-brand); color: #1a202c; }
-    html:not([data-theme="light"]) .csn-card-ref { background: #1a2a3a; }
-
-    /* Favourites */
-    html:not([data-theme="light"]) .fav-law-badge { background: #2d3748; border-color: #4a5568; }
-    html:not([data-theme="light"]) .fav-empty { color: #4a5568; }
-
-    /* DL labels */
-    html:not([data-theme="light"]) .dl { color: #4a5568; }
-
-    /* Signs */
-    html:not([data-theme="light"]) .sign-chip { background: #2d3748; border-color: #4a5568; }
-
-    /* Arrow */
-    html:not([data-theme="light"]) .arrow-icon {
-      border-color: #4a5568;
-    }
-
-    /* Scrollbar */
-    html:not([data-theme="light"]) ::-webkit-scrollbar { width: 6px; }
-    html:not([data-theme="light"]) ::-webkit-scrollbar-track { background: #171923; }
-    html:not([data-theme="light"]) ::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 3px; }
-    html:not([data-theme="light"]) ::-webkit-scrollbar-thumb:hover { background: #4a5568; }
-  }
-  
-  /* Центрируем всё приложение на экране */
-  body {
-    background: var(--color-background-secondary);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  }
-  
-  /* Оболочка для центрирования контента */
-  .app-header, .search-bar, .categories, .section-title, .laws-list {
-    max-width: var(--max-app-width);
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-  }
-  
-  /* HEADER - ТЕПЕРЬ ВСЁ ПО ЦЕНТРУ */
-  .app-header {
-    padding: 1.25rem 1rem 1rem;
-    border-bottom: 1px solid var(--color-border-tertiary);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background: var(--color-background-primary);
-  }
-  .app-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--color-text-primary);
-    letter-spacing: -0.5px;
-  }
-  .app-subtitle {
-    font-size: 13px;
-    color: var(--color-text-secondary);
-    margin-top: 6px;
-  }
-  .app-subtitle2 {
-    font-size: 11px;
-    color: var(--color-text-secondary);
-    margin-top: 1px;
-    opacity: 0.7;
-    font-style: italic;
-  }
-  
-  /* СТИЛЬ 1: ЯЗЫКОВЫЕ КНОПКИ (Тоже по центру) */
-  .lang-switcher {
-    display: flex;
-    gap: 8px;
-    margin-top: 16px;
-    justify-content: center; /* Центрирует кнопки в контейнере */
-  }
-  .lang-btn {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    padding: 5px 12px;
-    border-radius: var(--border-radius-md);
-    border: 1px solid var(--color-border-secondary);
-    cursor: pointer;
-    background: var(--color-background-primary);
-    color: var(--color-text-secondary);
-    transition: all 0.2s ease; 
-  }
-  .lang-btn:hover {
-    color: var(--color-text-primary);
-    border-color: var(--color-text-secondary);
-    background: var(--color-background-secondary);
-  }
-  .lang-btn.active {
-    background: var(--color-text-primary);
-    color: #ffffff;
-    border-color: var(--color-text-primary);
-  }
-  
-  
-  /* ПОИСК ПО ЦЕНТРУ */
-  .search-bar {
-    padding: 16px 1rem;
-    display: flex;
-    justify-content: center;
-  }
-  .search-bar input {
-    width: 100%;
-    max-width: 400px; /* Чтобы поиск не был слишком длинным */
-    font-size: 14px;
-    padding: 10px 14px;
-    border: 1px solid var(--color-border-secondary);
-    border-radius: var(--border-radius-md);
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    text-align: center; /* Текст внутри поиска тоже по центру */
-  }
-  .search-bar input:focus {
-    border-color: var(--color-brand);
-    box-shadow: 0 0 0 3px var(--color-brand-light);
-  }
-  
-  
-  /* КАТЕГОРИИ */
-  .categories {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 10px;
-    padding: 12px 14px;
-  }
-  .cat-card {
-    background: var(--color-background-primary);
-    border: 1px solid var(--color-border-tertiary);
-    border-radius: var(--border-radius-lg);
-    padding: 16px 14px;
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    text-align: center; /* Центрируем иконки и текст в категориях */
-  }
-  .cat-card:hover {
-    border-color: var(--color-border-secondary);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  }
-  .cat-card.active {
-    border: 1px solid var(--color-brand);
-    background: var(--color-brand-light);
-  }
-  .cat-icon {
-    font-size: 22px;
-    margin-bottom: 8px;
-    display: block;
-    color: var(--color-brand);
-  }
-  .cat-name {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--color-text-primary);
-    line-height: 1.3;
-  }
-  .cat-count {
-    font-size: 11px;
-    color: var(--color-text-secondary);
-    margin-top: 4px;
-  }
-  
-  
-  /* СПИСОК ЗАКОНОВ */
-  .section-title {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--color-text-secondary);
-    padding: 1rem 1rem 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-  }
-  .laws-list {
-    padding: 0 1rem 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .law-card {
-    background: var(--color-background-primary);
-    border: 1px solid var(--color-border-tertiary);
-    border-radius: var(--border-radius-lg);
-    padding: 16px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .law-card:hover {
-    border-color: var(--color-border-secondary);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-  }
-  .law-card.expanded {
-    border-color: var(--color-border-secondary);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-  }
-  .law-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-  }
-  .law-name {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--color-text-primary);
-    line-height: 1.4;
-    flex: 1;
-    min-width: 0;
-  }
-  .arrow-icon {
-    font-size: 16px;
-    color: var(--color-text-secondary);
-    flex-shrink: 0;
-    margin-top: 3px;
-    transition: transform 0.2s ease;
-  }
-  .law-card.expanded .arrow-icon {
-    transform: rotate(180deg);
-  }
-  
-  /* БЭДЖИ */
-  .law-meta {
-    display: flex;
-    gap: 6px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .badge {
-    font-size: 11px;
-    font-weight: 500;
-    padding: 3px 8px;
-    border-radius: var(--border-radius-md);
-  }
-  .badge-fine {
-    background: var(--color-warning-light);
-    color: var(--color-warning);
-  }
-  .badge-article {
-    background: var(--color-background-secondary);
-    color: var(--color-text-secondary);
-  }
-  .badge-warn {
-    background: var(--color-success-light);
-    color: var(--color-success);
-  }
-  
-  /* ДЕТАЛИ КАРТОЧКИ */
-  .law-detail {
-    display: none;
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid var(--color-border-tertiary);
-  }
-  .law-detail.show {
-    display: block;
-  }
-  .dl {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    color: var(--color-text-secondary);
-    margin-bottom: 4px;
-    margin-top: 14px;
-  }
-  .dl:first-child {
-    margin-top: 0;
-  }
-  .dt {
-    font-size: 13.5px;
-    color: var(--color-text-primary);
-    line-height: 1.5;
-  }
-  .fine-row {
-    display: flex;
-    gap: 8px;
-    margin-top: 12px;
-  }
-  .fine-box {
-    flex: 1;
-    background: var(--color-background-secondary);
-    border-radius: var(--border-radius-md);
-    padding: 10px 12px;
-  }
-  .fine-lbl {
-    font-size: 11px;
-    color: var(--color-text-secondary);
-  }
-  .fine-val {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--color-text-primary);
-    margin-top: 2px;
-  }
-  .fine-val.danger {
-    color: var(--color-danger);
-  }
-  
-  /* Вложенные блоки частей */
-  .part-block {
-    margin-top: 12px;
-    padding: 14px;
-    background: var(--color-background-secondary);
-    border-radius: var(--border-radius-lg);
-    border-left: 3px solid var(--color-brand);
-  }
-  .part-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--color-brand);
-    margin-bottom: 4px;
-  }
-  .part-desc {
-    font-size: 13px;
-    color: var(--color-text-primary);
-    line-height: 1.4;
-    margin-bottom: 10px;
-  }
-  .part-fines {
-    display: flex;
-    gap: 8px;
-  }
-  .part-fine-box {
-    flex: 1;
-    background: var(--color-background-primary);
-    border-radius: var(--border-radius-md);
-    padding: 8px 10px;
-    border: 1px solid var(--color-border-tertiary);
-  }
-  
-  
-  /* === ИЗМЕНЕНИЕ СТИЛЯ 3: КНОПКА ССЫЛКИ СЖИМАЕТСЯ ПОД ТЕКСТ === */
-  .source-btn {
-    display: inline-flex; /* Изменено с flex на inline-flex, чтобы кнопка не занимала всю ширину */
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-size: 12px;
-    font-weight: 500;
-    padding: 8px 16px;
-    width: auto; /* Изменено со 100% на auto — теперь она строго по размеру текста */
-    border-radius: var(--border-radius-md);
-    border: 1px solid var(--color-text-primary);
-    color: var(--color-text-primary);
-    background: transparent;
-    cursor: pointer;
-    margin-top: 16px;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-  .source-btn:hover {
-    background: var(--color-text-primary);
-    color: #ffffff;
-  }
-  .source-btn i {
-    font-size: 14px;
-  }
-  
-  .empty {
-    font-size: 13px;
-    color: var(--color-text-secondary);
-    padding: 24px 0;
-    text-align: center;
-  }
-  .csn-badge{display:inline-block;font-size:10px;font-weight:600;background:var(--color-brand-light);color:var(--color-brand);padding:2px 8px;border-radius:var(--border-radius-md);margin-left:6px;letter-spacing:0.2px;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:all 0.15s;}.csn-badge:hover{background:var(--color-brand);color:white;}
-  .csn-card-ref{font-size:12px;color:var(--color-brand);background:var(--color-brand-light);border-radius:var(--border-radius-md);padding:5px 12px;margin-top:10px;display:inline-flex;gap:8px;font-weight:500;flex-wrap:wrap;align-items:center;}
-  </style>
-<style>
-  .law-switcher{display:flex;gap:6px;margin-top:12px;justify-content:flex-start;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:4px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}.law-switcher::-webkit-scrollbar{display:none;}
-  .law-btn{font-size:12px;font-weight:500;padding:8px 14px;min-height:36px;white-space:nowrap;flex-shrink:0;border-radius:var(--border-radius-md);border:none;cursor:pointer;background:transparent;color:var(--color-text-secondary);transition:all 0.2s ease;}
-  .law-btn.active{background:var(--color-background-primary);color:var(--color-brand);box-shadow:0 1px 4px rgba(0,0,0,0.08);}
-  .badge-pts{background:#faf5ff;color:#6b46c1;}
-  .signs-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;align-items:flex-end;}
-  .sign-chip{display:flex;flex-direction:column;align-items:center;gap:3px;}
-  .sign-num{font-size:10px;color:var(--color-text-secondary);font-weight:500;}
-  /* ===== THEME TOGGLE ===== */
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{overflow-x:hidden;}
+  body{background:var(--color-background-secondary);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;overflow-x:hidden;color:var(--color-text-primary);}
+  .app-wrapper{max-width:var(--max-app-width);margin:0 auto;min-height:100vh;background:var(--color-background-secondary);}
+  @media(prefers-color-scheme:dark){html:not([data-theme="light"]){--color-border-secondary:#2d3748;--color-border-tertiary:#2d3748;--color-text-primary:#f7fafc;--color-text-secondary:#a0aec0;--color-background-primary:#1a202c;--color-background-secondary:#171923;--color-brand:#63b3ed;--color-brand-light:#1a2a3a;--color-danger:#fc8181;--color-danger-light:#2d1a1a;--color-success:#68d391;--color-success-light:#1a2d1f;--color-warning:#f6ad55;--color-warning-light:#2d2210;}
+  html:not([data-theme="light"]) .law-card{background:#1e2535;border-color:#2d3748;}html:not([data-theme="light"]) .law-card:hover{background:#232d42;}html:not([data-theme="light"]) .law-detail{border-top-color:#2d3748;}html:not([data-theme="light"]) .part-block{border-bottom-color:#2d3748;}html:not([data-theme="light"]) .fine-box,html:not([data-theme="light"]) .part-fine-box{background:#171923;}html:not([data-theme="light"]) .cat-card{background:#1e2535;border-color:#2d3748;}html:not([data-theme="light"]) .cat-card:hover{background:#232d42;}html:not([data-theme="light"]) .cat-card.active{background:#1a2a3a;border-color:var(--color-brand);}html:not([data-theme="light"]) .app-header{background:#1a202c;border-bottom-color:#2d3748;}html:not([data-theme="light"]) .search-bar{background:#1a202c;border-bottom-color:#2d3748;}html:not([data-theme="light"]) .search-input{background:#171923;border-color:#2d3748;color:var(--color-text-primary);}html:not([data-theme="light"]) .search-input::placeholder{color:#4a5568;}html:not([data-theme="light"]) .law-switcher{background:#1e2535;}html:not([data-theme="light"]) .law-btn.active{background:#1a2a3a;color:var(--color-brand);}html:not([data-theme="light"]) .badge-article{background:#2d3748;color:#a0aec0;}html:not([data-theme="light"]) .badge-fine{background:#2d1a1a;color:#fc8181;}html:not([data-theme="light"]) .badge-warn{background:#2d2210;color:#f6ad55;}html:not([data-theme="light"]) .badge-pts{background:#1a2a3a;color:#63b3ed;}html:not([data-theme="light"]) .source-btn{background:#1a2a3a;border-color:#2d3748;color:var(--color-brand);}html:not([data-theme="light"]) .csn-badge{background:#1a2a3a;color:var(--color-brand);}html:not([data-theme="light"]) .csn-card-ref{background:#1a2a3a;}html:not([data-theme="light"]) .fav-law-badge{background:#2d3748;border-color:#4a5568;}html:not([data-theme="light"]) .dl{color:#4a5568;}html:not([data-theme="light"]) .sign-chip{background:#2d3748;border-color:#4a5568;}html:not([data-theme="light"]) .arrow-icon{border-color:#4a5568;}}
+  [data-theme="dark"]{--color-border-secondary:#2d3748;--color-border-tertiary:#2d3748;--color-text-primary:#f7fafc;--color-text-secondary:#a0aec0;--color-background-primary:#1a202c;--color-background-secondary:#171923;--color-brand:#63b3ed;--color-brand-light:#1a2a3a;--color-danger:#fc8181;--color-danger-light:#2d1a1a;--color-success:#68d391;--color-success-light:#1a2d1f;--color-warning:#f6ad55;--color-warning-light:#2d2210;}
+  [data-theme="dark"] .law-card{background:#1e2535;border-color:#2d3748;}[data-theme="dark"] .law-card:hover{background:#232d42;}[data-theme="dark"] .law-detail{border-top-color:#2d3748;}[data-theme="dark"] .part-block{border-bottom-color:#2d3748;}[data-theme="dark"] .fine-box,[data-theme="dark"] .part-fine-box{background:#171923;}[data-theme="dark"] .cat-card{background:#1e2535;border-color:#2d3748;}[data-theme="dark"] .cat-card:hover{background:#232d42;}[data-theme="dark"] .cat-card.active{background:#1a2a3a;border-color:var(--color-brand);}[data-theme="dark"] .app-header{background:#1a202c;border-bottom-color:#2d3748;}[data-theme="dark"] .search-bar{background:#1a202c;border-bottom-color:#2d3748;}[data-theme="dark"] .search-input{background:#171923;border-color:#2d3748;color:var(--color-text-primary);}[data-theme="dark"] .search-input::placeholder{color:#4a5568;}[data-theme="dark"] .law-switcher{background:#1e2535;}[data-theme="dark"] .law-btn.active{background:#1a2a3a;color:var(--color-brand);}[data-theme="dark"] .badge-article{background:#2d3748;color:#a0aec0;}[data-theme="dark"] .badge-fine{background:#2d1a1a;color:#fc8181;}[data-theme="dark"] .badge-warn{background:#2d2210;color:#f6ad55;}[data-theme="dark"] .badge-pts{background:#1a2a3a;color:#63b3ed;}[data-theme="dark"] .source-btn{background:#1a2a3a;border-color:#2d3748;color:var(--color-brand);}[data-theme="dark"] .source-btn:hover{background:#1d3a5c;}[data-theme="dark"] .csn-badge{background:#1a2a3a;color:var(--color-brand);}[data-theme="dark"] .csn-badge:hover{background:var(--color-brand);color:#1a202c;}[data-theme="dark"] .csn-card-ref{background:#1a2a3a;}[data-theme="dark"] .fav-law-badge{background:#2d3748;border-color:#4a5568;}[data-theme="dark"] .dl{color:#4a5568;}[data-theme="dark"] .sign-chip{background:#2d3748;border-color:#4a5568;}[data-theme="dark"] .arrow-icon{border-color:#4a5568;}[data-theme="dark"] .compare-card{background:#1e2535;border-color:#2d3748;}[data-theme="dark"] .compare-card-header{background:#1a2a3a;}[data-theme="dark"] .compare-exit{background:#1a202c;border-bottom-color:#2d3748;}[data-theme="dark"] .proto-type-btn{background:var(--color-background-primary);border-color:#2d3748;}[data-theme="dark"] .proto-type-btn.selected,[data-theme="dark"] .proto-type-btn:hover{background:#1a2a3a;border-color:var(--color-brand);}[data-theme="dark"] .proto-check{background:#1e2535;border-color:#4a5568;}[data-theme="dark"] .proto-done-banner{background:#1a2d1f;border-color:#276749;}[data-theme="dark"] .abbrev-box{background:#171923;}
+  [data-theme="light"]{--color-border-secondary:#e2e8f0;--color-border-tertiary:#edf2f7;--color-text-primary:#1a202c;--color-text-secondary:#718096;--color-background-primary:#ffffff;--color-background-secondary:#f7fafc;--color-brand:#3182ce;--color-brand-light:#ebf8ff;--color-danger:#e53e3e;--color-danger-light:#fff5f5;--color-success:#38a169;--color-success-light:#f0fff4;--color-warning:#dd6b20;--color-warning-light:#fffaf0;}
+  [data-theme="light"] body{background:#f7fafc;color:#1a202c;}
+  [data-theme="light"] .law-card{background:#ffffff!important;border-color:#e2e8f0!important;}[data-theme="light"] .law-card:hover{background:#f8fafc!important;}[data-theme="light"] .law-name{color:#1a202c!important;}[data-theme="light"] .law-detail{border-top-color:#e2e8f0!important;background:#ffffff;}[data-theme="light"] .part-block{border-bottom-color:#edf2f7!important;}[data-theme="light"] .fine-box{background:#f7fafc!important;}[data-theme="light"] .part-fine-box{background:#f7fafc!important;}[data-theme="light"] .fine-lbl{color:#718096!important;}[data-theme="light"] .fine-val{color:#1a202c!important;}[data-theme="light"] .fine-val.danger{color:#e53e3e!important;}[data-theme="light"] .cat-card{background:#ffffff!important;border-color:#e2e8f0!important;}[data-theme="light"] .cat-card:hover{background:#f0f4f8!important;}[data-theme="light"] .cat-card.active{background:#ebf8ff!important;border-color:#3182ce!important;}[data-theme="light"] .app-header{background:#ffffff!important;border-bottom-color:#edf2f7!important;}[data-theme="light"] .app-title{color:#1a202c!important;}[data-theme="light"] .app-subtitle,[data-theme="light"] .app-subtitle2{color:#718096!important;}[data-theme="light"] .search-bar{background:#ffffff!important;border-bottom-color:#edf2f7!important;}[data-theme="light"] .search-input{background:#f7fafc!important;border-color:#e2e8f0!important;color:#1a202c!important;}[data-theme="light"] .law-switcher{background:#f7fafc!important;}[data-theme="light"] .law-btn{color:#718096!important;}[data-theme="light"] .law-btn.active{background:#ebf8ff!important;color:#3182ce!important;}[data-theme="light"] .badge-article{background:#edf2f7!important;color:#4a5568!important;}[data-theme="light"] .badge-fine{background:#fff5f5!important;color:#e53e3e!important;}[data-theme="light"] .badge-warn{background:#fffaf0!important;color:#dd6b20!important;}[data-theme="light"] .badge-pts{background:#ebf8ff!important;color:#3182ce!important;}[data-theme="light"] .source-btn{background:#ebf8ff!important;border-color:#bee3f8!important;color:#3182ce!important;}[data-theme="light"] .csn-badge{background:#ebf8ff!important;color:#3182ce!important;}[data-theme="light"] .csn-card-ref{background:#ebf8ff!important;}[data-theme="light"] .dl{color:#718096!important;}[data-theme="light"] .dt{color:#1a202c!important;}[data-theme="light"] .part-label{color:#1a202c!important;}[data-theme="light"] .part-desc{color:#4a5568!important;}[data-theme="light"] .sign-chip{background:#f7fafc!important;border-color:#e2e8f0!important;}[data-theme="light"] .arrow-icon{border-color:#a0aec0!important;}[data-theme="light"] .fav-law-badge{background:#edf2f7!important;border-color:#e2e8f0!important;color:#4a5568!important;}
   .theme-toggle-btn{background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:var(--color-text-secondary);transition:all 0.15s;display:flex;align-items:center;}
   .theme-toggle-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary);}
-
-  /* Manual dark theme override (set via JS, overrides prefers-color-scheme) */
-  [data-theme="dark"] {
-    --color-border-secondary: #2d3748;
-    --color-border-tertiary: #2d3748;
-    --color-text-primary: #f7fafc;
-    --color-text-secondary: #a0aec0;
-    --color-background-primary: #1a202c;
-    --color-background-secondary: #171923;
-    --color-brand: #63b3ed;
-    --color-brand-light: #1a2a3a;
-    --color-danger: #fc8181;
-    --color-danger-light: #2d1a1a;
-    --color-success: #68d391;
-    --color-success-light: #1a2d1f;
-    --color-warning: #f6ad55;
-    --color-warning-light: #2d2210;
-  }
-  [data-theme="light"] {
-    --color-border-secondary: #e2e8f0;
-    --color-border-tertiary: #edf2f7;
-    --color-text-primary: #1a202c;
-    --color-text-secondary: #718096;
-    --color-background-primary: #ffffff;
-    --color-background-secondary: #f7fafc;
-    --color-brand: #3182ce;
-    --color-brand-light: #ebf8ff;
-    --color-danger: #e53e3e;
-    --color-danger-light: #fff5f5;
-    --color-success: #38a169;
-    --color-success-light: #f0fff4;
-    --color-warning: #dd6b20;
-    --color-warning-light: #fffaf0;
-  }
-
-  /* Card/surface colours in dark mode (both auto and manual) */
-  @media (prefers-color-scheme: dark) { body:not([data-theme="light"]) .law-card,
-  [data-theme="dark"] .law-card { background:#1e2535; border-color:#2d3748; } }
-
-  [data-theme="dark"] .law-card { background:#1e2535; border-color:#2d3748; }
-  [data-theme="dark"] .law-card:hover { background:#232d42; }
-  [data-theme="dark"] .law-detail { border-top-color:#2d3748; }
-  [data-theme="dark"] .part-block { border-bottom-color:#2d3748; }
-  [data-theme="dark"] .fine-box,[data-theme="dark"] .part-fine-box { background:#171923; }
-  [data-theme="dark"] .cat-card { background:#1e2535; border-color:#2d3748; }
-  [data-theme="dark"] .cat-card:hover { background:#232d42; }
-  [data-theme="dark"] .cat-card.active { background:#1a2a3a; border-color:var(--color-brand); }
-  [data-theme="dark"] .app-header { background:#1a202c; border-bottom-color:#2d3748; }
-  [data-theme="dark"] .search-bar { background:#1a202c; border-bottom-color:#2d3748; }
-  [data-theme="dark"] .search-input { background:#171923; border-color:#2d3748; color:var(--color-text-primary); }
-  [data-theme="dark"] .search-input::placeholder { color:#4a5568; }
-  [data-theme="dark"] .law-switcher { background:#1e2535; }
-  [data-theme="dark"] .law-btn.active { background:#1a2a3a; color:var(--color-brand); }
-  [data-theme="dark"] .badge-article { background:#2d3748; color:#a0aec0; }
-  [data-theme="dark"] .badge-fine { background:#2d1a1a; color:#fc8181; }
-  [data-theme="dark"] .badge-warn { background:#2d2210; color:#f6ad55; }
-  [data-theme="dark"] .badge-pts { background:#1a2a3a; color:#63b3ed; }
-  [data-theme="dark"] .source-btn { background:#1a2a3a; border-color:#2d3748; color:var(--color-brand); }
-  [data-theme="dark"] .source-btn:hover { background:#1d3a5c; }
-  [data-theme="dark"] .csn-badge { background:#1a2a3a; color:var(--color-brand); }
-  [data-theme="dark"] .csn-badge:hover { background:var(--color-brand); color:#1a202c; }
-  [data-theme="dark"] .csn-card-ref { background:#1a2a3a; }
-  [data-theme="dark"] .fav-law-badge { background:#2d3748; border-color:#4a5568; }
-  [data-theme="dark"] .dl { color:#4a5568; }
-  [data-theme="dark"] .sign-chip { background:#2d3748; border-color:#4a5568; }
-  [data-theme="dark"] .arrow-icon { border-color:#4a5568; }
-
-  /* ===== LIGHT MODE FORCE (overrides OS dark + manual dark) ===== */
-  [data-theme="light"] body { background:#f7fafc; color:#1a202c; }
-  [data-theme="light"] .law-card { background:#ffffff !important; border-color:#e2e8f0 !important; }
-  [data-theme="light"] .law-card:hover { background:#f8fafc !important; }
-  [data-theme="light"] .law-card.expanded { background:#ffffff !important; }
-  [data-theme="light"] .law-name { color:#1a202c !important; }
-  [data-theme="light"] .law-detail { border-top-color:#e2e8f0 !important; background:#ffffff; }
-  [data-theme="light"] .part-block { border-bottom-color:#edf2f7 !important; }
-  [data-theme="light"] .fine-box { background:#f7fafc !important; }
-  [data-theme="light"] .part-fine-box { background:#f7fafc !important; }
-  [data-theme="light"] .fine-lbl { color:#718096 !important; }
-  [data-theme="light"] .fine-val { color:#1a202c !important; }
-  [data-theme="light"] .fine-val.danger { color:#e53e3e !important; }
-  [data-theme="light"] .cat-card { background:#ffffff !important; border-color:#e2e8f0 !important; }
-  [data-theme="light"] .cat-card:hover { background:#f0f4f8 !important; }
-  [data-theme="light"] .cat-card.active { background:#ebf8ff !important; border-color:#3182ce !important; }
-  [data-theme="light"] .cat-name { color:#1a202c !important; }
-  [data-theme="light"] .cat-count { color:#718096 !important; }
-  [data-theme="light"] .app-header { background:#ffffff !important; border-bottom-color:#edf2f7 !important; }
-  [data-theme="light"] .app-title { color:#1a202c !important; }
-  [data-theme="light"] .app-subtitle,[data-theme="light"] .app-subtitle2 { color:#718096 !important; }
-  [data-theme="light"] .search-bar { background:#ffffff !important; border-bottom-color:#edf2f7 !important; }
-  [data-theme="light"] .search-input { background:#f7fafc !important; border-color:#e2e8f0 !important; color:#1a202c !important; }
-  [data-theme="light"] .search-input::placeholder { color:#a0aec0 !important; }
-  [data-theme="light"] .law-switcher { background:#f7fafc !important; }
-  [data-theme="light"] .law-btn { color:#718096 !important; }
-  [data-theme="light"] .law-btn.active { background:#ebf8ff !important; color:#3182ce !important; }
-  [data-theme="light"] .badge-article { background:#edf2f7 !important; color:#4a5568 !important; }
-  [data-theme="light"] .badge-fine { background:#fff5f5 !important; color:#e53e3e !important; }
-  [data-theme="light"] .badge-warn { background:#fffaf0 !important; color:#dd6b20 !important; }
-  [data-theme="light"] .badge-pts { background:#ebf8ff !important; color:#3182ce !important; }
-  [data-theme="light"] .source-btn { background:#ebf8ff !important; border-color:#bee3f8 !important; color:#3182ce !important; }
-  [data-theme="light"] .source-btn:hover { background:#bee3f8 !important; }
-  [data-theme="light"] .csn-badge { background:#ebf8ff !important; color:#3182ce !important; }
-  [data-theme="light"] .csn-card-ref { background:#ebf8ff !important; }
-  [data-theme="light"] .dl { color:#718096 !important; }
-  [data-theme="light"] .dt { color:#1a202c !important; }
-  [data-theme="light"] .part-label { color:#1a202c !important; }
-  [data-theme="light"] .part-desc { color:#4a5568 !important; }
-  [data-theme="light"] .sign-chip { background:#f7fafc !important; border-color:#e2e8f0 !important; }
-  [data-theme="light"] .sign-num { color:#4a5568 !important; }
-  [data-theme="light"] .arrow-icon { border-color:#a0aec0 !important; }
-  [data-theme="light"] .fav-law-badge { background:#edf2f7 !important; border-color:#e2e8f0 !important; color:#4a5568 !important; }
-  [data-theme="light"] .section-title { color:#718096 !important; }
-
-  /* ===== PROTOCOL HELPER ===== */
+  .app-header{background:var(--color-background-primary);padding:14px 16px 0;border-bottom:1px solid var(--color-border-secondary);position:sticky;top:0;z-index:50;}
+  .header-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .app-title{font-size:20px;font-weight:800;color:var(--color-text-primary);flex:1;letter-spacing:-0.5px;}
+  .app-subtitle{font-size:11px;color:var(--color-text-secondary);font-weight:500;margin-bottom:2px;}
+  .app-subtitle2{font-size:10px;color:var(--color-text-secondary);font-style:italic;margin-bottom:6px;}
+  .lang-switcher{display:flex;gap:4px;}
+  .lang-btn{background:none;border:1px solid var(--color-border-secondary);border-radius:6px;padding:4px 8px;font-size:11px;font-weight:600;color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;}
+  .lang-btn.active{background:var(--color-brand);border-color:var(--color-brand);color:#fff;}
+  .law-switcher{display:flex;gap:5px;margin-top:10px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:4px;flex-wrap:wrap;}
+  .law-btn{font-size:12px;font-weight:500;padding:7px 12px;min-height:34px;white-space:nowrap;border:none;background:none;color:var(--color-text-secondary);cursor:pointer;border-radius:8px;transition:all 0.15s;flex-shrink:0;}
+  .law-btn:hover{background:var(--color-background-primary);color:var(--color-text-primary);}
+  .law-btn.active{background:var(--color-background-primary);color:var(--color-brand);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);}
   .proto-btn{border:1px solid var(--color-brand)!important;color:var(--color-brand)!important;}
   .proto-btn.active{background:var(--color-brand)!important;color:#fff!important;}
+  .search-bar{background:var(--color-background-primary);padding:10px 14px;border-bottom:1px solid var(--color-border-secondary);}
+  .search-input{width:100%;padding:8px 12px;font-size:14px;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);outline:none;transition:border-color 0.15s;}
+  .search-input:focus{border-color:var(--color-brand);}
+  .search-input::placeholder{color:var(--color-text-secondary);}
+  .categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;padding:12px 14px;}
+  .cat-card{background:var(--color-background-primary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:14px 12px;text-align:center;cursor:pointer;transition:all 0.15s;}
+  .cat-card:hover{border-color:var(--color-brand);background:var(--color-brand-light);}
+  .cat-card.active{border-color:var(--color-brand);background:var(--color-brand-light);}
+  .cat-icon{width:22px;height:22px;margin:0 auto 8px;display:block;color:var(--color-brand);}
+  .cat-icon svg{width:22px;height:22px;stroke:var(--color-brand);display:block;}
+  .cat-name{font-size:13px;font-weight:600;color:var(--color-text-primary);}
+  .cat-count{font-size:11px;color:var(--color-text-secondary);margin-top:3px;}
+  .section-title{font-size:11px;color:var(--color-text-secondary);padding:6px 14px 0;font-weight:500;}
+  .laws-list{padding:10px 14px 100px;display:flex;flex-direction:column;gap:10px;}
+  .law-card{background:var(--color-background-primary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:14px;cursor:pointer;transition:border-color 0.15s;}
+  .law-card.expanded{border-color:var(--color-brand);}
+  .law-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+  .law-name{font-size:15px;font-weight:500;color:var(--color-text-primary);line-height:1.4;flex:1;min-width:0;}
+  .arrow-icon{width:10px;height:10px;border-right:2px solid var(--color-text-secondary);border-bottom:2px solid var(--color-text-secondary);transform:rotate(45deg);flex-shrink:0;margin-top:4px;transition:transform 0.25s ease;}
+  .law-card.expanded .arrow-icon{transform:rotate(-135deg);}
+  .law-meta{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;align-items:center;}
+  .law-detail{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--color-border-secondary);}
+  .law-detail.show,.law-card.expanded .law-detail{display:block;}
+  .badge{font-size:11px;padding:3px 8px;border-radius:var(--border-radius-md);font-weight:500;}
+  .badge-fine{background:var(--color-danger-light);color:var(--color-danger);}
+  .badge-warn{background:var(--color-warning-light);color:var(--color-warning);}
+  .badge-pts{background:var(--color-brand-light);color:var(--color-brand);}
+  .badge-article{background:var(--color-background-secondary);color:var(--color-text-secondary);}
+  .fine-row{display:flex;gap:8px;margin-top:10px;}
+  .fine-box{flex:1;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px;}
+  .fine-lbl{font-size:11px;color:var(--color-text-secondary);}
+  .fine-val{font-size:16px;font-weight:600;color:var(--color-text-primary);margin-top:2px;}
+  .fine-val.danger{color:var(--color-danger);}
+  .dl{font-size:11px;font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.4px;margin-top:10px;margin-bottom:3px;}
+  .dt{font-size:13px;color:var(--color-text-primary);line-height:1.55;}
+  .part-block{padding:10px 0;border-bottom:1px solid var(--color-border-tertiary);}
+  .part-block:last-child{border-bottom:none;}
+  .part-label{font-size:13px;font-weight:600;color:var(--color-text-primary);margin-bottom:4px;}
+  .part-desc{font-size:13px;color:var(--color-text-secondary);line-height:1.5;margin-top:4px;}
+  .part-fines{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+  .part-fine-box{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:6px 10px;flex:1;min-width:100px;}
+  .source-btn{display:block;margin-top:12px;padding:9px 14px;background:var(--color-brand-light);border:1px solid #bee3f8;border-radius:var(--border-radius-md);color:var(--color-brand);font-size:13px;font-weight:500;text-decoration:none;text-align:center;transition:all 0.15s;}
+  .source-btn:hover{background:var(--color-brand);color:#fff;}
+  .csn-badge{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:var(--border-radius-md);background:var(--color-brand-light);color:var(--color-brand);text-decoration:none;border:1px solid transparent;transition:all 0.15s;cursor:pointer;}
+  .csn-badge:hover{background:var(--color-brand);color:#fff;}
+  .csn-card-ref{background:var(--color-brand-light);padding:6px 10px;border-radius:var(--border-radius-md);margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;}
+  .signs-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:flex-start;}
+  .sign-chip{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--color-background-primary);border:1px solid var(--color-border-secondary);border-radius:8px;padding:7px 6px 5px;cursor:pointer;text-decoration:none;transition:all 0.15s;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
+  .sign-chip:hover{border-color:var(--color-brand);box-shadow:0 2px 8px rgba(0,0,0,0.12);transform:translateY(-1px);}
+  .sign-num{font-size:10px;color:var(--color-text-secondary);font-weight:600;line-height:1;}
+  .sign-chip svg{filter:drop-shadow(0 1px 2px rgba(0,0,0,0.15));}
+  .fav-btn{background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-secondary);display:flex;align-items:center;flex-shrink:0;border-radius:4px;transition:color 0.15s,transform 0.15s;width:26px;justify-content:center;}
+  .fav-btn:hover{color:#f6ad55;transform:scale(1.15);}
+  .fav-btn.active{color:#f6ad55;}
+  .fav-btn.active svg polygon{fill:#f6ad55;}
+  .fav-tab-btn{background:none;border:none;cursor:pointer;padding:6px 10px;border-radius:8px;font-size:14px;color:var(--color-text-secondary);transition:all 0.15s;position:relative;display:flex;align-items:center;gap:4px;}
+  .fav-tab-btn:hover,.fav-tab-btn.active{color:#f6ad55;background:rgba(246,173,85,0.1);}
+  .fav-count{font-size:10px;font-weight:700;background:#f6ad55;color:white;border-radius:8px;padding:1px 5px;min-width:16px;text-align:center;}
+  .fav-law-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;background:var(--color-background-secondary);color:var(--color-text-secondary);border:1px solid var(--color-border-secondary);}
+  .fav-empty{text-align:center;padding:48px 24px;color:var(--color-text-secondary);}
+  .fav-empty svg{margin:0 auto 12px;display:block;opacity:0.3;}
+  .fav-empty-title{font-size:16px;font-weight:600;margin-bottom:6px;color:var(--color-text-primary);}
+  .fav-empty-sub{font-size:13px;opacity:0.7;}
+  .compare-btn{background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-secondary);display:flex;align-items:center;flex-shrink:0;border-radius:4px;transition:color 0.15s,transform 0.15s;width:26px;justify-content:center;}
+  .compare-btn:hover{color:var(--color-brand);transform:scale(1.15);}
+  .compare-btn.active{color:var(--color-brand);}
+  .compare-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--color-brand);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 -2px 16px rgba(0,0,0,0.2);transform:translateY(100%);transition:transform 0.25s ease;}
+  .compare-bar.visible{transform:translateY(0);}
+  .compare-bar-text{flex:1;font-size:13px;font-weight:500;}
+  .compare-bar-btn{background:#fff;color:var(--color-brand);border:none;border-radius:6px;padding:7px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;}
+  .compare-bar-clear{background:none;border:none;color:rgba(255,255,255,0.8);cursor:pointer;font-size:20px;padding:0 4px;line-height:1;}
+  .compare-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;padding:10px 10px 80px;align-items:start;}
+  .compare-col{min-width:0;overflow:hidden;}
+  .compare-card{background:var(--color-background-primary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow:hidden;}
+  .compare-card .law-name,.compare-card-title{font-size:12px!important;}
+  .compare-card .part-label{font-size:11px!important;}
+  .compare-card .part-desc,.compare-card .dt{font-size:11px!important;}
+  .compare-card .dl{font-size:10px!important;}
+  .compare-card .fine-lbl{font-size:10px!important;}
+  .compare-card .fine-val{font-size:13px!important;}
+  .compare-card .badge{font-size:9px!important;padding:2px 5px!important;}
+  .compare-card .source-btn{font-size:11px!important;padding:7px 10px!important;}
+  .compare-card .fine-row{gap:4px!important;}
+  .compare-card .fine-box{padding:6px 8px!important;}
+  .compare-card .csn-card-ref{padding:4px 8px!important;font-size:10px!important;}
+  .compare-card .part-block{padding:8px 0!important;}
+  .compare-card-header{padding:10px!important;border-bottom:1px solid var(--color-border-secondary);background:var(--color-brand-light);}
+  .compare-card-title{font-size:13px;font-weight:600;color:var(--color-text-primary);line-height:1.4;margin-bottom:6px;}
+  .compare-card-body{padding:10px!important;}
+  .compare-exit{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--color-border-secondary);background:var(--color-background-primary);position:sticky;top:0;z-index:10;}
+  .compare-exit-btn{background:none;border:1px solid var(--color-border-secondary);border-radius:6px;padding:6px 14px;font-size:12px;cursor:pointer;color:var(--color-text-secondary);}
+  .compare-exit-btn:hover{border-color:var(--color-brand);color:var(--color-brand);}
+  .compare-title{font-size:15px;font-weight:700;color:var(--color-text-primary);}
+  .compare-vs{font-size:10px;color:var(--color-text-secondary);font-weight:700;text-align:center;padding:8px 4px;align-self:start;margin-top:40px;background:var(--color-background-secondary);border-radius:20px;width:28px;}
+  @media(max-width:600px){.compare-grid{grid-template-columns:1fr auto 1fr;gap:4px;padding:8px 6px 80px;}.compare-card-body{padding:8px!important;}.compare-card-header{padding:8px!important;}.compare-vs{width:22px;font-size:9px;margin-top:30px;}.categories{grid-template-columns:repeat(2,1fr);}.law-name{font-size:14px;}}
   .proto-container{padding:14px;max-width:var(--max-app-width);margin:0 auto;}
   .proto-header{font-size:13px;font-weight:700;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;}
   .proto-types{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px;}
   .proto-type-btn{padding:14px 12px;border-radius:var(--border-radius-lg);border:2px solid var(--color-border-secondary);background:var(--color-background-primary);cursor:pointer;text-align:left;transition:all 0.15s;}
   .proto-type-btn:hover{border-color:var(--color-brand);background:var(--color-brand-light);}
-  .proto-type-btn.selected{border-color:var(--color-brand);background:var(--color-brand-light);}
   .proto-type-icon{font-size:24px;display:block;margin-bottom:6px;}
   .proto-type-name{font-size:13px;font-weight:600;color:var(--color-text-primary);}
   .proto-type-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px;}
-  .proto-section{margin-bottom:18px;}
   .proto-section-title{font-size:12px;font-weight:700;color:var(--color-brand);text-transform:uppercase;letter-spacing:0.5px;padding:8px 0 6px;border-bottom:1px solid var(--color-border-secondary);margin-bottom:10px;}
-  .proto-step{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--color-border-tertiary);}
+  .proto-step{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--color-border-tertiary);cursor:pointer;}
   .proto-step:last-child{border-bottom:none;}
   .proto-check{width:22px;height:22px;min-width:22px;border-radius:5px;border:2px solid var(--color-border-secondary);background:var(--color-background-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;margin-top:1px;}
   .proto-check.done{background:var(--color-brand);border-color:var(--color-brand);}
-  .proto-check.done::after{content:'✓';color:#fff;font-size:13px;font-weight:700;}
+  .proto-check.done::after{content:"✓";color:#fff;font-size:13px;font-weight:700;}
   .proto-check.warn{border-color:#e53e3e;}
   .proto-check.done.warn{background:#e53e3e;border-color:#e53e3e;}
   .proto-step-text{flex:1;}
@@ -640,262 +165,42 @@
   .proto-progress-fill{height:100%;background:var(--color-brand);border-radius:3px;transition:width 0.3s;}
   .proto-progress-text{font-size:12px;font-weight:600;color:var(--color-text-secondary);white-space:nowrap;}
   .proto-reset{font-size:12px;color:var(--color-text-secondary);text-decoration:underline;cursor:pointer;background:none;border:none;padding:0;}
-  .proto-reset:hover{color:var(--color-text-primary);}
   .proto-done-banner{background:#f0fff4;border:1px solid #9ae6b4;border-radius:var(--border-radius-lg);padding:16px;text-align:center;margin-top:12px;}
   .proto-done-banner .done-icon{font-size:32px;display:block;margin-bottom:6px;}
   .proto-done-banner .done-title{font-size:15px;font-weight:700;color:#276749;}
   .proto-done-banner .done-sub{font-size:12px;color:#2f855a;margin-top:4px;}
-  [data-theme="dark"] .proto-type-btn{background:var(--color-background-primary);border-color:#2d3748;}
-  [data-theme="dark"] .proto-type-btn.selected,[data-theme="dark"] .proto-type-btn:hover{background:#1a2a3a;border-color:var(--color-brand);}
-  [data-theme="dark"] .proto-check{background:#1e2535;border-color:#4a5568;}
-  [data-theme="dark"] .proto-done-banner{background:#1a2d1f;border-color:#276749;}
-  [data-theme="dark"] .proto-done-banner .done-title{color:#68d391;}
-  [data-theme="dark"] .proto-done-banner .done-sub{color:#48bb78;}
-
-  /* ===== ABBREVIATION LEGEND ===== */
   .abbrev-box{margin-top:14px;padding:10px 14px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border-left:3px solid var(--color-brand);}
   .abbrev-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-text-secondary);margin-bottom:6px;}
   .abbrev-item{font-size:12px;line-height:1.7;color:var(--color-text-secondary);}
   .abbrev-item strong{color:var(--color-text-primary);font-weight:600;}
-  [data-theme="dark"] .abbrev-box{background:#171923;border-left-color:var(--color-brand);}
-
-  /* ===== FAVOURITES ===== */
-  .fav-btn{background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-secondary);display:flex;align-items:center;flex-shrink:0;border-radius:4px;transition:color 0.15s,transform 0.15s;width:26px;justify-content:center;}
-  .fav-btn:hover{color:#f6ad55;transform:scale(1.15);}
-  .fav-btn.active{color:#f6ad55;}
-  .fav-btn.active svg polygon{fill:#f6ad55;}
-  .fav-tab-btn{background:none;border:none;cursor:pointer;padding:6px 10px;border-radius:8px;font-size:14px;color:var(--color-text-secondary);transition:all 0.15s;position:relative;display:flex;align-items:center;gap:4px;}
-  .fav-tab-btn:hover,.fav-tab-btn.active{color:#f6ad55;background:rgba(246,173,85,0.1);}
-  .fav-count{font-size:10px;font-weight:700;background:#f6ad55;color:white;border-radius:8px;padding:1px 5px;min-width:16px;text-align:center;}
-  .fav-law-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;background:var(--color-background-secondary);color:var(--color-text-secondary);border:1px solid var(--color-border-secondary);}
-  .fav-empty{text-align:center;padding:48px 24px;color:var(--color-text-secondary);}
-  .fav-empty svg{margin:0 auto 12px;display:block;opacity:0.3;}
-  .fav-empty-title{font-size:16px;font-weight:600;margin-bottom:6px;color:var(--color-text-primary);}
-  .fav-empty-sub{font-size:13px;opacity:0.7;}
-
-  /* ===== MOBILE RESPONSIVE ===== */
-  @media (max-width: 600px) {
-    :root {
-      --max-app-width: 100%;
-    }
-
-    body {
-      font-size: 14px;
-    }
-
-    .app-header {
-      padding: 12px 14px 10px;
-    }
-
-    .app-title {
-      font-size: 22px;
-    }
-
-    .app-subtitle {
-      font-size: 12px;
-    }
-
-    .app-subtitle2 {
-      font-size: 10px;
-    }
-
-    /* Law switcher - scrollable on mobile */
-    .law-switcher {
-      gap: 6px;
-      padding: 4px 6px;
-      overflow-x: auto;
-      justify-content: flex-start;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .law-switcher::-webkit-scrollbar { display: none; }
-
-    .law-btn {
-      font-size: 12px;
-      padding: 8px 14px;
-      white-space: nowrap;
-      min-height: 36px;
-      flex-shrink: 0;
-    }
-
-    /* Lang switcher */
-    .lang-switcher {
-      gap: 4px;
-    }
-    .lang-btn {
-      font-size: 11px;
-      padding: 4px 8px;
-      min-height: 32px;
-    }
-
-    /* Search */
-    .search-bar {
-      padding: 8px 14px;
-    }
-    .search-input {
-      font-size: 14px;
-      padding: 10px 12px;
-      min-height: 44px;
-    }
-
-    /* Categories grid - 2 columns on mobile */
-    .categories {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      padding: 10px 14px;
-    }
-
-    .cat-card {
-      padding: 10px 8px;
-    }
-
-    .cat-name {
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .cat-count {
-      font-size: 10px;
-    }
-
-    /* Laws list */
-    .laws-list {
-      padding: 0 14px 20px;
-    }
-
-    /* Law cards */
-    .law-top {
-      padding: 12px 14px;
-      gap: 8px;
-    }
-
-    .law-name {
-      font-size: 13px;
-      line-height: 1.4;
-    }
-
-    .law-meta {
-      padding: 0 14px 10px;
-      gap: 5px;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      font-size: 10px;
-      padding: 2px 7px;
-    }
-
-    .law-detail {
-      padding: 12px 14px 14px;
-    }
-
-    /* Fine boxes - full width on mobile */
-    .fine-row {
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .fine-box {
-      flex: 1 1 calc(50% - 6px);
-      min-width: 100px;
-    }
-
-    /* Parts */
-    .part-block {
-      padding: 10px 0;
-    }
-
-    .part-label {
-      font-size: 12px;
-    }
-
-    .part-desc {
-      font-size: 12px;
-    }
-
-    .part-fines {
-      gap: 6px;
-    }
-
-    .part-fine-box {
-      min-width: 80px;
-    }
-
-    /* Signs row - smaller chips on mobile */
-    .signs-row {
-      gap: 6px;
-    }
-
-    .sign-chip {
-      font-size: 10px;
-    }
-
-    /* Source button */
-    .source-btn {
-      font-size: 12px;
-      padding: 8px 12px;
-      min-height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* CSN badges */
-    .csn-badge {
-      font-size: 10px;
-      padding: 2px 6px;
-    }
-
-    .csn-card-ref {
-      font-size: 11px;
-      padding: 4px 8px;
-    }
-
-    /* Section title */
-    .section-title {
-      padding: 8px 14px 4px;
-      font-size: 11px;
-    }
-
-    /* DL/DT description */
-    .dl {
-      font-size: 11px;
-      margin-top: 10px;
-    }
-
-    .dt {
-      font-size: 13px;
-      line-height: 1.5;
-    }
-  }
-
-  /* Very small phones */
-  @media (max-width: 380px) {
-    .categories {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
-    }
-    .app-title { font-size: 20px; }
-    .law-btn { padding: 7px 10px; font-size: 11px; }
-  }
-
 </style>
-
-
+</head>
+<body>
+<div class="app-wrapper">
+<div id="compareBar" class="compare-bar">
+  <div class="compare-bar-text" id="compareBarText"></div>
+  <button class="compare-bar-btn" id="compareBarBtn" onclick="showCompare()" style="display:none"></button>
+  <button class="compare-bar-clear" onclick="clearCompare()">&#x2715;</button>
+</div>
 <div class="app-header">
-  <div class="app-title">BALT 1</div>
-  <div class="app-subtitle" id="appSubtitle">ASL</div>
-  <div class="app-subtitle2" id="appSubtitle2">Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā</div>
-  <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Mainit temu"><svg id="iconSun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg id="iconMoon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
-  <button class="fav-tab-btn" id="favTabBtn" onclick="showFavourites(this)" title="Favorīti">
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-    <span class="fav-count" id="favCount" style="display:none">0</span>
-  </button>
-  <div class="lang-switcher">
-    <button class="lang-btn" onclick="setLang('ru',this)">RU</button>
-    <button class="lang-btn active" onclick="setLang('lv',this)">LV</button>
-    <button class="lang-btn" onclick="setLang('en',this)">EN</button>
+  <div class="header-top">
+    <div class="app-title">BALT 1</div>
+    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
+      <svg id="iconSun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg id="iconMoon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+    <button class="fav-tab-btn" id="favTabBtn" onclick="showFavourites(this)">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+      <span class="fav-count" id="favCount" style="display:none">0</span>
+    </button>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('lv',this)">LV</button>
+      <button class="lang-btn" onclick="setLang('ru',this)">RU</button>
+      <button class="lang-btn" onclick="setLang('en',this)">EN</button>
+    </div>
   </div>
+  <div class="app-subtitle" id="appSubtitle">ASL</div>
+  <div class="app-subtitle2" id="appSubtitle2">Administratīvo sodu likums</div>
   <div class="law-switcher">
     <button class="law-btn active" onclick="setLaw('asl',this)">ASL</button>
     <button class="law-btn" onclick="setLaw('aal',this)">AAL</button>
@@ -903,15 +208,19 @@
     <button class="law-btn" onclick="setLaw('aiz',this)">Aizturēšana</button>
     <button class="law-btn" onclick="setLaw('lpp',this)">LPP</button>
     <button class="law-btn" onclick="setLaw('apas',this)">APAS</button>
+    <button class="law-btn" onclick="setLaw('mmob',this)">Mikro</button>
     <button class="law-btn proto-btn" onclick="showProtocol(this)" id="protocolBtn">Protokols</button>
   </div>
 </div>
-<div class="search-bar"><input type="text" id="searchInput" placeholder="Найти нарушение..." oninput="filterLaws()"/></div>
+<div class="search-bar">
+  <input type="search" class="search-input" id="searchInput" placeholder="Meklēt pantu..." oninput="filterLaws()" autocomplete="off">
+</div>
 <div class="categories" id="catGrid"></div>
-<div class="section-title" id="sectionTitle"></div>
+<p class="section-title" id="sectionTitle"></p>
 <div class="laws-list" id="lawsList"></div>
-
+</div>
 <script>
+
 let lang='lv', currentCat='admin', currentLaw='asl';
 const BASE_ASL='https://likumi.lv/ta/id/314808-administrativo-sodu-likums-par-parkapumiem-parvaldes-sabiedriskas-kartibas-un-valsts-valodas-lietosanas-joma';
 const BASE_CSL='https://likumi.lv/ta/id/45467-celu-satiksmes-likums';
@@ -955,49 +264,49 @@ function csnLinks(refs){
 
 // ===== SVG ROAD SIGNS =====
 const S={
-  lim:n=>`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="white" stroke="#e53e3e" stroke-width="6"/><text x="30" y="40" text-anchor="middle" font-size="${n>99?17:21}" font-weight="700" fill="#1a202c" font-family="Arial,sans-serif">${n}</text></svg>`,
-  limEnd:n=>`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="white" stroke="#aaa" stroke-width="5"/><text x="30" y="40" text-anchor="middle" font-size="${n>99?15:19}" font-weight="700" fill="#aaa" font-family="Arial,sans-serif">${n}</text><line x1="9" y1="51" x2="51" y2="9" stroke="#e53e3e" stroke-width="4"/></svg>`,
-  noStop:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="white" stroke="#e53e3e" stroke-width="6"/><line x1="14" y1="14" x2="46" y2="46" stroke="#e53e3e" stroke-width="7" stroke-linecap="round"/><line x1="46" y1="14" x2="14" y2="46" stroke="#e53e3e" stroke-width="7" stroke-linecap="round"/></svg>`,
-  noPark:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="#3182ce"/><text x="30" y="44" text-anchor="middle" font-size="34" font-weight="700" fill="white" font-family="Arial,sans-serif">P</text><line x1="9" y1="51" x2="51" y2="9" stroke="#e53e3e" stroke-width="6"/></svg>`,
-  park:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="58" height="58" rx="5" fill="#3182ce"/><text x="30" y="44" text-anchor="middle" font-size="38" font-weight="700" fill="white" font-family="Arial,sans-serif">P</text></svg>`,
-  stop:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><polygon points="19,3 41,3 57,19 57,41 41,57 19,57 3,41 3,19" fill="#e53e3e"/><text x="30" y="37" text-anchor="middle" font-size="13" font-weight="700" fill="white" font-family="Arial,sans-serif">STOP</text></svg>`,
-  giveWay:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><polygon points="30,57 3,10 57,10" fill="white" stroke="#e53e3e" stroke-width="5"/><polygon points="30,45 13,16 47,16" fill="#e53e3e"/></svg>`,
-  noEntry:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="#e53e3e"/><rect x="10" y="24" width="40" height="12" rx="3" fill="white"/></svg>`,
-  oneWay:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="58" height="58" rx="5" fill="#3182ce"/><polygon points="12,23 36,23 36,13 52,30 36,47 36,37 12,37" fill="white"/></svg>`,
-  residential:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="58" height="58" rx="4" fill="#3182ce"/><polygon points="30,13 15,26 15,45 23,45 23,35 37,35 37,45 45,45 45,26" fill="white"/><circle cx="13" cy="44" r="3.5" fill="white"/><circle cx="47" cy="44" r="3.5" fill="white"/></svg>`,
-  populated:`<svg viewBox="0 0 70 46" width="60" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="68" height="44" fill="#3182ce" stroke="white" stroke-width="3"/><text x="35" y="29" text-anchor="middle" font-size="12" font-weight="700" fill="white" font-family="Arial,sans-serif">RĪGA</text></svg>`,
-  redLight:`<svg viewBox="0 0 40 68" width="34" height="58" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="2" width="32" height="64" rx="5" fill="#2d3748"/><circle cx="20" cy="16" r="10" fill="#e53e3e"/><circle cx="20" cy="34" r="10" fill="#4a5568"/><circle cx="20" cy="52" r="10" fill="#4a5568"/></svg>`,
-  noPhone:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="white" stroke="#e53e3e" stroke-width="6"/><rect x="22" y="11" width="16" height="38" rx="3" fill="#2d3748"/><rect x="26" y="42" width="8" height="3" rx="1.5" fill="#718096"/><line x1="8" y1="52" x2="52" y2="8" stroke="#e53e3e" stroke-width="6"/></svg>`,
-  priority:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><rect x="13" y="13" width="34" height="34" rx="3" transform="rotate(45 30 30)" fill="#ECC94B" stroke="white" stroke-width="4"/></svg>`
+  lim:n=>`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="white" stroke="#e53e3e" stroke-width="6"/><text x="30" y="40" text-anchor="middle" font-size="${n>99?17:21}" font-weight="700" fill="#1a202c" font-family="Arial,sans-serif">${n}</text></svg>`,
+  limEnd:n=>`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="white" stroke="#aaa" stroke-width="5"/><text x="30" y="40" text-anchor="middle" font-size="${n>99?15:19}" font-weight="700" fill="#aaa" font-family="Arial,sans-serif">${n}</text><line x1="9" y1="51" x2="51" y2="9" stroke="#e53e3e" stroke-width="4"/></svg>`,
+  noStop:`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="white" stroke="#e53e3e" stroke-width="6"/><line x1="14" y1="14" x2="46" y2="46" stroke="#e53e3e" stroke-width="7" stroke-linecap="round"/><line x1="46" y1="14" x2="14" y2="46" stroke="#e53e3e" stroke-width="7" stroke-linecap="round"/></svg>`,
+  noPark:`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="#3182ce"/><text x="30" y="44" text-anchor="middle" font-size="34" font-weight="700" fill="white" font-family="Arial,sans-serif">P</text><line x1="9" y1="51" x2="51" y2="9" stroke="#e53e3e" stroke-width="6"/></svg>`,
+  park:`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="52" height="52" rx="5" fill="#3182ce"/><text x="30" y="44" text-anchor="middle" font-size="38" font-weight="700" fill="white" font-family="Arial,sans-serif">P</text></svg>`,
+  stop:`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><polygon points="19,3 41,3 57,19 57,41 41,57 19,57 3,41 3,19" fill="#e53e3e"/><text x="30" y="37" text-anchor="middle" font-size="13" font-weight="700" fill="white" font-family="Arial,sans-serif">STOP</text></svg>`,
+  giveWay:`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><polygon points="30,57 3,10 57,10" fill="white" stroke="#e53e3e" stroke-width="5"/><polygon points="30,45 13,16 47,16" fill="#e53e3e"/></svg>`,
+  noEntry:`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="#e53e3e"/><rect x="10" y="24" width="40" height="12" rx="3" fill="white"/></svg>`,
+  oneWay:`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="52" height="52" rx="5" fill="#3182ce"/><polygon points="12,23 36,23 36,13 52,30 36,47 36,37 12,37" fill="white"/></svg>`,
+  residential:`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="52" height="52" rx="4" fill="#3182ce"/><polygon points="30,13 15,26 15,45 23,45 23,35 37,35 37,45 45,45 45,26" fill="white"/><circle cx="13" cy="44" r="3.5" fill="white"/><circle cx="47" cy="44" r="3.5" fill="white"/></svg>`,
+  populated:`<svg viewBox="0 0 70 46" width="60" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="60" height="40" fill="#3182ce" stroke="white" stroke-width="3"/><text x="35" y="29" text-anchor="middle" font-size="12" font-weight="700" fill="white" font-family="Arial,sans-serif">RĪGA</text></svg>`,
+  redLight:`<svg viewBox="0 0 40 68" width="30" height="52" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="2" width="32" height="64" rx="5" fill="#2d3748"/><circle cx="20" cy="16" r="10" fill="#e53e3e"/><circle cx="20" cy="34" r="10" fill="#4a5568"/><circle cx="20" cy="52" r="10" fill="#4a5568"/></svg>`,
+  noPhone:`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="27" fill="white" stroke="#e53e3e" stroke-width="6"/><rect x="22" y="11" width="16" height="38" rx="3" fill="#2d3748"/><rect x="26" y="42" width="8" height="3" rx="1.5" fill="#718096"/><line x1="8" y1="52" x2="52" y2="8" stroke="#e53e3e" stroke-width="6"/></svg>`,
+  priority:`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><rect x="13" y="13" width="34" height="34" rx="3" transform="rotate(45 30 30)" fill="#ECC94B" stroke="white" stroke-width="4"/></svg>`
 ,
   // Sign 327 - Stāvēt aizliegts (red ring, blue fill, single diagonal stripe - NO P letter)
-  noParkZone:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="29" fill="#e53e3e"/><circle cx="30" cy="30" r="21" fill="#3182ce"/><line x1="10" y1="10" x2="50" y2="50" stroke="#e53e3e" stroke-width="13"/></svg>`,
-  s327:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="29" fill="#e53e3e"/><circle cx="30" cy="30" r="21" fill="#3182ce"/><line x1="10" y1="10" x2="50" y2="50" stroke="#e53e3e" stroke-width="13"/></svg>`,
+  noParkZone:`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="29" fill="#e53e3e"/><circle cx="30" cy="30" r="21" fill="#3182ce"/><line x1="10" y1="10" x2="50" y2="50" stroke="#e53e3e" stroke-width="13"/></svg>`,
+  s327:`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="29" fill="#e53e3e"/><circle cx="30" cy="30" r="21" fill="#3182ce"/><line x1="10" y1="10" x2="50" y2="50" stroke="#e53e3e" stroke-width="13"/></svg>`,
   // Sign 328 - No parking on odd dates
-  s328:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="29" fill="#e53e3e"/><circle cx="30" cy="30" r="21" fill="#3182ce"/><line x1="10" y1="10" x2="50" y2="50" stroke="#e53e3e" stroke-width="13"/><text x="30" y="22" text-anchor="middle" font-size="9" font-weight="700" fill="white" font-family="Arial,sans-serif">1.3.5</text></svg>`,
+  s328:`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="29" fill="#e53e3e"/><circle cx="30" cy="30" r="21" fill="#3182ce"/><line x1="10" y1="10" x2="50" y2="50" stroke="#e53e3e" stroke-width="13"/><text x="30" y="22" text-anchor="middle" font-size="9" font-weight="700" fill="white" font-family="Arial,sans-serif">1.3.5</text></svg>`,
   // Sign 329 - No parking on even dates
-  s329:`<svg viewBox="0 0 60 60" width="46" height="46" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="29" fill="#e53e3e"/><circle cx="30" cy="30" r="21" fill="#3182ce"/><line x1="10" y1="10" x2="50" y2="50" stroke="#e53e3e" stroke-width="13"/><text x="30" y="22" text-anchor="middle" font-size="9" font-weight="700" fill="white" font-family="Arial,sans-serif">2.4.6</text></svg>`,
+  s329:`<svg viewBox="0 0 60 60" width="52" height="52" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="29" fill="#e53e3e"/><circle cx="30" cy="30" r="21" fill="#3182ce"/><line x1="10" y1="10" x2="50" y2="50" stroke="#e53e3e" stroke-width="13"/><text x="30" y="22" text-anchor="middle" font-size="9" font-weight="700" fill="white" font-family="Arial,sans-serif">2.4.6</text></svg>`,
   // Sign 523 - Zone sign
   s523:`<svg viewBox="0 0 64 44" width="54" height="37" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="63" height="43" rx="3" fill="white" stroke="#38a169" stroke-width="4"/><text x="32" y="20" text-anchor="middle" font-size="10" font-weight="700" fill="#38a169" font-family="Arial,sans-serif">ZONA</text><text x="32" y="34" text-anchor="middle" font-size="11" font-weight="700" fill="#38a169" font-family="Arial,sans-serif">523</text></svg>`,
   // Sign 537 - Stāvvieta (parking zone)
-  s537:`<svg viewBox="0 0 52 52" width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="51" height="51" rx="3" fill="#3182ce"/><text x="26" y="38" text-anchor="middle" font-size="36" font-weight="700" fill="white" font-family="Arial,sans-serif">P</text></svg>`,
+  s537:`<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Latvia_road_sign_537.svg" width="52" height="52" style="object-fit:contain;max-width:52px;max-height:52px" loading="lazy" alt="537">`,
   // Sign 539 - Maksas stāvvieta (paid parking)
-  s539:`<svg viewBox="0 0 52 52" width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="51" height="51" rx="3" fill="#3182ce"/><text x="26" y="32" text-anchor="middle" font-size="26" font-weight="700" fill="white" font-family="Arial,sans-serif">P</text><text x="26" y="46" text-anchor="middle" font-size="11" font-weight="600" fill="white" font-family="Arial,sans-serif">€</text></svg>`,
+  s539:`<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Latvia_road_sign_539.svg" width="52" height="52" style="object-fit:contain;max-width:52px;max-height:52px" loading="lazy" alt="539">`,
   // Signs 830-839 - Parking orientation supplementary signs
-  s830:`<svg viewBox="0 0 80 46" width="58" height="34" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="45" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><rect x="13" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="35" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="57" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/></svg>`,
-  s831:`<svg viewBox="0 0 80 46" width="58" height="34" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="45" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><polygon points="8,36 16,10 27,10 19,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="30,36 38,10 49,10 41,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="52,36 60,10 71,10 63,36" fill="none" stroke="#333" stroke-width="1.5"/></svg>`,
-  s832:`<svg viewBox="0 0 80 46" width="58" height="34" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="45" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><polygon points="19,36 8,10 19,10 30,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="41,36 30,10 41,10 52,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="63,36 52,10 63,10 74,36" fill="none" stroke="#333" stroke-width="1.5"/></svg>`,
-  s833:`<svg viewBox="0 0 80 46" width="58" height="34" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="45" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><rect x="8" y="18" width="22" height="13" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="50" y="18" width="22" height="13" rx="1" fill="none" stroke="#333" stroke-width="1.5"/></svg>`,
-  s834:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><rect x="13" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="35" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="57" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">8-18</text></svg>`,
-  s835:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><polygon points="8,36 16,10 27,10 19,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="30,36 38,10 49,10 41,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="52,36 60,10 71,10 63,36" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">8-18</text></svg>`,
-  s836:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><polygon points="19,36 8,10 19,10 30,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="41,36 30,10 41,10 52,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="63,36 52,10 63,10 74,36" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">8-18</text></svg>`,
-  s837:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><rect x="8" y="18" width="22" height="13" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="50" y="18" width="22" height="13" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">8-18</text></svg>`,
-  s838:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><rect x="13" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="35" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><rect x="57" y="10" width="11" height="24" rx="1" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">3.5t</text></svg>`,
+  s830:`<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Latvia_road_sign_830.svg" width="56" height="40" style="object-fit:contain;max-width:56px;max-height:40px" loading="lazy" alt="830">`,
+  s831:`<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Latvia_road_sign_831.svg" width="56" height="40" style="object-fit:contain;max-width:56px;max-height:40px" loading="lazy" alt="831">`,
+  s832:`<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Latvia_road_sign_832.svg" width="56" height="40" style="object-fit:contain;max-width:56px;max-height:40px" loading="lazy" alt="832">`,
+  s833:`<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Latvia_road_sign_833.svg" width="56" height="40" style="object-fit:contain;max-width:56px;max-height:40px" loading="lazy" alt="833">`,
+  s834:`<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Latvia_road_sign_834.svg" width="56" height="40" style="object-fit:contain;max-width:56px;max-height:40px" loading="lazy" alt="834">`,
+  s835:`<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Latvia_road_sign_835.svg" width="56" height="40" style="object-fit:contain;max-width:56px;max-height:40px" loading="lazy" alt="835">`,
+  s836:`<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Latvia_road_sign_836.svg" width="56" height="40" style="object-fit:contain;max-width:56px;max-height:40px" loading="lazy" alt="836">`,
+  s837:`<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Latvia_road_sign_837.svg" width="56" height="40" style="object-fit:contain;max-width:56px;max-height:40px" loading="lazy" alt="837">`,
+  s838:`<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Latvia_road_sign_838.svg" width="56" height="40" style="object-fit:contain;max-width:56px;max-height:40px" loading="lazy" alt="838">`,
   // Sign 927 - Autobusa josla (bus lane) - blue rect with arrow + BUS text
   busLane:`<svg viewBox="0 0 70 46" width="58" height="38" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="69" height="45" rx="3" fill="#3182ce"/><polygon points="35,36 18,20 26,20 26,10 44,10 44,20 52,20" fill="white"/><text x="35" y="44" text-anchor="middle" font-size="8" font-weight="700" fill="white" font-family="Arial,sans-serif">BUS</text></svg>`,
   // Sign 527 - Trolleybus lane
   trollLane:`<svg viewBox="0 0 70 46" width="58" height="38" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="69" height="45" rx="3" fill="#3182ce"/><polygon points="35,36 18,20 26,20 26,10 44,10 44,20 52,20" fill="white"/><text x="35" y="44" text-anchor="middle" font-size="7" font-weight="700" fill="white" font-family="Arial,sans-serif">TROL</text></svg>`,
-  s839:`<svg viewBox="0 0 80 50" width="58" height="36" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="79" height="49" rx="2" fill="white" stroke="#333" stroke-width="1.5"/><line x1="4" y1="36" x2="76" y2="36" stroke="#333" stroke-width="2"/><polygon points="8,36 16,10 27,10 19,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="30,36 38,10 49,10 41,36" fill="none" stroke="#333" stroke-width="1.5"/><polygon points="52,36 60,10 71,10 63,36" fill="none" stroke="#333" stroke-width="1.5"/><text x="40" y="44" text-anchor="middle" font-size="7" fill="#333" font-family="Arial,sans-serif">3.5t</text></svg>`,
+  s839:`<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Latvia_road_sign_839.svg" width="56" height="40" style="object-fit:contain;max-width:56px;max-height:40px" loading="lazy" alt="839">`,
   // Signs 920/943/947 - edge/kerb marking (yellow zigzag)
   edgeMark:`<svg viewBox="0 0 70 34" width="60" height="29" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="68" height="32" rx="3" fill="#ECC94B" stroke="#888" stroke-width="1.5"/><polyline points="6,26 18,8 30,26 42,8 54,26 64,14" fill="none" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   // Sign 523 - Zone/area sign (green bordered rectangle)
@@ -1007,7 +316,16 @@ const S={
   parkAngle:`<svg viewBox="0 0 90 52" width="70" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="88" height="50" rx="3" fill="white" stroke="#333" stroke-width="2"/><line x1="22" y1="42" x2="34" y2="14" stroke="#333" stroke-width="3" stroke-linecap="round"/><polygon points="36,9 28,18 38,21" fill="#333"/><line x1="45" y1="42" x2="57" y2="14" stroke="#333" stroke-width="3" stroke-linecap="round"/><polygon points="59,9 51,18 61,21" fill="#333"/><line x1="64" y1="42" x2="76" y2="14" stroke="#333" stroke-width="3" stroke-linecap="round"/><polygon points="78,9 70,18 80,21" fill="#333"/><text x="45" y="50" text-anchor="middle" font-size="7" fill="#555" font-family="Arial,sans-serif">831/832</text></svg>`,
   parkParallel:`<svg viewBox="0 0 90 52" width="70" height="40" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="88" height="50" rx="3" fill="white" stroke="#333" stroke-width="2"/><rect x="14" y="18" width="20" height="20" rx="2" fill="none" stroke="#333" stroke-width="2"/><rect x="38" y="18" width="20" height="20" rx="2" fill="none" stroke="#333" stroke-width="2"/><rect x="62" y="18" width="20" height="20" rx="2" fill="none" stroke="#333" stroke-width="2"/><line x1="8" y1="44" x2="84" y2="44" stroke="#333" stroke-width="2.5"/><text x="45" y="51" text-anchor="middle" font-size="7" fill="#555" font-family="Arial,sans-serif">833</text></svg>`
 };
-function sgn(svg,label){return '<div class="sign-chip">'+svg+'<span class="sign-num">'+label+'</span></div>';}
+function sgn(svg,label){
+  // Map common sign ranges to CSN appendix anchors
+  var num=parseInt(label);
+  var anchor='';
+  if(num>=100&&num<=399) anchor='#pielikums1';  // Warning/prohibitory signs
+  if(num>=400&&num<=599) anchor='#pielikums1';  // Mandatory signs
+  if(num>=600&&num<=899) anchor='#pielikums1';  // Informational signs
+  if(num>=900&&num<=999) anchor='#pielikums1';  // Additional signs
+  return '<a class="sign-chip" href="'+BASE_CSN+anchor+'" target="_blank" onclick="event.stopPropagation()" title="Ceļa zīme '+label+' → CSN">'+svg+'<span class="sign-num">'+label+'</span></a>';
+}
 
 
 // ===== UI STRINGS =====
@@ -3022,6 +2340,155 @@ function renderProtocol(){
     '</div>';
 }
 
+// ===== COMPARE =====
+let compareSet=[];
+let showingCompare=false;
+
+const COMPARE_SVG='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="18" rx="1"/></svg>';
+
+function isInCompare(article){return compareSet.some(function(c){return c.article===article;});}
+
+function toggleCompare(article,lawType,catKey,name,event){
+  event.stopPropagation();
+  var idx=compareSet.findIndex(function(c){return c.article===article;});
+  if(idx>=0){
+    compareSet.splice(idx,1);
+  } else {
+    if(compareSet.length>=2){
+      // Replace oldest
+      compareSet.shift();
+    }
+    compareSet.push({article:article,law:lawType,cat:catKey,name:name});
+  }
+  updateCompareBar();
+  // Re-render current view to update button state
+  if(showingCompare){showCompare();return;}
+  if(showingFavs){renderFavourites();return;}
+  if(showingProto){return;}
+  renderLaws(getLaws()[currentCat]);
+}
+
+function updateCompareBar(){
+  var bar=document.getElementById('compareBar');
+  var txt=document.getElementById('compareBarText');
+  var btn=document.getElementById('compareBarBtn');
+  if(!bar) return;
+  var n=compareSet.length;
+  var labels={
+    lv:{none:'',one:'1 no 2 kartīņām atlasīta',two:'2 kartīņas atlasītas — gatavs salīdzināšanai',btnOne:'Izvēlies vēl 1',btnTwo:'Salīdzīnāt'},
+    ru:{none:'',one:'1 из 2 карточек выбрано',two:'2 карточки выбраны — готово к сравнению',btnOne:'Выберите ещё 1',btnTwo:'Сравнить'},
+    en:{none:'',one:'1 of 2 cards selected',two:'2 cards selected — ready to compare',btnOne:'Select 1 more',btnTwo:'Compare'}
+  };
+  var l=labels[lang]||labels.lv;
+  if(n===0){
+    bar.classList.remove('visible');
+    return;
+  }
+  bar.classList.add('visible');
+  txt.textContent=n===1?l.one:l.two;
+  if(n>=2){
+    btn.style.display='';
+    btn.textContent=l.btnTwo;
+  } else {
+    btn.style.display='none';
+  }
+}
+
+function clearCompare(){
+  compareSet=[];
+  updateCompareBar();
+  if(showingCompare){exitCompare();}
+  else if(!showingProto&&!showingFavs){renderLaws(getLaws()[currentCat]);}
+}
+
+function exitCompare(){
+  showingCompare=false;
+  var cats=document.getElementById('catGrid');
+  if(cats) cats.style.display='';
+  var sec=document.getElementById('sectionTitle');
+  if(sec) sec.textContent=getCats()[currentCat]?getCats()[currentCat][lang].sec:'';
+  document.getElementById('appSubtitle').textContent=getUI().subtitle;
+  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietoš.anas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietoš.anas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietoš.anas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'},apas:{ru:'Administratīvie pārkāpumi · Saistošie noteikumi',lv:'Administratīvie pārkāpumi · Saistošie noteikumi',en:'Administrative violations · Binding regulations'}};
+  document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
+  renderCats();
+  renderLaws(getLaws()[currentCat]);
+}
+
+function renderCompareCard(found){
+  var law=found.law;
+  var lawKey=found.lawKey;
+  var lawLabels={asl:'ASL',csl:'CSN/CSL',aiz:'Aizturēšana',aal:'AAL',lpp:'LPP',apas:'APAS'};
+  var t=getUIFor(lawKey);
+  var srcUrl=law.srcRaw?law.srcRaw:(law.srcUrl==='AAL'?BASE_AAL:law.srcUrl==='LPP'?BASE_LPP:lawKey==='lpp'?BASE_LPP:lawKey==='aiz'?BASE_AAL:lawKey==='aal'?BASE_AAL:lawKey==='csl'?BASE_CSL:lawKey==='apas'?BASE_AAL:BASE_ASL);
+  var maxStr=law.fineMax?law.fineMax[lang]:'';
+  var maxBadge=maxStr.split('/')[0].trim();
+  var ptsBadge=law.pts?'<span class="badge badge-pts">'+law.pts+' '+t.pts+'</span>':'';
+  var signHTML=(law.signsSVG&&law.signsSVG.length)?'<div class="signs-row" style="flex-wrap:wrap;gap:6px">'+law.signsSVG.join('')+'</div>':'';
+  var fineSection='';
+  if(!law.noFine){
+    if(law.singleFine){var fl={ru:'Штраф',lv:'Sods',en:'Fine'};fineSection='<div class="fine-row"><div class="fine-box"><div class="fine-lbl">'+fl[lang]+'</div><div class="fine-val danger">'+maxStr+'</div></div></div>';}
+    else if(maxBadge){fineSection='<div class="fine-row"><div class="fine-box"><div class="fine-lbl">'+t.min+'</div><div class="fine-val">'+getFineMinFor(law)+'</div></div><div class="fine-box"><div class="fine-lbl">'+t.max+'</div><div class="fine-val danger">'+maxStr+'</div></div></div>';}
+  }
+  var bodyContent=signHTML+(law.parts?renderPartsHTMLFor(law,lawKey):'<div class="dl">'+t.desc+'</div><div class="dt">'+law[lang].desc+'</div>'+fineSection);
+  if(law.csnRef) bodyContent+='<div class="csn-card-ref">'+csnLinks(law.csnRef)+'</div>';
+  if(law.lawRefs) bodyContent+='<div class="csn-card-ref">'+lawBadges(law.lawRefs)+'</div>';
+  if(t.howContest&&law[lang]&&law[lang].contest) bodyContent+='<div class="dl">'+t.howContest+'</div><div class="dt">'+law[lang].contest+'</div>';
+  bodyContent+='<a class="source-btn" href="'+srcUrl+(law.anchor||'')+'" target="_blank" onclick="event.stopPropagation()">↗'+t.sourceBtn+'</a>';
+  var metaBadges='<span class="fav-law-badge">'+lawLabels[lawKey]+'</span> ';
+  if(law.warn) metaBadges+='<span class="badge badge-warn">'+t.warn+'</span>';
+  if(!law.noFine&&maxBadge) metaBadges+='<span class="badge badge-fine">max '+maxBadge+'</span>';
+  metaBadges+=ptsBadge+'<span class="badge badge-article">'+law.article+'</span>';
+
+  return '<div class="compare-card">'+
+    '<div class="compare-card-header">'+
+    '<div class="compare-card-title">'+law[lang].name+'</div>'+
+    '<div style="display:flex;flex-wrap:wrap;gap:5px">'+metaBadges+'</div>'+
+    '</div>'+
+    '<div class="compare-card-body">'+bodyContent+'</div>'+
+    '</div>';
+}
+
+function showCompare(){
+  if(compareSet.length<2) return;
+  showingCompare=true;
+  showingFavs=false;
+  showingProto=false;
+  document.getElementById('protocolBtn').classList.remove('active');
+
+  var labels={
+    lv:{title:'Salīdzīnāšana',exit:'← Atpakaļ',vs:'VS'},
+    ru:{title:'Сравнение',exit:'← Назад',vs:'VS'},
+    en:{title:'Comparison',exit:'← Back',vs:'VS'}
+  }[lang]||{};
+
+  var cats=document.getElementById('catGrid');
+  if(cats){cats.innerHTML='';cats.style.display='none';}
+  var sec=document.getElementById('sectionTitle');
+  if(sec) sec.textContent='';
+  document.getElementById('appSubtitle').textContent=labels.title||'';
+  document.getElementById('appSubtitle2').textContent='';
+
+  var list=document.getElementById('lawsList');
+  if(!list) return;
+
+  var cards=compareSet.map(function(fav){
+    return findLawByArticle(fav.article);
+  }).filter(Boolean);
+
+  if(cards.length<2){list.innerHTML='<div style="padding:24px;text-align:center;color:var(--color-text-secondary)">Atlasi 2 kartiņas.</div>';return;}
+
+  list.innerHTML=
+    '<div class="compare-exit">'+
+    '<button class="compare-exit-btn" onclick="exitCompare()">'+labels.exit+'</button>'+
+    '<div class="compare-title">'+labels.title+'</div>'+
+    '</div>'+
+    '<div class="compare-grid">'+
+    '<div class="compare-col">'+renderCompareCard(cards[0])+'</div>'+
+    '<div class="compare-vs">'+labels.vs+'</div>'+
+    '<div class="compare-col">'+renderCompareCard(cards[1])+'</div>'+
+    '</div>';
+}
+
 // ===== THEME =====
 const THEME_KEY='balt1_theme';
 
@@ -3088,7 +2555,7 @@ function toggleFav(article,lawType,catKey,name,event){
   updateFavCount();
   // Re-render current view
   if(showingFavs){renderFavourites();}
-  else{renderLaws(getLaws()[currentCat]);updateFavCount();initTheme();}
+  else{renderLaws(getLaws()[currentCat]);updateFavCount();initTheme();updateCompareBar();}
 }
 
 function updateFavCount(){
@@ -3227,6 +2694,7 @@ function getBase(){return currentLaw==='asl'?BASE_ASL:currentLaw==='csl'?BASE_CS
 function setLaw(law,btn){
   showingProto=false;
   showingFavs=false;
+  showingCompare=false;
   var _cg=document.getElementById('catGrid');
   if(_cg) _cg.style.display='';
   document.getElementById('protocolBtn').classList.remove('active');
@@ -3359,10 +2827,12 @@ function renderLaws(items){
     var detailClass='law-detail'+(isDefaultOpen?' show':'');
     var starCls=isFav(law.article)?'active':'';
     var starSvg=starCls?STAR_FULL:STAR_EMPTY;
+    var cmpCls=isInCompare(law.article)?'active':'';
     var favArticle=law.article.replace(/'/g,"\\'");
     var favName=law[lang].name.replace(/'/g,"\\'");
     return '<div class="'+cardClass+'" onclick="toggleLaw(this,'+i+')">'+
       '<div class="law-top"><div class="law-name">'+law[lang].name+'</div>'+
+      '<button class="compare-btn '+cmpCls+'" onclick="toggleCompare(\''+favArticle+'\',\''+currentLaw+'\',\''+currentCat+'\',\''+favName+'\',event)" title="Salīdzināt">'+COMPARE_SVG+'</button>'+
       '<button class="fav-btn '+starCls+'" onclick="toggleFav(\''+favArticle+'\',\''+currentLaw+'\',\''+currentCat+'\',\''+favName+'\',event)">'+starSvg+'</button>'+
       '<div class="arrow-icon"></div></div>'+
       '<div class="law-meta">'+metaBadges+'</div>'+
@@ -3424,6 +2894,153 @@ document.getElementById('appSubtitle').textContent=getUI().subtitle;
 document.getElementById('searchInput').placeholder=getUI().placeholder;
 document.getElementById('sectionTitle').textContent=getCats()[currentCat][lang].sec;
 renderLaws(getLaws()[currentCat]);
+
+
+// ===== MMOB ROUTING PATCH =====
+var _origGetCats=getCats;getCats=function(){return currentLaw==='mmob'?mmobCats:_origGetCats();};
+var _origGetLaws=getLaws;getLaws=function(){return currentLaw==='mmob'?mmobLaws:_origGetLaws();};
+var _origGetUI=getUI;getUI=function(){return currentLaw==='mmob'?uiStrings.mmob[lang]:_origGetUI();};
+
+// Minimal MMOB data
+uiStrings.mmob={
+  lv:{subtitle:'Mikro',placeholder:'Meklēt...',min:'Sods min.',max:'Sods max.',desc:'Apraksts',howContest:'Kā apstrīdēt',sourceBtn:'Atvērt CSL likumi.lv',warn:'Brīdinājums',warnWord:'!',empty:'Nav atrasts.',pts:'punkti',signs:'Zīmes'},
+  ru:{subtitle:'Mikro',placeholder:'Iskать...',min:'Штраф min.',max:'Штраф max.',desc:'Описание',howContest:'Как оспорить',sourceBtn:'Открыть CSL на likumi.lv',warn:'Предупреждение',warnWord:'!',empty:'Ничего не найдено.',pts:'баллов',signs:'Знаки'},
+  en:{subtitle:'Mikro',placeholder:'Search...',min:'Fine min.',max:'Fine max.',desc:'Description',howContest:'How to contest',sourceBtn:'Open CSL on likumi.lv',warn:'Warning',warnWord:'!',empty:'Nothing found.',pts:'pts',signs:'Signs'}
+};
+const SVG_MMOB_bike='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="5" cy="17" r="3"/><circle cx="19" cy="17" r="3"/><path d="M5 17l3-7h5l3 4"/><path d="M13 10l2 7"/><circle cx="14" cy="7" r="1" fill="currentColor" stroke="none"/></svg>';
+const SVG_MMOB_escoot='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path d="M6 18l4-8h4l3 4-3 4"/><line x1="10" y1="10" x2="10" y2="6"/><line x1="8" y1="6" x2="12" y2="6"/></svg>';
+const SVG_MMOB_moped='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="5" cy="17" r="3"/><circle cx="19" cy="17" r="3"/><path d="M5 17l5-10h6l3 6-3 4"/><rect x="10" y="7" width="4" height="3" rx="1"/></svg>';
+const SVG_MMOB_table='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1.5"/><circle cx="3" cy="12" r="1.5"/><circle cx="3" cy="18" r="1.5"/></svg>';
+const SVG_MMOB={velo:SVG_MMOB_bike,eskrej:SVG_MMOB_escoot,moped:SVG_MMOB_moped,salid:SVG_MMOB_table};
+const mmobCounts={velo:'CSL 1.32 / CSN',eskrej:'CSL 1.9¹ / CSN 2026',moped:'CSL AM kat.',salid:'Salīdzīnājums'};
+const mmobCats={
+  velo:{lv:{name:'Velosipēds / E-velo',sec:'CSL 1.32 / CSN 163–172'},ru:{name:'Велосипед / E-velo',sec:'CSL 1.32 / CSN 163–172'},en:{name:'Bicycle / E-bike',sec:'CSL 1.32 / CSN 163–172'}},
+  eskrej:{lv:{name:'E-skrejritenis',sec:'CSL 1.9¹ / CSN 2026'},ru:{name:'Эл. самокат',sec:'CSL 1.9¹ / CSN 2026'},en:{name:'E-scooter',sec:'CSL 1.9¹ / CSN 2026'}},
+  moped:{lv:{name:'Mopēds',sec:'CSL AM kat.'},ru:{name:'Мопед',sec:'CSL AM kat.'},en:{name:'Moped',sec:'CSL AM cat.'}},
+  salid:{lv:{name:'Salīdzīnājums',sec:'2026'},ru:{name:'Сравнение',sec:'2026'},en:{name:'Comparison',sec:'2026'}}
+};
+var BASE_CSL_MMOB='https://likumi.lv/ta/id/45467-celu-satiksmes-likums';
+const mmobLaws={
+velo:[
+ {article:'Velosipēds / E-velo — CSL 2026',anchor:'#p1',noFine:true,parts:true,signsSVG:[],srcRaw:BASE_CSL_MMOB,fineMax:{ru:'',lv:'',en:''},
+  lv:{name:'Velosipēds un elektrovelosipēds — definīcija un tiesības (CSL 2026)',parts:[
+    {label:'Velosipēds (CSL 1.32)',desc:'Nav mehāniskais TP. Muskuļu spēks + fakult. elektromotors ≤0.25 kW. Brīvpr. reģistrācija, OCTA nav. Vecums: no 10 g.v. (tiesības); no 18 g.v. — bez tiesībām.',fineMin:'',fineMax:''},
+    {label:'Elektrovelosipēds (jauns 2026)',desc:'Jauda ≤250 W, atslēdzas pie >25 km/h vai bez pedāļiem. Brīvpr. reģistrācija. No 14 g.v. Ievere kiv. obl. līdz 16 g.v.',fineMin:'',fineMax:''},
+    {label:'Pašgājējs velosipēds (jauns 2026)',desc:'Jauda ≤1 kW, max 25 km/h, pedāļi nav obligāti. No 01.02.2026: reģistrācija + OCTA OBLIGĀTA. Nav atļauts pa ietvi! No 14 g.v.',fineMin:'',fineMax:''}
+  ]},
+  ru:{name:'Велосипед и электровелосипед — определение (CSL 2026)',parts:[
+    {label:'Велосипед (CSL 1.32)',desc:'Не механическое ТС. Мышечная сила + фак. эл. двигатель ≤0.25 кВт. Регистрация добровольная, OCTA не нужна. Возраст: от 10 лет (права); от 18 лет — без прав.',fineMin:'',fineMax:''},
+    {label:'Электровелосипед (новый термин 2026)',desc:'Мощность ≤250 Вт, отключается при >25 км/ч или без педалей. Регистрация добровольная. От 14 лет.',fineMin:'',fineMax:''},
+    {label:'Самоходный велосипед (новый термин 2026)',desc:'Мощность ≤1 кВт, max 25 км/ч, педали не обязательны. С 01.02.2026: регистрация + OCTA ОБЯЗАТЕЛЬНА. На тротуаре ЗАПРЕЩЕНО! От 14 лет.',fineMin:'',fineMax:''}
+  ]},
+  en:{name:'Bicycle and e-bike — definition (CSL 2026)',parts:[
+    {label:'Bicycle (CSL 1.32)',desc:'Not a mechanical vehicle. Muscle power + optional motor ≤0.25 kW. Voluntary registration, no OCTA. Age: from 10 (licence); from 18 — no licence needed.',fineMin:'',fineMax:''},
+    {label:'Electric bicycle (new term 2026)',desc:'Power ≤250 W, disengages at >25 km/h or without pedalling. Voluntary registration. From age 14. Helmet mandatory under 16.',fineMin:'',fineMax:''},
+    {label:'Self-propelled bicycle (new term 2026)',desc:'Power ≤1 kW, max 25 km/h, pedalling not required. From 01.02.2026: registration + OCTA MANDATORY. Pavement PROHIBITED! From age 14.',fineMin:'',fineMax:''}
+  ]}},
+ {article:'Velosipēds — infrastruktūra',anchor:'#p163',noFine:true,parts:true,signsSVG:[],srcRaw:'https://likumi.lv/ta/id/274865-celu-satiksmes-noteikumi',fineMax:{ru:'',lv:'',en:''},
+  lv:{name:'Velosipēds — kustības kārtība (CSN 163–172, red. 31.03.2026)',parts:[
+    {label:'Prioritāte (CSN 163)',desc:'Primāri: velojosla vai velo ceļš. Ja nav — nomale vai brauktuve (labā mala). Līdzās braukšana aizliegta.',fineMin:'',fineMax:''},
+    {label:'Ietve (CSN 164)',desc:'Atļauta tikai tad, ja brauktuve bīstama (laikapstākļu, satiksmes intensitātes dēļ). Atļauta arī bērniem līdz 12 g.v. un viņu pav.adoņiem. Pašgājējam velo — AIZLIEGTS.',fineMin:'',fineMax:''},
+    {label:'Obligātās prasības',desc:'Tumsā: luktu.ri (baltie priekšā, sarkanais aizmugurē) vai atstarojošā veste. Īivere obl. līdz 16 g.v. Bremzes jābūt abiem riteņiem.',fineMin:'',fineMax:''}
+  ]},
+  ru:{name:'Велосипед — порядок движения (CSN 163–172, ред. 31.03.2026)',parts:[
+    {label:'Приоритет (CSN 163)',desc:'Первочередно: велополоса или велодорожка. Если нет — обочина дороги или проезжая (правый край). Езда рядом — запрещена.',fineMin:'',fineMax:''},
+    {label:'Тротуар (CSN 164)',desc:'Разрешён только если проезжая опасна или затруднена. Разрешён детям до 12 лет и их сопровождающим. Самоходному вело — ЗАПРЕЩЕНО.',fineMin:'',fineMax:''},
+    {label:'Обязательные требования',desc:'В темноте: фары (белый спереди, красный сзади) или светоотражательный жилет. Шлем обязателен до 16 лет. Тормоза на обоих колёсах.',fineMin:'',fineMax:''}
+  ]},
+  en:{name:'Bicycle — traffic rules (CSN 163–172, from 31.03.2026)',parts:[
+    {label:'Priority (CSN 163)',desc:'First: bike lane or bike path. If not available — roadside or carriageway (right edge). Side-by-side riding prohibited.',fineMin:'',fineMax:''},
+    {label:'Pavement (CSN 164)',desc:'Permitted only if road is dangerous or obstructed. Also for children under 12 and their escorts. Self-propelled bicycle — PROHIBITED on pavement.',fineMin:'',fineMax:''},
+    {label:'Mandatory requirements',desc:'In darkness: lights (white front, red rear) or reflective vest. Helmet mandatory under 16. Brakes on both wheels required.',fineMin:'',fineMax:''}
+  ]}}
+],
+eskrej:[
+ {article:'E-skrejritenis — CSL 1.9¹',anchor:'#p1',noFine:true,parts:true,signsSVG:[],srcRaw:BASE_CSL_MMOB,fineMax:{ru:'',lv:'',en:''},
+  lv:{name:'Elektriskais skrejritenis — definīcija, tiesības (CSL 2026)',parts:[
+    {label:'Definīcija (CSL 1.9¹)',desc:'Elektromotors, max ∥25 km/h konstruktīvi, nav pedāļu, paredzēts vienam cilvēkam ar stūri. Nav mehāniskais TP (ja atbilst param.).',fineMin:'',fineMax:''},
+    {label:'Vecuma ierobežojumi',desc:'No 14 g.v. Līdz 16 g.v. — ķivere obligāta.',fineMin:'',fineMax:''},
+    {label:'Reģistrācija un OCTA',desc:'Ja max 25 km/h un ≤1 kW: brīvpr. reģistrācija, OCTA nav. Ja pārsniedz — pielīdz. mopēdam: reģ. + OCTA OBLIGĀTA.',fineMin:'',fineMax:''},
+    {label:'Infrastruktūra (CSN 31.03.2026)',desc:'Primāri: velojosla vai velo ceļš. Ietve: atļauta tikai ja brauktuve bīstama. Gājējiem vienmēr prioritāte.',fineMin:'',fineMax:''}
+  ]},
+  ru:{name:'Электрический самокат — определение, права (CSL 2026)',parts:[
+    {label:'Определение (CSL 1.9¹)',desc:'Электродвигатель, макс. скорость ∥25 км/ч по конструкции, без педалей, для одного человека, с рулём. Не механ. ТС (если соответствует параметрам).',fineMin:'',fineMax:''},
+    {label:'Возрастные ограничения',desc:'От 14 лет. До 16 лет — шлем обязателен.',fineMin:'',fineMax:''},
+    {label:'Регистрация и OCTA',desc:'При max 25 км/ч и ≤1 кВт: регистрация добровольная, OCTA не нужна. Если параметры превышены — равнозначен мопеду: рег. + OCTA ОБЯЗАТЕЛЬНА.',fineMin:'',fineMax:''},
+    {label:'Инфраструктура (CSN 31.03.2026)',desc:'Первочередно: велополоса или велодорожка. Тротуар: разрешён только если проезжая опасна. Пешеходам всегда приоритет.',fineMin:'',fineMax:''}
+  ]},
+  en:{name:'Electric scooter — definition, rights (CSL 2026)',parts:[
+    {label:'Definition (CSL 1.9¹)',desc:'Electric motor, max speed ∥25 km/h by design, no pedals, for one person, with handlebar. Not a mechanical vehicle (if parameters are met).',fineMin:'',fineMax:''},
+    {label:'Age requirements',desc:'From age 14. Under 16 — helmet mandatory.',fineMin:'',fineMax:''},
+    {label:'Registration and OCTA',desc:'If max 25 km/h and ≤1 kW: voluntary registration, no OCTA. If parameters exceeded — treated as moped: registration + OCTA MANDATORY.',fineMin:'',fineMax:''},
+    {label:'Infrastructure (CSN from 31.03.2026)',desc:'Primary: bike lane or bike path. Pavement: permitted only if road is dangerous. Pedestrians always have priority.',fineMin:'',fineMax:''}
+  ]}}
+],
+moped:[
+ {article:'Mopēds — CSL',anchor:'#p1',noFine:true,parts:true,signsSVG:[],srcRaw:BASE_CSL_MMOB,fineMax:{ru:'',lv:'',en:''},
+  lv:{name:'Mopēds — tiesības un pienākumi',parts:[
+    {label:'Definīcija',desc:'Mehāniskais TP. Dzinējs ≤50 cm³ vai elektro līdz 4 kW. Max ātrums 45 km/h.',fineMin:'',fineMax:''},
+    {label:'AM kategorija',desc:'Nep.iecieš. AM kategorijas apliecība (no 16 g.v.). Łimere obligāta.',fineMin:'',fineMax:''},
+    {label:'Reģistrācija un OCTA',desc:'OBLIGĀTA reģistrācija CSDD. OCTA OBLIGĀTA. Numura zīme nep.iecieš.',fineMin:'',fineMax:''},
+    {label:'Infrastruktūra',desc:'TIKAI pa brauk.tuvi (labo malu). AIZLIEGTS: velojosla, ietve, gāj. ceļš. Alkohola normas kā auto.',fineMin:'',fineMax:''}
+  ]},
+  ru:{name:'Мопед — права и обязанности',parts:[
+    {label:'Определение',desc:'Механическое ТС. Двигатель ≤50 см³ или электро до 4 кВт. Макс. скорость 45 км/ч.',fineMin:'',fineMax:''},
+    {label:'Категория AM',desc:'Требуется водит. удостовер. AM (c 16 лет). Шлем обязателен.',fineMin:'',fineMax:''},
+    {label:'Регистрация и OCTA',desc:'ОБЯЗАТЕЛЬНА регистрация в CSDD. OCTA ОБЯЗАТЕЛЬНА. Нужен номерной знак.',fineMin:'',fineMax:''},
+    {label:'Инфраструктура',desc:'ТОЛЬКО по проезжей (правый ряд). ЗАПРЕЩЕНО: велополоса, тротуар, пеш. дорожка. Нормы алкоголя — как для авто.',fineMin:'',fineMax:''}
+  ]},
+  en:{name:'Moped — rights and duties',parts:[
+    {label:'Definition',desc:'Mechanical vehicle. Engine ≤50 cc or electric up to 4 kW. Max speed 45 km/h.',fineMin:'',fineMax:''},
+    {label:'AM category',desc:'AM driving licence required (from age 16). Helmet mandatory.',fineMin:'',fineMax:''},
+    {label:'Registration and OCTA',desc:'MANDATORY registration at CSDD. OCTA MANDATORY. Number plate required.',fineMin:'',fineMax:''},
+    {label:'Infrastructure',desc:'Road (right lane) ONLY. PROHIBITED: bike lane, pavement, pedestrian path. Alcohol limits same as car drivers.',fineMin:'',fineMax:''}
+  ]}}
+],
+salid:[
+ {article:'Salīdzīnājums 2026',anchor:'',noFine:true,parts:true,signsSVG:[],srcRaw:BASE_CSL_MMOB,fineMax:{ru:'',lv:'',en:''},
+  lv:{name:'Salīdzīnājums: Velo / E-velo / Pašgāj. / E-skrej. / Mopēds (2026)',parts:[
+    {label:'Velosipēds',desc:'Nav meh. TP • Jauda ≤0.25 kW • No 10 g.v. (18 g.v. bez ties.) • Reģ.: brīvpr. • OCTA: nav • Ietve: atļauta • Velojosla: jā • Brauktuve: jā',fineMin:'',fineMax:''},
+    {label:'Elektrovelosipēds',desc:'Nav meh. TP • Jauda ≤250 W, max 25 km/h • No 14 g.v. • Reģ.: brīvpr. • OCTA: nav • Ietve: atļauta • Velojosla: jā',fineMin:'',fineMax:''},
+    {label:'Pašgājējs velosipēds',desc:'Nav meh. TP • Jauda ≤1 kW, max 25 km/h • No 14 g.v. • Reģ.: OBLIGĀTA (01.02.2026) • OCTA: OBLIGĀTA • Ietve: AIZLIEGTS',fineMin:'',fineMax:''},
+    {label:'E-skrejritenis',desc:'Nav meh. TP • Max 25 km/h • No 14 g.v. • Reģ.: brīvpr. • OCTA: nav • Ietve: ierobežoti • Velojosla: jā',fineMin:'',fineMax:''},
+    {label:'Mopēds',desc:'MEHĀNISKAIS TP • Max 45 km/h • No 16 g.v. (AM kat.) • Reģ.: OBLIGĀTA • OCTA: OBLIGĀTA • Ietve: NAV • Velojosla: NAV • Brauktuve: tikai',fineMin:'',fineMax:''}
+  ]},
+  ru:{name:'Сравнение: Вело / E-вело / Самоходный / E-самокат / Мопед (2026)',parts:[
+    {label:'Велосипед',desc:'Не мех. ТС • Мощн. ≤0.25 кВт • От 10 лет (18 лет без прав) • Рег.: добр. • OCTA: нет • Тротуар: да • Велоп.: да • Проезжая: да',fineMin:'',fineMax:''},
+    {label:'Электровелосипед',desc:'Не мех. ТС • Мощн. ≤250 Вт, max 25 км/ч • От 14 лет • Рег.: добр. • OCTA: нет',fineMin:'',fineMax:''},
+    {label:'Самоходный велосипед',desc:'Не мех. ТС • Мощн. ≤1 кВт, max 25 км/ч • От 14 лет • Рег.: ОБЯЗ. (01.02.2026) • OCTA: ОБЯЗ. • Тротуар: ЗАПР.',fineMin:'',fineMax:''},
+    {label:'Электросамокат',desc:'Не мех. ТС • Max 25 км/ч • От 14 лет • Рег.: добр. • OCTA: нет • Тротуар: огр. • Велоп.: да',fineMin:'',fineMax:''},
+    {label:'Мопед',desc:'МЕХАН. ТС • Max 45 км/ч • От 16 лет (AM кат.) • Рег.: ОБЯЗ. • OCTA: ОБЯЗ. • Тротуар: НЕТ • Велоп.: НЕТ • Проезжая: ТОЛЬКО',fineMin:'',fineMax:''}
+  ]},
+  en:{name:'Comparison: Bicycle / E-bike / Self-propelled / E-scooter / Moped (2026)',parts:[
+    {label:'Bicycle',desc:'Not mech. vehicle • Power ≤0.25 kW • From age 10 (18 no licence) • Reg.: voluntary • OCTA: no • Pavement: yes • Bike lane: yes • Road: yes',fineMin:'',fineMax:''},
+    {label:'Electric bicycle',desc:'Not mech. vehicle • Power ≤250 W, max 25 km/h • From age 14 • Reg.: voluntary • OCTA: no',fineMin:'',fineMax:''},
+    {label:'Self-propelled bicycle',desc:'Not mech. vehicle • Power ≤1 kW, max 25 km/h • From age 14 • Reg.: MANDATORY (01.02.2026) • OCTA: MANDATORY • Pavement: PROHIBITED',fineMin:'',fineMax:''},
+    {label:'Electric scooter',desc:'Not mech. vehicle • Max 25 km/h • From age 14 • Reg.: voluntary • OCTA: no • Pavement: restricted • Bike lane: yes',fineMin:'',fineMax:''},
+    {label:'Moped',desc:'MECHANICAL vehicle • Max 45 km/h • From age 16 (AM cat.) • Reg.: MANDATORY • OCTA: MANDATORY • Pavement: NO • Bike lane: NO • Road: ONLY',fineMin:'',fineMax:''}
+  ]}}
+]};
+
+// Update svgMap and counts for MMOB
+var _origRenderCats=renderCats;
+renderCats=function(){
+  if(currentLaw==='mmob'){
+    var cats=getCats();
+    var counts=mmobCounts;
+    document.getElementById('catGrid').innerHTML=Object.keys(cats).map(function(k){
+      return '<div class="cat-card'+(k===currentCat?' active':'')+'" onclick="selectCat(this,\''+k+'\')">'+
+        '<div class="cat-icon">'+(SVG_MMOB[k]||'')+'</div>'+
+        '<div class="cat-name">'+cats[k][lang].name+'</div>'+
+        '<div class="cat-count">'+(counts[k]||'')+'</div>'+
+        '</div>';
+    }).join('');
+    return;
+  }
+  _origRenderCats();
+};
+
+renderLaws(getLaws()[currentCat]);updateFavCount();initTheme();updateCompareBar();
 </script>
 </body>
 </html>
