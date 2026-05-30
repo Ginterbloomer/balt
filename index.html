@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BALT 1</title>
 <style>
+
 :root {
     --border-radius-md: 6px;--border-radius-lg: 12px;
     --color-border-secondary: #e2e8f0;--color-border-tertiary: #edf2f7;
@@ -14,47 +15,37 @@
     --color-danger: #e53e3e;--color-danger-light: #fff5f5;
     --color-success: #38a169;--color-success-light: #f0fff4;
     --color-warning: #dd6b20;--color-warning-light: #fffaf0;
-    --max-app-width: 600px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html{overflow-x:hidden;}
+    --max-app-width: 600px;}
+  *{box-sizing:border-box;margin:0;padding:0;}html{overflow-x:hidden;}
   body{background:var(--color-background-secondary);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;overflow-x:hidden;color:var(--color-text-primary);}
   .app-wrapper{max-width:var(--max-app-width);margin:0 auto;min-height:100vh;background:var(--color-background-secondary);}
   @media(prefers-color-scheme:dark){html:not([data-theme="light"]){--color-border-secondary:#2d3748;--color-border-tertiary:#2d3748;--color-text-primary:#f7fafc;--color-text-secondary:#a0aec0;--color-background-primary:#1a202c;--color-background-secondary:#171923;--color-brand:#63b3ed;--color-brand-light:#1a2a3a;--color-danger:#fc8181;--color-danger-light:#2d1a1a;--color-success:#68d391;--color-success-light:#1a2d1f;--color-warning:#f6ad55;--color-warning-light:#2d2210;}
-  html:not([data-theme="light"]) .law-card{background:#1e2535;border-color:#2d3748;}html:not([data-theme="light"]) .law-card:hover{background:#232d42;}html:not([data-theme="light"]) .law-detail{border-top-color:#2d3748;}html:not([data-theme="light"]) .part-block{border-bottom-color:#2d3748;}html:not([data-theme="light"]) .fine-box,html:not([data-theme="light"]) .part-fine-box{background:#171923;}html:not([data-theme="light"]) .cat-card{background:#1e2535;border-color:#2d3748;}html:not([data-theme="light"]) .cat-card:hover{background:#232d42;}html:not([data-theme="light"]) .cat-card.active{background:#1a2a3a;border-color:var(--color-brand);}html:not([data-theme="light"]) .app-header{background:#1a202c;border-bottom-color:#2d3748;}html:not([data-theme="light"]) .search-bar{background:#1a202c;border-bottom-color:#2d3748;}html:not([data-theme="light"]) .search-input{background:#171923;border-color:#2d3748;color:var(--color-text-primary);}html:not([data-theme="light"]) .search-input::placeholder{color:#4a5568;}html:not([data-theme="light"]) .law-switcher{background:#1e2535;}html:not([data-theme="light"]) .law-btn.active{background:#1a2a3a;color:var(--color-brand);}html:not([data-theme="light"]) .badge-article{background:#2d3748;color:#a0aec0;}html:not([data-theme="light"]) .badge-fine{background:#2d1a1a;color:#fc8181;}html:not([data-theme="light"]) .badge-warn{background:#2d2210;color:#f6ad55;}html:not([data-theme="light"]) .badge-pts{background:#1a2a3a;color:#63b3ed;}html:not([data-theme="light"]) .source-btn{background:#1a2a3a;border-color:#2d3748;color:var(--color-brand);}html:not([data-theme="light"]) .csn-badge{background:#1a2a3a;color:var(--color-brand);}html:not([data-theme="light"]) .csn-card-ref{background:#1a2a3a;}html:not([data-theme="light"]) .fav-law-badge{background:#2d3748;border-color:#4a5568;}html:not([data-theme="light"]) .dl{color:#4a5568;}html:not([data-theme="light"]) .sign-chip{background:#2d3748;border-color:#4a5568;}html:not([data-theme="light"]) .arrow-icon{border-color:#4a5568;}}
+  html:not([data-theme="light"]) .law-card{background:#1e2535;border-color:#2d3748;}html:not([data-theme="light"]) .law-card:hover{background:#232d42;}html:not([data-theme="light"]) .law-detail{border-top-color:#2d3748;}html:not([data-theme="light"]) .part-block{border-bottom-color:#2d3748;}html:not([data-theme="light"]) .fine-box,html:not([data-theme="light"]) .part-fine-box{background:#171923;}html:not([data-theme="light"]) .cat-card{background:#1e2535;border-color:#2d3748;}html:not([data-theme="light"]) .cat-card:hover{background:#232d42;}html:not([data-theme="light"]) .cat-card.active{background:#1a2a3a;border-color:var(--color-brand);}html:not([data-theme="light"]) .app-header{background:#1a202c;border-bottom-color:#2d3748;}html:not([data-theme="light"]) .search-bar{background:#1a202c;border-bottom-color:#2d3748;}html:not([data-theme="light"]) .search-input{background:#171923;border-color:#2d3748;color:var(--color-text-primary);}html:not([data-theme="light"]) .search-input::placeholder{color:#4a5568;}html:not([data-theme="light"]) .law-switcher{background:#1e2535;}html:not([data-theme="light"]) .law-btn.active{background:#1a2a3a;color:var(--color-brand);}html:not([data-theme="light"]) .badge-article{background:#2d3748;color:#a0aec0;}html:not([data-theme="light"]) .badge-fine{background:#2d1a1a;color:#fc8181;}html:not([data-theme="light"]) .badge-warn{background:#2d2210;color:#f6ad55;}html:not([data-theme="light"]) .badge-pts{background:#1a2a3a;color:#63b3ed;}html:not([data-theme="light"]) .source-btn{background:#1a2a3a;border-color:#2d3748;color:var(--color-brand);}html:not([data-theme="light"]) .csn-badge{background:#1a2a3a;color:var(--color-brand);}html:not([data-theme="light"]) .csn-card-ref{background:#1a2a3a;}html:not([data-theme="light"]) .fav-law-badge{background:#2d3748;border-color:#4a5568;}html:not([data-theme="light"]) .dl{color:#4a5568;}html:not([data-theme="light"]) .sign-chip{background:#2d3748;border-color:#4a5568;}html:not([data-theme="light"]) .arrow-icon{border-color:#4a5568;}html:not([data-theme="light"]) .sub-pick-btn{background:#1e2535;border-color:#2d3748;}html:not([data-theme="light"]) .sub-pick-btn.active,html:not([data-theme="light"]) .sub-pick-btn:hover{background:#1a2a3a;border-color:var(--color-brand);}}
   [data-theme="dark"]{--color-border-secondary:#2d3748;--color-border-tertiary:#2d3748;--color-text-primary:#f7fafc;--color-text-secondary:#a0aec0;--color-background-primary:#1a202c;--color-background-secondary:#171923;--color-brand:#63b3ed;--color-brand-light:#1a2a3a;--color-danger:#fc8181;--color-danger-light:#2d1a1a;--color-success:#68d391;--color-success-light:#1a2d1f;--color-warning:#f6ad55;--color-warning-light:#2d2210;}
-  [data-theme="dark"] .law-card{background:#1e2535;border-color:#2d3748;}[data-theme="dark"] .law-card:hover{background:#232d42;}[data-theme="dark"] .law-detail{border-top-color:#2d3748;}[data-theme="dark"] .part-block{border-bottom-color:#2d3748;}[data-theme="dark"] .fine-box,[data-theme="dark"] .part-fine-box{background:#171923;}[data-theme="dark"] .cat-card{background:#1e2535;border-color:#2d3748;}[data-theme="dark"] .cat-card:hover{background:#232d42;}[data-theme="dark"] .cat-card.active{background:#1a2a3a;border-color:var(--color-brand);}[data-theme="dark"] .app-header{background:#1a202c;border-bottom-color:#2d3748;}[data-theme="dark"] .search-bar{background:#1a202c;border-bottom-color:#2d3748;}[data-theme="dark"] .search-input{background:#171923;border-color:#2d3748;color:var(--color-text-primary);}[data-theme="dark"] .search-input::placeholder{color:#4a5568;}[data-theme="dark"] .law-switcher{background:#1e2535;}[data-theme="dark"] .law-btn.active{background:#1a2a3a;color:var(--color-brand);}[data-theme="dark"] .badge-article{background:#2d3748;color:#a0aec0;}[data-theme="dark"] .badge-fine{background:#2d1a1a;color:#fc8181;}[data-theme="dark"] .badge-warn{background:#2d2210;color:#f6ad55;}[data-theme="dark"] .badge-pts{background:#1a2a3a;color:#63b3ed;}[data-theme="dark"] .source-btn{background:#1a2a3a;border-color:#2d3748;color:var(--color-brand);}[data-theme="dark"] .source-btn:hover{background:#1d3a5c;}[data-theme="dark"] .csn-badge{background:#1a2a3a;color:var(--color-brand);}[data-theme="dark"] .csn-badge:hover{background:var(--color-brand);color:#1a202c;}[data-theme="dark"] .csn-card-ref{background:#1a2a3a;}[data-theme="dark"] .fav-law-badge{background:#2d3748;border-color:#4a5568;}[data-theme="dark"] .dl{color:#4a5568;}[data-theme="dark"] .sign-chip{background:#2d3748;border-color:#4a5568;}[data-theme="dark"] .arrow-icon{border-color:#4a5568;}[data-theme="dark"] .compare-card{background:#1e2535;border-color:#2d3748;}[data-theme="dark"] .compare-card-header{background:#1a2a3a;}[data-theme="dark"] .compare-exit{background:#1a202c;border-bottom-color:#2d3748;}[data-theme="dark"] .proto-type-btn{background:var(--color-background-primary);border-color:#2d3748;}[data-theme="dark"] .proto-type-btn.selected,[data-theme="dark"] .proto-type-btn:hover{background:#1a2a3a;border-color:var(--color-brand);}[data-theme="dark"] .proto-check{background:#1e2535;border-color:#4a5568;}[data-theme="dark"] .proto-done-banner{background:#1a2d1f;border-color:#276749;}[data-theme="dark"] .abbrev-box{background:#171923;}
+  [data-theme="dark"] .law-card{background:#1e2535;border-color:#2d3748;}[data-theme="dark"] .law-card:hover{background:#232d42;}[data-theme="dark"] .law-detail{border-top-color:#2d3748;}[data-theme="dark"] .part-block{border-bottom-color:#2d3748;}[data-theme="dark"] .fine-box,[data-theme="dark"] .part-fine-box{background:#171923;}[data-theme="dark"] .cat-card{background:#1e2535;border-color:#2d3748;}[data-theme="dark"] .cat-card.active{background:#1a2a3a;border-color:var(--color-brand);}[data-theme="dark"] .app-header{background:#1a202c;border-bottom-color:#2d3748;}[data-theme="dark"] .search-bar{background:#1a202c;border-bottom-color:#2d3748;}[data-theme="dark"] .search-input{background:#171923;border-color:#2d3748;color:var(--color-text-primary);}[data-theme="dark"] .law-switcher{background:#1e2535;}[data-theme="dark"] .law-btn.active{background:#1a2a3a;color:var(--color-brand);}[data-theme="dark"] .badge-article{background:#2d3748;color:#a0aec0;}[data-theme="dark"] .badge-fine{background:#2d1a1a;color:#fc8181;}[data-theme="dark"] .badge-warn{background:#2d2210;color:#f6ad55;}[data-theme="dark"] .badge-pts{background:#1a2a3a;color:#63b3ed;}[data-theme="dark"] .source-btn{background:#1a2a3a;border-color:#2d3748;color:var(--color-brand);}[data-theme="dark"] .source-btn:hover{background:#1d3a5c;}[data-theme="dark"] .csn-badge{background:#1a2a3a;color:var(--color-brand);}[data-theme="dark"] .csn-card-ref{background:#1a2a3a;}[data-theme="dark"] .fav-law-badge{background:#2d3748;border-color:#4a5568;}[data-theme="dark"] .dl{color:#4a5568;}[data-theme="dark"] .sign-chip{background:#2d3748;border-color:#4a5568;}[data-theme="dark"] .arrow-icon{border-color:#4a5568;}[data-theme="dark"] .compare-card{background:#1e2535;border-color:#2d3748;}[data-theme="dark"] .compare-card-header{background:#1a2a3a;}[data-theme="dark"] .compare-exit{background:#1a202c;border-bottom-color:#2d3748;}[data-theme="dark"] .proto-type-btn{background:var(--color-background-primary);border-color:#2d3748;}[data-theme="dark"] .proto-type-btn.selected,[data-theme="dark"] .proto-type-btn:hover{background:#1a2a3a;border-color:var(--color-brand);}[data-theme="dark"] .proto-check{background:#1e2535;border-color:#4a5568;}[data-theme="dark"] .proto-done-banner{background:#1a2d1f;border-color:#276749;}[data-theme="dark"] .abbrev-box{background:#171923;}[data-theme="dark"] .sub-pick-btn{background:#1e2535;border-color:#2d3748;}[data-theme="dark"] .sub-pick-btn.active,[data-theme="dark"] .sub-pick-btn:hover{background:#1a2a3a;border-color:var(--color-brand);}
   [data-theme="light"]{--color-border-secondary:#e2e8f0;--color-border-tertiary:#edf2f7;--color-text-primary:#1a202c;--color-text-secondary:#718096;--color-background-primary:#ffffff;--color-background-secondary:#f7fafc;--color-brand:#3182ce;--color-brand-light:#ebf8ff;--color-danger:#e53e3e;--color-danger-light:#fff5f5;--color-success:#38a169;--color-success-light:#f0fff4;--color-warning:#dd6b20;--color-warning-light:#fffaf0;}
-  [data-theme="light"] body{background:#f7fafc;color:#1a202c;}
-  [data-theme="light"] .law-card{background:#ffffff!important;border-color:#e2e8f0!important;}[data-theme="light"] .law-card:hover{background:#f8fafc!important;}[data-theme="light"] .law-name{color:#1a202c!important;}[data-theme="light"] .law-detail{border-top-color:#e2e8f0!important;background:#ffffff;}[data-theme="light"] .part-block{border-bottom-color:#edf2f7!important;}[data-theme="light"] .fine-box{background:#f7fafc!important;}[data-theme="light"] .part-fine-box{background:#f7fafc!important;}[data-theme="light"] .fine-lbl{color:#718096!important;}[data-theme="light"] .fine-val{color:#1a202c!important;}[data-theme="light"] .fine-val.danger{color:#e53e3e!important;}[data-theme="light"] .cat-card{background:#ffffff!important;border-color:#e2e8f0!important;}[data-theme="light"] .cat-card:hover{background:#f0f4f8!important;}[data-theme="light"] .cat-card.active{background:#ebf8ff!important;border-color:#3182ce!important;}[data-theme="light"] .app-header{background:#ffffff!important;border-bottom-color:#edf2f7!important;}[data-theme="light"] .app-title{color:#1a202c!important;}[data-theme="light"] .app-subtitle,[data-theme="light"] .app-subtitle2{color:#718096!important;}[data-theme="light"] .search-bar{background:#ffffff!important;border-bottom-color:#edf2f7!important;}[data-theme="light"] .search-input{background:#f7fafc!important;border-color:#e2e8f0!important;color:#1a202c!important;}[data-theme="light"] .law-switcher{background:#f7fafc!important;}[data-theme="light"] .law-btn{color:#718096!important;}[data-theme="light"] .law-btn.active{background:#ebf8ff!important;color:#3182ce!important;}[data-theme="light"] .badge-article{background:#edf2f7!important;color:#4a5568!important;}[data-theme="light"] .badge-fine{background:#fff5f5!important;color:#e53e3e!important;}[data-theme="light"] .badge-warn{background:#fffaf0!important;color:#dd6b20!important;}[data-theme="light"] .badge-pts{background:#ebf8ff!important;color:#3182ce!important;}[data-theme="light"] .source-btn{background:#ebf8ff!important;border-color:#bee3f8!important;color:#3182ce!important;}[data-theme="light"] .csn-badge{background:#ebf8ff!important;color:#3182ce!important;}[data-theme="light"] .csn-card-ref{background:#ebf8ff!important;}[data-theme="light"] .dl{color:#718096!important;}[data-theme="light"] .dt{color:#1a202c!important;}[data-theme="light"] .part-label{color:#1a202c!important;}[data-theme="light"] .part-desc{color:#4a5568!important;}[data-theme="light"] .sign-chip{background:#f7fafc!important;border-color:#e2e8f0!important;}[data-theme="light"] .arrow-icon{border-color:#a0aec0!important;}[data-theme="light"] .fav-law-badge{background:#edf2f7!important;border-color:#e2e8f0!important;color:#4a5568!important;}
-  .theme-toggle-btn{background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:var(--color-text-secondary);transition:all 0.15s;display:flex;align-items:center;}
-  .theme-toggle-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary);}
+  [data-theme="light"] body{background:#f7fafc;color:#1a202c;}[data-theme="light"] .law-card{background:#ffffff!important;border-color:#e2e8f0!important;}[data-theme="light"] .fine-box{background:#f7fafc!important;}[data-theme="light"] .cat-card{background:#ffffff!important;border-color:#e2e8f0!important;}[data-theme="light"] .cat-card.active{background:#ebf8ff!important;border-color:#3182ce!important;}[data-theme="light"] .app-header{background:#ffffff!important;border-bottom-color:#edf2f7!important;}[data-theme="light"] .search-bar{background:#ffffff!important;border-bottom-color:#edf2f7!important;}[data-theme="light"] .search-input{background:#f7fafc!important;border-color:#e2e8f0!important;color:#1a202c!important;}[data-theme="light"] .law-switcher{background:#f7fafc!important;}[data-theme="light"] .law-btn.active{background:#ebf8ff!important;color:#3182ce!important;}[data-theme="light"] .source-btn{background:#ebf8ff!important;border-color:#bee3f8!important;color:#3182ce!important;}[data-theme="light"] .csn-badge{background:#ebf8ff!important;color:#3182ce!important;}[data-theme="light"] .sign-chip{background:#f7fafc!important;border-color:#e2e8f0!important;}
+  .theme-toggle-btn{background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:var(--color-text-secondary);display:flex;align-items:center;}
+  .theme-toggle-btn:hover{background:var(--color-background-secondary);}
   .app-header{background:var(--color-background-primary);padding:14px 16px 0;border-bottom:1px solid var(--color-border-secondary);position:sticky;top:0;z-index:50;}
   .header-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
   .app-title{font-size:20px;font-weight:800;color:var(--color-text-primary);flex:1;letter-spacing:-0.5px;}
   .app-subtitle{font-size:11px;color:var(--color-text-secondary);font-weight:500;margin-bottom:2px;}
   .app-subtitle2{font-size:10px;color:var(--color-text-secondary);font-style:italic;margin-bottom:6px;}
-  .lang-switcher{display:flex;gap:4px;}
-  .lang-btn{background:none;border:1px solid var(--color-border-secondary);border-radius:6px;padding:4px 8px;font-size:11px;font-weight:600;color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;}
-  .lang-btn.active{background:var(--color-brand);border-color:var(--color-brand);color:#fff;}
+  .lang-switcher{display:flex;gap:4px;}.lang-btn{background:none;border:1px solid var(--color-border-secondary);border-radius:6px;padding:4px 8px;font-size:11px;font-weight:600;color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;}.lang-btn.active{background:var(--color-brand);border-color:var(--color-brand);color:#fff;}
   .law-switcher{display:flex;gap:5px;margin-top:10px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:4px;flex-wrap:wrap;}
   .law-btn{font-size:12px;font-weight:500;padding:7px 12px;min-height:34px;white-space:nowrap;border:none;background:none;color:var(--color-text-secondary);cursor:pointer;border-radius:8px;transition:all 0.15s;flex-shrink:0;}
   .law-btn:hover{background:var(--color-background-primary);color:var(--color-text-primary);}
   .law-btn.active{background:var(--color-background-primary);color:var(--color-brand);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.1);}
-  .proto-btn{border:1px solid var(--color-brand)!important;color:var(--color-brand)!important;}
-  .proto-btn.active{background:var(--color-brand)!important;color:#fff!important;}
+  .proto-btn{border:1px solid var(--color-brand)!important;color:var(--color-brand)!important;}.proto-btn.active{background:var(--color-brand)!important;color:#fff!important;}
   .search-bar{background:var(--color-background-primary);padding:10px 14px;border-bottom:1px solid var(--color-border-secondary);}
   .search-input{width:100%;padding:8px 12px;font-size:14px;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);outline:none;transition:border-color 0.15s;}
-  .search-input:focus{border-color:var(--color-brand);}
-  .search-input::placeholder{color:var(--color-text-secondary);}
+  .search-input:focus{border-color:var(--color-brand);}.search-input::placeholder{color:var(--color-text-secondary);}
   .categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;padding:12px 14px;}
   .cat-card{background:var(--color-background-primary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:14px 12px;text-align:center;cursor:pointer;transition:all 0.15s;}
-  .cat-card:hover{border-color:var(--color-brand);background:var(--color-brand-light);}
-  .cat-card.active{border-color:var(--color-brand);background:var(--color-brand-light);}
-  .cat-icon{width:22px;height:22px;margin:0 auto 8px;display:block;color:var(--color-brand);}
-  .cat-icon svg{width:22px;height:22px;stroke:var(--color-brand);display:block;}
-  .cat-name{font-size:13px;font-weight:600;color:var(--color-text-primary);}
-  .cat-count{font-size:11px;color:var(--color-text-secondary);margin-top:3px;}
+  .cat-card:hover{border-color:var(--color-brand);background:var(--color-brand-light);}.cat-card.active{border-color:var(--color-brand);background:var(--color-brand-light);}
+  .cat-icon{width:22px;height:22px;margin:0 auto 8px;display:block;color:var(--color-brand);}.cat-icon svg{width:22px;height:22px;stroke:var(--color-brand);display:block;}
+  .cat-name{font-size:13px;font-weight:600;color:var(--color-text-primary);}.cat-count{font-size:11px;color:var(--color-text-secondary);margin-top:3px;}
   .section-title{font-size:11px;color:var(--color-text-secondary);padding:6px 14px 0;font-weight:500;}
   .laws-list{padding:10px 14px 100px;display:flex;flex-direction:column;gap:10px;}
   .law-card{background:var(--color-background-primary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:14px;cursor:pointer;transition:border-color 0.15s;}
@@ -71,19 +62,14 @@
   .badge-warn{background:var(--color-warning-light);color:var(--color-warning);}
   .badge-pts{background:var(--color-brand-light);color:var(--color-brand);}
   .badge-article{background:var(--color-background-secondary);color:var(--color-text-secondary);}
-  .fine-row{display:flex;gap:8px;margin-top:10px;}
-  .fine-box{flex:1;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px;}
-  .fine-lbl{font-size:11px;color:var(--color-text-secondary);}
-  .fine-val{font-size:16px;font-weight:600;color:var(--color-text-primary);margin-top:2px;}
-  .fine-val.danger{color:var(--color-danger);}
+  .fine-row{display:flex;gap:8px;margin-top:10px;}.fine-box{flex:1;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px;}
+  .fine-lbl{font-size:11px;color:var(--color-text-secondary);}.fine-val{font-size:16px;font-weight:600;color:var(--color-text-primary);margin-top:2px;}.fine-val.danger{color:var(--color-danger);}
   .dl{font-size:11px;font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.4px;margin-top:10px;margin-bottom:3px;}
   .dt{font-size:13px;color:var(--color-text-primary);line-height:1.55;}
-  .part-block{padding:10px 0;border-bottom:1px solid var(--color-border-tertiary);}
-  .part-block:last-child{border-bottom:none;}
+  .part-block{padding:10px 0;border-bottom:1px solid var(--color-border-tertiary);}.part-block:last-child{border-bottom:none;}
   .part-label{font-size:13px;font-weight:600;color:var(--color-text-primary);margin-bottom:4px;}
   .part-desc{font-size:13px;color:var(--color-text-secondary);line-height:1.5;margin-top:4px;}
-  .part-fines{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
-  .part-fine-box{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:6px 10px;flex:1;min-width:100px;}
+  .part-fines{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}.part-fine-box{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:6px 10px;flex:1;min-width:100px;}
   .source-btn{display:block;margin-top:12px;padding:9px 14px;background:var(--color-brand-light);border:1px solid #bee3f8;border-radius:var(--border-radius-md);color:var(--color-brand);font-size:13px;font-weight:500;text-decoration:none;text-align:center;transition:all 0.15s;}
   .source-btn:hover{background:var(--color-brand);color:#fff;}
   .csn-badge{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:var(--border-radius-md);background:var(--color-brand-light);color:var(--color-brand);text-decoration:none;border:1px solid transparent;transition:all 0.15s;cursor:pointer;}
@@ -92,23 +78,17 @@
   .signs-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:flex-start;}
   .sign-chip{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--color-background-primary);border:1px solid var(--color-border-secondary);border-radius:8px;padding:7px 6px 5px;cursor:pointer;text-decoration:none;transition:all 0.15s;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
   .sign-chip:hover{border-color:var(--color-brand);box-shadow:0 2px 8px rgba(0,0,0,0.12);transform:translateY(-1px);}
-  .sign-num{font-size:10px;color:var(--color-text-secondary);font-weight:600;line-height:1;}
-  .sign-chip svg{filter:drop-shadow(0 1px 2px rgba(0,0,0,0.15));}
+  .sign-num{font-size:10px;color:var(--color-text-secondary);font-weight:600;line-height:1;}.sign-chip svg{filter:drop-shadow(0 1px 2px rgba(0,0,0,0.15));}
   .fav-btn{background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-secondary);display:flex;align-items:center;flex-shrink:0;border-radius:4px;transition:color 0.15s,transform 0.15s;width:26px;justify-content:center;}
-  .fav-btn:hover{color:#f6ad55;transform:scale(1.15);}
-  .fav-btn.active{color:#f6ad55;}
-  .fav-btn.active svg polygon{fill:#f6ad55;}
+  .fav-btn:hover{color:#f6ad55;transform:scale(1.15);}.fav-btn.active{color:#f6ad55;}.fav-btn.active svg polygon{fill:#f6ad55;}
   .fav-tab-btn{background:none;border:none;cursor:pointer;padding:6px 10px;border-radius:8px;font-size:14px;color:var(--color-text-secondary);transition:all 0.15s;position:relative;display:flex;align-items:center;gap:4px;}
   .fav-tab-btn:hover,.fav-tab-btn.active{color:#f6ad55;background:rgba(246,173,85,0.1);}
   .fav-count{font-size:10px;font-weight:700;background:#f6ad55;color:white;border-radius:8px;padding:1px 5px;min-width:16px;text-align:center;}
   .fav-law-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;background:var(--color-background-secondary);color:var(--color-text-secondary);border:1px solid var(--color-border-secondary);}
   .fav-empty{text-align:center;padding:48px 24px;color:var(--color-text-secondary);}
-  .fav-empty svg{margin:0 auto 12px;display:block;opacity:0.3;}
-  .fav-empty-title{font-size:16px;font-weight:600;margin-bottom:6px;color:var(--color-text-primary);}
-  .fav-empty-sub{font-size:13px;opacity:0.7;}
+  .fav-empty-title{font-size:16px;font-weight:600;margin-bottom:6px;color:var(--color-text-primary);}.fav-empty-sub{font-size:13px;opacity:0.7;}
   .compare-btn{background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-secondary);display:flex;align-items:center;flex-shrink:0;border-radius:4px;transition:color 0.15s,transform 0.15s;width:26px;justify-content:center;}
-  .compare-btn:hover{color:var(--color-brand);transform:scale(1.15);}
-  .compare-btn.active{color:var(--color-brand);}
+  .compare-btn:hover{color:var(--color-brand);transform:scale(1.15);}.compare-btn.active{color:var(--color-brand);}
   .compare-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--color-brand);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 -2px 16px rgba(0,0,0,0.2);transform:translateY(100%);transition:transform 0.25s ease;}
   .compare-bar.visible{transform:translateY(0);}
   .compare-bar-text{flex:1;font-size:13px;font-weight:500;}
@@ -117,18 +97,7 @@
   .compare-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;padding:10px 10px 80px;align-items:start;}
   .compare-col{min-width:0;overflow:hidden;}
   .compare-card{background:var(--color-background-primary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow:hidden;}
-  .compare-card .law-name,.compare-card-title{font-size:12px!important;}
-  .compare-card .part-label{font-size:11px!important;}
-  .compare-card .part-desc,.compare-card .dt{font-size:11px!important;}
-  .compare-card .dl{font-size:10px!important;}
-  .compare-card .fine-lbl{font-size:10px!important;}
-  .compare-card .fine-val{font-size:13px!important;}
-  .compare-card .badge{font-size:9px!important;padding:2px 5px!important;}
-  .compare-card .source-btn{font-size:11px!important;padding:7px 10px!important;}
-  .compare-card .fine-row{gap:4px!important;}
-  .compare-card .fine-box{padding:6px 8px!important;}
-  .compare-card .csn-card-ref{padding:4px 8px!important;font-size:10px!important;}
-  .compare-card .part-block{padding:8px 0!important;}
+  .compare-card .law-name,.compare-card-title{font-size:12px!important;}.compare-card .part-label{font-size:11px!important;}.compare-card .part-desc,.compare-card .dt{font-size:11px!important;}.compare-card .dl{font-size:10px!important;}.compare-card .fine-lbl{font-size:10px!important;}.compare-card .fine-val{font-size:13px!important;}.compare-card .badge{font-size:9px!important;padding:2px 5px!important;}.compare-card .source-btn{font-size:11px!important;padding:7px 10px!important;}.compare-card .fine-row{gap:4px!important;}.compare-card .fine-box{padding:6px 8px!important;}.compare-card .csn-card-ref{padding:4px 8px!important;font-size:10px!important;}.compare-card .part-block{padding:8px 0!important;}
   .compare-card-header{padding:10px!important;border-bottom:1px solid var(--color-border-secondary);background:var(--color-brand-light);}
   .compare-card-title{font-size:13px;font-weight:600;color:var(--color-text-primary);line-height:1.4;margin-bottom:6px;}
   .compare-card-body{padding:10px!important;}
@@ -137,42 +106,38 @@
   .compare-exit-btn:hover{border-color:var(--color-brand);color:var(--color-brand);}
   .compare-title{font-size:15px;font-weight:700;color:var(--color-text-primary);}
   .compare-vs{font-size:10px;color:var(--color-text-secondary);font-weight:700;text-align:center;padding:8px 4px;align-self:start;margin-top:40px;background:var(--color-background-secondary);border-radius:20px;width:28px;}
-  @media(max-width:600px){.compare-grid{grid-template-columns:1fr auto 1fr;gap:4px;padding:8px 6px 80px;}.compare-card-body{padding:8px!important;}.compare-card-header{padding:8px!important;}.compare-vs{width:22px;font-size:9px;margin-top:30px;}.categories{grid-template-columns:repeat(2,1fr);}.law-name{font-size:14px;}}
-  .proto-container{padding:14px;max-width:var(--max-app-width);margin:0 auto;}
-  .proto-header{font-size:13px;font-weight:700;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;}
+  .proto-container{padding:14px;}.proto-header{font-size:13px;font-weight:700;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;}
   .proto-types{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px;}
   .proto-type-btn{padding:14px 12px;border-radius:var(--border-radius-lg);border:2px solid var(--color-border-secondary);background:var(--color-background-primary);cursor:pointer;text-align:left;transition:all 0.15s;}
   .proto-type-btn:hover{border-color:var(--color-brand);background:var(--color-brand-light);}
-  .proto-type-icon{font-size:24px;display:block;margin-bottom:6px;}
-  .proto-type-name{font-size:13px;font-weight:600;color:var(--color-text-primary);}
-  .proto-type-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px;}
+  .proto-type-icon{font-size:24px;display:block;margin-bottom:6px;}.proto-type-name{font-size:13px;font-weight:600;color:var(--color-text-primary);}.proto-type-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px;}
   .proto-section-title{font-size:12px;font-weight:700;color:var(--color-brand);text-transform:uppercase;letter-spacing:0.5px;padding:8px 0 6px;border-bottom:1px solid var(--color-border-secondary);margin-bottom:10px;}
-  .proto-step{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--color-border-tertiary);cursor:pointer;}
-  .proto-step:last-child{border-bottom:none;}
+  .proto-step{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--color-border-tertiary);cursor:pointer;}.proto-step:last-child{border-bottom:none;}
   .proto-check{width:22px;height:22px;min-width:22px;border-radius:5px;border:2px solid var(--color-border-secondary);background:var(--color-background-primary);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;margin-top:1px;}
-  .proto-check.done{background:var(--color-brand);border-color:var(--color-brand);}
-  .proto-check.done::after{content:"✓";color:#fff;font-size:13px;font-weight:700;}
-  .proto-check.warn{border-color:#e53e3e;}
-  .proto-check.done.warn{background:#e53e3e;border-color:#e53e3e;}
-  .proto-step-text{flex:1;}
-  .proto-step-label{font-size:13px;color:var(--color-text-primary);line-height:1.4;}
-  .proto-step-label.done-text{text-decoration:line-through;color:var(--color-text-secondary);}
-  .proto-step-note{font-size:11px;color:var(--color-text-secondary);margin-top:3px;}
-  .proto-step-law{font-size:10px;color:var(--color-brand);font-weight:600;margin-top:2px;}
-  .proto-mandatory{font-size:9px;font-weight:700;color:#e53e3e;text-transform:uppercase;letter-spacing:0.3px;margin-left:6px;}
+  .proto-check.done{background:var(--color-brand);border-color:var(--color-brand);}.proto-check.done::after{content:"\2713";color:#fff;font-size:13px;font-weight:700;}
+  .proto-check.warn{border-color:#e53e3e;}.proto-check.done.warn{background:#e53e3e;border-color:#e53e3e;}
+  .proto-step-text{flex:1;}.proto-step-label{font-size:13px;color:var(--color-text-primary);line-height:1.4;}.proto-step-label.done-text{text-decoration:line-through;color:var(--color-text-secondary);}
+  .proto-step-note{font-size:11px;color:var(--color-text-secondary);margin-top:3px;}.proto-step-law{font-size:10px;color:var(--color-brand);font-weight:600;margin-top:2px;}.proto-mandatory{font-size:9px;font-weight:700;color:#e53e3e;text-transform:uppercase;letter-spacing:0.3px;margin-left:6px;}
   .proto-progress{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:12px 14px;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
-  .proto-progress-bar{flex:1;height:6px;background:var(--color-border-secondary);border-radius:3px;overflow:hidden;}
-  .proto-progress-fill{height:100%;background:var(--color-brand);border-radius:3px;transition:width 0.3s;}
+  .proto-progress-bar{flex:1;height:6px;background:var(--color-border-secondary);border-radius:3px;overflow:hidden;}.proto-progress-fill{height:100%;background:var(--color-brand);border-radius:3px;transition:width 0.3s;}
   .proto-progress-text{font-size:12px;font-weight:600;color:var(--color-text-secondary);white-space:nowrap;}
   .proto-reset{font-size:12px;color:var(--color-text-secondary);text-decoration:underline;cursor:pointer;background:none;border:none;padding:0;}
   .proto-done-banner{background:#f0fff4;border:1px solid #9ae6b4;border-radius:var(--border-radius-lg);padding:16px;text-align:center;margin-top:12px;}
-  .proto-done-banner .done-icon{font-size:32px;display:block;margin-bottom:6px;}
-  .proto-done-banner .done-title{font-size:15px;font-weight:700;color:#276749;}
-  .proto-done-banner .done-sub{font-size:12px;color:#2f855a;margin-top:4px;}
+  .proto-done-banner .done-icon{font-size:32px;display:block;margin-bottom:6px;}.proto-done-banner .done-title{font-size:15px;font-weight:700;color:#276749;}.proto-done-banner .done-sub{font-size:12px;color:#2f855a;margin-top:4px;}
   .abbrev-box{margin-top:14px;padding:10px 14px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border-left:3px solid var(--color-brand);}
   .abbrev-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-text-secondary);margin-bottom:6px;}
-  .abbrev-item{font-size:12px;line-height:1.7;color:var(--color-text-secondary);}
-  .abbrev-item strong{color:var(--color-text-primary);font-weight:600;}
+  .abbrev-item{font-size:12px;line-height:1.7;color:var(--color-text-secondary);}.abbrev-item strong{color:var(--color-text-primary);font-weight:600;}
+  .sub-picker{display:flex;flex-direction:column;gap:8px;padding:10px 0 4px;}
+  .sub-pick-btn{display:flex;align-items:center;gap:12px;padding:13px 14px;background:var(--color-background-primary);border:1.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);cursor:pointer;transition:all 0.15s;text-align:left;width:100%;}
+  .sub-pick-btn:hover{border-color:var(--color-brand);background:var(--color-brand-light);}
+  .sub-pick-btn.active{border-color:var(--color-brand);background:var(--color-brand-light);box-shadow:0 0 0 3px rgba(49,130,206,0.1);}
+  .sub-pick-icon{flex-shrink:0;color:var(--color-brand);display:flex;align-items:center;}
+  .sub-pick-text{display:flex;flex-direction:column;gap:2px;}
+  .sub-pick-name{font-size:13px;font-weight:600;color:var(--color-text-primary);}
+  .sub-pick-sub{font-size:11px;color:var(--color-text-secondary);}
+  .sub-pick-divider{height:1px;background:var(--color-border-secondary);margin:6px 0;}
+  @media(max-width:600px){.compare-grid{grid-template-columns:1fr auto 1fr;gap:4px;padding:8px 6px 80px;}.compare-card-body{padding:8px!important;}.compare-card-header{padding:8px!important;}.compare-vs{width:22px;font-size:9px;margin-top:30px;}.categories{grid-template-columns:repeat(2,1fr);}.law-name{font-size:14px;}}
+
 </style>
 </head>
 <body>
@@ -208,6 +173,7 @@
     <button class="law-btn" onclick="setLaw('aiz',this)">Aizturēšana</button>
     <button class="law-btn" onclick="setLaw('lpp',this)">LPP</button>
     <button class="law-btn" onclick="setLaw('apas',this)">APAS</button>
+    <button class="law-btn" onclick="setLaw('btal',this)">Nepilng.</button>
     <button class="law-btn" onclick="setLaw('mmob',this)">Mikro</button>
     <button class="law-btn proto-btn" onclick="showProtocol(this)" id="protocolBtn">Protokols</button>
   </div>
@@ -220,6 +186,8 @@
 <div class="laws-list" id="lawsList"></div>
 </div>
 <script>
+
+
 
 let lang='lv', currentCat='admin', currentLaw='asl';
 const BASE_ASL='https://likumi.lv/ta/id/314808-administrativo-sodu-likums-par-parkapumiem-parvaldes-sabiedriskas-kartibas-un-valsts-valodas-lietosanas-joma';
@@ -1203,6 +1171,7 @@ uiStrings.apas={
 };
 
 // ===== APAS BASE URLs =====
+let apasSubCat='nesakopta';
 const BASE_RD24='https://likumi.lv/ta/id/353198-rigas-valstspilsetas-pasvaldibas-teritorijas-kopsanas-un-buvju-uzturesanas-saistosie-noteikumi';
 const BASE_RD25='https://likumi.lv/ta/id/366864-par-sadzives-atkritumu-apsaimniekosanu-rigas-valstspilsetas-pasvaldibas-administrativaja-teritorija';
 const BASE_ATK='https://likumi.lv/ta/id/221378-atkritumu-apsaimniekosanas-likums';
@@ -1231,21 +1200,19 @@ function apasRef(label,url,articles){
 
 // ===== APAS CATEGORIES =====
 const apasCats={
-  nesakopta:{
-    ru:{name:'Неухоженная территория',sec:'Мелкие отходы, захламлённость, piegružojums · RD-24-270-sn'},
-    lv:{name:'Nesakopta teritorija',sec:'Sīkie atkritumi, piegružojums · RD-24-270-sn'},
-    en:{name:'Unmaintained territory',sec:'Small waste, littering · RD-24-270-sn'}},
-  dzivojamas:{
-    ru:{name:'Территория жилого дома',sec:'Pārvaldīšanas pienākumi · RD-24-270-sn / MK 906'},
-    lv:{name:'Dzīvojamās mājas teritorija',sec:'Pārvaldīšanas pienākumi · RD-24-270-sn / MK 906'},
-    en:{name:'Residential building territory',sec:'Management duties · RD-24-270-sn / MK 906'}},
+  kopshana:{
+    ru:{name:'Территория',sec:'Nesakopta · Dzīv. māja · Konteineri'},
+    lv:{name:'Teritorija',sec:'Nesakopta · Dzīv. māja · Konteineri'},
+    en:{name:'Territory',sec:'Unmaintained · Residential · Containers'}},
+  zale:{
+    ru:{name:'Газон / Покос',sec:'RD-24-270-sn 4.1.2 / 4.2.2 · Покос травы'},
+    lv:{name:'Zāle / Pļaušana',sec:'RD-24-270-sn 4.1.2 / 4.2.2 · Zālāja kopšana'},
+    en:{name:'Lawn / Mowing',sec:'RD-24-270-sn 4.1.2 / 4.2.2 · Lawn maintenance'}},
   konteineri:{
-    ru:{name:'Территория у контейнеров',sec:'Konteineru laukums · RD-25-19-sn / Atk.lik.'},
+    ru:{name:'Терр. у контейнеров',sec:'Konteineru laukums · RD-25-19-sn / Atk.lik.'},
     lv:{name:'Atkritumu konteineru apkārtne',sec:'Konteineru laukums · RD-25-19-sn / Atk.lik.'},
-    en:{name:'Waste container area',sec:'Container area · RD-25-19-sn / Atk.lik.'}}
-};
+    en:{name:'Waste container area',sec:'Container site · RD-25-19-sn / Waste law'}}}
 
-// ===== APAS LAWS =====
 const apasLaws={
 nesakopta:[
  {article:'RD-24-270-sn 2.1; 4.1.1; 22; 23',anchor:'',abbrev:'nesakopta',lawRefs:'RD24:p2',srcRaw:BASE_RD24,noFine:true,parts:true,signsSVG:[],
@@ -1404,6 +1371,57 @@ dzivojamas:[
     {label:'Waste Management Law',
      desc:'Waste Management Law – clause 43.1; clause 44.1 (liability for improper waste placement).',
      fineMin:'',fineMax:''}
+   ]}}
+],
+
+
+zale:[
+ {article:'RD-24-270-sn 4.1.2',anchor:'#p4',abbrev:'',lawRefs:'RD24:p4',srcRaw:'https://likumi.lv/ta/id/353198-rigas-valstspilsetas-pasvaldibas-teritorijas-kopsanas-un-buvju-uzturesanas-saistosie-noteikumi',parts:true,
+  fineMax:{
+    ru:'350 € / 1400 € (jur.)',
+    lv:'350 € / 1400 € (jur.)',
+    en:'350 € / 1400 € (legal)'},
+  ru:{name:'Покос зелени — обязанности (застр. территория и прилегающая)',
+   parts:[
+    {label:'4.1.2.1 — Не реже 2 раз в год',desc:'Незастроенные УН и застроенные УН с айнавическими луговыми насаждениями: косить не реже 2 раз в год — до 31 мая и до 15 сентября. Запрещается образование куялы!',fineMin:'',fineMax:''},
+    {label:'4.1.2.2 — Трава не выше 20 см',desc:'Застроенная терр. (кроме луговых полян) + полоса 2 м от дорожек, тротуаров, стоянок, границ соседней застройки: нельзя превышать 20 см. Косить регулярно.',fineMin:'',fineMax:''},
+    {label:'4.2.2 — Прилегающая территория',desc:'Газон на прилегающей территории (газон вдоль тротуара до проезжей) — не выше 20 см. Обеспечивает владелец/управитель НИ.',fineMin:'',fineMax:''},
+    {label:'Штраф — п. 22 RD-24-270-sn',desc:'Физ. лица: предупреждение или страф до 70 NSV (350 €). Юр. лица: до 280 NSV (1400 €). 1 NSV = 5 €.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Zālāja pļaušana — pienākumi (pastāvīgā un piegulošā teritorija)',
+   parts:[
+    {label:'4.1.2.1 — Ne retāk kā 2 reizes gadā',desc:'Neapbūvēta nekust. īpaš. un apbūvēta nekust. īpaš. ar ainav. pļavas apstādījumiem: ne retāk kā 2 reizes gadā — līdz 31. maijam un 15. septembrim. Nepieļaujot kūlas veidošanos!',fineMin:'',fineMax:''},
+    {label:'4.1.2.2 — Zāle ne vairāk kā 20 cm',desc:'Apbūvēta nekust. īpaš. teritorijā (izņemot ainav. pļavas): zāles garums nepārsniedz 20 cm. Arī 2 m joslā no piebrauktuvēm, autostāvvietām, ietvēm, gāj. ceļiem un gar robežām ar apbūvētu īpašumu.',fineMin:'',fineMax:''},
+    {label:'4.2.2 — Piegulošā teritorija',desc:'Zālājs piegulošajā teritorijā (zālājs gar ietvi līdz brauktuvei) — nepārsniedz 20 cm. Nodrošina nekust. īpaš. īpašnieks/tiesiskais valdītājs.',fineMin:'',fineMax:''},
+    {label:'Sods — p. 22 RD-24-270-sn',desc:'Fiz. personām: brīdinājums vai naudas sods līdz 70 NSV (350 €). Jur. personām: naudas sods līdz 280 NSV (1400 €). 1 NSV = 5 €.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Lawn mowing — obligations (own territory and adjacent)',
+   parts:[
+    {label:'4.1.2.1 — At least 2 times per year',desc:'Undeveloped properties and developed properties with scenic meadow planting: mow at least twice a year — by 31 May and 15 September. Prevention of straw (kūla) formation required!',fineMin:'',fineMax:''},
+    {label:'4.1.2.2 — Grass max 20 cm',desc:'Developed property territory (except scenic meadows): grass must not exceed 20 cm. Also in 2 m strip from driveways, parking areas, pavements, pedestrian paths and along boundaries with adjacent developed properties.',fineMin:'',fineMax:''},
+    {label:'4.2.2 — Adjacent territory',desc:'Lawn in adjacent territory (grass strip along pavement to road edge) — must not exceed 20 cm. Ensured by property owner/legal holder.',fineMin:'',fineMax:''},
+    {label:'Fine — Art. 22 RD-24-270-sn',desc:'Natural persons: warning or fine up to 70 NSV (350 €). Legal persons: fine up to 280 NSV (1400 €). 1 NSV = 5 €.',fineMin:'',fineMax:''}
+   ]}},
+
+ {article:'RD-24-270-sn 4.1.1; 4.2.1',anchor:'#p4',abbrev:'',lawRefs:'RD24:p4',srcRaw:'https://likumi.lv/ta/id/353198-rigas-valstspilsetas-pasvaldibas-teritorijas-kopsanas-un-buvju-uzturesanas-saistosie-noteikumi',parts:true,
+  fineMax:{
+    ru:'350 € / 1400 € (jur.)',
+    lv:'350 € / 1400 € (jur.)',
+    en:'350 € / 1400 € (legal)'},
+  ru:{name:'Листья, ветки и плоды — уборка территории',
+   parts:[
+    {label:'4.1.1 — Собственная территория',desc:'Нельзя допускать накопление листьев, плодов, ягод и веток на проезжей, тротуарах, стоянках и площадках с твёрдым покрытием, а также в полосе 2 м по обе стороны. Остальное — до 30 ноября.',fineMin:'',fineMax:''},
+    {label:'4.2.1 — Прилегающая терр.',desc:'Листья на прилегающей территории: нельзя допускать на тротуаре и в полосе 2 м от неё. Остальное — до 30 ноября.',fineMin:'',fineMax:''}
+   ]},
+  lv:{name:'Lapas, zari, augļi — teritorijas sakopšana',
+   parts:[
+    {label:'4.1.1 — Pašu teritorijā',desc:'Nepieļaut lapu, augļu, ogu un zaru uzkrāšanos uz brauktuvēm, piebrauktuvēm, autostāvvietām, ietvēm, gāj. ceļiem un 2 m zonā no tiem, kā arī rotaļu/sporta laukumiem. Pārējā teritorijā — jāsavāc līdz 30. novembrim.',fineMin:'',fineMax:''},
+    {label:'4.2.1 — Piegulošajā teritorijā',desc:'Lapas piegulošajā teritorijā: nepieļaut uz ietves un 2 m no tās. Pārējā piegulošajā teritorijā — jāsavāc līdz 30. novembrim.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Leaves, branches, fruit — territory maintenance',
+   parts:[
+    {label:'4.1.1 — Own territory',desc:'Prevent accumulation of leaves, fruit, berries and branches on driveways, parking areas, pavements, pedestrian paths and within 2 m on either side, and on recreational areas. Rest of territory — must be cleared by 30 November.',fineMin:'',fineMax:''},
+    {label:'4.2.1 — Adjacent territory',desc:'Leaves on adjacent territory: not permitted on pavement or within 2 m of it. Rest of adjacent territory — must be cleared by 30 November.',fineMin:'',fineMax:''}
    ]}}
 ],
 
@@ -2408,7 +2426,7 @@ function exitCompare(){
   var sec=document.getElementById('sectionTitle');
   if(sec) sec.textContent=getCats()[currentCat]?getCats()[currentCat][lang].sec:'';
   document.getElementById('appSubtitle').textContent=getUI().subtitle;
-  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietoš.anas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietoš.anas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietoš.anas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'},apas:{ru:'Administratīvie pārkāpumi · Saistošie noteikumi',lv:'Administratīvie pārkāpumi · Saistošie noteikumi',en:'Administrative violations · Binding regulations'}};
+  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietoš.anas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietoš.anas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietoš.anas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'},btal:{ru:'BTAL · Bērnu tiesību aizsardzības likums',lv:'BTAL · Bērnu tiesību aizsardzības likums',en:'BTAL · Children Rights Protection Law'},apas:{ru:'Administratīvie pārkāpumi · Saistošie noteikumi',lv:'Administratīvie pārkāpumi · Saistošie noteikumi',en:'Administrative violations · Binding regulations'}};
   document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
   renderCats();
   renderLaws(getLaws()[currentCat]);
@@ -2703,7 +2721,7 @@ function setLaw(law,btn){
   btn.classList.add('active');
   currentCat=Object.keys(getCats())[0];
   document.getElementById('appSubtitle').textContent=getUI().subtitle;
-  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'},apas:{ru:'Administratīvie pārkāpumi · Saistošie noteikumi',lv:'Administratīvie pārkāpumi · Saistošie noteikumi',en:'Administrative violations · Binding regulations'}};
+  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'},btal:{ru:'BTAL · Bērnu tiesību aizsardzības likums',lv:'BTAL · Bērnu tiesību aizsardzības likums',en:'BTAL · Children Rights Protection Law'},apas:{ru:'Administratīvie pārkāpumi · Saistošie noteikumi',lv:'Administratīvie pārkāpumi · Saistošie noteikumi',en:'Administrative violations · Binding regulations'}};
   document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
   document.getElementById('searchInput').placeholder=getUI().placeholder;
   document.getElementById('searchInput').value='';
@@ -2719,7 +2737,7 @@ function setLang(l,btn){
   if(showingProto){renderProtocol();return;}
   if(showingFavs){renderFavourites();return;}
   document.getElementById('appSubtitle').textContent=getUI().subtitle;
-  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'},apas:{ru:'Administratīvie pārkāpumi · Saistošie noteikumi',lv:'Administratīvie pārkāpumi · Saistošie noteikumi',en:'Administrative violations · Binding regulations'}};
+  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'},btal:{ru:'BTAL · Bērnu tiesību aizsardzības likums',lv:'BTAL · Bērnu tiesību aizsardzības likums',en:'BTAL · Children Rights Protection Law'},apas:{ru:'Administratīvie pārkāpumi · Saistošie noteikumi',lv:'Administratīvie pārkāpumi · Saistošie noteikumi',en:'Administrative violations · Binding regulations'}};
   document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
   document.getElementById('searchInput').placeholder=getUI().placeholder;
   renderCats();
@@ -2738,15 +2756,17 @@ const aalCounts={dalibnieki:'AAL 39.–49. p.',termini:'AAL termini',sodi:'AAL 1
 const SVG_LPP={visparigie:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l8 4v6c0 5.5-4 9-8 10C8 21 4 17.5 4 12V6l8-4z"/></svg>`,pienakumi:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="7" y="2" width="10" height="8" rx="1"/><path d="M7 10l-4 11h18L17 10"/><circle cx="12" cy="15" r="2"/></svg>`,tiesibas:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"/><path d="M3 10l9-7 9 7"/><path d="M5 10c0 3 2 5 4 5s4-2 4-5H5z"/><path d="M11 17c0 3 2 5 4 5s4-2 4-5h-8z"/></svg>`,speks:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 10h14v4H3z"/><path d="M17 12h2a2 2 0 002-2V8h-5"/><path d="M7 14v4h4v-4"/><line x1="3" y1="12" x2="1" y2="12"/></svg>`,aizstav:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l8 4v6c0 5.5-4 9-8 10C8 21 4 17.5 4 12V6l8-4z"/><path d="M12 8v4"/><circle cx="12" cy="15" r="1" fill="currentColor" stroke="none"/></svg>`};
 const lppCounts={visparigie:'LPP 1.–8. pants',pienakumi:'LPP 9.–11. pants',tiesibas:'LPP 12. pants',speks:'LPP 13.–14. pants',aizstav:'LPP 15.–17. pants'};
 
-const SVG_APAS={nesakopta:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="3,6 5,6 21,6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>`,dzivojamas:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>`,konteineri:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27,6.96 12,12.01 20.73,6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`};
-const apasCounts={nesakopta:'RD-24-270-sn / RD-25-19-sn',dzivojamas:'RD-24-270-sn / MK 906',konteineri:'RD-25-19-sn / Atk.lik.'};
+const SVG_APAS={kopshana:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="7" width="20" height="15" rx="1"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>`,zale:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 18c0-6 3-10 6-10s6 4 6 10"/><path d="M9 18c0-4 1.5-7 3-7s3 3 3 7"/><line x1="3" y1="18" x2="21" y2="18"/><path d="M17 12c0-3 1.5-5 4-5"/></svg>`,
+  zale:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 20c2-6 6-9 10-9s8 3 10 9"/><path d="M7 20c1-4 3-7 5-7s4 3 5 7"/><line x1="2" y1="20" x2="22" y2="20"/><path d="M18 13c0-3 2-5 4-4"/></svg>`,
+  konteineri:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27,6.96 12,12.01 20.73,6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`};
+const apasCounts={kopshana:'RD-24-270-sn',zale:'RD-24-270-sn 4.1.2',konteineri:'RD-25-19-sn / Atk.lik.'};
 function renderCats(){
   const cats=getCats();
   const aslCounts={admin:'ASL 3–8',order:'ASL 9–13.1',lang:'ASL 14–28'};
   const cslCounts={parking:'CSL 57. p.',speed:'CSL 55. p.',alcohol:'CSL 62. p.',signals:'CSN/CSL',other:'CSL 43–58. p.'};
   const aizCounts={aiztureshana:'AAL 71 · LPP 12 · LPP 19'};
-  const svgMap=currentLaw==='asl'?SVG_ASL:currentLaw==='csl'?SVG_CSL:currentLaw==='aiz'?SVG_AIZ:currentLaw==='aal'?SVG_AAL:currentLaw==='lpp'?SVG_LPP:SVG_APAS;
-  const counts=currentLaw==='asl'?aslCounts:currentLaw==='csl'?cslCounts:currentLaw==='aiz'?aizCounts:currentLaw==='aal'?aalCounts:currentLaw==='lpp'?lppCounts:apasCounts;
+  const svgMap=currentLaw==='asl'?SVG_ASL:currentLaw==='csl'?SVG_CSL:currentLaw==='aiz'?SVG_AIZ:currentLaw==='aal'?SVG_AAL:currentLaw==='lpp'?SVG_LPP:currentLaw==='apas'?SVG_APAS:currentLaw==='btal'?SVG_BTAL:SVG_APAS;
+  const counts=currentLaw==='asl'?aslCounts:currentLaw==='csl'?cslCounts:currentLaw==='aiz'?aizCounts:currentLaw==='aal'?aalCounts:currentLaw==='lpp'?lppCounts:currentLaw==='apas'?apasCounts:currentLaw==='btal'?btalCounts:mmobCounts;
   document.getElementById('catGrid').innerHTML=Object.keys(cats).map(k=>
     '<div class="cat-card'+(k===currentCat?' active':'')+'" onclick="selectCat(this,\''+k+'\')">'+
     '<div class="cat-icon">'+(svgMap[k]||'')+'</div>'+
@@ -2756,6 +2776,7 @@ function renderCats(){
   ).join('');
 }
 
+function selectApasSubCat(sub){apasSubCat=sub;renderLaws(getLaws()[currentCat]);}
 function selectCat(el,cat){
   currentCat=cat;
   renderCats();
@@ -2792,6 +2813,80 @@ function renderPartsHTML(law){
 function renderLaws(items){
   const t=getUI();
   const list=document.getElementById('lawsList');
+  if(currentLaw==='apas'&&currentCat==='kopshana'){
+    var siIc={
+      nesakopta:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,6 5,6 21,6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>',
+      dzivojamas:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>',
+      konteineri:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,6 5,6 21,6"/><path d="M19 6l-1 14H6L5 6"/></svg>'
+    };
+    var siLb={
+      nesakopta:{lv:'Nesakopta teritorija',ru:'Неухож. терр.',en:'Unmaintained territory'},
+      dzivojamas:{lv:'Dzīvoj. mājas teritorija',ru:'Терр. жил. дома',en:'Residential territory'},
+      konteineri:{lv:'Konteineru apkārtne',ru:'Площ. контейн.',en:'Container area'}
+    };
+    var siSb={
+      nesakopta:{lv:'Sīkie atkritumi · RD-24-270-sn',ru:'Мелкие отходы · RD-24-270-sn',en:'Littering · RD-24-270-sn'},
+      dzivojamas:{lv:'Pienākumi · MK 906 / DMPL',ru:'Обязанн. · MK 906 / DMPL',en:'Management · MK 906 / DMPL'},
+      konteineri:{lv:'Konteineru laukums · RD-25-19-sn',ru:'Конт. площ. · RD-25-19-sn',en:'Container site · RD-25-19-sn'}
+    };
+    var ph='<div class="sub-picker">';
+    ['nesakopta','dzivojamas','konteineri'].forEach(function(k){
+      ph+='<button class="sub-pick-btn'+(apasSubCat===k?' active':'')+'" onclick="selectApasSubCat(\''+k+'\')">'+
+        '<span class="sub-pick-icon">'+(siIc[k]||'')+'</span>'+
+        '<span class="sub-pick-text"><span class="sub-pick-name">'+(siLb[k]?siLb[k][lang]:k)+'</span>'+
+        '<span class="sub-pick-sub">'+(siSb[k]?siSb[k][lang]:'')+'</span></span></button>';
+    });
+    ph+='</div><div class="sub-pick-divider"></div>';
+    var subL=apasLaws[apasSubCat]||[];
+    var origC=currentCat;currentCat=apasSubCat;
+    list.innerHTML=ph+(subL.length?subL.map(function(law,i){
+    var maxStr=law.fineMax?law.fineMax[lang]:'';
+    var maxBadge=maxStr.split('/')[0].trim();
+    var ptsBadge=law.pts?'<span class="badge badge-pts">'+law.pts+' '+t.pts+'</span>':'';
+    var signHTML=(law.signsSVG&&law.signsSVG.length)?'<div class="signs-row">'+law.signsSVG.join('')+'</div>':'';
+    var isAlwaysOpen=false;
+    var isDefaultOpen=law.defaultOpen===true;
+    var srcUrl=law.srcRaw?law.srcRaw:(law.srcUrl==='AAL'?BASE_AAL:law.srcUrl==='LPP'?BASE_LPP:getBase());
+    var fineSection='';
+    if(!law.noFine){
+      if(law.singleFine){
+        var fl={ru:'Штраф',lv:'Sods',en:'Fine'};
+        fineSection='<div class="fine-row"><div class="fine-box"><div class="fine-lbl">'+fl[lang]+'</div><div class="fine-val danger">'+maxStr+'</div></div></div>';
+      } else {
+        fineSection='<div class="fine-row"><div class="fine-box"><div class="fine-lbl">'+t.min+'</div><div class="fine-val">'+getFineMin(law)+'</div></div><div class="fine-box"><div class="fine-lbl">'+t.max+'</div><div class="fine-val danger">'+maxStr+'</div></div></div>';
+      }
+    }
+    var metaBadges=law.warn?'<span class="badge badge-warn">'+t.warn+'</span>':'';
+    if(!law.noFine&&maxBadge) metaBadges+='<span class="badge badge-fine">max '+maxBadge+'</span>';
+    metaBadges+=ptsBadge+'<span class="badge badge-article">'+law.article+'</span>';
+    var detailContent=signHTML+(law.parts?renderPartsHTML(law):'<div class="dl">'+t.desc+'</div><div class="dt">'+law[lang].desc+'</div>'+fineSection);
+    if(law.csnRef) detailContent+='<div class="csn-card-ref">'+csnLinks(law.csnRef)+'</div>';
+    if(law.lawRefs) detailContent+='<div class="csn-card-ref">'+lawBadges(law.lawRefs)+'</div>';
+    if(law.abbrev){
+      var abbrevMap={nesakopta:ABBREV_NESAKOPTA,konteineri:ABBREV_KONTEINERI};
+      var abbrevBox=abbrevMap[law.abbrev];
+      if(abbrevBox) detailContent+=abbrevBox[lang]||abbrevBox.lv;
+    }
+    if(t.howContest&&law[lang].contest) detailContent+='<div class="dl">'+t.howContest+'</div><div class="dt">'+law[lang].contest+'</div>';
+    detailContent+='<a class="source-btn" href="'+srcUrl+law.anchor+'" target="_blank" onclick="event.stopPropagation()">↗'+t.sourceBtn+'</a>';
+    var cardClass='law-card'+(isDefaultOpen?' expanded':'');
+    var detailClass='law-detail'+(isDefaultOpen?' show':'');
+    var starCls=isFav(law.article)?'active':'';
+    var starSvg=starCls?STAR_FULL:STAR_EMPTY;
+    var cmpCls=isInCompare(law.article)?'active':'';
+    var favArticle=law.article.replace(/'/g,"\\'");
+    var favName=law[lang].name.replace(/'/g,"\\'");
+    return '<div class="'+cardClass+'" onclick="toggleLaw(this,'+i+')">'+
+      '<div class="law-top"><div class="law-name">'+law[lang].name+'</div>'+
+      '<button class="compare-btn '+cmpCls+'" onclick="toggleCompare(\''+favArticle+'\',\''+currentLaw+'\',\''+currentCat+'\',\''+favName+'\',event)" title="Salīdzināt">'+COMPARE_SVG+'</button>'+
+      '<button class="fav-btn '+starCls+'" onclick="toggleFav(\''+favArticle+'\',\''+currentLaw+'\',\''+currentCat+'\',\''+favName+'\',event)">'+starSvg+'</button>'+
+      '<div class="arrow-icon"></div></div>'+
+      '<div class="law-meta">'+metaBadges+'</div>'+
+      '<div class="'+detailClass+'" id="detail-'+i+'">'+detailContent+'</div>'+
+      '</div>';
+  }).join(''):'');
+    currentCat=origC;return;
+  }
   if(!items||!items.length){list.innerHTML=`<p class="empty">${t.empty}</p>`;return;}
   list.innerHTML=items.map(function(law,i){
     var maxStr=law.fineMax?law.fineMax[lang]:'';
@@ -2889,7 +2984,7 @@ function filterLaws(){
 // ===== INIT =====
 renderCats();
 document.getElementById('appSubtitle').textContent=getUI().subtitle;
-  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'},apas:{ru:'Administratīvie pārkāpumi · Saistošie noteikumi',lv:'Administratīvie pārkāpumi · Saistošie noteikumi',en:'Administrative violations · Binding regulations'}};
+  var sub2Map={asl:{ru:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',lv:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā',en:'Administratīvo sodu likums par pārkāpumiem pārvaldes, sabiedriskās kārtības un valsts valodas lietošanas jomā'},csl:{ru:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',lv:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi',en:'Ceļu satiksmes likums / Ceļu satiksmes noteikumi'},aiz:{ru:'Administratīvās atbildības likums / Likums par policiju',lv:'Administratīvās atbildības likums / Likums par policiju',en:'Administratīvās atbildības likums / Likums par policiju'},aal:{ru:'Administratīvās atbildības likums',lv:'Administratīvās atbildības likums',en:'Administratīvās atbildības likums'},lpp:{ru:'Likums par policiju',lv:'Likums par policiju',en:'Likums par policiju'},btal:{ru:'BTAL · Bērnu tiesību aizsardzības likums',lv:'BTAL · Bērnu tiesību aizsardzības likums',en:'BTAL · Children Rights Protection Law'},apas:{ru:'Administratīvie pārkāpumi · Saistošie noteikumi',lv:'Administratīvie pārkāpumi · Saistošie noteikumi',en:'Administrative violations · Binding regulations'}};
   document.getElementById('appSubtitle2').textContent=(sub2Map[currentLaw]||{})[lang]||'';
 document.getElementById('searchInput').placeholder=getUI().placeholder;
 document.getElementById('sectionTitle').textContent=getCats()[currentCat][lang].sec;
@@ -3041,6 +3136,166 @@ renderCats=function(){
 };
 
 renderLaws(getLaws()[currentCat]);updateFavCount();initTheme();updateCompareBar();
+
+
+// ===== BTAL - NEPILNGADĪGIE =====
+const BASE_BTAL='https://likumi.lv/ta/id/49096-bernu-tiesibu-aizsardzibas-likums';
+
+uiStrings.btal={
+  lv:{subtitle:'BTAL',placeholder:'Meklēt...',min:'Sods min.',max:'Sods max.',desc:'Apraksts',howContest:'Kā apstrīdēt',sourceBtn:'Atvērt BTAL likumi.lv',warn:'Uzmanību',warnWord:'!',empty:'Nav atrasts.',pts:'punkti',signs:'Zīmes'},
+  ru:{subtitle:'BTAL',placeholder:'Поиск...',min:'Штраф min.',max:'Штраф max.',desc:'Описание',howContest:'Как оспорить',sourceBtn:'Открыть BTAL на likumi.lv',warn:'Внимание',warnWord:'!',empty:'Ничего не найдено.',pts:'баллов',signs:'Знаки'},
+  en:{subtitle:'BTAL',placeholder:'Search...',min:'Fine min.',max:'Fine max.',desc:'Description',howContest:'How to contest',sourceBtn:'Open BTAL on likumi.lv',warn:'Warning',warnWord:'!',empty:'Nothing found.',pts:'pts',signs:'Signs'}
+};
+
+const btalCats={
+  policija:{
+    lv:{name:'Policijas tiesības',sec:'BTAL 74. · Noogadāšana, rīciba'},
+    ru:{name:'Полномочия полиции',sec:'BTAL 74. · Доставка, действия'},
+    en:{name:'Police powers',sec:'BTAL 74. · Transfer, actions'}},
+  nakts:{
+    lv:{name:'Nakts stunda',sec:'BTAL 72. · Atrašanās ierobežojumi'},
+    ru:{name:'Ночное время',sec:'BTAL 72. · Ограничения пребывания'},
+    en:{name:'Night hours',sec:'BTAL 72. · Presence restrictions'}},
+  vielas:{
+    lv:{name:'Alkohols / Tabaka',sec:'BTAL 73. · Apreibinošo vielu aizliegumi'},
+    ru:{name:'Алкоголь / Табак',sec:'BTAL 73. · Запрет на вещества'},
+    en:{name:'Alcohol / Tobacco',sec:'BTAL 73. · Substance restrictions'}},
+  vecaki:{
+    lv:{name:'Vecāku atbildība',sec:'BTAL 24. · Pienākumi un sodi'},
+    ru:{name:'Отв. родителей',sec:'BTAL 24. · Обязанности и штрафы'},
+    en:{name:'Parental responsibility',sec:'BTAL 24. · Duties and fines'}}
+};
+
+const btalCounts={policija:'BTAL 74.',nakts:'BTAL 72.',vielas:'BTAL 73.',vecaki:'BTAL 24. / AAL'};
+
+const SVG_BTAL={
+  nakts:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/><circle cx="12" cy="12" r="3"/></svg>',
+  vielas:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 3l2 3h4l2-3"/><path d="M10 6v4l-3 7a1 1 0 001 1h8a1 1 0 001-1l-3-7V6"/></svg>',
+  vecaki:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>',
+  policija:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>'
+};
+
+const btalLaws={
+nakts:[
+ {article:'BTAL 72. pants',anchor:'#p72',noFine:true,parts:true,signsSVG:[],srcRaw:BASE_BTAL,
+  fineMax:{lv:'',ru:'',en:''},
+  lv:{name:'Nakts stunda — bērna atrašanās publiskās vietās laika ierobežojumi',
+   parts:[
+    {label:'Līdz 7 gadiem — 24/7 ar pieaugušo',desc:'Bērns līdz 7 gadu vecumam nedrīkst atrasties publiski bez vecāku vai vismaz 13 gadus vecas personas klātbūtnes NEBŪT KURĀ LAIKĀ. Atbildība gulstas uz vecāku (BTAL 24.(6)).',fineMin:'',fineMax:''},
+    {label:'7–15 gadi — aizliegts pēc 22:00',desc:'Bērnam no 7 līdz 15 gadiem aizliegts atrasties publiski no plkst. 22.00 līdz 07.00 bez pieaugušas pavadošas personas klātbūtnes.',fineMin:'',fineMax:''},
+    {label:'15–18 gadi — aizliegts pēc 00:00',desc:'Bērnam no 15 līdz 18 gadiem aizliegts atrasties publiski no plkst. 00.00 līdz 07.00 bez pieaugušas personas klātbūtnes. No 1. jūnija līdz 31. augustam — no plkst. 01.00 līdz 07.00.',fineMin:'',fineMax:''},
+    {label:'Izņēmumi (BTAL 72.(4))',desc:'Ierobežojumi neattiecas, ja bērns: dodas uz/no darba vai mācībām; saņem neatliekamu medicīnisko palīdzību; atrodas organizētā pasākumā ar pieaugušā vadītāja klātbūtni; izpilda bāriņtiesas vai policijas uzaicinājumu; ir ārkārtējos apstākļos.',fineMin:'',fineMax:''},
+    {label:'Sods par pārkāpumu (vecākiem)',desc:'Par nakts stundas pārkāpumu vecāki/pieskatītāji saucami pie adm. atbildības: bīdinājums vai naudas sods atbilstoši AAL. Policija nogādā bērnu policijā un informē bāriņtiesu.',fineMin:'',fineMax:''}
+   ]},
+  ru:{name:'Ночное время — ограничения пребывания несовершеннолетних в общественных местах',
+   parts:[
+    {label:'До 7 лет — всегда с взрослым',desc:'Ребёнок до 7 лет не вправе находиться публично без родителя или лица в возрасте не менее 13 лет В ЛЮБОЕ ВРЕМЯ. Ответственность несёт родитель (BTAL 24.(6)).',fineMin:'',fineMax:''},
+    {label:'7–15 лет — запрещено после 22:00',desc:'Детям 7–15 лет запрещено публичное пребывание с 22:00 до 07:00 без сопровождения взрослого.',fineMin:'',fineMax:''},
+    {label:'15–18 лет — запрещено после 00:00',desc:'Подросткам 15–18 лет запрещено пребывать публично с 00:00 до 07:00 без взрослого. С 1 июня по 31 августа — с 01:00 до 07:00.',fineMin:'',fineMax:''},
+    {label:'Исключения (BTAL 72.(4))',desc:'Ограничения не распространяются, если ребёнок: следует на/с работы или учёбы; получает медиц. помощь; участвует в организованном мероприятии с педагогом; исполняет вызов сиротского суда или полиции.',fineMin:'',fineMax:''},
+    {label:'Штраф для родителей',desc:'За нарушение ночного режима родители/опекуны привлекаются к адм. ответственности (AAL). Полиция доставляет ребёнка в полицию и уведомляет сиротский суд.',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Night hours — restrictions on minors in public places',
+   parts:[
+    {label:'Under 7 — always with an adult',desc:'Children under 7 may not be in public places without a parent or person aged at least 13 AT ANY TIME. Responsibility lies with the parent (BTAL 24.(6)).',fineMin:'',fineMax:''},
+    {label:'7–15 years — prohibited after 22:00',desc:'Children aged 7–15 are prohibited from being in public from 22:00 to 07:00 without an accompanying adult.',fineMin:'',fineMax:''},
+    {label:'15–18 years — prohibited after 00:00',desc:'Minors aged 15–18 are prohibited from being in public from 00:00 to 07:00 without an adult. From 1 June to 31 August — from 01:00 to 07:00.',fineMin:'',fineMax:''},
+    {label:'Exceptions (BTAL 72.(4))',desc:'Restrictions do not apply if the child: travels to/from work or school; receives urgent medical assistance; participates in an organised event with adult supervision; fulfils a summons from bāriņtiesa or police.',fineMin:'',fineMax:''},
+    {label:'Fine for parents',desc:'Parents/guardians are subject to administrative liability for night hour violations (AAL). Police transfer the child to the station and notify bāriņtiesa.',fineMin:'',fineMax:''}
+   ]}}
+],
+
+vielas:[
+ {article:'BTAL 73. pants',anchor:'#p73',noFine:true,parts:true,signsSVG:[],srcRaw:BASE_BTAL,
+  fineMax:{lv:'',ru:'',en:''},
+  lv:{name:'Alkohols, tabaka, narkotikas — aizliegumi nepilngadīgajiem (BTAL 73.)',
+   parts:[
+    {label:'Alkohols (73.(1))',desc:'Bērnam aizliegts: pirkt, gādāt, glābāt vai lietot alkoholiskos dzērienus. Aizliegts atrasties vietās, kur galvenokārt tiek pārdots vai patērēts alkohols (bāri, naktsklubi, kazino, totalizatori, azartspēļu zāles).',fineMin:'',fineMax:''},
+    {label:'Tabaka un e-cigaretes (73.(1))',desc:'Bērnam aizliegts: pirkt, glābāt vai lietot tabakas izstrādājumus, augu smēķēšanas produktus, elektroniskās smēķēšanas ierīces (e-cigaretes, vapes).',fineMin:'',fineMax:''},
+    {label:'Narkotikas un citas vielas (73.(2))',desc:'Aizliegts pamudināt bērnu lietot narkotikas, toksiskās vai citas apreibinošas vielas vai iesaistīt to lietošanā. Vainīgās personas saucamas pie likumā noteiktās atbildības.',fineMin:'',fineMax:''},
+    {label:'Pārdevēja atbildība',desc:'Juridiska vai fiziska persona, kura pārdod alkoholu vai tabakas izstrādājumus nepilngadīgajam, saucama pie administratīvās vai kriminālatbildības. Sods: naudas sods 14–70 NSV (70–350 €) fiziskām personām vai 70–280 NSV (350–1400 €) juridiskām personām.',fineMin:'14 NSV (70 €)',fineMax:'280 NSV (1400 €)'}
+   ]},
+  ru:{name:'Алкоголь, табак, наркотики — запреты для несовершеннолетних (BTAL 73.)',
+   parts:[
+    {label:'Алкоголь (73.(1))',desc:'Ребёнку запрещено: покупать, добывать, хранить или употреблять алкогольные напитки. Запрещено находиться в местах, где преимущ. торгуют или употребляют алкоголь (бары, ночные клубы, казино, тотализаторы, залы азарт. игр).',fineMin:'',fineMax:''},
+    {label:'Табак и э-сигареты (73.(1))',desc:'Ребёнку запрещено: покупать, хранить или употреблять табачные изделия, растительные продукты для курения, электронные сигареты (вейпы).',fineMin:'',fineMax:''},
+    {label:'Наркотики (73.(2))',desc:'Запрещено подстрекать ребёнка к употреблению наркотиков, токсических или других опьяняющих веществ или вовлекать в их распространение. Виновные привлекаются к ответственности.',fineMin:'',fineMax:''},
+    {label:'Ответственность продавца',desc:'Юр. или физ. лицо, продающее алкоголь или табак несовершеннолетнему, привлекается к адм. или угол. отв. Штраф: 14–70 NSV (70–350 €) физ. лицам, 70–280 NSV (350–1400 €) юр. лицам.',fineMin:'14 NSV (70 €)',fineMax:'280 NSV (1400 €)'}
+   ]},
+  en:{name:'Alcohol, tobacco, drugs — prohibitions for minors (BTAL 73.)',
+   parts:[
+    {label:'Alcohol (73.(1))',desc:'Child is prohibited from: purchasing, acquiring, storing or consuming alcoholic beverages. Prohibited from being in places where alcohol is mainly sold or consumed (bars, nightclubs, casinos, betting shops, gambling halls).',fineMin:'',fineMax:''},
+    {label:'Tobacco and e-cigarettes (73.(1))',desc:'Child is prohibited from: purchasing, storing or using tobacco products, herbal smoking products, electronic smoking devices (e-cigarettes, vapes).',fineMin:'',fineMax:''},
+    {label:'Narcotics (73.(2))',desc:'Prohibited to encourage a child to use narcotics, toxic or other intoxicating substances or to involve them in their use or distribution. Offenders are subject to liability under the law.',fineMin:'',fineMax:''},
+    {label:'Seller liability',desc:'Legal or natural person selling alcohol or tobacco to a minor is subject to administrative or criminal liability. Fine: 14–70 NSV (70–350 €) for natural persons, 70–280 NSV (350–1400 €) for legal persons.',fineMin:'14 NSV (70 €)',fineMax:'280 NSV (1400 €)'}
+   ]}}
+],
+
+vecaki:[
+ {article:'BTAL 24. pants · AAL',anchor:'#p24',noFine:false,parts:true,signsSVG:[],srcRaw:BASE_BTAL,
+  fineMax:{lv:'250 € / 500 € (atk.)',ru:'250 € / 500 € (повт.)',en:'250 € / 500 € (repeat)'},
+  lv:{name:'Vecāku pienākumi un atbildība (BTAL 24.)',
+   parts:[
+    {label:'24.(6) — Bērns līdz 7 g.v.',desc:'Vecākiem vai pieskatītājam AIZLIEGTS atstāt bērnu līdz 7 gadu vecumam bez pieaugušā vai vismaz 13 gadus vecas personas klātbūtnes. Pārkāpums = administratīvā atbildība.',fineMin:'2 NSV (10 €)',fineMax:'50 NSV (250 €)'},
+    {label:'24.(4) — Fizisks sods, cietsirdīga izturēšanās',desc:'Par bērna fizisku sodīšanu vai cietsirdīgu izturēšanos pret viņu vecāki saucami pie likumā noteiktās atbildības. Var tikt uzsākts kriminālo process (KL 174. pants).',fineMin:'',fineMax:''},
+    {label:'24.(7) — Atteikšanās no sadarbības',desc:'Vecākiem pienākums sadarboties ar sociālo dienestu, ja konstatēta vardarbība vai bērnu tiesību pārkāpumi. Par atteikšanos sociālais dienests informē bāriņtiesu.',fineMin:'',fineMax:''},
+    {label:'Sods par pienākumu nepildīšanu (AAL)',desc:'Par vecāku pienākumu nepildīšanu: brīdinājums vai naudas sods 2–50 NSV (10–250 €). Sistematisks pārkāpums vai atkārtots: 50–100 NSV (250–500 €). Bāriņtiesa var lemt par aizgādības tiesību pārtraukšanu.',fineMin:'2 NSV (10 €)',fineMax:'100 NSV (500 €)'}
+   ]},
+  ru:{name:'Обязанности и ответственность родителей (BTAL 24.)',
+   parts:[
+    {label:'24.(6) — Ребёнок до 7 лет',desc:'Родителям или опекунам ЗАПРЕЩЕНО оставлять ребёнка до 7 лет без взрослого или лица возрастом не менее 13 лет. Нарушение = адм. ответственность.',fineMin:'2 NSV (10 €)',fineMax:'50 NSV (250 €)'},
+    {label:'24.(4) — Физическое наказание',desc:'За физическое наказание или жестокое обращение родители привлекаются к ответственности. Может быть возбуждено угол. дело (УК 174. пантс).',fineMin:'',fineMax:''},
+    {label:'24.(7) — Отказ от сотрудничества',desc:'Родители обязаны сотрудничать с соц. службой при насилии или парушениях прав. Отказ → соц. служба уведомляет сиротский суд.',fineMin:'',fineMax:''},
+    {label:'Штраф (AAL)',desc:'За неисполнение обязанностей: предупреждение или штраф 2–50 NSV (10–250 €). Систематические нарушения: 50–100 NSV (250–500 €). Сиротский суд может лишить опеки прав опеки.',fineMin:'2 NSV (10 €)',fineMax:'100 NSV (500 €)'}
+   ]},
+  en:{name:'Parental obligations and liability (BTAL 24.)',
+   parts:[
+    {label:'24.(6) — Child under 7',desc:'Parents or guardians are PROHIBITED from leaving a child under 7 without an adult or person aged at least 13 present. Violation = administrative liability.',fineMin:'2 NSV (10 €)',fineMax:'50 NSV (250 €)'},
+    {label:'24.(4) — Physical punishment',desc:'Parents are liable under the law for physical punishment or cruel treatment of a child. Criminal proceedings may be initiated (Criminal Law Art. 174).',fineMin:'',fineMax:''},
+    {label:'24.(7) — Refusal to cooperate',desc:'Parents must cooperate with social services if violence or child rights violations are identified. Refusal → social service notifies bāriņtiesa.',fineMin:'',fineMax:''},
+    {label:'Fine (AAL)',desc:'For failure to fulfil duties: warning or fine 2–50 NSV (10–250 €). Systematic violations: 50–100 NSV (250–500 €). Bāriņtiesa may terminate custody rights.',fineMin:'2 NSV (10 €)',fineMax:'100 NSV (500 €)'}
+   ]}}
+],
+
+policija:[
+ {article:'BTAL 74. pants',anchor:'#p74',noFine:true,parts:true,signsSVG:[],srcRaw:BASE_BTAL,
+  fineMax:{lv:'',ru:'',en:''},
+  lv:{name:'Policijas tiesības attiecībā uz bērniem (BTAL 74.)',
+   parts:[
+    {label:'74.(1) — Nogadāšanas pamati',desc:'Policija var nogadāt bērnu policijā, ja konstatē: 1) klaiņošanu; 2) ubagošanu; 3) apreibināšanos ar narkotikām, toksiskajām vielām vai alkoholu; 4) nakts stundas pārkāpumu; 5) nelabvēlīgu vidi ģimenē; 6) citus apstākļus, kas var kaitēt bērnam.',fineMin:'',fineMax:''},
+    {label:'74.(2) — Nogadāšanas kārtība',desc:'Nogadāšana policijā pieļaujama tikai tad, ja nav iespējams bērnam sniegt palīdzību citādā veidā. Ja policija konstatē nakts stundas pārkāpumu vai nelabvēlīgu vidi — informē bāriņtiesu vai pagasttiesu.',fineMin:'',fineMax:''},
+    {label:'Bāriņtiesas informēšana',desc:'Policijai ir pienākums informēt bāriņtiesu, ja tā konstatē bērna klaiņošanu, ubagošanu, alkohola/narkotiku lietošanu, nelabvēlīgu vidi ģimenē vai citus apstākļus, kas var kaitēt bērnam.',fineMin:'',fineMax:''},
+    {label:'Izsaukšana uz policiju',desc:'Policija ir tiesīga izsaukt vai nogadāt uz policiju nepilngadīgos, viņu vecākus vai aizstāvējus, kā arī citas personas, lai noskaidrotu apstākļus, kas saistīti ar nepilngadīgo izdarītajiem likumpārkāpumiem.',fineMin:'',fineMax:''},
+    {label:'Bērna procesuālās tiesības',desc:'Krimināllietās, kurās apsūdzētais ir nepilngadīgs, lietas tiesā izskatāmas ārpus kārtas (BTAL 20.(3)). Bērnam ir tiesības tikt uzklausītam jebkurās ar viņu saistītās procedūrās (BTAL 20.(2)).',fineMin:'',fineMax:''}
+   ]},
+  ru:{name:'Полномочия полиции в отношении детей (BTAL 74.)',
+   parts:[
+    {label:'74.(1) — Основания доставки',desc:'Полиция может доставить ребёнка в полицию, если обнаруживает: 1) бродяжничество; 2) попрошайничество; 3) опьянение алкоголем/наркотиками; 4) нарушение ночного режима; 5) неблагоприятная семейная среда; 6) иные угрожающие обстоятельства.',fineMin:'',fineMax:''},
+    {label:'74.(2) — Порядок доставки',desc:'Доставка в полицию допустима только если невозможно оказать помощь иначе. При выявлении нарушения ночного режима или неблагопр. среды — уведомляет сиротский суд.',fineMin:'',fineMax:''},
+    {label:'Уведомление сиротского суда',desc:'Полиция обязана уведомить сиротский суд, если обнаруживает бродяжничество, нищенство, алкоголь/наркотики, неблагопр. семейную среду или другие угрожающие ребёнку обстоятельства.',fineMin:'',fineMax:''},
+    {label:'Вызов в полицию',desc:'Полиция вправе вызовать или доставлять в полицию несовершеннолетних, их родителей или опекунов, а также других лиц для выяснения обстоятельств, связанных с правонарушениями несовершеннолетних.',fineMin:'',fineMax:''},
+    {label:'Процессуальные права ребёнка',desc:'По уголовным делам с несовершеннолетним обвиняемым — рассмотрение вне очереди (BTAL 20.(3)). Ребёнок вправе быть заслушанным в любых процедурах (BTAL 20.(2)).',fineMin:'',fineMax:''}
+   ]},
+  en:{name:'Police powers regarding children (BTAL 74.)',
+   parts:[
+    {label:'74.(1) — Grounds for transfer',desc:'Police may transfer a child to the police station if they identify: 1) vagrancy; 2) begging; 3) intoxication with drugs, toxins or alcohol; 4) night hour violation; 5) adverse family environment; 6) other circumstances that may harm the child.',fineMin:'',fineMax:''},
+    {label:'74.(2) — Transfer procedure',desc:'Transfer to a police station is permitted only if it is not possible to help the child otherwise. If a night hour violation or adverse family environment is identified — bāriņtiesa must be notified.',fineMin:'',fineMax:''},
+    {label:'Bāriņtiesa notification',desc:'Police are obliged to notify bāriņtiesa if they identify vagrancy, begging, alcohol/drug use, adverse family environment or other circumstances posing a risk to the child.',fineMin:'',fineMax:''},
+    {label:'Summons to police',desc:'Police are entitled to summon or bring to the police station minors, their parents or guardians, and other persons to clarify circumstances related to offences committed by minors.',fineMin:'',fineMax:''},
+    {label:'Procedural rights of the child',desc:'In criminal cases where the accused is a minor, cases are heard as a priority (BTAL 20.(3)). The child has the right to be heard in any proceedings relating to them (BTAL 20.(2)).',fineMin:'',fineMax:''}
+   ]}}
+]
+};
+
+// BTAL routing patch
+var _origBtalGetCats=getCats;getCats=function(){return currentLaw==='btal'?btalCats:_origBtalGetCats();};
+var _origBtalGetLaws=getLaws;getLaws=function(){return currentLaw==='btal'?btalLaws:_origBtalGetLaws();};
+var _origBtalGetUI=getUI;getUI=function(){return currentLaw==='btal'?uiStrings.btal[lang]:_origBtalGetUI();};
+
+
+renderLaws(getLaws()[currentCat]);updateFavCount();initTheme();updateCompareBar();
+
+
 </script>
 </body>
 </html>
