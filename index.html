@@ -43,7 +43,8 @@
   .proto-btn{border:1px solid var(--color-brand)!important;color:var(--color-brand)!important;}.proto-btn.active{background:var(--color-brand)!important;color:#fff!important;}
   .search-bar{background:var(--color-background-primary);padding:10px 14px;border-bottom:1px solid var(--color-border-secondary);}
   .search-input{width:100%;padding:8px 12px;font-size:14px;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);outline:none;transition:border-color 0.15s;}
-  .search-input:focus{border-color:var(--color-brand);}.search-input::placeholder{color:var(--color-text-secondary);}
+  .search-input:focus{border-color:var(--color-brand);}
+  .search-global-bar{font-size:12px;color:var(--color-text-secondary);padding:6px 14px 2px;font-weight:500;}.search-input::placeholder{color:var(--color-text-secondary);}
   .categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;padding:12px 14px;}
   .cat-card{background:var(--color-background-primary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:14px 12px;text-align:center;cursor:pointer;transition:all 0.15s;}
   .cat-card:hover{border-color:var(--color-brand);background:var(--color-brand-light);}.cat-card.active{border-color:var(--color-brand);background:var(--color-brand-light);}
@@ -2988,41 +2989,167 @@ function toggleLaw(card,i){
   if(!open){d.classList.add('show');card.classList.add('expanded');}
 }
 
+function toggleSearchCard(el){el.classList.toggle('expanded');}
+
+function getAllLawsFlat(){
+  var all=[];
+  var sections={asl:aslLaws,csl:cslLaws,aiz:aizLaws,aal:aalLaws,lpp:lppLaws,apas:apasLaws,btal:btalLaws,mmob:mmobLaws};
+  for(var sk in sections){
+    var sl=sections[sk];if(!sl)continue;
+    for(var ck in sl){
+      var arr=sl[ck];if(!Array.isArray(arr))continue;
+      for(var idx=0;idx<arr.length;idx++) all.push({law:arr[idx],sectionKey:sk,catKey:ck,idx:idx});
+    }
+  }
+  return all;
+}
+
 function filterLaws(){
-  const q=document.getElementById('searchInput').value.trim().toLowerCase();
-  if(!q){renderLaws(getLaws()[currentCat]);return;}
-  const all=Object.values(getLaws()).flat();
+  var q=document.getElementById('searchInput').value.trim().toLowerCase();
+  var catGrid=document.getElementById('catGrid');
+  var secTitle=document.getElementById('sectionTitle');
+  var list=document.getElementById('lawsList');
+  if(!q){
+    if(catGrid&&!showingFavs&&!showingCompare&&!showingProto) catGrid.style.display='';
+    if(secTitle&&!showingFavs&&!showingCompare&&!showingProto){
+      secTitle.textContent=getCats()[currentCat]?getCats()[currentCat][lang].sec:'';
+    }
+    if(!showingFavs&&!showingCompare&&!showingProto) renderLaws(getLaws()[currentCat]);
+    return;
+  }
+  if(showingFavs||showingCompare||showingProto) return;
+  if(catGrid) catGrid.style.display='none';
+  if(secTitle) secTitle.textContent='';
 
-  // Check if query looks like a fine amount (digits only or "X €")
-  const numQ=q.replace(/[€\s]/g,'');
-  const isNumQ=/^\d+$/.test(numQ);
-
-  function fineMatches(str){
-    if(!str) return false;
-    // Extract numbers from fine string and compare
-    var nums=str.match(/\d+/g)||[];
-    return nums.some(function(n){ return n===numQ; });
+  var allFlat=getAllLawsFlat();
+  var isNum=/^\d+$/.test(q);
+  // Build a lookup for category names per section
+  var catNameCache={};
+  function getCatName(sk,ck){
+    var key=sk+'|'+ck;
+    if(catNameCache[key]!==undefined) return catNameCache[key];
+    try{
+      var origLaw2=currentLaw,origCat2=currentCat;
+      currentLaw=sk;currentCat=ck;
+      var cats=getCats();
+      var n=(cats[ck]&&cats[ck][lang])?cats[ck][lang].name+' '+(cats[ck][lang].sec||''):'';
+      currentLaw=origLaw2;currentCat=origCat2;
+      catNameCache[key]=n.toLowerCase();
+    }catch(e){catNameCache[key]=ck;}
+    return catNameCache[key];
   }
 
-  renderLaws(all.filter(function(l){
-    if(l[lang].name.toLowerCase().includes(q)) return true;
-    if(l.article.toLowerCase().includes(q)) return true;
-    // Search in fine amounts
-    if(isNumQ){
-      if(l.fineMax&&l.fineMax[lang]&&fineMatches(l.fineMax[lang])) return true;
-      if(l.fineMin&&fineMatches(l.fineMin)) return true;
-      if(l[lang].parts&&l[lang].parts.some(function(p){
-        return fineMatches(p.fineMax)||fineMatches(p.fineMin);
-      })) return true;
+  var sLblSearch={asl:'asl administrativo sodu',csl:'csl csn celu satiksmes',aiz:'aiztureshana aiztur',aal:'aal administrativas atbildibas',lpp:'lpp policija',apas:'apas pasvaldibas administrativie',btal:'btal bernu tiesibas nepilngadigo nepilngadigje',mmob:'mmob mikro mikromobilitāte'};
+
+  var matched=allFlat.filter(function(item){
+    var law=item.law;
+    var ld=law[lang]||law.lv||{};
+    var ldlv=law.lv||{};
+    var ldru=law.ru||{};
+    if(isNum){
+      // Search in fine amounts
+      var fm=(law.fineMax&&law.fineMax[lang])||'';
+      var fmn=(law.fineMin&&law.fineMin[lang])||'';
+      var fineMatch=(fm+' '+fmn).replace(/[^\d]/g,' ').split(/\s+/).some(function(n){return n&&parseInt(n)===parseInt(q);});
+      if(fineMatch) return true;
+      // Also search in article number — match "13" in "LPP 13.", "13.1.", "13.pants" etc.
+      var artText=(law.article||'').replace(/[^\d.]/g,' ');
+      var artMatch=artText.split(/[^\d]+/).some(function(n){return n&&parseInt(n)===parseInt(q);});
+      if(artMatch) return true;
+      // Also search in parts labels (for sub-article numbers like "13.(1)")
+      var ld2=law[lang]||law.lv||{};
+      if(ld2.parts) return ld2.parts.some(function(p){return (p.label||'').indexOf(q)>=0;});
+      return false;
     }
-    if(l[lang].parts){
-      return l[lang].parts.some(function(p){
-        return p.label.toLowerCase().includes(q)||(p.desc&&p.desc.toLowerCase().includes(q));
-      });
+    // Search across: article, all language names/descs, catKey, category name, section label
+    var text=[
+      law.article||'',
+      ld.name||'', ldlv.name||'', ldru.name||'',
+      ld.desc||'', ldlv.desc||'',
+      law.csnRef||'',
+      item.catKey,
+      item.sectionKey,
+      getCatName(item.sectionKey,item.catKey),
+      (sLblSearch[item.sectionKey]||'')
+    ].join(' ').toLowerCase();
+    if(ld.parts) ld.parts.forEach(function(p){text+=' '+(p.label||'').toLowerCase()+' '+(p.desc||'').toLowerCase();});
+    if(ldlv.parts) ldlv.parts.forEach(function(p){text+=' '+(p.label||'').toLowerCase()+' '+(p.desc||'').toLowerCase();});
+    return text.indexOf(q)>=0;
+  });
+
+  var t=getUI();
+  if(!matched.length){list.innerHTML='<p class="empty">'+t.empty+'</p>';return;}
+
+  var cnt={lv:matched.length+' rezultāti',ru:matched.length+' результатов',en:matched.length+' results'}[lang]||matched.length+' results';
+  var sLbl={asl:'ASL',csl:'CSN/CSL',aiz:'Aiztur.',aal:'AAL',lpp:'LPP',apas:'APAS',btal:'BTAL',mmob:'Mikro'};
+  var origLaw=currentLaw,origCat=currentCat;
+
+  var origLaw=currentLaw,origCat=currentCat;
+  var _SR=[];  // global search result store for onclick refs
+
+  function buildSearchCard(item,gi){
+    currentLaw=item.sectionKey; currentCat=item.catKey;
+    _SR[gi]=item;
+    var t2=getUI();
+    var law=item.law;
+    var ld=law[lang]||law.lv||{};
+    var maxStr=law.fineMax?(law.fineMax[lang]||''):'';
+    var maxBadge=maxStr.split('/')[0].trim();
+    var starCls=isFav(law.article)?'active':'';
+    var cmpCls=isInCompare(law.article)?'active':'';
+
+    var metaHtml='<span class="fav-law-badge">'+(sLbl[item.sectionKey]||item.sectionKey)+'</span> ';
+    if(law.warn) metaHtml+='<span class="badge badge-warn">'+t2.warnWord+'</span> ';
+    if(!law.noFine&&maxBadge) metaHtml+='<span class="badge badge-fine">max '+maxBadge+'</span> ';
+    if(law.pts) metaHtml+='<span class="badge badge-pts">'+law.pts+' '+t2.pts+'</span> ';
+    metaHtml+='<span class="badge badge-article">'+law.article+'</span>';
+
+    var det='';
+    if(law.signsSVG&&law.signsSVG.length) det+='<div class="signs-row">'+law.signsSVG.join('')+'</div>';
+    if(law.parts&&ld.parts&&ld.parts.length){
+      det+=ld.parts.map(function(p){
+        var ph='<div class="part-block"><div class="part-label">'+(p.label||'')+'</div><div class="part-desc">'+(p.desc||'')+'</div>';
+        if(p.fineMin||p.fineMax) ph+='<div class="part-fines"><div class="part-fine-box"><div class="fine-lbl">'+t2.min+'</div><div class="fine-val">'+(p.fineMin||'')+'</div></div><div class="part-fine-box"><div class="fine-lbl">'+t2.max+'</div><div class="fine-val danger">'+(p.fineMax||'')+'</div></div></div>';
+        return ph+'</div>';
+      }).join('');
+    } else {
+      det+='<div class="dl">'+t2.desc+'</div><div class="dt">'+(ld.desc||'')+'</div>';
     }
-    if(l[lang].desc&&l[lang].desc.toLowerCase().includes(q)) return true;
-    return false;
-  }));
+    if(!law.noFine&&maxBadge) det+='<div class="fine-row"><div class="fine-box"><div class="fine-lbl">'+t2.min+'</div><div class="fine-val">'+(law.fineMin?law.fineMin[lang]:'')+'</div></div><div class="fine-box"><div class="fine-lbl">'+t2.max+'</div><div class="fine-val danger">'+maxStr+'</div></div></div>';
+    if(law.csnRef) det+='<div class="csn-card-ref">'+csnLinks(law.csnRef)+'</div>';
+    if(law.lawRefs) det+='<div class="csn-card-ref">'+lawBadges(law.lawRefs)+'</div>';
+    if(t2.howContest&&ld.contest) det+='<div class="dl">'+t2.howContest+'</div><div class="dt">'+ld.contest+'</div>';
+    var srcUrl=law.srcRaw||(item.sectionKey==='lpp'?BASE_LPP:item.sectionKey==='aal'||item.sectionKey==='aiz'?BASE_AAL:item.sectionKey==='asl'?BASE_ASL:BASE_CSL);
+    det+='<a class="source-btn" href="'+srcUrl+(law.anchor||'')+'" target="_blank" onclick="event.stopPropagation()">↗'+t2.sourceBtn+'</a>';
+
+    var el=document.createElement('div');
+    el.className='law-card';
+    el.onclick=function(){this.classList.toggle('expanded');};
+
+    var topDiv=document.createElement('div'); topDiv.className='law-top';
+    var nameDiv=document.createElement('div'); nameDiv.className='law-name'; nameDiv.textContent=ld.name||''; topDiv.appendChild(nameDiv);
+
+    var cmpBtn=document.createElement('button'); cmpBtn.className='compare-btn'+( cmpCls?' '+cmpCls:''); cmpBtn.innerHTML=COMPARE_SVG;
+    (function(idx){cmpBtn.onclick=function(e){e.stopPropagation();var it=_SR[idx];toggleCompare(it.law.article,it.sectionKey,it.catKey,(it.law[lang]||it.law.lv||{}).name||'',e);};})(gi);
+    topDiv.appendChild(cmpBtn);
+
+    var favBtn=document.createElement('button'); favBtn.className='fav-btn'+(starCls?' '+starCls:''); favBtn.innerHTML=starCls?STAR_FULL:STAR_EMPTY;
+    (function(idx){favBtn.onclick=function(e){e.stopPropagation();var it=_SR[idx];toggleFav(it.law.article,it.sectionKey,it.catKey,(it.law[lang]||it.law.lv||{}).name||'',e);};})(gi);
+    topDiv.appendChild(favBtn);
+
+    var arr=document.createElement('div'); arr.className='arrow-icon'; topDiv.appendChild(arr);
+    el.appendChild(topDiv);
+
+    var metaDiv=document.createElement('div'); metaDiv.className='law-meta'; metaDiv.innerHTML=metaHtml; el.appendChild(metaDiv);
+    var detDiv=document.createElement('div'); detDiv.className='law-detail'; detDiv.innerHTML=det; el.appendChild(detDiv);
+    return el;
+  }
+
+  var frag=document.createDocumentFragment();
+  var hdr=document.createElement('div'); hdr.className='search-global-bar'; hdr.textContent=cnt; frag.appendChild(hdr);
+  matched.forEach(function(item,gi){ frag.appendChild(buildSearchCard(item,gi)); });
+  currentLaw=origLaw; currentCat=origCat;
+  list.innerHTML=''; list.appendChild(frag);
 }
 
 // ===== INIT =====
