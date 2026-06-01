@@ -146,6 +146,14 @@
 
 
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZX7D7F7E4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5ZX7D7F7E4');
+</script>
 </head>
 <body>
 <div class="app-wrapper">
@@ -2811,7 +2819,7 @@ function renderCats(){
   const cslCounts={parking:'CSL 57. p.',speed:'CSL 55. p.',alcohol:'CSL 62. p.',signals:'CSN/CSL',other:'CSL 43–58. p.',evakuacija:'CSL 43.3'};
   const aizCounts={aiztureshana:'AAL 71 · LPP 12 · LPP 19'};
   const svgMap=currentLaw==='asl'?SVG_ASL:currentLaw==='csl'?SVG_CSL:currentLaw==='aiz'?SVG_AIZ:currentLaw==='aal'?SVG_AAL:currentLaw==='lpp'?SVG_LPP:SVG_APAS;
-  const counts=currentLaw==='asl'?aslCounts:currentLaw==='csl'?cslCounts:currentLaw==='aiz'?aizCounts:currentLaw==='aal'?aalCounts:currentLaw==='lpp'?lppCounts:apasCounts;
+  const counts=currentLaw==='asl'?aslCounts:currentLaw==='csl'?cslCounts:currentLaw==='aiz'?aizCounts:currentLaw==='aal'?aalCounts:currentLaw==='lpp'?lppCounts:currentLaw==='apas'?apasCounts:currentLaw==='btal'?btalCounts:currentLaw==='mmob'?mmobCounts:{}; 
   document.getElementById('catGrid').innerHTML=Object.keys(cats).map(k=>
     '<div class="cat-card'+(k===currentCat?' active':'')+'" onclick="selectCat(this,\''+k+'\')">'+
     '<div class="cat-icon">'+(svgMap[k]||'')+'</div>'+
